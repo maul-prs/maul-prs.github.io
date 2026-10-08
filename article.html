@@ -34,7 +34,7 @@
             }
 
             try {
-                // 1. Ambil data dari posts.json
+                // 1. Ambil data dari posts.json (pastikan file posts.json ada di luar folder data/articles)
                 const res = await fetch('data/posts.json');
                 if (!res.ok) throw new Error('Gagal mengambil file database posts.json');
                 
@@ -51,7 +51,7 @@
                 const articleRes = await fetch(articleUrl);
                 
                 if (!articleRes.ok) {
-                    throw new Error(`File HTML artikel tidak ditemukan di path: <code>${articleUrl}</code>. Pastikan folder "articles" dan file "${post.filename}" sudah ter-upload ke GitHub.`);
+                    throw new Error(`File HTML artikel tidak ditemukan di path: <code>${articleUrl}</code>. Pastikan folder "articles" dan file "${post.filename}" sudah ter-upload.`);
                 }
                 
                 const htmlContent = await articleRes.text();
