@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title id="page-title">Detail Artikel — Maul Prs</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+      :root {
+        --bg-primary: #07110d;
+        --bg-secondary: #0a1711;
+        --bg-card: #112219;
+        --border-color: #163827;
+        --text-main: #ffffff;
+        --accent-emerald: #10b981;
+      }
+
+      body {
+        margin: 0;
+        font-family: Inter, sans-serif;
+        background: var(--bg-primary);
+        color: #e2e8f0;
+        line-height: 1.7;
+      }
+
+      .container {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      .article-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 340px;
+        gap: 30px;
+        align-items: start;
+        margin: 40px auto;
+      }
+
+      .article-content-wrapper {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        padding: 40px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .sidebar-column {
+        position: sticky;
+        top: 95px;
+      }
+
+      .sidebar-box {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        padding: 24px;
+      }
+
+      .focus-mode-toggle {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        color: var(--accent-emerald);
+        padding: 8px 14px;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 20px;
+        transition: all 0.2s ease;
+      }
+
+      .focus-mode-toggle:hover {
+        background: var(--border-color);
+        color: #ffffff;
+      }
+
+      body.focus-on .article-layout {
+        grid-template-columns: 1fr;
+        max-width: 800px;
+      }
+
+      body.focus-on .sidebar-column {
+        display: none !important;
+      }
+
+      @media (max-width: 768px) {
+        .article-layout {
+          grid-template-columns: 1fr;
+          padding: 0 16px;
+        }
+        .sidebar-column {
+          position: static !important;
+        }
+        .article-content-wrapper {
+          padding: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header / Navigasi -->
+    <header
+      class="site-header"
+      style="
+        background: #f7f6f2;
+        border-bottom: 1px solid #e8e5df;
+        padding: 12px 0;
+      "
+    >
+      <div
+        class="container"
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        "
+      >
+        <a
+          href="index.html"
+          style="
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #252525;
+            text-decoration: none;
+            font-weight: bold;
+          "
+        >
+          <img
+            src="assets/profile.png"
+            alt="Maul Prs"
+            class="brand-photo"
+            style="
+              width: 38px;
+              height: 38px;
+              border-radius: 50%;
+              object-fit: cover;
+              display: block;
+            "
+          />
+          <span>Maul Prs</span>
+        </a>
+
+        <a
+          href="index.html"
+          style="
+            color: var(--accent-emerald);
+            text-decoration: none;
+            font-size: 14px;
+          "
+          >← Kembali ke Beranda</a
+        >
+      </div>
+    </header>
+
+    <!-- Konten Utama -->
+    <main class="container">
+      <div class="article-layout">
+        <article class="article-content-wrapper">
+          <button
+            id="focusToggleBtn"
+            class="focus-mode-toggle"
+            onclick="toggleFocusMode()"
+          >
+            👁️ Mode Fokus: <span id="focusStatus">Off</span>
+          </button>
+
+          <h1
+            id="article-title"
+            style="color: #fff; font-size: 32px; margin-bottom: 10px"
+          >
+            Memuat Artikel...
+          </h1>
+          <p
+            id="article-date"
+            style="
+              color: var(--accent-emerald);
+              font-size: 13px;
+              margin-bottom: 20px;
+            "
+          >
+            ----,--,--
+          </p>
+
+          <div id="article-body" class="article-body" style="color: #d1d5db">
+            <p>Sedang mengambil data artikel...</p>
+          </div>
+        </article>
+
+        <aside class="sidebar-column">
+          <div class="sidebar-box">
+            <h3 style="color: #fff; font-size: 18px; margin-top: 0">
+              Posting Terbaru
+            </h3>
+            <p style="color: #94a3b8; font-size: 14px">
+              Daftar postingan atau rekomendasi buku akan tampil di sini.
+            </p>
+          </div>
+        </aside>
+      </div>
+    </main>
+
+    <script>
+      function toggleFocusMode() {
+        document.body.classList.toggle("focus-on");
+        const statusSpan = document.getElementById("focusStatus");
+        if (document.body.classList.contains("focus-on")) {
+          statusSpan.textContent = "On";
+        } else {
+          statusSpan.textContent = "Off";
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        try {
+          const urlParams = new URLSearchParams(window.location.search);
+          const articleId = urlParams.get("id");
+
+          const response = await fetch("data/posts.json");
+          if (!response.ok) throw new Error("Gagal mengambil file posts.json");
+
+          const posts = await response.json();
+          let post = null;
+
+          if (articleId !== null) {
+            post = posts.find(p => p.id && p.id.toString() === articleId) || posts[parseInt(articleId, 10)];
+          }
+          
+          if (!post && posts.length > 0) {
+            post = posts[0];
+          }
+
+          if (post) {
+            document.getElementById("article-title").textContent = post.title || "Tanpa Judul";
+            document.getElementById("article-date").textContent = post.date || "";
+            document.getElementById("page-title").textContent = `${post.title || "Artikel"} — Maul Prs`;
+
+            const contentContainer = document.getElementById("article-body");
+            
+            // Mengambil isi full HTML yang diinput dari admin (bisa dari post.content, post.body, atau post.summary)
+            // Pastikan field di JSON yang menampung file HTML Anda sesuai (misal: post.content)
+            const fullHtmlContent = post.content || post.body || post.summary || "<p>Isi artikel belum tersedia.</p>";
+
+            // Render langsung sebagai elemen HTML agar struktur tag dari admin tampil sempurna
+            contentContainer.innerHTML = `
+              <div class="full-article-content" style="font-size: 16px; line-height: 1.8; color: #d1d5db;">
+                ${fullHtmlContent}
+              </div>
+            `;
+
+            // Render Sidebar Posting Terbaru
+            const sidebarBox = document.querySelector("aside") || document.querySelectorAll("div[style*='background']")[1];
+            if (sidebarBox) {
+              let recentHtml = `<h3 style="font-size: 18px; font-weight: bold; color: #ffffff; margin-bottom: 12px;">Posting Terbaru</h3><ul style="list-style: none; padding: 0; margin: 0;">`;
+              
+              posts.slice(0, 5).forEach(p => {
+                const pId = p.id || '';
+                recentHtml += `
+                  <li style="margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px;">
+                    <a href="article.html?id=${pId}" style="color: #34d399; text-decoration: none; font-size: 14px; line-height: 1.4; display: block;">
+                      ${p.title}
+                    </a>
+                    <span style="font-size: 11px; color: #9ca3af;">${p.date || ''}</span>
+                  </li>
+                `;
+              });
+              recentHtml += `</ul>`;
+              sidebarBox.innerHTML = recentHtml;
+            }
+
+          } else {
+            document.getElementById("article-title").textContent = "Artikel Tidak Ditemukan";
+            document.getElementById("article-body").innerHTML = "<p>Maaf, artikel yang Anda cari tidak tersedia.</p>";
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          document.getElementById("article-title").textContent = "Terjadi Kesalahan";
+          document.getElementById("article-body").innerHTML = `<p style="color: #ef4444;">Gagal memuat data: ${error.message}</p>`;
+        }
+      });
+    </script>
+  </body>
+</html>
