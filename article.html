@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detail Artikel</title>
+    <title>Detail Artikel - Maul Prs</title>
     <style>
-        body { font-family: 'Poppins', sans-serif; max-width: 750px; margin: 40px auto; padding: 0 20px; color: #333; line-height: 1.8; }
-        .back-link { display: inline-block; margin-bottom: 20px; color: #3498db; text-decoration: none; }
+        body { font-family: 'Poppins', sans-serif; max-width: 750px; margin: 40px auto; padding: 0 20px; color: #333; line-height: 1.8; background: #fdfdfd; }
+        .back-link { display: inline-block; margin-bottom: 20px; color: #3498db; text-decoration: none; font-weight: 500; }
         .back-link:hover { text-decoration: underline; }
-        h1 { color: #2c3e50; }
+        h1 { color: #2c3e50; margin-bottom: 10px; }
         .date { font-size: 0.9rem; color: #888; margin-bottom: 30px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .content { margin-top: 20px; }
+        .error-box { background: #ffebee; color: #c0392b; padding: 15px; border-radius: 5px; border: 1px solid #ffcdd2; margin-top: 20px; }
     </style>
 </head>
 <body>
@@ -22,38 +24,56 @@
 
     <script>
         async function loadArticle() {
+            const container = document.getElementById('article-content');
             const params = new URLSearchParams(window.location.search);
             const postId = params.get('id');
 
             if (!postId) {
-                document.getElementById('article-content').innerHTML = '<h2>Artikel tidak ditemukan.</h2>';
+                container.innerHTML = `<div class="error-box"><strong>Error:</strong> ID Artikel tidak ditemukan pada URL.</div>`;
                 return;
             }
 
             try {
-                const res = await fetch('posts.json');
+                // 1. Ambil data dari posts.json
+                const res = await fetch('data/posts.json');
+                if (!res.ok) throw new Error('Gagal mengambil file database posts.json');
+                
                 const posts = await res.json();
                 const post = posts.find(p => p.id === postId);
 
                 if (!post) {
-                    document.getElementById('article-content').innerHTML = '<h2>Artikel tidak terdaftar di sistem.</h2>';
+                    container.innerHTML = `<div class="error-box"><strong>Error:</strong> Artikel dengan ID "<strong>${postId}</strong>" tidak terdaftar di database posts.json.</div>`;
                     return;
                 }
 
-                // Ambil file HTML isi artikel dari folder articles/
-                const articleRes = await fetch(`articles/${post.filename}`);
-                if (!articleRes.ok) throw new Error('File HTML artikel tidak ditemukan.');
+                // 2. Ambil file HTML isi artikel dari folder articles/
+                const articleUrl = `articles/${post.filename}`;
+                const articleRes = await fetch(articleUrl);
+                
+                if (!articleRes.ok) {
+                    throw new Error(`File HTML artikel tidak ditemukan di path: <code>${articleUrl}</code>. Pastikan folder "articles" dan file "${post.filename}" sudah ter-upload ke GitHub.`);
+                }
+                
                 const htmlContent = await articleRes.text();
 
-                document.getElementById('article-content').innerHTML = `
+                // 3. Tampilkan ke halaman
+                container.innerHTML = `
                     <h1>${post.title}</h1>
                     <div class="date">Dipublikasikan pada: ${post.date}</div>
                     <div class="content">${htmlContent}</div>
                 `;
                 document.title = `${post.title} - Maul Prs`;
+
             } catch (err) {
                 console.error(err);
-                document.getElementById('article-content').innerHTML = '<h2>Gagal memuat isi artikel.</h2>';
+                container.innerHTML = `
+                    <div class="error-box">
+                        <h3>Gagal memuat isi artikel</h3>
+                        <p>${err.message}</p>
+                        <hr style="border:0; border-top:1px solid #ffcdd2; margin:10px 0;">
+                        <small>Tips: Jika Anda menguji secara lokal di komputer, pastikan Anda menggunakan local server (seperti Live Server VS Code) agar fungsi fetch file berjalan lancar.</small>
+                    </div>
+                `;
             }
         }
 
