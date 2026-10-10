@@ -59,17 +59,16 @@
         <!-- Navigasi Paginasi -->
         <div class="pagination" id="paginationContainer"></div>
       </section>
-
-      <!-- YouTube & About Sections (Tetap seperti sebelumnya) -->
     </main>
 
     <script>
-      // Database statis untuk GitHub (Ganti atau ambil dari file posts.json)
+      // Database statis untuk GitHub
       let allPostsData = [
         {
           id: "1",
           title: "Dzikir & Do'a Pagi",
           category: "Dzikir & Do'a",
+          type: "Dzikir & Do'a",
           date: "10 Oktober 2026",
           cover: "assets/cover-dzikir.jpg",
           coreMessage: "Kumpulan bacaan dzikir dan doa penenang hati untuk mengawali pagi hari.",
@@ -105,11 +104,14 @@
 
         let html = "";
         paginatedPosts.forEach((post) => {
+          const bd = post.bookData || {};
           const coverUrl = post.cover || 'assets/default-cover.png';
-          // Menggunakan kategori asli postingan, bukan paksaan Book Summary
-          const categoryName = post.category || 'Catatan';
+          
+          // Diperbaiki: Membaca kategori secara dinamis dan akurat
+          const categoryName = post.category || post.type || bd.bookMainCategory || 'Catatan';
+          
           const title = post.title;
-          const summaryText = post.coreMessage || post.summary || '';
+          const summaryText = post.coreMessage || bd.bookCore || post.summary || '';
 
           html += `
             <a href="article.html?id=${post.id}" class="post-card">
@@ -164,13 +166,18 @@
         let filtered = allPostsData;
 
         if (currentCategory !== "all") {
-          filtered = filtered.filter(post => post.category === currentCategory);
+          filtered = filtered.filter(post => {
+            const bd = post.bookData || {};
+            const cat = post.category || post.type || bd.bookMainCategory;
+            return cat === currentCategory;
+          });
         }
 
         if (keyword.trim() !== "") {
           filtered = filtered.filter(post => {
+            const bd = post.bookData || {};
             return (post.title || "").toLowerCase().includes(keyword) || 
-                   (post.coreMessage || "").toLowerCase().includes(keyword);
+                   (post.coreMessage || bd.bookCore || "").toLowerCase().includes(keyword);
           });
         }
 
