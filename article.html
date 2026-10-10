@@ -6,30 +6,19 @@
     <title id="pageTitle">Detail Artikel — Maul Prs</title>
     <link rel="stylesheet" href="css/style.css" />
     <style>
-      /* Smooth Scrolling untuk Transisi Klik Bab */
-      html {
-        scroll-behavior: smooth;
-      }
+      html { scroll-behavior: smooth; }
+      .site-header { padding: 10px 0 !important; }
+      .site-header .nav { min-height: auto !important; }
 
-      /* Perbaikan Header Atas (Ringkas) */
-      .site-header {
-        padding: 10px 0 !important;
-      }
-      .site-header .nav {
-        min-height: auto !important;
-      }
-
-      /* Layout Grid 3 Kolom */
       .article-layout {
         display: grid;
         grid-template-columns: 240px 1fr 260px;
         gap: 24px;
         padding: 20px 0 80px 0;
         align-items: start;
-        transition: all 0.3s ease;
       }
 
-      .sidebar-card {
+      .sidebar-card, .category-card-container, .toc-card-container {
         background: var(--bg-card);
         border: 1px solid var(--border-color);
         border-radius: 12px;
@@ -37,207 +26,18 @@
         margin-bottom: 20px;
       }
 
-      /* Sidebar Kiri (Sticky Melayang) */
-      .sidebar-left-sticky {
+      .sidebar-left-sticky, .sidebar-right-sticky {
         position: sticky;
         top: 75px;
       }
 
-      /* KARTU KATEGORI & MENU SCROLLABLE */
-      .category-card-container {
-        background: var(--bg-card);
-        border: 1px solid var(--border-color);
-        border-radius: 12px;
-        padding: 18px;
-        margin-bottom: 20px;
-        display: flex;
-        flex-direction: column;
+      .category-scroll-area, .toc-scroll-area {
         max-height: 280px;
-      }
-
-      .category-card-container .category-sticky-title {
-        position: sticky;
-        top: 0;
-        background: var(--bg-card);
-        z-index: 2;
-        margin: -18px -18px 12px -18px;
-        padding: 18px 18px 10px 18px;
-        border-bottom: 1px solid var(--border-color);
-        font-size: 15px;
-        font-weight: 700;
-        color: #ffffff;
-      }
-
-      .category-scroll-area {
         overflow-y: auto;
-        padding-right: 4px;
-        flex-grow: 1;
       }
 
-      .category-scroll-area::-webkit-scrollbar {
-        width: 4px;
-      }
-      .category-scroll-area::-webkit-scrollbar-thumb {
-        background: var(--border-color);
-        border-radius: 4px;
-      }
-
-      /* Sidebar Kanan Khusus Bab */
-      .sidebar-right-sticky {
-        position: sticky;
-        top: 75px;
-      }
-
-      /* Container Card Daftar Bab dengan Judul Sticky & List Scrollable */
-      .toc-card-container {
-        background: var(--bg-card);
-        border: 1px solid var(--border-color);
-        border-radius: 12px;
-        padding: 18px;
-        display: flex;
-        flex-direction: column;
-        max-height: calc(100vh - 90px);
-      }
-
-      .toc-card-container .toc-sticky-title {
-        position: sticky;
-        top: 0;
-        background: var(--bg-card);
-        z-index: 2;
-        margin: -18px -18px 12px -18px;
-        padding: 18px 18px 10px 18px;
-        border-bottom: 1px solid var(--border-color);
-        font-size: 15px;
-        font-weight: 700;
-        color: #ffffff;
-      }
-
-      .toc-scroll-area {
-        max-height: calc(100vh - 170px);
-        overflow-y: auto;
-        padding-right: 4px;
-      }
-
-      .toc-scroll-area::-webkit-scrollbar {
-        width: 4px;
-      }
-      .toc-scroll-area::-webkit-scrollbar-thumb {
-        background: var(--border-color);
-        border-radius: 4px;
-      }
-
-      .sidebar-title {
-        font-size: 15px;
-        font-weight: 700;
-        color: #ffffff;
-        margin: 0 0 14px 0;
-        padding-bottom: 8px;
-        border-bottom: 1px solid var(--border-color);
-      }
-
-      /* Styling Accordion Kategori Sidebar Kiri */
-      .category-list {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        font-size: 13.5px;
-      }
-
-      .category-item {
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-      }
-
-      .category-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        color: var(--text-main);
-        cursor: pointer;
-        transition: 0.2s;
-        font-weight: 500;
-        user-select: none;
-      }
-
-      .category-header:hover {
-        color: var(--accent-light);
-      }
-
-      .sub-book-list {
-        list-style: none;
-        padding-left: 16px;
-        margin: 0;
-        display: none;
-        flex-direction: column;
-        gap: 6px;
-        border-left: 1px dashed var(--border-color);
-        margin-left: 6px;
-      }
-
-      .category-item.active .sub-book-list {
-        display: flex;
-      }
-
-      .sub-book-list a {
-        font-size: 12.5px;
-        color: var(--text-muted);
-        text-decoration: none;
-        transition: 0.2s;
-        display: block;
-        padding: 2px 0;
-        line-height: 1.4;
-      }
-
-      .sub-book-list a:hover,
-      .sub-book-list a.current-active {
-        color: var(--accent-light);
-        font-weight: 500;
-      }
-
-      .recent-list, .toc-list {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        font-size: 13.5px;
-      }
-
-      .recent-list a, .toc-list a {
-        color: var(--text-main);
-        text-decoration: none;
-        transition: 0.2s;
-        line-height: 1.4;
-      }
-
-      .recent-list a:hover, .toc-list a:hover {
-        color: var(--accent-light);
-      }
-
-      .toc-list a {
-        display: block;
-        padding: 3px 0;
-        font-size: 13px;
-        color: var(--text-muted);
-      }
-
-      .toc-list a:hover {
-        color: var(--accent-light);
-        padding-left: 4px;
-      }
-
-      .toc-item-h3 {
-        padding-left: 14px !important;
-        font-size: 12px !important;
-      }
-
-      /* Kartu Detail Buku Utama (Desktop) */
-      .book-summary-box {
+      /* Kotak Informasi Utama Artikel / Buku */
+      .article-hero-box {
         background: rgba(3, 42, 24, 0.7);
         border: 1px solid var(--border-color);
         border-radius: 12px;
@@ -249,20 +49,21 @@
         align-items: center;
       }
 
-      .book-summary-cover {
+      .article-hero-cover {
         width: 100%;
+        height: 210px;
         border-radius: 8px;
         object-fit: cover;
         border: 1px solid var(--border-color);
       }
 
-      .book-summary-info {
+      .article-hero-info {
         display: flex;
         flex-direction: column;
         gap: 10px;
       }
 
-      .book-badge-tag {
+      .article-badge-tag {
         display: inline-block;
         background: #032a18;
         border: 1px solid var(--border-color);
@@ -274,50 +75,26 @@
         width: fit-content;
       }
 
-      .book-title-sub {
+      .article-title-sub {
         font-size: 26px;
         font-weight: 800;
         color: #ffffff;
         margin: 0;
         line-height: 1.25;
-        letter-spacing: -0.01em;
       }
 
-      .book-author-year {
-        font-size: 13.5px;
-        color: var(--text-muted);
-        margin: 0;
-      }
-
-      .book-core-desc {
+      .article-core-desc {
         font-size: 14px;
         color: var(--text-main);
         line-height: 1.6;
         margin: 2px 0;
       }
 
-      .book-meta-pills {
-        display: flex;
-        gap: 14px;
-        font-size: 12px;
-        color: var(--text-muted);
-        margin-top: 4px;
-        padding-top: 10px;
-        border-top: 1px solid rgba(255, 255, 255, 0.08);
-      }
-
-      /* Content Area Artikel */
       .main-article-card {
         background: var(--bg-card);
         border: 1px solid var(--border-color);
         border-radius: 12px;
         padding: 28px;
-      }
-
-      .standard-article-header {
-        margin-bottom: 24px;
-        padding-bottom: 16px;
-        border-bottom: 1px solid var(--border-color);
       }
 
       .article-content {
@@ -332,439 +109,113 @@
         scroll-margin-top: 80px;
       }
 
-      /* STYLING KHUSUS MODE FOKUS */
-      body.focus-mode .sidebar-left-sticky,
-      body.focus-mode .sidebar-right-sticky {
-        display: none !important;
-      }
-
-      body.focus-mode .article-layout {
-        grid-template-columns: 1fr !important;
-        max-width: 820px;
-        margin: 0 auto;
-      }
-
-      body.focus-mode #focusToggle {
-        background: var(--accent-light) !important;
-        color: #020c06 !important;
-        font-weight: 600;
-      }
-
-      /* STYLING MOBILE RESPONSIVE ( <= 1024px ) */
-      .desktop-back-btn {
-        display: inline-block;
-      }
-
-      .mobile-hamburger-btn {
-        display: none;
-        background: #032a18;
-        border: 1px solid var(--border-color);
-        color: var(--accent-light);
-        padding: 5px 12px;
-        border-radius: 20px;
-        font-size: 12px;
-        font-weight: 600;
-        cursor: pointer;
-      }
-
       @media (max-width: 1024px) {
-        .article-layout {
-          grid-template-columns: 1fr;
-          padding: 12px 0 60px 0;
-        }
-
-        .main-article-card {
-          padding: 16px;
-        }
-
-        /* SEMBUNYIKAN TOMBOL FOKUS DI MOBILE */
-        .desktop-only-btn {
-          display: none !important;
-        }
-
-        /* LAYOUT MOBIL 2 KOLOM (COVER DI KIRI, TEKS DI KANAN) */
-        .book-summary-box {
-          grid-template-columns: 100px 1fr;
-          gap: 14px;
-          padding: 14px;
-          margin-bottom: 18px;
-          align-items: start;
-          text-align: left;
-        }
-
-        .book-summary-cover {
-          width: 100%;
-          max-width: 100px;
-          height: auto;
-          margin: 0;
-        }
-
-        .book-summary-info {
-          gap: 6px;
-        }
-
-        .book-badge-tag {
-          margin: 0;
-          font-size: 10px;
-          padding: 2px 8px;
-        }
-
-        .book-title-sub {
-          font-size: 17px;
-          line-height: 1.3;
-        }
-
-        .book-author-year {
-          font-size: 12px;
-        }
-
-        .book-core-desc {
-          font-size: 12.5px;
-          line-height: 1.5;
-        }
-
-        .book-meta-pills {
-          justify-content: flex-start;
-          gap: 8px;
-          flex-wrap: wrap;
-          font-size: 11px;
-          padding-top: 6px;
-        }
-
-        .desktop-back-btn {
-          display: none !important;
-        }
-        .mobile-hamburger-btn {
-          display: inline-block !important;
-        }
-        #recentSidebarCard {
-          display: none !important;
-        }
-
-        .sidebar-left-sticky {
-          display: none;
-        }
-        .sidebar-left-sticky.mobile-open {
-          display: block !important;
-          position: fixed;
-          top: 60px;
-          right: 15px;
-          left: 15px;
-          z-index: 999;
-          box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-        }
-
-        .sidebar-right-sticky.mobile-open {
-          position: fixed;
-          top: 60px;
-          right: 15px;
-          left: 15px;
-          z-index: 999;
-          box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-          border-radius: 12px;
-        }
-
-        .sidebar-right-sticky.mobile-open .toc-card-container {
-          max-height: 70vh;
-        }
+        .article-layout { grid-template-columns: 1fr; }
+        .article-hero-box { grid-template-columns: 100px 1fr; gap: 14px; padding: 14px; }
+        .article-hero-cover { height: 130px; }
+        .article-title-sub { font-size: 17px; }
       }
     </style>
   </head>
   <body>
-    <!-- Header Top Navigation -->
     <header class="site-header">
       <div class="container nav">
         <a class="brand" href="index.html">
           <img class="brand-photo" src="assets/profile.png" alt="Maul Prs" onerror="this.style.display='none'" />
           <span>Maul Prs</span>
         </a>
-
-        <div style="display: flex; gap: 8px; align-items: center;">
-          <!-- Tombol Fokus HANYA MUNCUL DI DESKTOP -->
-          <button id="focusToggle" class="desktop-only-btn" onclick="toggleFocusMode()" style="background: #032a18; border: 1px solid var(--border-color); color: #fff; padding: 5px 10px; border-radius: 20px; font-size: 12px; cursor: pointer; transition: 0.2s;">
-            👁️ Fokus
-          </button>
-          
-          <a href="index.html" class="desktop-back-btn" style="color: var(--accent-light); text-decoration: none; font-size: 13px; font-weight: 500;">
-            ← Beranda
-          </a>
-
-          <button id="btnMobileCategory" class="mobile-hamburger-btn" onclick="toggleMobileCategory(event)">
-            ☰ 📁 Kategori
-          </button>
-
-          <button id="btnMobileToc" class="mobile-hamburger-btn" onclick="toggleMobileToc(event)">
-            ☰ 📖 Bab
-          </button>
-        </div>
+        <a href="index.html" style="color: var(--accent-light); text-decoration: none; font-size: 13px; font-weight: 500;">
+          ← Beranda
+        </a>
       </div>
     </header>
 
     <main class="container article-layout">
-      <!-- SIDEBAR KIRI -->
-      <div class="sidebar-left-sticky" id="leftSidebarContainer">
+      <!-- SIDEBAR KIRI: Kategori -->
+      <div class="sidebar-left-sticky">
         <aside class="category-card-container">
-          <h3 class="category-sticky-title">Kategori & Menu</h3>
+          <h3 class="sidebar-title">Kategori & Menu</h3>
           <div class="category-scroll-area">
-            <ul class="category-list" id="categorySidebar">
-              <!-- Diisi dinamis via JavaScript -->
-            </ul>
+            <ul class="category-list" id="categorySidebar"></ul>
           </div>
-        </aside>
-
-        <aside class="sidebar-card" id="recentSidebarCard">
-          <h3 class="sidebar-title">Posting Terbaru</h3>
-          <ul class="recent-list" id="recentSidebar">
-            <!-- Diisi dinamis via JavaScript -->
-          </ul>
         </aside>
       </div>
 
-      <!-- KOLOM TENGAH: Isi Artikel & Kartu Buku -->
+      <!-- KONTEN UTAMA ARTIKEL -->
       <section class="main-article-card">
-        <div id="standardHeader" class="standard-article-header" style="display: none;">
-          <span id="mainCategory" class="eyebrow">CATATAN</span>
-          <h1 id="mainTitle" style="font-size: 28px; color: #fff; margin: 8px 0 4px 0;">-</h1>
-          <p id="mainDate" style="color: var(--text-muted); font-size: 13px; margin: 0;">-</p>
-        </div>
-
-        <!-- Kartu Informasi Buku Utama -->
-        <div id="bookSummaryCard" class="book-summary-box">
-          <img id="bookCover" src="" alt="Cover Buku" class="book-summary-cover" />
-          <div class="book-summary-info">
-            <span id="bookMainCatBadge" class="book-badge-tag">Book Summary</span>
-            <h2 id="bookTitleDisplay" class="book-title-sub">-</h2>
-            <p id="bookAuthorYear" class="book-author-year">✍️ -</p>
-            <p id="bookCoreDisplay" class="book-core-desc">-</p>
-            <div class="book-meta-pills">
-              <span>⏱️ Waktu Baca: <strong id="bookReadTimeDisplay" style="color: #fff;">-</strong></span>
-              <span>📅 Tanggal: <strong id="bookPostDate" style="color: #fff;">-</strong></span>
+        <!-- Hero Box Informasi Artikel (Cover + Inti/Ringkasan) -->
+        <div id="articleHeroBox" class="article-hero-box">
+          <img id="articleCover" src="" alt="Cover" class="article-hero-cover" />
+          <div class="article-hero-info">
+            <span id="articleCategoryBadge" class="article-badge-tag">Kategori</span>
+            <h1 id="articleTitleDisplay" class="article-title-sub">-</h1>
+            <p id="articleMetaAuthor" style="color: var(--text-muted); font-size: 13px; margin: 0; display: none;"></p>
+            <p id="articleCoreDisplay" class="article-core-desc">-</p>
+            <div style="font-size: 12px; color: var(--text-muted); border-top: 1px solid rgba(255,255,255,0.08); padding-top: 8px;">
+              📅 Tanggal: <strong id="articleDateDisplay" style="color: #fff;">-</strong>
             </div>
           </div>
         </div>
 
         <article id="articleContent" class="article-content">
-          <p style="color: var(--text-muted);">Memuat konten artikel...</p>
+          <p style="color: var(--text-muted);">Memuat konten...</p>
         </article>
-
-        <!-- FITUR TOMBOL SHARE INTERAKTIF -->
-        <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 12px;">
-          <span style="font-size: 14px; color: var(--text-muted); font-weight: 600;">Bagikan Konten Ini:</span>
-          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-            <button onclick="shareTo('whatsapp')" style="background: #25D366; color: #fff; border: none; padding: 8px 14px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer;">
-              📱 WhatsApp
-            </button>
-            <button onclick="shareTo('telegram')" style="background: #0088cc; color: #fff; border: none; padding: 8px 14px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer;">
-              ✈️ Telegram
-            </button>
-            <button onclick="shareTo('twitter')" style="background: #1DA1F2; color: #fff; border: none; padding: 8px 14px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer;">
-              🅧 X / Twitter
-            </button>
-            <button onclick="copyArticleLink()" style="background: #032a18; border: 1px solid var(--border-color); color: var(--accent-light); padding: 8px 14px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer;">
-              🔗 Salin Tautan
-            </button>
-          </div>
-        </div>
       </section>
 
-      <!-- SIDEBAR KANAN -->
-      <div class="sidebar-right-sticky" id="rightSidebarContainer">
+      <!-- SIDEBAR KANAN: Daftar Bab (TOC) -->
+      <div class="sidebar-right-sticky">
         <aside id="tocSidebarCard" class="toc-card-container" style="display: none;">
-          <h3 class="toc-sticky-title">📖 Bab & Sub-Judul</h3>
+          <h3 class="sidebar-title">📖 Bab & Sub-Judul</h3>
           <div class="toc-scroll-area">
-            <ul class="toc-list" id="tocList">
-              <!-- Diisi otomatis oleh JavaScript -->
-            </ul>
+            <ul class="toc-list" id="tocList"></ul>
           </div>
         </aside>
       </div>
     </main>
 
     <script>
-      function toggleFocusMode() {
-        const body = document.body;
-        const btn = document.getElementById("focusToggle");
-
-        body.classList.toggle("focus-mode");
-
-        if (body.classList.contains("focus-mode")) {
-          btn.innerHTML = "👁️ Fokus: On";
-        } else {
-          btn.innerHTML = "👁️ Fokus: Off";
+      // Struktur Data Statis untuk GitHub (Ganti dengan fetch('posts.json') jika menggunakan file JSON terpisah)
+      const staticPostsDatabase = [
+        {
+          id: "1",
+          title: "Dzikir & Do'a Pagi",
+          category: "Dzikir & Do'a",
+          date: "10 Oktober 2026",
+          cover: "assets/cover-dzikir.jpg",
+          coreMessage: "Kumpulan bacaan dzikir dan doa penenang hati untuk mengawali pagi hari.",
+          fullContent: "<h2 id='istiadzah'>Isti'adzah</h2><p>أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ...</p>"
         }
-      }
-
-      function toggleMobileCategory(e) {
-        if (e) e.stopPropagation();
-        const leftSidebar = document.getElementById("leftSidebarContainer");
-        const rightSidebar = document.getElementById("rightSidebarContainer");
-        rightSidebar.classList.remove("mobile-open");
-        leftSidebar.classList.toggle("mobile-open");
-      }
-
-      function toggleMobileToc(e) {
-        if (e) e.stopPropagation();
-        const rightSidebar = document.getElementById("rightSidebarContainer");
-        const leftSidebar = document.getElementById("leftSidebarContainer");
-        leftSidebar.classList.remove("mobile-open");
-        rightSidebar.classList.toggle("mobile-open");
-      }
-
-      // TUTUP MENU SAAT KLIK DI LUAR AREA MENU (CLICK OUTSIDE TO CLOSE)
-      document.addEventListener("click", function (event) {
-        const leftSidebar = document.getElementById("leftSidebarContainer");
-        const rightSidebar = document.getElementById("rightSidebarContainer");
-        const btnCat = document.getElementById("btnMobileCategory");
-        const btnToc = document.getElementById("btnMobileToc");
-
-        if (leftSidebar.classList.contains("mobile-open")) {
-          if (!leftSidebar.contains(event.target) && !btnCat.contains(event.target)) {
-            leftSidebar.classList.remove("mobile-open");
-          }
-        }
-
-        if (rightSidebar.classList.contains("mobile-open")) {
-          if (!rightSidebar.contains(event.target) && !btnToc.contains(event.target)) {
-            rightSidebar.classList.remove("mobile-open");
-          }
-        }
-      });
+        // Tambahkan data postingan lainnya di sini sesuai kebutuhan GitHub Anda
+      ];
 
       window.addEventListener("DOMContentLoaded", () => {
         const urlParams = new URLSearchParams(window.location.search);
-        const articleId = urlParams.get("id");
+        const articleId = urlParams.get("id") || staticPostsDatabase[0].id;
 
-        const allPosts = JSON.parse(localStorage.getItem("maul_posts")) || [];
+        const post = staticPostsDatabase.find(p => String(p.id) === String(articleId)) || staticPostsDatabase[0];
 
-        if (allPosts.length === 0) {
-          document.getElementById("bookSummaryCard").style.display = "none";
-          document.getElementById("standardHeader").style.display = "block";
-          document.getElementById("mainTitle").textContent = "Data Tidak Ditemukan";
-          document.getElementById("articleContent").innerHTML = `
-            <div style="padding: 20px; background: rgba(255,0,0,0.1); border: 1px solid rgba(255,0,0,0.3); border-radius: 8px; color: #ff8888;">
-              ⚠️ <strong>Data artikel belum dimuat di localStorage.</strong><br>
-              Silakan buka halaman utama (<a href="index.html" style="color: var(--accent-light);">Beranda</a>) terlebih dahulu.
-            </div>
-          `;
-          return;
-        }
+        document.title = `${post.title} — Maul Prs`;
+        
+        // Render Badge Kategori sesuai data asli (Bukan default Book Summary)
+        document.getElementById("articleCategoryBadge").textContent = post.category;
+        document.getElementById("articleTitleDisplay").textContent = post.title;
+        document.getElementById("articleCoreDisplay").textContent = post.coreMessage || post.summary || "";
+        document.getElementById("articleDateDisplay").textContent = post.date;
 
-        let post = allPosts.find((p) => String(p.id) === String(articleId));
-        if (!post) {
-          post = allPosts[0];
-        }
-
-        document.title = `${post.title || "Detail Artikel"} — Maul Prs`;
-
-        if (post.bookData && (post.bookData.bookTitle || post.bookData.bookAuthor || post.title)) {
-          const bd = post.bookData;
-          document.getElementById("bookSummaryCard").style.display = "grid";
-          document.getElementById("standardHeader").style.display = "none";
-
-          document.getElementById("bookMainCatBadge").textContent = bd.bookMainCategory || post.category || "Book Summary";
-          document.getElementById("bookTitleDisplay").textContent = bd.bookTitle || post.title || "Judul Tidak Tersedia";
-
-          const author = bd.bookAuthor || "Penulis tidak diisi";
-          const year = bd.bookYear ? ` (${bd.bookYear})` : "";
-          document.getElementById("bookAuthorYear").textContent = `✍️ ${author}${year}`;
-
-          document.getElementById("bookCoreDisplay").textContent = bd.bookCore || post.summary || "Tidak ada ringkasan inti.";
-          document.getElementById("bookReadTimeDisplay").textContent = bd.bookReadTime || "15-20 menit";
-          document.getElementById("bookPostDate").textContent = post.date || "-";
-
-          const bookCoverEl = document.getElementById("bookCover");
-          if (post.cover && post.cover.trim() !== "") {
-            bookCoverEl.src = post.cover;
-            bookCoverEl.style.display = "block";
-          } else {
-            bookCoverEl.style.display = "none";
-          }
+        const coverEl = document.getElementById("articleCover");
+        if (post.cover) {
+          coverEl.src = post.cover;
+          coverEl.style.display = "block";
         } else {
-          document.getElementById("bookSummaryCard").style.display = "none";
-          document.getElementById("standardHeader").style.display = "block";
-          document.getElementById("mainTitle").textContent = post.title || "Tanpa Judul";
-          document.getElementById("mainCategory").textContent = (post.category || post.type || "CATATAN").toUpperCase();
-          document.getElementById("mainDate").textContent = post.date || "";
+          coverEl.style.display = "none";
         }
 
-        const articleContainer = document.getElementById("articleContent");
-        if (post.fullContent && post.fullContent.trim() !== "") {
-          articleContainer.innerHTML = post.fullContent;
-        } else if (post.content && post.content.trim() !== "") {
-          articleContainer.innerHTML = post.content;
-        } else {
-          articleContainer.innerHTML = `<p>${post.summary || "Tidak ada konten tambahan."}</p>`;
-        }
-
-        renderCategoryAccordion(allPosts, post.id);
+        document.getElementById("articleContent").innerHTML = post.fullContent || "<p>Belum ada isi konten.</p>";
         generateTableOfContents();
-        renderRecentPosts(allPosts, post.id);
       });
 
-      function renderCategoryAccordion(posts, currentArticleId) {
-        const activePosts = posts.filter(p => p.status !== "archived");
-        const catSidebarEl = document.getElementById("categorySidebar");
-        if (!catSidebarEl) return;
-
-        const categoryMap = {};
-        activePosts.forEach(post => {
-          let cats = post.categories || [post.category || post.type];
-          if (typeof cats === "string") cats = [cats];
-
-          cats.forEach(c => {
-            if (!c) return;
-            if (!categoryMap[c]) categoryMap[c] = [];
-            categoryMap[c].push(post);
-          });
-        });
-
-        const categories = Object.keys(categoryMap);
-        if (categories.length === 0) {
-          catSidebarEl.innerHTML = '<li style="color: var(--text-muted); font-size: 13px;">Belum ada kategori.</li>';
-          return;
-        }
-
-        let html = "";
-        categories.forEach(cat => {
-          const postsInCat = categoryMap[cat];
-          const containsCurrent = postsInCat.some(p => String(p.id) === String(currentArticleId));
-          const activeClass = containsCurrent ? "category-item active" : "category-item";
-
-          html += `
-            <li class="${activeClass}">
-              <div class="category-header" onclick="toggleCategoryAccordion(this)">
-                <span>📁 ${cat} (${postsInCat.length})</span>
-                <span style="font-size: 11px;">▼</span>
-              </div>
-              <ul class="sub-book-list">
-          `;
-
-          postsInCat.forEach(p => {
-            const isCurrentActive = String(p.id) === String(currentArticleId) ? "current-active" : "";
-            html += `
-              <li>
-                <a href="article.html?id=${p.id}" class="${isCurrentActive}" onclick="closeMobileMenus()">• ${p.title}</a>
-              </li>
-            `;
-          });
-
-          html += `
-              </ul>
-            </li>
-          `;
-        });
-
-        catSidebarEl.innerHTML = html;
-      }
-
-      window.toggleCategoryAccordion = function(headerEl) {
-        const parentLi = headerEl.parentElement;
-        parentLi.classList.toggle("active");
-      };
-
       function generateTableOfContents() {
-        const articleContainer = document.getElementById("articleContent");
-        const headings = articleContainer.querySelectorAll("h2, h3");
+        const headings = document.getElementById("articleContent").querySelectorAll("h2, h3");
         const tocCard = document.getElementById("tocSidebarCard");
         const tocList = document.getElementById("tocList");
 
@@ -773,67 +224,13 @@
           return;
         }
 
-        let tocHtml = "";
-        headings.forEach((heading, index) => {
-          const headingId = heading.id || `bab-${index + 1}`;
-          heading.id = headingId;
-
-          const isH3 = heading.tagName.toLowerCase() === "h3";
-          const classAttr = isH3 ? 'class="toc-item-h3"' : '';
-          const icon = isH3 ? '▫️' : '📌';
-
-          tocHtml += `
-            <li>
-              <a href="#${headingId}" ${classAttr} onclick="closeMobileMenus()">
-                ${icon} ${heading.textContent}
-              </a>
-            </li>
-          `;
-        });
-
-        tocList.innerHTML = tocHtml;
-        tocCard.style.display = "flex";
-      }
-
-      function closeMobileMenus() {
-        document.getElementById("leftSidebarContainer").classList.remove("mobile-open");
-        document.getElementById("rightSidebarContainer").classList.remove("mobile-open");
-      }
-
-      function renderRecentPosts(posts, currentId) {
-        const recentListEl = document.getElementById("recentSidebar");
-        const activePosts = posts.filter(p => p.status !== "archived" && String(p.id) !== String(currentId)).slice(0, 3);
-
-        if (activePosts.length === 0) {
-          recentListEl.innerHTML = '<li style="color: var(--text-muted); font-size: 13px;">Tidak ada postingan lain.</li>';
-          return;
-        }
-
         let html = "";
-        activePosts.forEach(p => {
-          html += `<li>• <a href="article.html?id=${p.id}">${p.title}</a></li>`;
+        headings.forEach((h, index) => {
+          if (!h.id) h.id = `heading-${index}`;
+          html += `<li><a href="#${h.id}">📌 ${h.textContent}</a></li>`;
         });
-        recentListEl.innerHTML = html;
-      }
-
-      function shareTo(platform) {
-        const url = encodeURIComponent(window.location.href);
-        const title = encodeURIComponent(document.title);
-        const text = encodeURIComponent(`💡 Menarik untuk dibaca: "${document.title}". Yuk intip rangkumannya di sini: `);
-
-        if (platform === 'whatsapp') {
-          window.open(`https://api.whatsapp.com/send?text=${text}${url}`, '_blank');
-        } else if (platform === 'telegram') {
-          window.open(`https://t.me/share/url?url=${url}&text=${text}`, '_blank');
-        } else if (platform === 'twitter') {
-          window.open(`https://twitter.com/intent/tweet?text=${title}&url=${url}`, '_blank');
-        }
-      }
-
-      function copyArticleLink() {
-        navigator.clipboard.writeText(window.location.href).then(() => {
-          alert("Tautan artikel berhasil disalin ke clipboard!");
-        });
+        tocList.innerHTML = html;
+        tocCard.style.display = "block";
       }
     </script>
   </body>
