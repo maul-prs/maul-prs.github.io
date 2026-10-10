@@ -484,3 +484,35 @@
         const listEl = btnEl.nextElementSibling;
         btnEl.classList.toggle("active");
         listEl.classList.toggle("open");
+      }
+
+      // FUNGSI MEMBUAT DAFTAR BAB (TOC HALUS) SIDEBAR KANAN
+      function generateTableOfContents() {
+        const headings = document.getElementById("articleContent").querySelectorAll("h2, h3");
+        const tocCard = document.getElementById("tocSidebarCard");
+        const tocList = document.getElementById("tocList");
+
+        if (headings.length === 0) {
+          tocCard.style.display = "none";
+          return;
+        }
+
+        let html = "";
+        headings.forEach((h, index) => {
+          if (!h.id) h.id = `heading-${index}`;
+          html += `
+            <li>
+              <a href="#${h.id}">
+                <span class="toc-bullet">📍</span>
+                <span>${h.textContent}</span>
+              </a>
+            </li>
+          `;
+        });
+
+        tocList.innerHTML = html;
+        tocCard.style.display = "block";
+      }
+    </script>
+  </body>
+</html>
