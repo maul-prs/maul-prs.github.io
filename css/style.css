@@ -255,8 +255,7 @@ body {
   width: 100%;
   max-width: 110px;
   height: 140px;
-  object-fit: contain;
-  background: #020c06;
+  object-fit: cover; /* Menjamin gambar penuh tanpa space hitam */
   border-radius: 6px;
   border: 1px solid var(--border-color);
   display: block;
