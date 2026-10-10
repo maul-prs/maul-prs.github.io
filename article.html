@@ -53,15 +53,14 @@
         top: 75px;
       }
 
-      /* === STYLING CUSTOM SCROLLBAR SIDEBAR === */
+      /* CUSTOM SCROLLBAR SIDEBAR */
       .category-scroll-area,
       .toc-scroll-area {
-        max-height: 400px;
+        max-height: 420px;
         overflow-y: auto;
         padding-right: 4px;
       }
 
-      /* Scrollbar halus untuk Chrome, Edge, Safari */
       .category-scroll-area::-webkit-scrollbar,
       .toc-scroll-area::-webkit-scrollbar {
         width: 5px;
@@ -81,7 +80,7 @@
         background: #34d399;
       }
 
-      /* === SIDEBAR KIRI: ACCORDION KATEGORI & BUKU === */
+      /* ACCORDION SIDEBAR KIRI */
       .acc-category-item {
         margin-bottom: 8px;
       }
@@ -115,7 +114,7 @@
       }
       .acc-post-list {
         list-style: none;
-        padding: 6px 0 6px 12px;
+        padding: 6px 0 6px 10px;
         margin: 0;
         display: none;
       }
@@ -139,7 +138,7 @@
         border-left-color: #34d399;
       }
 
-      /* === SIDEBAR KANAN: DAFTAR BAB (TOC HALUS) === */
+      /* DAFTAR BAB SIDEBAR KANAN */
       .toc-list {
         list-style: none;
         padding: 0;
@@ -174,7 +173,7 @@
         margin-top: 2px;
       }
 
-      /* Kotak Informasi Utama Artikel / Buku */
+      /* HERO BOX UTAMA ARTIKEL */
       .article-hero-box {
         background: rgba(3, 42, 24, 0.7);
         border: 1px solid var(--border-color, #0f3020);
@@ -294,10 +293,10 @@
     </header>
 
     <main class="container article-layout">
-      <!-- SIDEBAR KIRI: ACCORDION KATEGORI & MENUS -->
+      <!-- SIDEBAR KIRI: ACCORDION KATEGORI -->
       <div class="sidebar-left-sticky">
         <aside class="category-card-container">
-          <h3 class="sidebar-title">📑 Kategori & Daftar Artikel</h3>
+          <h3 class="sidebar-title">📑 Kategori & Artikel</h3>
           <div class="category-scroll-area" id="accordionContainer">
             <p style="color: #777; font-size: 12px;">Memuat menu...</p>
           </div>
@@ -312,6 +311,7 @@
             src="assets/default-cover.png"
             alt="Cover"
             class="article-hero-cover"
+            onerror="this.src='assets/default-cover.png'"
           />
           <div class="article-hero-info">
             <span id="articleCategoryBadge" class="article-badge-tag">Kategori</span>
@@ -365,67 +365,88 @@
       let currentArticleId = "";
 
       window.addEventListener("DOMContentLoaded", () => {
-        const urlParams = new URLSearchParams(window.location.search);
-        currentArticleId = urlParams.get("id");
+        try {
+          const urlParams = new URLSearchParams(window.location.search);
+          currentArticleId = urlParams.get("id");
 
-        const storedPosts = JSON.parse(localStorage.getItem("maul_posts")) || [];
-        const defaultPosts = [
-          {
-            id: "1",
-            title: "Dzikir & Do'a Pagi",
-            type: "Dzikir & Do'a",
-            category: "Dzikir & Do'a",
-            date: "10 Oktober 2026",
-            cover: "assets/cover-dzikir.jpg",
-            coreMessage: "Kumpulan bacaan dzikir dan doa penenang hati untuk mengawali pagi hari.",
-            fullContent: "<h2 id='istiadzah'>Isti'adzah</h2><p>أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ...</p>",
-          },
-        ];
+          const storedPosts = JSON.parse(localStorage.getItem("maul_posts")) || [];
+          
+          // Data Default Lengkap jika localStorage kosong
+          const defaultPosts = [
+            {
+              id: "1",
+              title: "Dzikir & Do'a Pagi",
+              type: "Dzikir & Do'a",
+              category: "Dzikir & Do'a",
+              date: "10 Oktober 2026",
+              cover: "assets/cover-dzikir.jpg",
+              coreMessage: "Kumpulan bacaan dzikir dan doa penenang hati untuk mengawali pagi hari.",
+              fullContent: "<h2 id='istiadzah'>Isti'adzah</h2><p>أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ...</p>",
+            },
+            {
+              id: "2",
+              title: "The Lost Art of Listening",
+              type: "Book Summary",
+              category: "Book Summary",
+              date: "10 Oktober 2026",
+              cover: "assets/cover-listening.jpg",
+              coreMessage: "Mendengarkan sungguh-sungguh membuat orang merasa dimengerti dan itulah kunci hubungan yang sehat.",
+              fullContent: "<h2>Pengantar: Tentang Buku Ini</h2><p>Pernahkah kamu bercerita panjang lebar, lalu sadar lawan bicaramu sibuk menyusun jawabannya sendiri?</p>",
+              bookData: {
+                bookAuthor: "Michael P. Nichols",
+                bookYear: "1995"
+              }
+            }
+          ];
 
-        const allPosts = storedPosts.length > 0 ? storedPosts : defaultPosts;
-        let post = allPosts.find((p) => String(p.id) === String(currentArticleId)) || allPosts[0];
+          const allPosts = storedPosts.length > 0 ? storedPosts : defaultPosts;
+          
+          let post = null;
+          if (currentArticleId) {
+            post = allPosts.find((p) => String(p.id) === String(currentArticleId));
+          }
+          if (!post) {
+            post = allPosts[0];
+          }
 
-        if (!post) {
-          document.getElementById("articleContent").innerHTML = "<p>Postingan tidak ditemukan.</p>";
-          return;
+          currentArticleId = String(post.id);
+          document.title = `${post.title} — Maul Prs`;
+
+          const bd = post.bookData || {};
+          const catName = post.type || post.category || bd.bookMainCategory || "Catatan";
+
+          document.getElementById("articleCategoryBadge").textContent = catName;
+          document.getElementById("articleTitleDisplay").textContent = post.title;
+          document.getElementById("articleCoreDisplay").textContent = post.coreMessage || bd.bookCore || post.summary || "";
+          document.getElementById("articleDateDisplay").textContent = post.date || "-";
+
+          const authorEl = document.getElementById("articleMetaAuthor");
+          if (bd.bookAuthor) {
+            authorEl.textContent = `✍️ Penulis: ${bd.bookAuthor} ${bd.bookYear ? `(${bd.bookYear})` : ""}`;
+            authorEl.style.display = "block";
+          } else {
+            authorEl.style.display = "none";
+          }
+
+          const coverEl = document.getElementById("articleCover");
+          if (post.cover && post.cover.trim() !== "") {
+            coverEl.src = post.cover;
+            coverEl.style.display = "block";
+          } else {
+            coverEl.src = "assets/default-cover.png";
+          }
+
+          const rawContent = post.fullContent || `<p>${post.coreMessage || bd.bookCore || post.title}</p>`;
+          document.getElementById("articleContent").innerHTML = rawContent;
+
+          renderAccordionSidebar(allPosts, catName);
+          generateTableOfContents();
+        } catch (err) {
+          console.error("Error loading article:", err);
         }
-
-        currentArticleId = String(post.id);
-        document.title = `${post.title} — Maul Prs`;
-
-        const bd = post.bookData || {};
-        const catName = post.type || post.category || bd.bookMainCategory || "Catatan";
-
-        document.getElementById("articleCategoryBadge").textContent = catName;
-        document.getElementById("articleTitleDisplay").textContent = post.title;
-        document.getElementById("articleCoreDisplay").textContent = post.coreMessage || bd.bookCore || post.summary || "";
-        document.getElementById("articleDateDisplay").textContent = post.date || "-";
-
-        const authorEl = document.getElementById("articleMetaAuthor");
-        if (bd.bookAuthor) {
-          authorEl.textContent = `✍️ Penulis: ${bd.bookAuthor} ${bd.bookYear ? `(${bd.bookYear})` : ""}`;
-          authorEl.style.display = "block";
-        } else {
-          authorEl.style.display = "none";
-        }
-
-        const coverEl = document.getElementById("articleCover");
-        if (post.cover && post.cover.trim() !== "") {
-          coverEl.src = post.cover;
-          coverEl.style.display = "block";
-        } else {
-          coverEl.src = "assets/default-cover.png";
-        }
-
-        const rawContent = post.fullContent || `<p>${post.coreMessage || bd.bookCore || post.title}</p>`;
-        document.getElementById("articleContent").innerHTML = rawContent;
-
-        // Render Sidebar Kiri (Accordion) & Kanan (TOC)
-        renderAccordionSidebar(allPosts, catName);
-        generateTableOfContents();
       });
 
-      // FUNGSI MEMBUAT ACCORDION SIDEBAR KIRI
+      // RENDER SIDEBAR KIRI (ACCORDION)
       function renderAccordionSidebar(allPosts, currentCatName) {
         const categories = [
           { name: "Book Summary", icon: "📚" },
@@ -438,14 +459,13 @@
         let html = "";
 
         categories.forEach((cat) => {
-          // Filter postingan berdasarkan kategori ini
           const matchingPosts = allPosts.filter(p => {
             const bd = p.bookData || {};
             const c = p.type || p.category || bd.bookMainCategory;
             return c === cat.name;
           });
 
-          const isCurrentCat = currentCatName === cat.name;
+          const isCurrentCat = (currentCatName === cat.name);
 
           html += `
             <div class="acc-category-item">
@@ -460,7 +480,7 @@
             html += `<li class="acc-post-item"><span style="color: #666; font-size: 11px; padding: 4px 10px; display:block;">Belum ada tulisan</span></li>`;
           } else {
             matchingPosts.forEach(p => {
-              const isCurrent = String(p.id) === currentArticleId;
+              const isCurrent = (String(p.id) === String(currentArticleId));
               html += `
                 <li class="acc-post-item">
                   <a href="article.html?id=${p.id}" class="${isCurrent ? 'current-article' : ''}">
@@ -482,17 +502,19 @@
 
       function toggleAccordion(btnEl) {
         const listEl = btnEl.nextElementSibling;
-        btnEl.classList.toggle("active");
-        listEl.classList.toggle("open");
+        if (listEl) {
+          btnEl.classList.toggle("active");
+          listEl.classList.toggle("open");
+        }
       }
 
-      // FUNGSI MEMBUAT DAFTAR BAB (TOC HALUS) SIDEBAR KANAN
+      // RENDER SIDEBAR KANAN (TOC HALUS)
       function generateTableOfContents() {
         const headings = document.getElementById("articleContent").querySelectorAll("h2, h3");
         const tocCard = document.getElementById("tocSidebarCard");
         const tocList = document.getElementById("tocList");
 
-        if (headings.length === 0) {
+        if (!headings || headings.length === 0) {
           tocCard.style.display = "none";
           return;
         }
