@@ -1,157 +1,666 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - Maul Prs</title>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin Panel — Maul Prs</title>
+    <link rel="stylesheet" href="css/style.css" />
     <style>
-        body { font-family: 'Poppins', sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; background: #f4f6f9; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        h2 { color: #2c3e50; text-align: center; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; font-weight: bold; margin-bottom: 5px; color: #333; }
-        input[type="text"], textarea, input[type="password"] { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
-        textarea { height: 150px; }
-        button { background: #27ae60; color: white; border: none; padding: 12px 20px; font-size: 1rem; border-radius: 4px; cursor: pointer; width: 100%; }
-        button:hover { background: #219653; }
-        .status { margin-top: 15px; text-align: center; font-weight: bold; }
+      .admin-wrapper {
+        max-width: 1100px;
+        margin: 40px auto;
+        padding: 40px;
+        background: #071a0e;
+        border: 1px solid #0f3020;
+        border-radius: 12px;
+      }
+
+      /* Tab Navigasi Kategori */
+      .category-tabs {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 30px;
+        border-bottom: 1px solid #0f3020;
+        padding-bottom: 15px;
+        flex-wrap: wrap;
+      }
+      .tab-btn {
+        background: #032a18;
+        border: 1px solid #0f3020;
+        color: #d4f0dc;
+        padding: 10px 18px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        transition: 0.2s;
+      }
+      .tab-btn.active {
+        background: #34d399;
+        color: #020c06;
+        border-color: #34d399;
+        font-weight: 600;
+      }
+
+      .form-group {
+        margin-bottom: 22px;
+      }
+      .form-group label {
+        display: block;
+        color: #d4f0dc;
+        font-size: 15px;
+        margin-bottom: 8px;
+        font-weight: 500;
+      }
+
+      .form-group input[type="text"],
+      .form-group textarea,
+      .form-group select {
+        width: 100%;
+        padding: 14px 18px;
+        background: #032a18;
+        border: 1px solid #0f3020;
+        color: #fff;
+        border-radius: 8px;
+        font-size: 15px;
+        box-sizing: border-box;
+      }
+      .form-group input[type="file"] {
+        width: 100%;
+        padding: 12px;
+        background: #032a18;
+        border: 1px solid #0f3020;
+        color: #fff;
+        border-radius: 8px;
+        font-size: 14px;
+        box-sizing: border-box;
+      }
+      .form-group textarea {
+        min-height: 140px;
+        resize: vertical;
+      }
+
+      .form-group input[type="date"] {
+        width: 100%;
+        padding: 14px 18px;
+        background: #032a18;
+        border: 1px solid #0f3020;
+        color: #fff;
+        border-radius: 8px;
+        font-size: 15px;
+        box-sizing: border-box;
+        cursor: pointer;
+        color-scheme: dark;
+      }
+
+      .btn-submit {
+        background: #34d399;
+        color: #020c06;
+        border: none;
+        padding: 14px 24px;
+        font-weight: 600;
+        border-radius: 8px;
+        cursor: pointer;
+        width: 100%;
+        font-size: 16px;
+        transition: 0.2s;
+      }
+      .btn-submit:hover {
+        background: #10b981;
+      }
+
+      /* History Tabel */
+      .history-section {
+        margin-top: 50px;
+        border-top: 1px solid #0f3020;
+        padding-top: 30px;
+      }
+      .history-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+        font-size: 14px;
+      }
+      .history-table th,
+      .history-table td {
+        padding: 14px;
+        text-align: left;
+        border-bottom: 1px solid #0f3020;
+        color: #d4f0dc;
+      }
+      .history-table th {
+        background: #032a18;
+        color: #34d399;
+        font-weight: 600;
+      }
+      .action-btns {
+        display: flex;
+        gap: 8px;
+      }
+      .btn-action {
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 13px;
+        cursor: pointer;
+        border: none;
+        font-weight: 500;
+        text-decoration: none;
+      }
+      .btn-edit {
+        background: #3b82f6;
+        color: #fff;
+      }
+      .btn-archive {
+        background: #f59e0b;
+        color: #020c06;
+      }
+      .btn-delete {
+        background: #ef4444;
+        color: #fff;
+      }
+      .btn-action:hover {
+        opacity: 0.85;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
+    <div class="container">
+      <div class="admin-wrapper">
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #0f3020;
+            padding-bottom: 15px;
+          "
+        >
+          <h2 style="color: #fff; margin: 0; font-size: 26px" id="mainTitle">
+            Panel Admin Postingan
+          </h2>
+          <a
+            href="index.html"
+            style="color: #34d399; font-size: 15px; text-decoration: none"
+            >← Ke Beranda</a
+          >
+        </div>
 
-    <h2>Admin Tool - Tambah Artikel</h2>
-    
-    <div class="form-group">
-        <label>GitHub Personal Access Token (PAT)</label>
-        <input type="password" id="gh-token" placeholder="Masukkan PAT GitHub Anda (simpan untuk kemudahan)">
+        <!-- Tombol Tab Kategori Utama -->
+        <div class="category-tabs">
+          <button
+            class="tab-btn active"
+            onclick="switchTab('Book Summary', event)"
+          >
+            📚 Book Summary
+          </button>
+          <button class="tab-btn" onclick="switchTab('Quote & Nasehat', event)">
+            💡 Quote & Nasehat
+          </button>
+          <button class="tab-btn" onclick="switchTab('Dzikir & Do\'a', event)">
+            🤲 Dzikir & Do'a
+          </button>
+          <button
+            class="tab-btn"
+            onclick="switchTab('Cerita Inspirasi', event)"
+          >
+            ✨ Cerita Inspirasi
+          </button>
+        </div>
+
+        <!-- Form Utama -->
+        <form id="postForm">
+          <input type="hidden" id="editIndex" value="" />
+          <input type="hidden" id="postType" value="Book Summary" />
+
+          <!-- Multi-Kategori Tagging -->
+          <div id="book-category-group" class="form-group">
+            <label for="post-categories"
+              >Kategori Tagging (Bisa ketik lebih dari satu, pisahkan dengan
+              koma):</label
+            >
+            <input
+              type="text"
+              list="category-options"
+              id="post-categories"
+              placeholder="Contoh: Productivity, Psychology"
+            />
+            <datalist id="category-options">
+              <option value="Finance"></option>
+              <option value="Productivity"></option>
+              <option value="Thinking"></option>
+              <option value="Self Improvement"></option>
+              <option value="Parenting"></option>
+              <option value="Motivasi"></option>
+              <option value="Kehidupan"></option>
+              <option value="Hati & Jiwa"></option>
+            </datalist>
+          </div>
+
+          <div class="form-group">
+            <label>Judul Postingan / Artikel</label>
+            <input
+              type="text"
+              id="postTitle"
+              required
+              placeholder="Masukkan judul..."
+            />
+          </div>
+
+          <!-- KELOMPOK INPUT KHUSUS DETAIL BUKU -->
+          <div
+            id="book-details-section"
+            style="
+              background: #032a18;
+              border: 1px solid #0f3020;
+              padding: 20px;
+              border-radius: 10px;
+              margin-bottom: 22px;
+            "
+          >
+            <h3
+              style="
+                color: #34d399;
+                font-size: 16px;
+                margin-top: 0;
+                margin-bottom: 15px;
+                border-bottom: 1px solid #0f3020;
+                padding-bottom: 8px;
+              "
+            >
+              📖 Detail Informasi Buku (Khusus Book Summary)
+            </h3>
+
+            <div class="form-group">
+              <label>Judul Buku</label>
+              <input
+                type="text"
+                id="bookTitle"
+                placeholder="Contoh: Atomic Habits"
+              />
+            </div>
+
+            <div class="form-group">
+              <label>Penulis</label>
+              <input
+                type="text"
+                id="bookAuthor"
+                placeholder="Contoh: James Clear"
+              />
+            </div>
+
+            <div class="form-group">
+              <label>Tahun Terbit Buku</label>
+              <input type="text" id="bookYear" placeholder="Contoh: 2018" />
+            </div>
+
+            <div class="form-group">
+              <label>Kategori (Pilih Tepat Salah Satu)</label>
+              <select id="bookMainCategory">
+                <option value="Book Summary">Book Summary</option>
+                <option value="Cerita Inspirasi">Cerita Inspirasi</option>
+                <option value="Quotes">Quotes</option>
+                <option value="Nasehat">Nasehat</option>
+                <option value="Dzikir & Do'a">Dzikir & Do'a</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Inti Buku (Ringkasan/Pesan Utama)</label>
+              <textarea
+                id="bookCore"
+                style="min-height: 90px"
+                placeholder="Tuliskan inti atau ringkasan singkat isi buku..."
+              ></textarea>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 0">
+              <label>Waktu Baca</label>
+              <input
+                type="text"
+                id="bookReadTime"
+                placeholder="Contoh: 15-20 menit"
+                value="15-20 menit baca"
+              />
+            </div>
+          </div>
+          <!-- AKHIR KELOMPOK DETAIL BUKU -->
+
+          <div class="form-group">
+            <label>Tanggal Postingan</label>
+            <input
+              type="date"
+              id="postDate"
+              required
+              onclick="this.showPicker && this.showPicker()"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Upload Gambar Sampul (Cover dari Lokal)</label>
+            <input type="file" id="postCoverFile" accept="image/*" />
+            <input type="hidden" id="postCoverBase64" />
+          </div>
+
+          <div class="form-group">
+            <label
+              >Upload File Artikel Lengkap Format
+              <strong>.html</strong> (Opsional)</label
+            >
+            <input type="file" id="postHtmlFile" accept=".html" />
+            <input type="hidden" id="postFullContent" />
+          </div>
+
+          <button type="submit" class="btn-submit" id="submitBtn">
+            Simpan Postingan Book Summary
+          </button>
+        </form>
+
+        <!-- Bagian History Postingan -->
+        <div class="history-section">
+          <h3 style="color: #fff; font-size: 20px; margin-bottom: 15px">
+            Riwayat Postingan (History & Manajemen)
+          </h3>
+          <div style="overflow-x: auto">
+            <table class="history-table">
+              <thead>
+                <tr>
+                  <th>Judul</th>
+                  <th>Kategori</th>
+                  <th>Tanggal</th>
+                  <th>Status</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="historyTableBody">
+                <tr>
+                  <td colspan="5" style="text-align: center; color: #777">
+                    Belum ada riwayat postingan.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <hr style="margin: 20px 0; border: 0; border-top: 1px solid #ddd;">
-
-    <div class="form-group">
-        <label>Judul Artikel</label>
-        <input type="text" id="article-title" placeholder="Contoh: Belajar Konsisten Menulis">
-    </div>
-
-    <div class="form-group">
-        <label>Ringkasan Singkat (Snippet)</label>
-        <textarea style="height: 80px;" id="article-summary" placeholder="Tulis ringkasan pendek untuk halaman utama..."></textarea>
-    </div>
-
-    <div class="form-group">
-        <label>Isi Artikel (Format HTML / Teks)</label>
-        <textarea id="article-body" placeholder="<p>Paragraf pertama...</p><p>Paragraf kedua...</p>"></textarea>
-    </div>
-
-    <button onclick="publishArticle()">Simpan & Publish ke GitHub</button>
-    <div class="status" id="status-msg"></div>
 
     <script>
-        // Konfigurasi Repository GitHub Anda (Sesuaikan dengan milik Anda) / GitHub Personal Access Token (PAT)
-        const GITHUB_USER = "maul-prs"; // Ganti dengan username GitHub Anda
-        const GITHUB_REPO = "maul-prs.github.io"; // Ganti dengan nama repo Anda (misal: maul-prs)
+      let activeTab = "Book Summary";
 
-        // Simpan token di localStorage agar tidak perlu mengetik ulang terus menerus
-        const tokenInput = document.getElementById('gh-token');
-        tokenInput.value = localStorage.getItem('gh_token') || '';
-        tokenInput.addEventListener('input', () => {
-            localStorage.setItem('gh_token', tokenInput.value);
+      window.addEventListener("DOMContentLoaded", () => {
+        const today = new Date().toISOString().split("T")[0];
+        document.getElementById("postDate").value = today;
+        renderHistory();
+      });
+
+      function switchTab(categoryName, event) {
+        activeTab = categoryName;
+
+        document
+          .querySelectorAll(".tab-btn")
+          .forEach((btn) => btn.classList.remove("active"));
+        if (event && event.currentTarget) {
+          event.currentTarget.classList.add("active");
+        }
+
+        document.getElementById("postType").value = categoryName;
+        document.getElementById("submitBtn").innerText =
+          `Simpan Postingan ${categoryName}`;
+
+        const catGroup = document.getElementById("book-category-group");
+        const bookDetailsSection = document.getElementById(
+          "book-details-section",
+        );
+
+        if (categoryName === "Cerita Inspirasi") {
+          catGroup.style.display = "none";
+        } else {
+          catGroup.style.display = "block";
+        }
+
+        if (categoryName === "Book Summary") {
+          bookDetailsSection.style.display = "block";
+          document.getElementById("bookMainCategory").value = "Book Summary";
+        } else {
+          bookDetailsSection.style.display = "none";
+        }
+      }
+
+      let coverBase64 = "";
+      document
+        .getElementById("postCoverFile")
+        .addEventListener("change", function (e) {
+          const file = e.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = function (event) {
+              coverBase64 = event.target.result;
+              document.getElementById("postCoverBase64").value = coverBase64;
+            };
+            reader.readAsDataURL(file);
+          }
         });
 
-        async function getFileFromGitHub(path) {
-            const url = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${path}`;
-            const res = await fetch(url, {
-                headers: { 'Authorization': `token ${tokenInput.value}` }
-            });
-            if (!res.ok) return null;
-            return await res.json();
-        }
-
-        async function saveFileToGitHub(path, content, message, sha = null) {
-            const url = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${path}`;
-            const bodyData = {
-                message: message,
-                content: btoa(unescape(encodeURIComponent(content))) // Encode ke Base64 aman untuk karakter Unicode
+      let uploadedHtmlContent = "";
+      document
+        .getElementById("postHtmlFile")
+        .addEventListener("change", function (e) {
+          const file = e.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = function (event) {
+              uploadedHtmlContent = event.target.result;
+              document.getElementById("postFullContent").value =
+                uploadedHtmlContent;
             };
-            if (sha) bodyData.sha = sha;
+            reader.readAsText(file);
+          }
+        });
 
-            const res = await fetch(url, {
-                method: 'PUT',
-                headers: {
-                    'Authorization': `token ${tokenInput.value}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(bodyData)
-            });
+      function renderHistory() {
+        const posts = JSON.parse(localStorage.getItem("maul_posts")) || [];
+        const tbody = document.getElementById("historyTableBody");
 
-            if (!res.ok) {
-                const errJson = await res.json();
-                throw new Error(errJson.message || 'Gagal menyimpan ke GitHub');
-            }
-            return await res.json();
+        if (posts.length === 0) {
+          tbody.innerHTML =
+            '<tr><td colspan="5" style="text-align: center; color: #777;">Belum ada riwayat postingan.</td></tr>';
+          return;
         }
 
-        async function publishArticle() {
-            const token = tokenInput.value.trim();
-            const title = document.getElementById('article-title').value.trim();
-            const summary = document.getElementById('article-summary').value.trim();
-            const body = document.getElementById('article-body').value.trim();
-            const statusMsg = document.getElementById('status-msg');
+        let html = "";
+        posts.forEach((post, index) => {
+          const isArchived = post.status === "archived";
+          const catDisplay = Array.isArray(post.categories)
+            ? post.categories.join(", ")
+            : post.category || post.type;
+          html += `
+            <tr>
+              <td><strong>${post.title}</strong></td>
+              <td><span style="color: #34d399; font-weight: 500;">${catDisplay}</span></td>
+              <td>${post.date || "-"}</td>
+              <td>${isArchived ? '<span style="color: #f59e0b;">Diarsipkan</span>' : '<span style="color: #10b981;">Aktif</span>'}</td>
+              <td>
+                <div class="action-btns">
+                  <button type="button" class="btn-action btn-edit" onclick="editPost(${index})">Edit</button>
+                  <button type="button" class="btn-action btn-archive" onclick="toggleArchive(${index})">${isArchived ? "Pulihkan" : "Arsip"}</button>
+                  <button type="button" class="btn-action btn-delete" onclick="deletePost(${index})">Hapus</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        });
+        tbody.innerHTML = html;
+      }
 
-            if (!token || !title || !body) {
-                alert('Token, Judul, dan Isi Artikel wajib diisi!');
-                return;
+      document
+        .getElementById("postForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const editIndex = document.getElementById("editIndex").value;
+          const title = document.getElementById("postTitle").value;
+          const postType = document.getElementById("postType").value;
+
+          let selectedCategories = [];
+          if (postType !== "Cerita Inspirasi") {
+            const rawCatInput = document
+              .getElementById("post-categories")
+              .value.trim();
+            if (rawCatInput !== "") {
+              selectedCategories = rawCatInput
+                .split(",")
+                .map((c) => c.trim())
+                .filter((c) => c !== "");
             }
+          }
+          if (selectedCategories.length === 0) {
+            selectedCategories = [postType];
+          }
 
-            statusMsg.style.color = '#333';
-            statusMsg.innerText = 'Sedang memproses dan mengirim ke GitHub...';
+          const dateInput = document.getElementById("postDate").value;
+          let formattedDate = dateInput;
+          if (dateInput) {
+            const d = new Date(dateInput);
+            const months = [
+              "Januari",
+              "Februari",
+              "Maret",
+              "April",
+              "Mei",
+              "Juni",
+              "Juli",
+              "Agustus",
+              "September",
+              "Oktober",
+              "November",
+              "Desember",
+            ];
+            formattedDate = `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+          }
 
-            try {
-                // 1. Buat ID unik dan nama file dari judul
-                const id = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-                const filename = `${id}.html`;
-                const date = new Date().toISOString().split('T')[0];
+          const cover = document.getElementById("postCoverBase64").value;
+          const fullContent = document.getElementById("postFullContent").value;
 
-                // 2. Upload file HTML isi artikel ke folder "articles/"
-                await saveFileToGitHub(`articles/${filename}`, body, `Add article: ${title}`);
+          // Ambil data detail buku
+          const bookData = {
+            bookTitle: document.getElementById("bookTitle").value,
+            bookAuthor: document.getElementById("bookAuthor").value,
+            bookYear: document.getElementById("bookYear").value,
+            bookMainCategory: document.getElementById("bookMainCategory").value,
+            bookCore: document.getElementById("bookCore").value,
+            bookReadTime: document.getElementById("bookReadTime").value,
+          };
 
-                // 3. Ambil file "posts.json" yang sudah ada di GitHub untuk diperbarui
-                const postsFile = await getFileFromGitHub('posts.json');
-                let posts = [];
-                let postsSha = null;
+          const slug = title
+            .toLowerCase()
+            .replace(/[^a-z0-9\s-]/g, "")
+            .trim()
+            .replace(/\s+/g, "-");
+          let posts = JSON.parse(localStorage.getItem("maul_posts")) || [];
 
-                if (postsFile) {
-                    postsSha = postsFile.sha;
-                    // Decode dari Base64 kembali ke teks JSON
-                    const decodedContent = decodeURIComponent(escape(atob(postsFile.content)));
-                    posts = JSON.parse(decodedContent);
-                }
+          if (editIndex !== "") {
+            posts[editIndex].title = title;
+            posts[editIndex].slug = slug;
+            posts[editIndex].type = postType;
+            posts[editIndex].categories = selectedCategories;
+            posts[editIndex].date = formattedDate;
+            if (cover) posts[editIndex].cover = cover;
+            if (fullContent) posts[editIndex].fullContent = fullContent;
+            posts[editIndex].bookData = bookData;
 
-                // 4. Tambahkan artikel baru ke dalam array posts (paling atas / terbaru)
-                posts.unshift({
-                    id: id,
-                    title: title,
-                    date: date,
-                    summary: summary,
-                    filename: filename
-                });
+            alert("Postingan berhasil diperbarui!");
+            document.getElementById("editIndex").value = "";
+            document.getElementById("mainTitle").innerText =
+              "Panel Admin Postingan";
+          } else {
+            const newPost = {
+              id: Date.now().toString(),
+              slug: slug,
+              title,
+              type: postType,
+              categories: selectedCategories,
+              date: formattedDate,
+              cover: cover || "",
+              summary: bookData.bookCore || "", // Fallback summary diambil dari inti buku
+              fullContent:
+                fullContent || `<p>${bookData.bookCore || title}</p>`,
+              bookData: bookData,
+              status: "active",
+            };
+            posts.unshift(newPost);
+            alert("Postingan baru berhasil disimpan!");
+          }
 
-                // 5. Simpan ulang file "posts.json" yang sudah diperbarui ke GitHub
-                await saveFileToGitHub('posts.json', JSON.stringify(posts, null, 2), `Update posts.json with: ${title}`, postsSha);
+          localStorage.setItem("maul_posts", JSON.stringify(posts));
+          this.reset();
+          document.getElementById("postDate").value = new Date()
+            .toISOString()
+            .split("T")[0];
+          coverBase64 = "";
+          uploadedHtmlContent = "";
+          renderHistory();
+        });
 
-                statusMsg.style.color = '#27ae60';
-                statusMsg.innerText = 'Berhasil! Artikel sudah dipublikasikan secara otomatis ke GitHub.';
-                
-                // Bersihkan form
-                document.getElementById('article-title').value = '';
-                document.getElementById('article-summary').value = '';
-                document.getElementById('article-body').value = '';
+      window.editPost = function (index) {
+        const posts = JSON.parse(localStorage.getItem("maul_posts")) || [];
+        const post = posts[index];
+        if (!post) return;
 
-            } catch (error) {
-                console.error(error);
-                statusMsg.style.color = '#c0392b';
-                statusMsg.innerText = 'Terjadi kesalahan: ' + error.message;
-            }
+        document.getElementById("editIndex").value = index;
+        document.getElementById("postTitle").value = post.title;
+        document.getElementById("postCoverBase64").value = post.cover || "";
+        document.getElementById("postFullContent").value =
+          post.fullContent || "";
+
+        if (post.categories && Array.isArray(post.categories)) {
+          document.getElementById("post-categories").value =
+            post.categories.join(", ");
         }
+
+        if (post.bookData) {
+          document.getElementById("bookTitle").value =
+            post.bookData.bookTitle || "";
+          document.getElementById("bookAuthor").value =
+            post.bookData.bookAuthor || "";
+          document.getElementById("bookYear").value =
+            post.bookData.bookYear || "";
+          document.getElementById("bookMainCategory").value =
+            post.bookData.bookMainCategory || "Book Summary";
+          document.getElementById("bookCore").value =
+            post.bookData.bookCore || "";
+          document.getElementById("bookReadTime").value =
+            post.bookData.bookReadTime || "15-20 menit baca";
+        }
+
+        document.getElementById("mainTitle").innerText =
+          "Edit Postingan: " + post.title;
+        document.getElementById("submitBtn").innerText = "Simpan Perubahan";
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      };
+
+      window.toggleArchive = function (index) {
+        let posts = JSON.parse(localStorage.getItem("maul_posts")) || [];
+        if (posts[index]) {
+          posts[index].status =
+            posts[index].status === "archived" ? "active" : "archived";
+          localStorage.setItem("maul_posts", JSON.stringify(posts));
+          renderHistory();
+        }
+      };
+
+      window.deletePost = function (index) {
+        if (
+          confirm(
+            "Apakah Anda yakin ingin menghapus postingan ini secara permanen?",
+          )
+        ) {
+          let posts = JSON.parse(localStorage.getItem("maul_posts")) || [];
+          posts.splice(index, 1);
+          localStorage.setItem("maul_posts", JSON.stringify(posts));
+          renderHistory();
+        }
+      };
     </script>
-</body>
+  </body>
 </html>

@@ -1,83 +1,630 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detail Artikel - Maul Prs</title>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Artikel — Maul Prs</title>
+    <link rel="stylesheet" href="css/style.css" />
     <style>
-        body { font-family: 'Poppins', sans-serif; max-width: 750px; margin: 40px auto; padding: 0 20px; color: #333; line-height: 1.8; background: #fdfdfd; }
-        .back-link { display: inline-block; margin-bottom: 20px; color: #3498db; text-decoration: none; font-weight: 500; }
-        .back-link:hover { text-decoration: underline; }
-        h1 { color: #2c3e50; margin-bottom: 10px; }
-        .date { font-size: 0.9rem; color: #888; margin-bottom: 30px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
-        .content { margin-top: 20px; }
-        .error-box { background: #ffebee; color: #c0392b; padding: 15px; border-radius: 5px; border: 1px solid #ffcdd2; margin-top: 20px; }
-    </style>
-</head>
-<body>
+      :root {
+        --bg-color: #020c06;
+        --card-bg: #071a0e;
+        --border-color: #0f3020;
+        --accent-color: #34d399;
+        --text-color: #d4f0dc;
+        --text-muted: #94a3b8;
+      }
+      body {
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        font-family:
+          system-ui,
+          -apple-system,
+          sans-serif;
+        margin: 0;
+        padding: 0 0 40px 0;
+      }
 
-    <a href="index.html" class="back-link">&larr; Kembali ke Beranda</a>
-    
-    <main id="article-content">
-        <p>Memuat isi artikel...</p>
-    </main>
+      /* Reading Progress Bar di Paling Atas Layar */
+      #scrollProgressBar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 3px;
+        background-color: var(--accent-color);
+        width: 0%;
+        z-index: 9999;
+        transition: width 0.1s ease-out;
+      }
+
+      /* Header Nav Sticky */
+      .header-nav-wrapper {
+        position: sticky;
+        top: 0;
+        background-color: rgba(2, 12, 6, 0.95);
+        backdrop-filter: blur(8px);
+        z-index: 1000;
+        border-bottom: 1px solid var(--border-color);
+        padding: 15px 40px;
+      }
+
+      /* Perlebar kontainer agar hampir memenuhi seluruh layar browser */
+      .container {
+        max-width: 100% !important;
+        width: 100%;
+        margin: 0 auto;
+        padding: 0 40px;
+        box-sizing: border-box;
+      }
+
+      /* Layout 3 Kolom dengan Sidebar Sticky */
+      .layout-grid {
+        display: grid;
+        grid-template-columns: 260px 1fr 280px;
+        gap: 24px;
+        align-items: start;
+        transition: 0.3s;
+        margin-top: 25px;
+      }
+      .layout-grid.focus-mode {
+        grid-template-columns: 1fr;
+      }
+      .layout-grid.focus-mode .sidebar {
+        display: none;
+      }
+
+      @media (max-width: 1024px) {
+        .layout-grid {
+          grid-template-columns: 1fr;
+        }
+        .container,
+        .header-nav-wrapper {
+          padding: 0 20px;
+        }
+      }
+
+      /* Elemen Sidebar yang dibuat Sticky */
+      .sidebar {
+        position: sticky;
+        top: 85px; /* Berjarak pas di bawah header sticky */
+        max-height: calc(100vh - 100px);
+        overflow-y: auto;
+      }
+
+      .sidebar,
+      .main-content {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 24px;
+        box-sizing: border-box;
+      }
+
+      /* Scrollbar halus untuk sidebar jika isinya panjang */
+      .sidebar::-webkit-scrollbar {
+        width: 4px;
+      }
+      .sidebar::-webkit-scrollbar-thumb {
+        background: var(--border-color);
+        border-radius: 4px;
+      }
+
+      /* Header Nav Konten */
+      .header-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .brand-area {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+        color: #fff;
+      }
+      .brand-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 1px solid var(--accent-color);
+      }
+      .btn-focus {
+        background: #032a18;
+        border: 1px solid var(--border-color);
+        color: var(--text-color);
+        padding: 6px 14px;
+        border-radius: 6px;
+        font-size: 13px;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+      .btn-focus:hover {
+        background: var(--accent-color);
+        color: #020c06;
+      }
+
+      /* Layout Ringkas Cover + Info Buku */
+      .book-header-box {
+        display: flex;
+        gap: 20px;
+        align-items: flex-start;
+        background: #032a18;
+        border: 1px solid var(--border-color);
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 25px;
+      }
+      .book-cover-small {
+        width: 130px;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 6px;
+        border: 1px solid var(--border-color);
+        flex-shrink: 0;
+      }
+      .book-meta-info {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .badge-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(52, 211, 153, 0.1);
+        border: 1px solid var(--border-color);
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        color: var(--accent-color);
+        width: fit-content;
+      }
+
+      /* Tombol Wallpaper & Share */
+      .action-box {
+        margin: 25px 0;
+        padding: 20px;
+        background: #032a18;
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        text-align: center;
+      }
+      .btn-download-wallpaper {
+        background: #34d399;
+        color: #020c06;
+        border: none;
+        padding: 12px 20px;
+        font-weight: 600;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 15px;
+        transition: 0.2s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .btn-download-wallpaper:hover {
+        background: #10b981;
+      }
+      .share-container {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 15px;
+      }
+      .btn-share {
+        background: #0f3020;
+        color: var(--text-color);
+        border: 1px solid var(--border-color);
+        padding: 8px 14px;
+        border-radius: 6px;
+        font-size: 13px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: 0.2s;
+      }
+      .btn-share:hover {
+        background: var(--accent-color);
+        color: #020c06;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Reading Progress Bar -->
+    <div id="scrollProgressBar"></div>
+
+    <!-- Header Nav Sticky dengan Wrapper -->
+    <div class="header-nav-wrapper">
+      <div class="header-nav container" style="padding: 0">
+        <a href="index.html" class="brand-area">
+          <img
+            src="assets/maulprs_icon.png"
+            alt="Logo"
+            class="brand-icon"
+            onerror="this.style.display = 'none'"
+          />
+          <h2 style="margin: 0; font-size: 20px; color: #fff">Maul Prs</h2>
+        </a>
+        <div style="display: flex; align-items: center; gap: 15px">
+          <button
+            class="btn-focus"
+            onclick="toggleFocusMode()"
+            id="focusToggleBtn"
+          >
+            👁️ Mode Fokus: Off
+          </button>
+          <a
+            href="index.html"
+            style="
+              color: var(--accent-color);
+              text-decoration: none;
+              font-size: 14px;
+            "
+            >← Kembali ke Beranda</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="container" style="margin-top: 25px">
+      <!-- Layout Utama (Lebar Penuh 3 Kolom dengan Sidebar Sticky) -->
+      <div class="layout-grid" id="mainLayoutGrid">
+        <!-- Sidebar Kiri: Kategori & Multi-Tag -->
+        <aside class="sidebar">
+          <h3
+            style="
+              font-size: 16px;
+              margin-top: 0;
+              color: #fff;
+              border-bottom: 1px solid var(--border-color);
+              padding-bottom: 10px;
+            "
+          >
+            Kategori & Menu
+          </h3>
+          <div id="dynamic-categories"></div>
+        </aside>
+
+        <!-- Konten Utama Artikel -->
+        <main class="main-content">
+          <div id="article-container">
+            <h3 style="color: var(--text-muted); text-align: center">
+              Memuat artikel...
+            </h3>
+          </div>
+        </main>
+
+        <!-- Sidebar Kanan: Postingan Terbaru -->
+        <aside class="sidebar">
+          <h3
+            style="
+              font-size: 16px;
+              margin-top: 0;
+              color: #fff;
+              border-bottom: 1px solid var(--border-color);
+              padding-bottom: 10px;
+            "
+          >
+            Posting Terbaru
+          </h3>
+          <ul
+            id="recent-posts-list"
+            style="list-style: none; padding: 0; margin: 0; font-size: 13px"
+          ></ul>
+        </aside>
+      </div>
+    </div>
+
+    <!-- Canvas Tersembunyi untuk Wallpaper -->
+    <canvas
+      id="wallpaperCanvas"
+      width="1080"
+      height="1920"
+      style="display: none"
+    ></canvas>
 
     <script>
-        async function loadArticle() {
-            const container = document.getElementById('article-content');
-            const params = new URLSearchParams(window.location.search);
-            const postId = params.get('id');
+      // Scroll Progress Bar Logic
+      window.addEventListener("scroll", () => {
+        const winScroll =
+          document.documentElement.scrollTop || document.body.scrollTop;
+        const height =
+          document.documentElement.scrollHeight -
+          document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        document.getElementById("scrollProgressBar").style.width =
+          scrolled + "%";
+      });
 
-            if (!postId) {
-                container.innerHTML = `<div class="error-box"><strong>Error:</strong> ID Artikel tidak ditemukan pada URL.</div>`;
-                return;
-            }
+      const urlParams = new URLSearchParams(window.location.search);
+      const articleId = urlParams.get("id");
 
-            try {
-                // 1. Ambil data dari posts.json (pastikan file posts.json ada di luar folder data/articles)
-                const res = await fetch('data/posts.json');
-                if (!res.ok) throw new Error('Gagal mengambil file database posts.json');
-                
-                const posts = await res.json();
-                const post = posts.find(p => p.id === postId);
+      const posts = JSON.parse(localStorage.getItem("maul_posts")) || [];
+      const currentPost = posts.find((p) => p.id === articleId) || posts[0];
 
-                if (!post) {
-                    container.innerHTML = `<div class="error-box"><strong>Error:</strong> Artikel dengan ID "<strong>${postId}</strong>" tidak terdaftar di database posts.json.</div>`;
-                    return;
-                }
+      window.addEventListener("DOMContentLoaded", () => {
+        renderSidebarCategories(posts);
+        renderRecentPosts(posts);
+        if (currentPost) {
+          renderArticleDetail(currentPost);
+        } else {
+          document.getElementById("article-container").innerHTML =
+            "<p>Artikel tidak ditemukan.</p>";
+        }
+      });
 
-                // 2. Ambil file HTML isi artikel dari folder articles/
-                const articleUrl = `articles/${post.filename}`;
-                const articleRes = await fetch(articleUrl);
-                
-                if (!articleRes.ok) {
-                    throw new Error(`File HTML artikel tidak ditemukan di path: <code>${articleUrl}</code>. Pastikan folder "articles" dan file "${post.filename}" sudah ter-upload.`);
-                }
-                
-                const htmlContent = await articleRes.text();
+      // Toggle Mode Fokus
+      let isFocusActive = false;
+      function toggleFocusMode() {
+        isFocusActive = !isFocusActive;
+        const grid = document.getElementById("mainLayoutGrid");
+        const btn = document.getElementById("focusToggleBtn");
+        if (isFocusActive) {
+          grid.classList.add("focus-mode");
+          btn.innerText = "👁️ Mode Fokus: On";
+          btn.style.background = "var(--accent-color)";
+          btn.style.color = "#020c06";
+        } else {
+          grid.classList.remove("focus-mode");
+          btn.innerText = "👁️ Mode Fokus: Off";
+          btn.style.background = "#032a18";
+          btn.style.color = "var(--text-color)";
+        }
+      }
 
-                // 3. Tampilkan ke halaman
-                container.innerHTML = `
-                    <h1>${post.title}</h1>
-                    <div class="date">Dipublikasikan pada: ${post.date}</div>
-                    <div class="content">${htmlContent}</div>
-                `;
-                document.title = `${post.title} - Maul Prs`;
+      // Render Sidebar Kiri
+      function renderSidebarCategories(allPosts) {
+        const container = document.getElementById("dynamic-categories");
+        const categoryMap = {};
 
-            } catch (err) {
-                console.error(err);
-                container.innerHTML = `
-                    <div class="error-box">
-                        <h3>Gagal memuat isi artikel</h3>
-                        <p>${err.message}</p>
-                        <hr style="border:0; border-top:1px solid #ffcdd2; margin:10px 0;">
-                        <small>Tips: Jika Anda menguji secara lokal di komputer, pastikan Anda menggunakan local server (seperti Live Server VS Code) agar fungsi fetch file berjalan lancar.</small>
-                    </div>
-                `;
-            }
+        allPosts.forEach((post) => {
+          let cats = Array.isArray(post.categories)
+            ? post.categories
+            : [post.category || post.type || "Umum"];
+          cats.forEach((cat) => {
+            if (!categoryMap[cat]) categoryMap[cat] = [];
+            categoryMap[cat].push(post);
+          });
+        });
+
+        let html = "";
+        let idx = 0;
+        for (const [catName, catPosts] of Object.entries(categoryMap)) {
+          const listId = `cat-list-${idx}`;
+          let icon = "📁";
+          if (catName === "Quote & Nasehat") icon = "💡";
+          else if (catName === "Dzikir & Do'a") icon = "🤲";
+          else if (catName === "Cerita Inspirasi") icon = "✨";
+          else if (
+            [
+              "Finance",
+              "Productivity",
+              "Thinking",
+              "Self Improvement",
+              "Parenting",
+            ].includes(catName)
+          )
+            icon = "📚";
+
+          html += `
+            <div style="margin-bottom: 10px;">
+              <button onclick="toggleCat('${listId}')" style="background:none; border:none; color:var(--text-color); width:100%; text-align:left; font-size:14px; font-weight:500; padding:6px 0; cursor:pointer; display:flex; justify-content:space-between; align-items:center;">
+                <span>${icon} ${catName} (${catPosts.length})</span>
+                <span style="font-size:10px; opacity:0.7;">▼</span>
+              </button>
+              <ul id="${listId}" style="list-style:none; padding-left:16px; margin:4px 0 8px 0; display:none; border-left:2px solid var(--border-color);">
+          `;
+          catPosts.forEach((p) => {
+            html += `<li style="margin-bottom:6px;"><a href="article.html?id=${p.id}" style="color:var(--text-muted); text-decoration:none; font-size:13px; display:block;">• ${p.title}</a></li>`;
+          });
+          html += `</ul></div>`;
+          idx++;
+        }
+        container.innerHTML =
+          html ||
+          "<p style='font-size:13px; color:var(--text-muted);'>Belum ada kategori.</p>";
+      }
+
+      function toggleCat(id) {
+        const el = document.getElementById(id);
+        el.style.display = el.style.display === "block" ? "none" : "block";
+      }
+
+      // Render Sidebar Kanan
+      function renderRecentPosts(allPosts) {
+        const list = document.getElementById("recent-posts-list");
+        let html = "";
+        allPosts.slice(0, 5).forEach((p) => {
+          html += `<li style="margin-bottom: 8px;"><a href="article.html?id=${p.id}" style="color: var(--text-muted); text-decoration: none; display: block; line-height: 1.4;">• ${p.title}</a></li>`;
+        });
+        list.innerHTML =
+          html ||
+          "<p style='color:var(--text-muted);'>Belum ada postingan.</p>";
+      }
+
+      // Render Detail Artikel
+      function renderArticleDetail(post) {
+        const container = document.getElementById("article-container");
+        const currentUrl = window.location.href;
+
+        let wallpaperSection = "";
+        if (
+          post.type === "Quote & Nasehat" ||
+          (post.categories && post.categories.includes("Quote & Nasehat"))
+        ) {
+          wallpaperSection = `
+            <div class="action-box">
+              <p style="margin: 0 0 12px 0; font-size: 14px; color: var(--text-muted);">Unduh kutipan ini sebagai wallpaper ponsel estetik berkualitas tinggi:</p>
+              <button class="btn-download-wallpaper" onclick="generateWallpaper()">
+                📥 Unduh Wallpaper Ponsel (1080x1920)
+              </button>
+            </div>
+          `;
         }
 
-        loadArticle();
+        const shareSection = `
+          <div class="action-box" style="margin-top: 30px;">
+            <p style="margin: 0 0 10px 0; font-size: 14px; font-weight: 500;">Bagikan Artikel Ini:</p>
+            <div class="share-container">
+              <a href="https://api.whatsapp.com/send?text=${encodeURIComponent(post.title + " — " + currentUrl)}" target="_blank" class="btn-share">💬 WhatsApp</a>
+              <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(currentUrl)}" target="_blank" class="btn-share">🐦 Twitter / X</a>
+              <button onclick="copyLink('${currentUrl}')" class="btn-share">🔗 Salin Tautan</button>
+            </div>
+          </div>
+        `;
+
+        let bookHeaderBox = "";
+        if (post.cover) {
+          bookHeaderBox = `
+            <div class="book-header-box">
+              <img src="${post.cover}" alt="${post.title}" class="book-cover-small" />
+              <div class="book-meta-info">
+                <span class="badge-tag">📚 Rangkuman Buku</span>
+                <h2 style="margin: 4px 0; font-size: 22px; color: #fff;">${post.title}</h2>
+                <p style="margin: 0; font-size: 14px; color: var(--text-muted); line-height: 1.5;">${post.summary || ""}</p>
+                <div style="display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap;">
+                  <span style="font-size: 12px; background: #0f3020; padding: 4px 8px; border-radius: 4px; color: var(--text-color);">⏱️ 15-20 menit baca</span>
+                  <span style="font-size: 12px; background: #0f3020; padding: 4px 8px; border-radius: 4px; color: var(--text-color);">📅 ${post.date || ""}</span>
+                </div>
+              </div>
+            </div>
+          `;
+        }
+
+        container.innerHTML = `
+          <div style="font-size: 12px; color: var(--accent-color); font-weight: 600; text-transform: uppercase; margin-bottom: 8px;">
+            ${Array.isArray(post.categories) ? post.categories.join(" • ") : post.category}
+          </div>
+          <h1 style="font-size: 26px; margin-top: 0; color: #fff; line-height: 1.3;">${post.title}</h1>
+          <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">${post.date || ""}</div>
+          
+          ${bookHeaderBox}
+          ${wallpaperSection}
+
+          <div class="article-body" style="line-height: 1.7; font-size: 16px;">
+            ${post.fullContent || `<p>${post.summary}</p>`}
+          </div>
+
+          ${shareSection}
+        `;
+      }
+
+      // Generator Wallpaper Ponsel
+      function generateWallpaper() {
+        const canvas = document.getElementById("wallpaperCanvas");
+        const ctx = canvas.getContext("2d");
+
+        canvas.width = 1080;
+        canvas.height = 1920;
+
+        ctx.fillStyle = "#020c06";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        if (currentPost.cover) {
+          const bgImg = new Image();
+          bgImg.crossOrigin = "anonymous";
+          bgImg.src = currentPost.cover;
+          bgImg.onload = function () {
+            ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "rgba(2, 12, 6, 0.78)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            drawWallpaperTextAndLogo(ctx, canvas);
+          };
+          bgImg.onerror = function () {
+            drawWallpaperTextAndLogo(ctx, canvas);
+          };
+        } else {
+          drawWallpaperTextAndLogo(ctx, canvas);
+        }
+      }
+
+      function drawWallpaperTextAndLogo(ctx, canvas) {
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "bold 44px system-ui, -apple-system, sans-serif";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+
+        const text = currentPost.summary || currentPost.title;
+        wrapText(ctx, `“${text}”`, canvas.width / 2, 800, 880, 64);
+
+        const logoImg = new Image();
+        logoImg.crossOrigin = "anonymous";
+        logoImg.src = "assets/maulprs_icon.png";
+
+        logoImg.onload = function () {
+          const logoWidth = 130;
+          const logoHeight = (logoImg.height / logoImg.width) * logoWidth;
+          const logoX = (canvas.width - logoWidth) / 2;
+          const logoY = 1650;
+
+          ctx.drawImage(logoImg, logoX, logoY, logoWidth, logoHeight);
+
+          ctx.fillStyle = "rgba(255, 255, 255, 0.75)";
+          ctx.font = "18px system-ui, -apple-system, sans-serif";
+          ctx.fillText(
+            "www.maulprs.com",
+            canvas.width / 2,
+            logoY + logoHeight + 35,
+          );
+
+          triggerDownload(canvas);
+        };
+
+        logoImg.onerror = function () {
+          ctx.fillStyle = "rgba(255, 255, 255, 0.85)";
+          ctx.font = "bold 26px system-ui, -apple-system, sans-serif";
+          ctx.fillText("Maul Prs", canvas.width / 2, 1720);
+
+          ctx.fillStyle = "rgba(52, 211, 153, 0.9)";
+          ctx.font = "18px system-ui, -apple-system, sans-serif";
+          ctx.fillText("www.maulprs.com", canvas.width / 2, 1760);
+
+          triggerDownload(canvas);
+        };
+      }
+
+      function triggerDownload(canvas) {
+        const link = document.createElement("a");
+        link.download = `Wallpaper-${currentPost.slug || "Quote"}.jpg`;
+        link.href = canvas.toDataURL("image/jpeg", 0.95);
+        link.click();
+      }
+
+      function wrapText(context, text, x, y, maxWidth, lineHeight) {
+        const words = text.split(" ");
+        let line = "";
+        let currentY = y;
+
+        for (let n = 0; n < words.length; n++) {
+          const testLine = line + words[n] + " ";
+          const metrics = context.measureText(testLine);
+          const testWidth = metrics.width;
+          if (testWidth > maxWidth && n > 0) {
+            context.fillText(line, x, currentY);
+            line = words[n] + " ";
+            currentY += lineHeight;
+          } else {
+            line = testLine;
+          }
+        }
+        context.fillText(line, x, currentY);
+      }
+
+      function copyLink(url) {
+        navigator.clipboard
+          .writeText(url)
+          .then(() => {
+            alert("Tautan artikel berhasil disalin!");
+          })
+          .catch((err) => {
+            console.error("Gagal menyalin tautan: ", err);
+          });
+      }
     </script>
-</body>
+  </body>
 </html>

@@ -1,9 +1,38 @@
 [
+    {
+    "id": "1",
+    "slug": "48 Laws of Power — Rangkuman",
+    "title": "48 Laws of Power — Rangkuman",
+    "date": "2026-09-24",
+    "category": "Book Summary",
+    "summary": "Mohammed Faris — Achieve More and Stress Less While Saving Your Soul. Rangkuman lengkap mengenai tiga dimensi utama produktivitas seorang Mu...",
+    "content": "<p>Mohammed Faris — Achieve More and Stress Less While Saving Your Soul. Rangkuman lengkap mengenai tiga dimensi utama produktivitas seorang Muslim, yaitu Spiritual (Ruh), Fisik (Raga), dan Intelektual (Jiwa).</p><p>Dalam buku ini, produktivitas bukan hanya soal mengejar target duniawi, melainkan bagaimana menyelaraskan energi fisik dan spiritual untuk mendapatkan keberkahan waktu.</p>"
+  },
   {
-    "id": "artikel-pertama",
-    "title": "Selamat Datang di Website Maul Prs",
-    "date": "2026-10-09",
-    "summary": "Ini adalah artikel uji coba pertama yang dikelola secara otomatis melalui sistem GitHub API.",
-    "filename": "artikel-pertama.html"
+    "id": "2",
+    "slug": "the-productive-muslim",
+    "title": "The Productive Muslim | Rangkuman Buku",
+    "date": "2026-09-24",
+    "category": "Book Summary",
+    "summary": "Mohammed Faris — Achieve More and Stress Less While Saving Your Soul. Rangkuman lengkap mengenai tiga dimensi utama produktivitas seorang Mu...",
+    "content": "<p>Mohammed Faris — Achieve More and Stress Less While Saving Your Soul. Rangkuman lengkap mengenai tiga dimensi utama produktivitas seorang Muslim, yaitu Spiritual (Ruh), Fisik (Raga), dan Intelektual (Jiwa).</p><p>Dalam buku ini, produktivitas bukan hanya soal mengejar target duniawi, melainkan bagaimana menyelaraskan energi fisik dan spiritual untuk mendapatkan keberkahan waktu.</p>"
+  },
+  {
+    "id": "3",
+    "slug": "the-compound-effect",
+    "title": "The Compound Effect — Darren Hardy",
+    "date": "2026-09-25",
+    "category": "Book Summary",
+    "summary": "Prinsip dasar bahwa keputusan kecil dan konsisten yang diambil setiap hari akan menghasilkan perbedaan yang masif dalam jangka panjang. Pela...",
+    "content": "<p>Prinsip dasar bahwa keputusan kecil dan konsisten yang diambil setiap hari akan menghasilkan perbedaan yang masif dalam jangka panjang.</p><p>Kesuksesan besar bukanlah hasil dari satu tindakan monumental yang instan, melainkan akumulasi dari kebiasaan-kebiasaan kecil harian yang dilakukan secara disiplin.</p>"
+  },
+  {
+    "id": "4",
+    "slug": "tawakkal-imam-al-ghazali",
+    "title": "Tawakkal — Imam Al Ghazali",
+    "date": "2026-09-26",
+    "category": "Quotes / Nasehat",
+    "summary": "Menyelami hakikat tawakal yang sesungguhnya menurut Imam Al Ghazali. Tawakal bukanlah sikap pasrah tanpa usaha, melainkan ketenangan hati se...",
+    "content": "<p>Menyelami hakikat tawakal yang sesungguhnya menurut Imam Al Ghazali. Tawakal bukanlah sikap pasrah tanpa usaha, melainkan ketenangan hati setelah mengerahkan ikhtiar secara maksimal.</p><p>Hati yang bertawakal bersandar sepenuhnya kepada Allah SWT namun tetap menjalankan peran dan tanggung jawab duniawinya dengan penuh kesadaran.</p>"
   }
 ]
