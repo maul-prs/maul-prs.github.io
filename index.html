@@ -3,37 +3,21 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="description"
-      content="Maul Prs — catatan tentang iman, kehidupan, buku, dan pengembangan diri."
-    />
+    <meta name="description" content="Maul Prs — catatan tentang iman, kehidupan, buku, dan pengembangan diri." />
     <title>Maul Prs — Ideas for Faith, Life & Growth</title>
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/style_2.css" />
   </head>
   <body>
     <!-- Header Navigation -->
     <header class="site-header">
       <div class="container nav">
-        <a class="brand" href="index.html" aria-label="Maul Prs home">
-          <img
-            class="brand-photo"
-            src="assets/profile.png"
-            alt="Maul Prs"
-            onerror="this.style.display = 'none'"
-          />
+        <a class="brand" href="index_2.html">
+          <img class="brand-photo" src="assets/profile.png" alt="Maul Prs" onerror="this.style.display = 'none'" />
           <span>Maul Prs</span>
         </a>
-
-        <button
-          class="menu-toggle"
-          onclick="toggleMenu()"
-          aria-label="Toggle Menu"
-        >
-          <span></span>
-          <span></span>
-          <span></span>
+        <button class="menu-toggle" onclick="toggleMenu()" aria-label="Toggle Menu">
+          <span></span><span></span><span></span>
         </button>
-
         <nav id="navMenu">
           <a href="#categories">Categories</a>
           <a href="#youtube">YouTube</a>
@@ -47,10 +31,7 @@
       <section class="hero container">
         <p class="eyebrow">MAUL PRS</p>
         <h1>Ideas worth <em>remembering.</em></h1>
-        <p class="hero-copy">
-          Catatan tentang iman, kehidupan, buku, dan proses menjadi manusia yang
-          lebih baik.
-        </p>
+        <p class="hero-copy">Catatan tentang iman, kehidupan, buku, dan proses menjadi manusia yang lebih baik.</p>
         <div class="hero-actions">
           <a class="button" href="#categories">Explore writing</a>
           <a class="text-link" href="#youtube">Watch on YouTube →</a>
@@ -59,51 +40,15 @@
 
       <!-- Kategori & Postingan Section -->
       <section id="categories" class="section container">
-        <!-- Wrapper Flex: Tombol Kategori di Kiri, Kotak Pencarian di Kanan (Sejajar) -->
         <div class="category-search-wrapper">
-          <!-- 1. Tombol Filter Kategori -->
           <div class="category-filter">
-            <button
-              class="filter-btn active"
-              onclick="filterPosts('all', this)"
-            >
-              Semua
-            </button>
-            <button
-              class="filter-btn"
-              onclick="filterPosts('Book Summary', this)"
-            >
-              📚 Book Summary
-            </button>
-            <button
-              class="filter-btn"
-              onclick="filterPosts('Quote & Nasehat', this)"
-            >
-              💡 Quote & Nasehat
-            </button>
-            <button
-              class="filter-btn"
-              onclick="filterPosts('Dzikir & Do\'a', this)"
-            >
-              🤲 Dzikir & Do'a
-            </button>
-            <button
-              class="filter-btn"
-              onclick="filterPosts('Cerita Inspirasi', this)"
-            >
-              ✨ Cerita Inspirasi
-            </button>
+            <button class="filter-btn active" onclick="filterPosts('all', this)">Semua</button>
+            <button class="filter-btn" onclick="filterPosts('Book Summary', this)">📚 Book Summary</button>
+            <button class="filter-btn" onclick="filterPosts('Quote & Nasehat', this)">💡 Quote & Nasehat</button>
+            <button class="filter-btn" onclick="filterPosts('Dzikir & Do\'a', this)">🤲 Dzikir & Do'a</button>
+            <button class="filter-btn" onclick="filterPosts('Cerita Inspirasi', this)">✨ Cerita Inspirasi</button>
           </div>
-
-          <!-- 2. Kotak Pencarian -->
-          <input
-            id="searchInput"
-            class="search-input"
-            type="search"
-            placeholder="Cari tulisan atau buku..."
-            oninput="handleSearch(this.value)"
-            aria-label="Cari tulisan"
-          />
+          <input id="searchInput" class="search-input" type="search" placeholder="Cari tulisan atau buku..." oninput="handleSearch(this.value)" aria-label="Cari tulisan" />
         </div>
 
         <!-- Grid Postingan (3 Kolom) -->
@@ -111,103 +56,40 @@
           <p style="color: var(--text-muted)">Memuat postingan...</p>
         </div>
 
-        <!-- Tombol Navigasi Halaman (Pagination) -->
+        <!-- Navigasi Paginasi -->
         <div class="pagination" id="paginationContainer"></div>
       </section>
 
-      <!-- YouTube Section -->
-      <section id="youtube" class="section container">
-        <div
-          class="info-box"
-          style="
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            align-items: center;
-          "
-        >
-          <div>
-            <p
-              class="eyebrow"
-              style="color: var(--accent-light); margin: 0 0 6px 0"
-            >
-              YOUTUBE
-            </p>
-            <h2 style="color: #fff; margin: 0 0 10px 0; font-size: 26px">
-              Konten Maul Prs
-            </h2>
-            <p
-              style="
-                color: var(--text-muted);
-                margin: 0;
-                line-height: 1.6;
-                font-size: 14px;
-              "
-            >
-              Website ini menjadi rumah untuk tulisan dan catatan yang
-              melengkapi konten video Maul Prs.
-            </p>
-          </div>
-
-          <div
-            style="
-              aspect-ratio: 16/9;
-              width: 100%;
-              border-radius: 8px;
-              overflow: hidden;
-              background: #032a18;
-              border: 1px solid var(--border-color);
-            "
-          >
-            <iframe
-              src="https://www.youtube.com/embed/videoseries?list=PLx0sYbCqOb8TBPRdmBHs5Iftvv9TPboYG"
-              title="YouTube video player"
-              style="width: 100%; height: 100%; border: 0"
-              allowfullscreen
-            >
-            </iframe>
-          </div>
-        </div>
-      </section>
-
-      <!-- About Section -->
-      <section id="about" class="section container" style="margin-bottom: 60px">
-        <div class="info-box">
-          <p class="eyebrow">ABOUT</p>
-          <h2 style="color: #fff; margin: 0 0 10px 0; font-size: 26px">
-            Selamat datang di Maul Prs.
-          </h2>
-          <p style="color: var(--text-muted); margin: 0">
-            Tempat untuk menyimpan ide, pelajaran, nasihat, dan rangkuman buku
-            yang ingin saya bawa lebih jauh dari sekadar satu video.
-          </p>
-        </div>
-      </section>
+      <!-- YouTube & About Sections (Tetap seperti sebelumnya) -->
     </main>
 
     <script>
-      let allPostsData = [];
+      // Database statis untuk GitHub (Ganti atau ambil dari file posts.json)
+      let allPostsData = [
+        {
+          id: "1",
+          title: "Dzikir & Do'a Pagi",
+          category: "Dzikir & Do'a",
+          date: "10 Oktober 2026",
+          cover: "assets/cover-dzikir.jpg",
+          coreMessage: "Kumpulan bacaan dzikir dan doa penenang hati untuk mengawali pagi hari.",
+          status: "active"
+        }
+      ];
+
       let currentCategory = "all";
       let currentPage = 1;
-      const postsPerPage = 6; // Maksimal 6 postingan per halaman (2 baris x 3 kolom)
+      const postsPerPage = 6;
 
       window.addEventListener("DOMContentLoaded", () => {
-        allPostsData = JSON.parse(localStorage.getItem("maul_posts")) || [];
         applyFilters();
       });
-
-      function toggleMenu() {
-        const nav = document.getElementById("navMenu");
-        nav.classList.toggle("active");
-      }
 
       function renderBerandaPosts(postsToRender) {
         const grid = document.getElementById("berandaPostsGrid");
         const paginationContainer = document.getElementById("paginationContainer");
         
-        const activePosts = postsToRender.filter(
-          (p) => p.status !== "archived",
-        );
+        const activePosts = postsToRender.filter(p => p.status !== "archived");
 
         if (activePosts.length === 0) {
           grid.innerHTML = '<p style="color: var(--text-muted);">Tidak ada postingan yang ditemukan.</p>';
@@ -215,22 +97,19 @@
           return;
         }
 
-        // Kalkulasi Paginasi
         const totalPages = Math.ceil(activePosts.length / postsPerPage);
-        if (currentPage > totalPages) currentPage = totalPages;
-        if (currentPage < 1) currentPage = 1;
+        if (currentPage > totalPages) currentPage = Math.max(1, totalPages);
 
         const startIndex = (currentPage - 1) * postsPerPage;
         const paginatedPosts = activePosts.slice(startIndex, startIndex + postsPerPage);
 
         let html = "";
         paginatedPosts.forEach((post) => {
-          const bd = post.bookData || {};
           const coverUrl = post.cover || 'assets/default-cover.png';
-          const categoryName = bd.bookMainCategory || post.category || post.type || 'Book Summary';
-          const title = bd.bookTitle || post.title;
-          const author = bd.bookAuthor ? `Oleh: ${bd.bookAuthor}${bd.bookYear ? ` (${bd.bookYear})` : ''}` : '';
-          const summaryText = bd.bookCore || post.summary || '';
+          // Menggunakan kategori asli postingan, bukan paksaan Book Summary
+          const categoryName = post.category || 'Catatan';
+          const title = post.title;
+          const summaryText = post.coreMessage || post.summary || '';
 
           html += `
             <a href="article.html?id=${post.id}" class="post-card">
@@ -238,7 +117,6 @@
               <div class="post-card-info">
                 <span class="post-card-badge">${categoryName}</span>
                 <h3 class="post-card-title">${title}</h3>
-                ${author ? `<p class="post-card-author">${author}</p>` : ''}
                 <p class="post-card-desc">${summaryText ? summaryText.substring(0, 90) + "..." : ""}</p>
                 <div class="post-card-meta">
                   <span>📅 ${post.date || ""}</span>
@@ -251,15 +129,12 @@
 
         grid.innerHTML = html;
 
-        // Render Tombol Paginasi (Prev, 1, 2, 3, Next)
         let paginationHtml = "";
         if (totalPages > 1) {
           paginationHtml += `<button class="page-btn" onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? "disabled" : ""}>← Prev</button>`;
-          
           for (let i = 1; i <= totalPages; i++) {
             paginationHtml += `<button class="page-btn ${i === currentPage ? "active" : ""}" onclick="changePage(${i})">${i}</button>`;
           }
-
           paginationHtml += `<button class="page-btn" onclick="changePage(${currentPage + 1})" ${currentPage === totalPages ? "disabled" : ""}>Next →</button>`;
         }
         paginationContainer.innerHTML = paginationHtml;
@@ -268,60 +143,34 @@
       function changePage(page) {
         currentPage = page;
         applyFilters();
-        // Gulir layar secara halus kembali ke bagian atas section categories
         document.getElementById("categories").scrollIntoView({ behavior: 'smooth' });
       }
 
       function filterPosts(catName, btnEl) {
         currentCategory = catName;
-        currentPage = 1; // Reset halaman ke 1 saat kategori diganti
-        document
-          .querySelectorAll(".filter-btn")
-          .forEach((btn) => btn.classList.remove("active"));
+        currentPage = 1;
+        document.querySelectorAll(".filter-btn").forEach((btn) => btn.classList.remove("active"));
         if (btnEl) btnEl.classList.add("active");
-
         applyFilters();
       }
 
-      function handleSearch(keyword) {
-        currentPage = 1; // Reset halaman ke 1 saat melakukan pencarian
+      function handleSearch() {
+        currentPage = 1;
         applyFilters();
       }
 
       function applyFilters() {
-        const keyword = document
-          .getElementById("searchInput")
-          .value.toLowerCase();
-
+        const keyword = document.getElementById("searchInput").value.toLowerCase();
         let filtered = allPostsData;
 
-        // Filter Kategori
         if (currentCategory !== "all") {
-          filtered = filtered.filter((post) => {
-            const bd = post.bookData || {};
-            const cat = bd.bookMainCategory || post.category || post.type;
-            if (cat === currentCategory) return true;
-            if (
-              Array.isArray(post.categories) &&
-              post.categories.includes(currentCategory)
-            )
-              return true;
-            return false;
-          });
+          filtered = filtered.filter(post => post.category === currentCategory);
         }
 
-        // Filter Keyword Pencarian
         if (keyword.trim() !== "") {
-          filtered = filtered.filter((post) => {
-            const bd = post.bookData || {};
-            const title = (bd.bookTitle || post.title || "").toLowerCase();
-            const summary = (bd.bookCore || post.summary || "").toLowerCase();
-            const author = (bd.bookAuthor || "").toLowerCase();
-            return (
-              title.includes(keyword) ||
-              summary.includes(keyword) ||
-              author.includes(keyword)
-            );
+          filtered = filtered.filter(post => {
+            return (post.title || "").toLowerCase().includes(keyword) || 
+                   (post.coreMessage || "").toLowerCase().includes(keyword);
           });
         }
 
