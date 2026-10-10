@@ -260,7 +260,12 @@ body {
   border: 1px solid var(--border-color);
   display: block;
 }
-
+.book-summary-cover {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover; /* Menjamin gambar penuh tanpa space hitam di halaman artikel */
+  border: 1px solid var(--border-color);
+}
 .post-card-info {
   display: flex;
   flex-direction: column;
