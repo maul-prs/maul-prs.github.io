@@ -22,13 +22,7 @@ html {
 
 body {
   margin: 0;
-  font-family:
-    Inter,
-    ui-sans-serif,
-    system-ui,
-    -apple-system,
-    "Segoe UI",
-    sans-serif;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   color: var(--text-main);
   background: var(--bg-primary);
   line-height: 1.7;
@@ -36,7 +30,7 @@ body {
 
 /* --- 2. LAYOUT & CONTAINER --- */
 .container {
-  width: min(1200px, calc(100% - 40px));
+  width: min(1350px, calc(100% - 100px));
   margin: auto;
 }
 
@@ -98,9 +92,9 @@ body {
   color: var(--accent-light);
 }
 
-/* --- 4. HERO SECTION (JARAK DIRENGGANGKAN/DIRAPATKAN DI SINI) --- */
+/* --- 4. HERO SECTION --- */
 .hero {
-  padding: 35px 0 45px 0; /* Padding atas diperkecil dari 110px ke 35px agar rapat */
+  padding: 80px 0 100px 0;
   display: flex;
   flex-direction: column;
 }
@@ -169,17 +163,46 @@ body {
   color: var(--accent-light);
 }
 
-/* --- 5. SECTIONS & FILTER --- */
+/* --- 5. SECTIONS, FILTER & SEARCH --- */
 .section {
-  padding: 40px 0;
+  padding: 30px 0 40px 0;
   border-top: 1px solid var(--border-color);
 }
 
+.category-search-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+/* --- Styling Kotak Pencarian yang Lebih Luwes & Selaras --- */
+.search-input {
+  background-color: #032a18;
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 8px 18px; /* Dibuat pas dan nyaman */
+  border-radius: 20px; /* Dibuat melengkung lonjong (pill-shaped) mengikuti tombol kategori */
+  width: 260px;
+  font-size: 13px;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.search-input:focus {
+  border-color: var(--accent-light);
+  box-shadow: 0 0 0 2px rgba(52, 211, 153, 0.15); /* Memberikan efek pendaran hijau yang elegan saat diklik */
+}
+
+.search-input::placeholder {
+  color: var(--text-muted);
+}
 .category-filter {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
-  margin-bottom: 30px;
+  margin-bottom: 0;
 }
 
 .filter-btn {
@@ -201,86 +224,140 @@ body {
   font-weight: 600;
 }
 
-/* Grid Artikel */
+/* --- 6. POSTS GRID & CARDS (3 Kolom & Horizontal Rapi) --- */
 .posts-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  width: 100%;
 }
 
 .post-card {
-  background: var(--bg-card);
+  background: rgba(3, 42, 24, 0.7);
   border: 1px solid var(--border-color);
   border-radius: 12px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  transition: 0.2s;
+  padding: 16px;
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 16px;
+  align-items: center;
   text-decoration: none;
-  color: inherit;
+  transition: transform 0.2s, border-color 0.2s;
+  box-sizing: border-box;
 }
 
 .post-card:hover {
+  transform: translateY(-2px);
   border-color: var(--accent-light);
-  transform: translateY(-3px);
 }
 
-.post-thumb {
+.post-card-cover {
   width: 100%;
-  height: 200px;
-  object-fit: cover;
-  background: #032a18;
+  max-width: 110px;
+  height: 140px;
+  object-fit: contain;
+  background: #020c06;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  display: block;
 }
 
-.post-content {
-  padding: 20px;
+.post-card-info {
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
+  gap: 6px;
+  text-align: left;
+  width: 100%;
+  overflow: hidden;
 }
 
-.post-badge {
-  font-size: 11px;
+.post-card-badge {
+  display: inline-block;
+  background: #032a18;
+  border: 1px solid var(--border-color);
   color: var(--accent-light);
+  font-size: 10.5px;
   font-weight: 600;
-  text-transform: uppercase;
-  margin-bottom: 8px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  width: fit-content;
 }
 
-.post-title {
-  font-size: 19px;
-  font-weight: 600;
+.post-card-title {
+  font-size: 16px;
+  font-weight: 700;
   color: #ffffff;
-  margin: 0 0 8px 0;
-  line-height: 1.35;
+  margin: 0;
+  line-height: 1.3;
 }
 
-.post-meta-sub {
-  font-size: 13px;
+.post-card-author {
+  font-size: 12px;
   color: var(--text-muted);
-  margin-bottom: 12px;
-  font-style: italic;
+  margin: 0;
 }
 
-.post-summary {
-  font-size: 14px;
+.post-card-desc {
+  font-size: 12.5px;
   color: var(--text-main);
-  line-height: 1.5;
-  margin-bottom: 15px;
-  flex-grow: 1;
+  line-height: 1.4;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-.post-footer {
+.post-card-meta {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text-muted);
-  border-top: 1px solid var(--border-color);
-  padding-top: 12px;
+  margin-top: 4px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* About & YouTube Section Box */
+/* --- 7. PAGINATION STYLING --- */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+
+.page-btn {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.page-btn:hover {
+  border-color: var(--accent-light);
+  color: var(--accent-light);
+}
+
+.page-btn.active {
+  background: var(--accent-light);
+  color: #020c06;
+  border-color: var(--accent-light);
+}
+
+.page-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* --- 8. INFO BOX (About & YouTube) --- */
 .info-box {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
@@ -288,7 +365,7 @@ body {
   padding: 28px;
 }
 
-/* --- 6. RESPONSIF MOBILE --- */
+/* --- 9. RESPONSIF MOBILE --- */
 .menu-toggle {
   display: none;
   background: none;
@@ -305,7 +382,7 @@ body {
   margin: 5px 0;
 }
 
-@media screen and (max-width: 768px) {
+@media (max-width: 768px) {
   .menu-toggle {
     display: block;
   }
@@ -329,30 +406,19 @@ body {
   .posts-grid {
     grid-template-columns: 1fr;
   }
-  .youtube-split {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
-    align-items: center;
+
+  .post-card {
+    grid-template-columns: 90px 1fr;
+    padding: 14px;
+    gap: 12px;
+  }
+  
+  .post-card-cover {
+    max-width: 90px;
+    height: 120px;
   }
 
-  .media-placeholder {
-    aspect-ratio: 16 / 9;
-    border-radius: 12px;
-    background: #032a18;
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    border: 1px solid var(--border-color);
-    overflow: hidden;
-  }
-
-  @media (max-width: 768px) {
-    .youtube-split {
-      grid-template-columns: 1fr;
-    }
+  .post-card-title {
+    font-size: 15px;
   }
 }
