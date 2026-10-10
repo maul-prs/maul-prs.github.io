@@ -18,7 +18,7 @@
 
       .article-layout {
         display: grid;
-        grid-template-columns: 240px 1fr 260px;
+        grid-template-columns: 260px 1fr 280px;
         gap: 24px;
         padding: 20px 0 80px 0;
         align-items: start;
@@ -30,17 +30,21 @@
         background: var(--bg-card, #071a0e);
         border: 1px solid var(--border-color, #0f3020);
         border-radius: 12px;
-        padding: 18px;
+        padding: 20px;
         margin-bottom: 20px;
       }
 
       .sidebar-title {
         color: #fff;
-        font-size: 16px;
+        font-size: 15px;
+        font-weight: 700;
         margin-top: 0;
-        margin-bottom: 12px;
+        margin-bottom: 14px;
         border-bottom: 1px solid var(--border-color, #0f3020);
-        padding-bottom: 8px;
+        padding-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
       }
 
       .sidebar-left-sticky,
@@ -49,36 +53,125 @@
         top: 75px;
       }
 
+      /* === STYLING CUSTOM SCROLLBAR SIDEBAR === */
       .category-scroll-area,
       .toc-scroll-area {
-        max-height: 320px;
+        max-height: 400px;
         overflow-y: auto;
+        padding-right: 4px;
       }
 
-      .category-list,
+      /* Scrollbar halus untuk Chrome, Edge, Safari */
+      .category-scroll-area::-webkit-scrollbar,
+      .toc-scroll-area::-webkit-scrollbar {
+        width: 5px;
+      }
+      .category-scroll-area::-webkit-scrollbar-track,
+      .toc-scroll-area::-webkit-scrollbar-track {
+        background: rgba(3, 42, 24, 0.5);
+        border-radius: 10px;
+      }
+      .category-scroll-area::-webkit-scrollbar-thumb,
+      .toc-scroll-area::-webkit-scrollbar-thumb {
+        background: #0f3020;
+        border-radius: 10px;
+      }
+      .category-scroll-area::-webkit-scrollbar-thumb:hover,
+      .toc-scroll-area::-webkit-scrollbar-thumb:hover {
+        background: #34d399;
+      }
+
+      /* === SIDEBAR KIRI: ACCORDION KATEGORI & BUKU === */
+      .acc-category-item {
+        margin-bottom: 8px;
+      }
+      .acc-btn {
+        width: 100%;
+        background: rgba(3, 42, 24, 0.6);
+        border: 1px solid var(--border-color, #0f3020);
+        color: #d4f0dc;
+        padding: 10px 12px;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 600;
+        text-align: left;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: all 0.2s ease;
+      }
+      .acc-btn:hover, .acc-btn.active {
+        background: #0f3020;
+        color: #34d399;
+        border-color: #34d399;
+      }
+      .acc-icon {
+        font-size: 11px;
+        transition: transform 0.2s ease;
+      }
+      .acc-btn.active .acc-icon {
+        transform: rotate(180deg);
+      }
+      .acc-post-list {
+        list-style: none;
+        padding: 6px 0 6px 12px;
+        margin: 0;
+        display: none;
+      }
+      .acc-post-list.open {
+        display: block;
+      }
+      .acc-post-item a {
+        color: var(--text-muted, #9ca3af);
+        text-decoration: none;
+        font-size: 12px;
+        display: block;
+        padding: 6px 10px;
+        border-radius: 6px;
+        line-height: 1.4;
+        transition: 0.2s;
+        border-left: 2px solid transparent;
+      }
+      .acc-post-item a:hover, .acc-post-item a.current-article {
+        color: #fff;
+        background: rgba(52, 211, 153, 0.1);
+        border-left-color: #34d399;
+      }
+
+      /* === SIDEBAR KANAN: DAFTAR BAB (TOC HALUS) === */
       .toc-list {
         list-style: none;
         padding: 0;
         margin: 0;
       }
-
-      .category-list li,
       .toc-list li {
-        margin-bottom: 10px;
+        margin-bottom: 6px;
       }
-
-      .category-list a,
       .toc-list a {
-        color: #d4f0dc;
+        color: #a3b8cc;
         text-decoration: none;
-        font-size: 14px;
-        transition: 0.2s;
-        display: block;
+        font-size: 13px;
+        line-height: 1.5;
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 8px 10px;
+        border-radius: 6px;
+        background: rgba(3, 42, 24, 0.3);
+        border: 1px solid transparent;
+        transition: all 0.2s ease;
       }
-
-      .category-list a:hover,
       .toc-list a:hover {
         color: #34d399;
+        background: #032a18;
+        border-color: #0f3020;
+        transform: translateX(3px);
+      }
+      .toc-bullet {
+        color: #34d399;
+        font-size: 12px;
+        margin-top: 2px;
       }
 
       /* Kotak Informasi Utama Artikel / Buku */
@@ -201,25 +294,18 @@
     </header>
 
     <main class="container article-layout">
-      <!-- SIDEBAR KIRI: Kategori -->
+      <!-- SIDEBAR KIRI: ACCORDION KATEGORI & MENUS -->
       <div class="sidebar-left-sticky">
         <aside class="category-card-container">
-          <h3 class="sidebar-title">Kategori & Menu</h3>
-          <div class="category-scroll-area">
-            <ul class="category-list" id="categorySidebar">
-              <li><a href="index.html">Semua Tulisan</a></li>
-              <li><a href="index.html#categories">📚 Book Summary</a></li>
-              <li><a href="index.html#categories">💡 Quote & Nasehat</a></li>
-              <li><a href="index.html#categories">🤲 Dzikir & Do'a</a></li>
-              <li><a href="index.html#categories">✨ Cerita Inspirasi</a></li>
-            </ul>
+          <h3 class="sidebar-title">📑 Kategori & Daftar Artikel</h3>
+          <div class="category-scroll-area" id="accordionContainer">
+            <p style="color: #777; font-size: 12px;">Memuat menu...</p>
           </div>
         </aside>
       </div>
 
       <!-- KONTEN UTAMA ARTIKEL -->
       <section class="main-article-card">
-        <!-- Hero Box Informasi Artikel (Cover + Inti/Ringkasan) -->
         <div id="articleHeroBox" class="article-hero-box">
           <img
             id="articleCover"
@@ -228,9 +314,7 @@
             class="article-hero-cover"
           />
           <div class="article-hero-info">
-            <span id="articleCategoryBadge" class="article-badge-tag"
-              >Kategori</span
-            >
+            <span id="articleCategoryBadge" class="article-badge-tag">Kategori</span>
             <h1 id="articleTitleDisplay" class="article-title-sub">-</h1>
             <p
               id="articleMetaAuthor"
@@ -262,7 +346,7 @@
         </article>
       </section>
 
-      <!-- SIDEBAR KANAN: Daftar Bab (TOC) -->
+      <!-- SIDEBAR KANAN: DAFTAR BAB (TOC) -->
       <div class="sidebar-right-sticky">
         <aside
           id="tocSidebarCard"
@@ -278,15 +362,13 @@
     </main>
 
     <script>
+      let currentArticleId = "";
+
       window.addEventListener("DOMContentLoaded", () => {
-        // 1. Ambil ID postingan dari URL query string (?id=...)
         const urlParams = new URLSearchParams(window.location.search);
-        const articleId = urlParams.get("id");
+        currentArticleId = urlParams.get("id");
 
-        // 2. Baca data dari localStorage (hasil simpanan Admin)
         const storedPosts = JSON.parse(localStorage.getItem("maul_posts")) || [];
-
-        // Data default jika localStorage belum terisi
         const defaultPosts = [
           {
             id: "1",
@@ -295,56 +377,38 @@
             category: "Dzikir & Do'a",
             date: "10 Oktober 2026",
             cover: "assets/cover-dzikir.jpg",
-            coreMessage:
-              "Kumpulan bacaan dzikir dan doa penenang hati untuk mengawali pagi hari.",
-            fullContent:
-              "<h2 id='istiadzah'>Isti'adzah</h2><p>أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ...</p>",
+            coreMessage: "Kumpulan bacaan dzikir dan doa penenang hati untuk mengawali pagi hari.",
+            fullContent: "<h2 id='istiadzah'>Isti'adzah</h2><p>أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ...</p>",
           },
         ];
 
         const allPosts = storedPosts.length > 0 ? storedPosts : defaultPosts;
-
-        // 3. Cari postingan berdasarkan ID
-        let post = allPosts.find((p) => String(p.id) === String(articleId));
-
-        // Jika tidak ketemu berdasarkan ID, coba cari berdasarkan ID di default
-        if (!post) {
-          post = allPosts[0];
-        }
+        let post = allPosts.find((p) => String(p.id) === String(currentArticleId)) || allPosts[0];
 
         if (!post) {
-          document.getElementById("articleContent").innerHTML =
-            "<p>Postingan tidak ditemukan.</p>";
+          document.getElementById("articleContent").innerHTML = "<p>Postingan tidak ditemukan.</p>";
           return;
         }
 
-        // 4. Render Judul Halaman
+        currentArticleId = String(post.id);
         document.title = `${post.title} — Maul Prs`;
 
-        // 5. Render Informasi Detail Artikel
         const bd = post.bookData || {};
-        const catName =
-          post.type || post.category || bd.bookMainCategory || "Catatan";
+        const catName = post.type || post.category || bd.bookMainCategory || "Catatan";
 
         document.getElementById("articleCategoryBadge").textContent = catName;
         document.getElementById("articleTitleDisplay").textContent = post.title;
-        document.getElementById("articleCoreDisplay").textContent =
-          post.coreMessage || bd.bookCore || post.summary || "";
-        document.getElementById("articleDateDisplay").textContent =
-          post.date || "-";
+        document.getElementById("articleCoreDisplay").textContent = post.coreMessage || bd.bookCore || post.summary || "";
+        document.getElementById("articleDateDisplay").textContent = post.date || "-";
 
-        // Render Penulis jika ada (Khusus Book Summary)
         const authorEl = document.getElementById("articleMetaAuthor");
         if (bd.bookAuthor) {
-          authorEl.textContent = `✍️ Penulis: ${bd.bookAuthor} ${
-            bd.bookYear ? `(${bd.bookYear})` : ""
-          }`;
+          authorEl.textContent = `✍️ Penulis: ${bd.bookAuthor} ${bd.bookYear ? `(${bd.bookYear})` : ""}`;
           authorEl.style.display = "block";
         } else {
           authorEl.style.display = "none";
         }
 
-        // Render Gambar Cover dengan Penanganan Aman
         const coverEl = document.getElementById("articleCover");
         if (post.cover && post.cover.trim() !== "") {
           coverEl.src = post.cover;
@@ -353,36 +417,70 @@
           coverEl.src = "assets/default-cover.png";
         }
 
-        // Render Isi Konten Artikel
-        const rawContent =
-          post.fullContent ||
-          `<p>${post.coreMessage || bd.bookCore || post.title}</p>`;
+        const rawContent = post.fullContent || `<p>${post.coreMessage || bd.bookCore || post.title}</p>`;
         document.getElementById("articleContent").innerHTML = rawContent;
 
-        // Generate Daftar Isi di Sidebar Kanan
+        // Render Sidebar Kiri (Accordion) & Kanan (TOC)
+        renderAccordionSidebar(allPosts, catName);
         generateTableOfContents();
       });
 
-      function generateTableOfContents() {
-        const headings = document
-          .getElementById("articleContent")
-          .querySelectorAll("h2, h3");
-        const tocCard = document.getElementById("tocSidebarCard");
-        const tocList = document.getElementById("tocList");
+      // FUNGSI MEMBUAT ACCORDION SIDEBAR KIRI
+      function renderAccordionSidebar(allPosts, currentCatName) {
+        const categories = [
+          { name: "Book Summary", icon: "📚" },
+          { name: "Quote & Nasehat", icon: "💡" },
+          { name: "Dzikir & Do'a", icon: "🤲" },
+          { name: "Cerita Inspirasi", icon: "✨" }
+        ];
 
-        if (headings.length === 0) {
-          tocCard.style.display = "none";
-          return;
-        }
-
+        const container = document.getElementById("accordionContainer");
         let html = "";
-        headings.forEach((h, index) => {
-          if (!h.id) h.id = `heading-${index}`;
-          html += `<li><a href="#${h.id}">📌 ${h.textContent}</a></li>`;
+
+        categories.forEach((cat) => {
+          // Filter postingan berdasarkan kategori ini
+          const matchingPosts = allPosts.filter(p => {
+            const bd = p.bookData || {};
+            const c = p.type || p.category || bd.bookMainCategory;
+            return c === cat.name;
+          });
+
+          const isCurrentCat = currentCatName === cat.name;
+
+          html += `
+            <div class="acc-category-item">
+              <button class="acc-btn ${isCurrentCat ? 'active' : ''}" onclick="toggleAccordion(this)">
+                <span>${cat.icon} ${cat.name} (${matchingPosts.length})</span>
+                <span class="acc-icon">▼</span>
+              </button>
+              <ul class="acc-post-list ${isCurrentCat ? 'open' : ''}">
+          `;
+
+          if (matchingPosts.length === 0) {
+            html += `<li class="acc-post-item"><span style="color: #666; font-size: 11px; padding: 4px 10px; display:block;">Belum ada tulisan</span></li>`;
+          } else {
+            matchingPosts.forEach(p => {
+              const isCurrent = String(p.id) === currentArticleId;
+              html += `
+                <li class="acc-post-item">
+                  <a href="article.html?id=${p.id}" class="${isCurrent ? 'current-article' : ''}">
+                    ${p.title}
+                  </a>
+                </li>
+              `;
+            });
+          }
+
+          html += `
+              </ul>
+            </div>
+          `;
         });
-        tocList.innerHTML = html;
-        tocCard.style.display = "block";
+
+        container.innerHTML = html;
       }
-    </script>
-  </body>
-</html>
+
+      function toggleAccordion(btnEl) {
+        const listEl = btnEl.nextElementSibling;
+        btnEl.classList.toggle("active");
+        listEl.classList.toggle("open");
