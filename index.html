@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Maul Prs — catatan tentang iman, kehidupan, buku, dan pengembangan diri." />
     <title>Maul Prs — Ideas for Faith, Life & Growth</title>
+    <!-- PASTIKAN PATH CSS INI SESUAI DENGAN FILE CSS DI GITHUB ANDA -->
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
     <!-- Header Navigation -->
     <header class="site-header">
       <div class="container nav">
-        <a class="brand" href="index_2.html">
+        <a class="brand" href="index.html">
           <img class="brand-photo" src="assets/profile.png" alt="Maul Prs" onerror="this.style.display = 'none'" />
           <span>Maul Prs</span>
         </a>
@@ -48,7 +49,7 @@
             <button class="filter-btn" onclick="filterPosts('Dzikir & Do\'a', this)">🤲 Dzikir & Do'a</button>
             <button class="filter-btn" onclick="filterPosts('Cerita Inspirasi', this)">✨ Cerita Inspirasi</button>
           </div>
-          <input id="searchInput" class="search-input" type="search" placeholder="Cari tulisan atau buku..." oninput="handleSearch(this.value)" aria-label="Cari tulisan" />
+          <input id="searchInput" class="search-input" type="search" placeholder="Cari tulisan atau buku..." oninput="handleSearch()" aria-label="Cari tulisan" />
         </div>
 
         <!-- Grid Postingan (3 Kolom) -->
@@ -62,20 +63,6 @@
     </main>
 
     <script>
-      // Database statis untuk GitHub
-      let allPostsData = [
-        {
-          id: "1",
-          title: "Dzikir & Do'a Pagi",
-          category: "Dzikir & Do'a",
-          type: "Dzikir & Do'a",
-          date: "10 Oktober 2026",
-          cover: "assets/cover-dzikir.jpg",
-          coreMessage: "Kumpulan bacaan dzikir dan doa penenang hati untuk mengawali pagi hari.",
-          status: "active"
-        }
-      ];
-
       let currentCategory = "all";
       let currentPage = 1;
       const postsPerPage = 6;
@@ -84,10 +71,16 @@
         applyFilters();
       });
 
+      function toggleMenu() {
+        const nav = document.getElementById("navMenu");
+        nav.classList.toggle("active");
+      }
+
       function renderBerandaPosts(postsToRender) {
         const grid = document.getElementById("berandaPostsGrid");
         const paginationContainer = document.getElementById("paginationContainer");
-        
+
+        // Ambil data dari localStorage jika ada, atau gunakan default
         const activePosts = postsToRender.filter(p => p.status !== "archived");
 
         if (activePosts.length === 0) {
@@ -107,9 +100,8 @@
           const bd = post.bookData || {};
           const coverUrl = post.cover || 'assets/default-cover.png';
           
-          // Diperbaiki: Membaca kategori secara dinamis dan akurat
+          // Membaca kategori dinamis agar tidak memaksakan Book Summary
           const categoryName = post.category || post.type || bd.bookMainCategory || 'Catatan';
-          
           const title = post.title;
           const summaryText = post.coreMessage || bd.bookCore || post.summary || '';
 
@@ -163,6 +155,21 @@
 
       function applyFilters() {
         const keyword = document.getElementById("searchInput").value.toLowerCase();
+        
+        // Baca data dari localStorage jika ada (untuk sinkronisasi admin lokal/statis)
+        let allPostsData = JSON.parse(localStorage.getItem("maul_posts")) || [
+          {
+            id: "1",
+            title: "Dzikir & Do'a Pagi",
+            category: "Dzikir & Do'a",
+            type: "Dzikir & Do'a",
+            date: "10 Oktober 2026",
+            cover: "assets/cover-dzikir.jpg",
+            coreMessage: "Kumpulan bacaan dzikir dan doa penenang hati untuk mengawali pagi hari.",
+            status: "active"
+          }
+        ];
+
         let filtered = allPostsData;
 
         if (currentCategory !== "all") {
