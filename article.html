@@ -16,12 +16,25 @@
         min-height: auto !important;
       }
 
+      /* LAYOUT GRID DENGAN DUKUNGAN MODE FOKUS */
       .article-layout {
         display: grid;
         grid-template-columns: 260px 1fr 280px;
         gap: 24px;
         padding: 20px 0 80px 0;
         align-items: start;
+        transition: all 0.3s ease;
+      }
+
+      /* TAMPILAN MODE FOKUS DEAKTIFKAN SIDEBAR & PERLEBAR KONTEN */
+      body.focus-mode .sidebar-left-sticky,
+      body.focus-mode .sidebar-right-sticky {
+        display: none !important;
+      }
+      body.focus-mode .article-layout {
+        grid-template-columns: 1fr;
+        max-width: 820px;
+        margin: 0 auto;
       }
 
       .sidebar-card,
@@ -248,6 +261,26 @@
         scroll-margin-top: 80px;
       }
 
+      /* TOMBOL MODE FOKUS */
+      .focus-toggle-btn {
+        background: rgba(3, 42, 24, 0.8);
+        border: 1px solid var(--border-color, #0f3020);
+        color: #34d399;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 6px 14px;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .focus-toggle-btn:hover {
+        background: #34d399;
+        color: #020c06;
+      }
+
       @media (max-width: 1024px) {
         .article-layout {
           grid-template-columns: 1fr;
@@ -268,7 +301,7 @@
   </head>
   <body>
     <header class="site-header">
-      <div class="container nav">
+      <div class="container nav" style="display: flex; justify-content: space-between; align-items: center;">
         <a class="brand" href="index.html">
           <img
             class="brand-photo"
@@ -278,25 +311,32 @@
           />
           <span>Maul Prs</span>
         </a>
-        <a
-          href="index.html"
-          style="
-            color: var(--accent-light, #34d399);
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 500;
-          "
-        >
-          ← Beranda
-        </a>
+
+        <!-- NAVIGASI ATAS: TOMBOL FOKUS & BERANDA -->
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <button id="focusBtn" class="focus-toggle-btn" onclick="toggleFocusMode()">
+            👁️ <span id="focusBtnText">Mode Fokus</span>
+          </button>
+          <a
+            href="index.html"
+            style="
+              color: var(--accent-light, #34d399);
+              text-decoration: none;
+              font-size: 13px;
+              font-weight: 500;
+            "
+          >
+            ← Beranda
+          </a>
+        </div>
       </div>
     </header>
 
     <main class="container article-layout">
-      <!-- SIDEBAR KIRI: ACCORDION KATEGORI -->
+      <!-- SIDEBAR KIRI: ACCORDION KATEGORI TAGGING -->
       <div class="sidebar-left-sticky">
         <aside class="category-card-container">
-          <h3 class="sidebar-title">📑 Kategori & Artikel</h3>
+          <h3 class="sidebar-title">📑 Kategori & Buku</h3>
           <div class="category-scroll-area" id="accordionContainer">
             <p style="color: #777; font-size: 12px;">Memuat menu...</p>
           </div>
@@ -365,19 +405,25 @@
       let currentArticleId = "";
 
       window.addEventListener("DOMContentLoaded", () => {
+        // Cek status Mode Fokus dari LocalStorage
+        if (localStorage.getItem("maul_focus_mode") === "enabled") {
+          document.body.classList.add("focus-mode");
+          document.getElementById("focusBtnText").innerText = "Keluar Fokus";
+        }
+
         try {
           const urlParams = new URLSearchParams(window.location.search);
           currentArticleId = urlParams.get("id");
 
           const storedPosts = JSON.parse(localStorage.getItem("maul_posts")) || [];
           
-          // Data Default Lengkap jika localStorage kosong
           const defaultPosts = [
             {
               id: "1",
               title: "Dzikir & Do'a Pagi",
               type: "Dzikir & Do'a",
               category: "Dzikir & Do'a",
+              categories: ["Dzikir & Do'a"],
               date: "10 Oktober 2026",
               cover: "assets/cover-dzikir.jpg",
               coreMessage: "Kumpulan bacaan dzikir dan doa penenang hati untuk mengawali pagi hari.",
@@ -388,6 +434,7 @@
               title: "The Lost Art of Listening",
               type: "Book Summary",
               category: "Book Summary",
+              categories: ["Komunikasi", "Psychology"],
               date: "10 Oktober 2026",
               cover: "assets/cover-listening.jpg",
               coreMessage: "Mendengarkan sungguh-sungguh membuat orang merasa dimengerti dan itulah kunci hubungan yang sehat.",
@@ -439,57 +486,65 @@
           const rawContent = post.fullContent || `<p>${post.coreMessage || bd.bookCore || post.title}</p>`;
           document.getElementById("articleContent").innerHTML = rawContent;
 
-          renderAccordionSidebar(allPosts, catName);
+          renderAccordionSidebarByTag(allPosts, post);
           generateTableOfContents();
         } catch (err) {
           console.error("Error loading article:", err);
         }
       });
 
-      // RENDER SIDEBAR KIRI (ACCORDION)
-      function renderAccordionSidebar(allPosts, currentCatName) {
-        const categories = [
-          { name: "Book Summary", icon: "📚" },
-          { name: "Quote & Nasehat", icon: "💡" },
-          { name: "Dzikir & Do'a", icon: "🤲" },
-          { name: "Cerita Inspirasi", icon: "✨" }
-        ];
+      // RENDER ACCORDION SIDEBAR DENGAN KATEGORI TAGGING BUKU (Productivity, Komunikasi, Dll)
+      function renderAccordionSidebarByTag(allPosts, currentPost) {
+        // Ambil semua kategori unik dari array 'categories' milik setiap postingan
+        let tagMap = {};
+
+        allPosts.forEach(p => {
+          let tags = p.categories;
+          if (!tags || !Array.isArray(tags) || tags.length === 0) {
+            tags = [p.type || p.category || "Umum"];
+          }
+          
+          tags.forEach(t => {
+            const cleanTag = t.trim();
+            if (!tagMap[cleanTag]) {
+              tagMap[cleanTag] = [];
+            }
+            // Hindari duplikat postingan di tag yang sama
+            if (!tagMap[cleanTag].some(item => String(item.id) === String(p.id))) {
+              tagMap[cleanTag].push(p);
+            }
+          });
+        });
 
         const container = document.getElementById("accordionContainer");
         let html = "";
 
-        categories.forEach((cat) => {
-          const matchingPosts = allPosts.filter(p => {
-            const bd = p.bookData || {};
-            const c = p.type || p.category || bd.bookMainCategory;
-            return c === cat.name;
-          });
+        // Ambil tag aktif postingan saat ini untuk otomatis membuka foldernya
+        const currentPostTags = currentPost.categories || [currentPost.type || currentPost.category];
 
-          const isCurrentCat = (currentCatName === cat.name);
+        Object.keys(tagMap).forEach(tagName => {
+          const postsInTag = tagMap[tagName];
+          const isCurrentCat = currentPostTags.includes(tagName);
 
           html += `
             <div class="acc-category-item">
               <button class="acc-btn ${isCurrentCat ? 'active' : ''}" onclick="toggleAccordion(this)">
-                <span>${cat.icon} ${cat.name} (${matchingPosts.length})</span>
+                <span>🏷️ ${tagName} (${postsInTag.length})</span>
                 <span class="acc-icon">▼</span>
               </button>
               <ul class="acc-post-list ${isCurrentCat ? 'open' : ''}">
           `;
 
-          if (matchingPosts.length === 0) {
-            html += `<li class="acc-post-item"><span style="color: #666; font-size: 11px; padding: 4px 10px; display:block;">Belum ada tulisan</span></li>`;
-          } else {
-            matchingPosts.forEach(p => {
-              const isCurrent = (String(p.id) === String(currentArticleId));
-              html += `
-                <li class="acc-post-item">
-                  <a href="article.html?id=${p.id}" class="${isCurrent ? 'current-article' : ''}">
-                    ${p.title}
-                  </a>
-                </li>
-              `;
-            });
-          }
+          postsInTag.forEach(p => {
+            const isCurrent = (String(p.id) === String(currentArticleId));
+            html += `
+              <li class="acc-post-item">
+                <a href="article.html?id=${p.id}" class="${isCurrent ? 'current-article' : ''}">
+                  ${p.title}
+                </a>
+              </li>
+            `;
+          });
 
           html += `
               </ul>
@@ -505,6 +560,20 @@
         if (listEl) {
           btnEl.classList.toggle("active");
           listEl.classList.toggle("open");
+        }
+      }
+
+      // FUNGSI TOGGLE MODE FOKUS
+      function toggleFocusMode() {
+        document.body.classList.toggle("focus-mode");
+        const btnText = document.getElementById("focusBtnText");
+
+        if (document.body.classList.contains("focus-mode")) {
+          localStorage.setItem("maul_focus_mode", "enabled");
+          btnText.innerText = "Keluar Fokus";
+        } else {
+          localStorage.setItem("maul_focus_mode", "disabled");
+          btnText.innerText = "Mode Fokus";
         }
       }
 
