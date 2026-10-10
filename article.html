@@ -6,9 +6,15 @@
     <title id="pageTitle">Detail Artikel — Maul Prs</title>
     <link rel="stylesheet" href="css/style.css" />
     <style>
-      html { scroll-behavior: smooth; }
-      .site-header { padding: 10px 0 !important; }
-      .site-header .nav { min-height: auto !important; }
+      html {
+        scroll-behavior: smooth;
+      }
+      .site-header {
+        padding: 10px 0 !important;
+      }
+      .site-header .nav {
+        min-height: auto !important;
+      }
 
       .article-layout {
         display: grid;
@@ -18,28 +24,67 @@
         align-items: start;
       }
 
-      .sidebar-card, .category-card-container, .toc-card-container {
-        background: var(--bg-card);
-        border: 1px solid var(--border-color);
+      .sidebar-card,
+      .category-card-container,
+      .toc-card-container {
+        background: var(--bg-card, #071a0e);
+        border: 1px solid var(--border-color, #0f3020);
         border-radius: 12px;
         padding: 18px;
         margin-bottom: 20px;
       }
 
-      .sidebar-left-sticky, .sidebar-right-sticky {
+      .sidebar-title {
+        color: #fff;
+        font-size: 16px;
+        margin-top: 0;
+        margin-bottom: 12px;
+        border-bottom: 1px solid var(--border-color, #0f3020);
+        padding-bottom: 8px;
+      }
+
+      .sidebar-left-sticky,
+      .sidebar-right-sticky {
         position: sticky;
         top: 75px;
       }
 
-      .category-scroll-area, .toc-scroll-area {
-        max-height: 280px;
+      .category-scroll-area,
+      .toc-scroll-area {
+        max-height: 320px;
         overflow-y: auto;
+      }
+
+      .category-list,
+      .toc-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .category-list li,
+      .toc-list li {
+        margin-bottom: 10px;
+      }
+
+      .category-list a,
+      .toc-list a {
+        color: #d4f0dc;
+        text-decoration: none;
+        font-size: 14px;
+        transition: 0.2s;
+        display: block;
+      }
+
+      .category-list a:hover,
+      .toc-list a:hover {
+        color: #34d399;
       }
 
       /* Kotak Informasi Utama Artikel / Buku */
       .article-hero-box {
         background: rgba(3, 42, 24, 0.7);
-        border: 1px solid var(--border-color);
+        border: 1px solid var(--border-color, #0f3020);
         border-radius: 12px;
         padding: 24px;
         display: grid;
@@ -54,7 +99,8 @@
         height: 210px;
         border-radius: 8px;
         object-fit: cover;
-        border: 1px solid var(--border-color);
+        border: 1px solid var(--border-color, #0f3020);
+        background: #032a18;
       }
 
       .article-hero-info {
@@ -66,8 +112,8 @@
       .article-badge-tag {
         display: inline-block;
         background: #032a18;
-        border: 1px solid var(--border-color);
-        color: var(--accent-light);
+        border: 1px solid var(--border-color, #0f3020);
+        color: var(--accent-light, #34d399);
         font-size: 11px;
         font-weight: 600;
         padding: 3px 10px;
@@ -85,35 +131,46 @@
 
       .article-core-desc {
         font-size: 14px;
-        color: var(--text-main);
+        color: var(--text-main, #d4f0dc);
         line-height: 1.6;
         margin: 2px 0;
       }
 
       .main-article-card {
-        background: var(--bg-card);
-        border: 1px solid var(--border-color);
+        background: var(--bg-card, #071a0e);
+        border: 1px solid var(--border-color, #0f3020);
         border-radius: 12px;
         padding: 28px;
       }
 
       .article-content {
-        color: var(--text-main);
+        color: var(--text-main, #d4f0dc);
         line-height: 1.8;
         font-size: 16px;
       }
 
-      .article-content h2, .article-content h3 {
+      .article-content h2,
+      .article-content h3 {
         color: #fff;
         margin-top: 32px;
         scroll-margin-top: 80px;
       }
 
       @media (max-width: 1024px) {
-        .article-layout { grid-template-columns: 1fr; }
-        .article-hero-box { grid-template-columns: 100px 1fr; gap: 14px; padding: 14px; }
-        .article-hero-cover { height: 130px; }
-        .article-title-sub { font-size: 17px; }
+        .article-layout {
+          grid-template-columns: 1fr;
+        }
+        .article-hero-box {
+          grid-template-columns: 100px 1fr;
+          gap: 14px;
+          padding: 14px;
+        }
+        .article-hero-cover {
+          height: 130px;
+        }
+        .article-title-sub {
+          font-size: 17px;
+        }
       }
     </style>
   </head>
@@ -121,10 +178,23 @@
     <header class="site-header">
       <div class="container nav">
         <a class="brand" href="index.html">
-          <img class="brand-photo" src="assets/profile.png" alt="Maul Prs" onerror="this.style.display='none'" />
+          <img
+            class="brand-photo"
+            src="assets/profile.png"
+            alt="Maul Prs"
+            onerror="this.style.display='none'"
+          />
           <span>Maul Prs</span>
         </a>
-        <a href="index.html" style="color: var(--accent-light); text-decoration: none; font-size: 13px; font-weight: 500;">
+        <a
+          href="index.html"
+          style="
+            color: var(--accent-light, #34d399);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+          "
+        >
           ← Beranda
         </a>
       </div>
@@ -136,7 +206,13 @@
         <aside class="category-card-container">
           <h3 class="sidebar-title">Kategori & Menu</h3>
           <div class="category-scroll-area">
-            <ul class="category-list" id="categorySidebar"></ul>
+            <ul class="category-list" id="categorySidebar">
+              <li><a href="index.html">Semua Tulisan</a></li>
+              <li><a href="index.html#categories">📚 Book Summary</a></li>
+              <li><a href="index.html#categories">💡 Quote & Nasehat</a></li>
+              <li><a href="index.html#categories">🤲 Dzikir & Do'a</a></li>
+              <li><a href="index.html#categories">✨ Cerita Inspirasi</a></li>
+            </ul>
           </div>
         </aside>
       </div>
@@ -145,26 +221,54 @@
       <section class="main-article-card">
         <!-- Hero Box Informasi Artikel (Cover + Inti/Ringkasan) -->
         <div id="articleHeroBox" class="article-hero-box">
-          <img id="articleCover" src="" alt="Cover" class="article-hero-cover" />
+          <img
+            id="articleCover"
+            src="assets/default-cover.png"
+            alt="Cover"
+            class="article-hero-cover"
+          />
           <div class="article-hero-info">
-            <span id="articleCategoryBadge" class="article-badge-tag">Kategori</span>
+            <span id="articleCategoryBadge" class="article-badge-tag"
+              >Kategori</span
+            >
             <h1 id="articleTitleDisplay" class="article-title-sub">-</h1>
-            <p id="articleMetaAuthor" style="color: var(--text-muted); font-size: 13px; margin: 0; display: none;"></p>
+            <p
+              id="articleMetaAuthor"
+              style="
+                color: #a3e635;
+                font-size: 13px;
+                margin: 0;
+                display: none;
+                font-weight: 500;
+              "
+            ></p>
             <p id="articleCoreDisplay" class="article-core-desc">-</p>
-            <div style="font-size: 12px; color: var(--text-muted); border-top: 1px solid rgba(255,255,255,0.08); padding-top: 8px;">
-              📅 Tanggal: <strong id="articleDateDisplay" style="color: #fff;">-</strong>
+            <div
+              style="
+                font-size: 12px;
+                color: #888;
+                border-top: 1px solid rgba(255, 255, 255, 0.08);
+                padding-top: 8px;
+              "
+            >
+              📅 Tanggal:
+              <strong id="articleDateDisplay" style="color: #fff">-</strong>
             </div>
           </div>
         </div>
 
         <article id="articleContent" class="article-content">
-          <p style="color: var(--text-muted);">Memuat konten...</p>
+          <p style="color: var(--text-muted)">Memuat konten...</p>
         </article>
       </section>
 
       <!-- SIDEBAR KANAN: Daftar Bab (TOC) -->
       <div class="sidebar-right-sticky">
-        <aside id="tocSidebarCard" class="toc-card-container" style="display: none;">
+        <aside
+          id="tocSidebarCard"
+          class="toc-card-container"
+          style="display: none"
+        >
           <h3 class="sidebar-title">📖 Bab & Sub-Judul</h3>
           <div class="toc-scroll-area">
             <ul class="toc-list" id="tocList"></ul>
@@ -174,48 +278,95 @@
     </main>
 
     <script>
-      // Struktur Data Statis untuk GitHub (Ganti dengan fetch('posts.json') jika menggunakan file JSON terpisah)
-      const staticPostsDatabase = [
-        {
-          id: "1",
-          title: "Dzikir & Do'a Pagi",
-          category: "Dzikir & Do'a",
-          date: "10 Oktober 2026",
-          cover: "assets/cover-dzikir.jpg",
-          coreMessage: "Kumpulan bacaan dzikir dan doa penenang hati untuk mengawali pagi hari.",
-          fullContent: "<h2 id='istiadzah'>Isti'adzah</h2><p>أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ...</p>"
-        }
-        // Tambahkan data postingan lainnya di sini sesuai kebutuhan GitHub Anda
-      ];
-
       window.addEventListener("DOMContentLoaded", () => {
+        // 1. Ambil ID postingan dari URL query string (?id=...)
         const urlParams = new URLSearchParams(window.location.search);
-        const articleId = urlParams.get("id") || staticPostsDatabase[0].id;
+        const articleId = urlParams.get("id");
 
-        const post = staticPostsDatabase.find(p => String(p.id) === String(articleId)) || staticPostsDatabase[0];
+        // 2. Baca data dari localStorage (hasil simpanan Admin)
+        const storedPosts = JSON.parse(localStorage.getItem("maul_posts")) || [];
 
+        // Data default jika localStorage belum terisi
+        const defaultPosts = [
+          {
+            id: "1",
+            title: "Dzikir & Do'a Pagi",
+            type: "Dzikir & Do'a",
+            category: "Dzikir & Do'a",
+            date: "10 Oktober 2026",
+            cover: "assets/cover-dzikir.jpg",
+            coreMessage:
+              "Kumpulan bacaan dzikir dan doa penenang hati untuk mengawali pagi hari.",
+            fullContent:
+              "<h2 id='istiadzah'>Isti'adzah</h2><p>أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ...</p>",
+          },
+        ];
+
+        const allPosts = storedPosts.length > 0 ? storedPosts : defaultPosts;
+
+        // 3. Cari postingan berdasarkan ID
+        let post = allPosts.find((p) => String(p.id) === String(articleId));
+
+        // Jika tidak ketemu berdasarkan ID, coba cari berdasarkan ID di default
+        if (!post) {
+          post = allPosts[0];
+        }
+
+        if (!post) {
+          document.getElementById("articleContent").innerHTML =
+            "<p>Postingan tidak ditemukan.</p>";
+          return;
+        }
+
+        // 4. Render Judul Halaman
         document.title = `${post.title} — Maul Prs`;
-        
-        // Render Badge Kategori sesuai data asli (Bukan default Book Summary)
-        document.getElementById("articleCategoryBadge").textContent = post.category;
-        document.getElementById("articleTitleDisplay").textContent = post.title;
-        document.getElementById("articleCoreDisplay").textContent = post.coreMessage || post.summary || "";
-        document.getElementById("articleDateDisplay").textContent = post.date;
 
+        // 5. Render Informasi Detail Artikel
+        const bd = post.bookData || {};
+        const catName =
+          post.type || post.category || bd.bookMainCategory || "Catatan";
+
+        document.getElementById("articleCategoryBadge").textContent = catName;
+        document.getElementById("articleTitleDisplay").textContent = post.title;
+        document.getElementById("articleCoreDisplay").textContent =
+          post.coreMessage || bd.bookCore || post.summary || "";
+        document.getElementById("articleDateDisplay").textContent =
+          post.date || "-";
+
+        // Render Penulis jika ada (Khusus Book Summary)
+        const authorEl = document.getElementById("articleMetaAuthor");
+        if (bd.bookAuthor) {
+          authorEl.textContent = `✍️ Penulis: ${bd.bookAuthor} ${
+            bd.bookYear ? `(${bd.bookYear})` : ""
+          }`;
+          authorEl.style.display = "block";
+        } else {
+          authorEl.style.display = "none";
+        }
+
+        // Render Gambar Cover dengan Penanganan Aman
         const coverEl = document.getElementById("articleCover");
-        if (post.cover) {
+        if (post.cover && post.cover.trim() !== "") {
           coverEl.src = post.cover;
           coverEl.style.display = "block";
         } else {
-          coverEl.style.display = "none";
+          coverEl.src = "assets/default-cover.png";
         }
 
-        document.getElementById("articleContent").innerHTML = post.fullContent || "<p>Belum ada isi konten.</p>";
+        // Render Isi Konten Artikel
+        const rawContent =
+          post.fullContent ||
+          `<p>${post.coreMessage || bd.bookCore || post.title}</p>`;
+        document.getElementById("articleContent").innerHTML = rawContent;
+
+        // Generate Daftar Isi di Sidebar Kanan
         generateTableOfContents();
       });
 
       function generateTableOfContents() {
-        const headings = document.getElementById("articleContent").querySelectorAll("h2, h3");
+        const headings = document
+          .getElementById("articleContent")
+          .querySelectorAll("h2, h3");
         const tocCard = document.getElementById("tocSidebarCard");
         const tocList = document.getElementById("tocList");
 
