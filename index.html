@@ -210,6 +210,17 @@
 
         renderBerandaPosts(filtered);
       }
+      // Tutup menu hamburger jika klik di luar area menu/tombol
+document.addEventListener('click', function(event) {
+  const navMenu = document.getElementById('navMenu');
+  const menuToggle = document.querySelector('.menu-toggle');
+  
+  if (navMenu.classList.contains('active')) {
+    if (!navMenu.contains(event.target) && !menuToggle.contains(event.target)) {
+      navMenu.classList.remove('active');
+    }
+  }
+});
     </script>
   </body>
 </html>
