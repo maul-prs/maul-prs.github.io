@@ -6,6 +6,7 @@
     <meta name="description" content="Maul Prs — catatan tentang iman, kehidupan, buku, dan pengembangan diri." />
     <title>Maul Prs — Ideas for Faith, Life & Growth</title>
     <link rel="stylesheet" href="css/style.css" />
+    <script src="posts.js"></script>
   </head>
   <body>
     <!-- Header Navigation -->
@@ -60,7 +61,7 @@
         <div class="pagination" id="paginationContainer"></div>
       </section>
 
-      <!-- YouTube & About Sections (TIDAK ADA PERUBAHAN) -->
+      <!-- YouTube & About Sections -->
       <section id="youtube" class="section container">
         <div class="info-box" style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: center;">
           <div>
@@ -92,6 +93,18 @@
         applyFilters();
       });
 
+      // Tutup menu hamburger jika klik di luar area menu/tombol
+      document.addEventListener('click', function(event) {
+        const navMenu = document.getElementById("navMenu");
+        const menuToggle = document.querySelector('.menu-toggle');
+        
+        if (navMenu && navMenu.classList.contains('active')) {
+          if (!navMenu.contains(event.target) && !menuToggle.contains(event.target)) {
+            navMenu.classList.remove('active');
+          }
+        }
+      });
+
       function toggleMenu() {
         const nav = document.getElementById("navMenu");
         nav.classList.toggle("active");
@@ -120,7 +133,6 @@
           const bd = post.bookData || {};
           const coverUrl = post.cover || 'assets/default-cover.png';
           
-          // FOKUS PERBAIKAN CARD: Kategori dan Teks Inti Dinamis sesuai tab
           const categoryName = post.type || post.category || bd.bookMainCategory || 'Catatan';
           const title = post.title;
           const summaryText = post.coreMessage || bd.bookCore || post.summary || '';
@@ -176,20 +188,19 @@
       function applyFilters() {
         const keyword = document.getElementById("searchInput").value.toLowerCase();
         
-        // Ambil data konsisten dari localStorage hasil panel admin
-        let allPostsData = JSON.parse(localStorage.getItem("maul_posts")) || [
-          {
-            id: "1",
-            title: "Dzikir & Do'a Pagi",
-            type: "Dzikir & Do'a",
-            category: "Dzikir & Do'a",
-            date: "10 Oktober 2026",
-            cover: "assets/cover-dzikir.jpg",
-            coreMessage: "Kumpulan bacaan dzikir dan doa penenang hati untuk mengawali pagi hari.",
-            status: "active"
-          }
-        ];
+        // --- LOGIKA GABUNGAN: posts.js & localStorage ---
+        let storedPosts = JSON.parse(localStorage.getItem("maul_posts")) || [];
+        let combinedMap = new Map();
 
+        // 1. Masukkan data dari file posts.js (defaultPostsData) jika ada
+        if (typeof defaultPostsData !== 'undefined') {
+          defaultPostsData.forEach(p => combinedMap.set(String(p.id), p));
+        }
+
+        // 2. Timpa/tambahkan dengan data dari localStorage (hasil admin)
+        storedPosts.forEach(p => combinedMap.set(String(p.id), p));
+
+        let allPostsData = Array.from(combinedMap.values());
         let filtered = allPostsData;
 
         if (currentCategory !== "all") {
@@ -210,17 +221,6 @@
 
         renderBerandaPosts(filtered);
       }
-      // Tutup menu hamburger jika klik di luar area menu/tombol
-document.addEventListener('click', function(event) {
-  const navMenu = document.getElementById('navMenu');
-  const menuToggle = document.querySelector('.menu-toggle');
-  
-  if (navMenu.classList.contains('active')) {
-    if (!navMenu.contains(event.target) && !menuToggle.contains(event.target)) {
-      navMenu.classList.remove('active');
-    }
-  }
-});
     </script>
   </body>
 </html>

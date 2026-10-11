@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title id="pageTitle">Detail Artikel — Maul Prs</title>
     <link rel="stylesheet" href="css/style.css" />
+    <script src="posts.js"></script>
     <style>
       html {
         scroll-behavior: smooth;
@@ -415,38 +416,16 @@
           const urlParams = new URLSearchParams(window.location.search);
           currentArticleId = urlParams.get("id");
 
-          const storedPosts = JSON.parse(localStorage.getItem("maul_posts")) || [];
-          
-          const defaultPosts = [
-            {
-              id: "1",
-              title: "Dzikir & Do'a Pagi",
-              type: "Dzikir & Do'a",
-              category: "Dzikir & Do'a",
-              categories: ["Dzikir & Do'a"],
-              date: "10 Oktober 2026",
-              cover: "assets/cover-dzikir.jpg",
-              coreMessage: "Kumpulan bacaan dzikir dan doa penenang hati untuk mengawali pagi hari.",
-              fullContent: "<h2 id='istiadzah'>Isti'adzah</h2><p>أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ...</p>",
-            },
-            {
-              id: "2",
-              title: "The Lost Art of Listening",
-              type: "Book Summary",
-              category: "Book Summary",
-              categories: ["Komunikasi", "Psychology"],
-              date: "10 Oktober 2026",
-              cover: "assets/cover-listening.jpg",
-              coreMessage: "Mendengarkan sungguh-sungguh membuat orang merasa dimengerti dan itulah kunci hubungan yang sehat.",
-              fullContent: "<h2>Pengantar: Tentang Buku Ini</h2><p>Pernahkah kamu bercerita panjang lebar, lalu sadar lawan bicaramu sibuk menyusun jawabannya sendiri?</p>",
-              bookData: {
-                bookAuthor: "Michael P. Nichols",
-                bookYear: "1995"
-              }
-            }
-          ];
+          // --- LOGIKA GABUNGAN: posts.js & localStorage ---
+          let storedPosts = JSON.parse(localStorage.getItem("maul_posts")) || [];
+          let combinedMap = new Map();
 
-          const allPosts = storedPosts.length > 0 ? storedPosts : defaultPosts;
+          if (typeof defaultPostsData !== 'undefined') {
+            defaultPostsData.forEach(p => combinedMap.set(String(p.id), p));
+          }
+          storedPosts.forEach(p => combinedMap.set(String(p.id), p));
+
+          const allPosts = Array.from(combinedMap.values());
           
           let post = null;
           if (currentArticleId) {
@@ -493,9 +472,8 @@
         }
       });
 
-      // RENDER ACCORDION SIDEBAR DENGAN KATEGORI TAGGING BUKU (Productivity, Komunikasi, Dll)
+      // RENDER ACCORDION SIDEBAR DENGAN KATEGORI TAGGING BUKU
       function renderAccordionSidebarByTag(allPosts, currentPost) {
-        // Ambil semua kategori unik dari array 'categories' milik setiap postingan
         let tagMap = {};
 
         allPosts.forEach(p => {
@@ -509,7 +487,6 @@
             if (!tagMap[cleanTag]) {
               tagMap[cleanTag] = [];
             }
-            // Hindari duplikat postingan di tag yang sama
             if (!tagMap[cleanTag].some(item => String(item.id) === String(p.id))) {
               tagMap[cleanTag].push(p);
             }
@@ -519,7 +496,6 @@
         const container = document.getElementById("accordionContainer");
         let html = "";
 
-        // Ambil tag aktif postingan saat ini untuk otomatis membuka foldernya
         const currentPostTags = currentPost.categories || [currentPost.type || currentPost.category];
 
         Object.keys(tagMap).forEach(tagName => {
