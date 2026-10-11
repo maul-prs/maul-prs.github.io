@@ -187,20 +187,21 @@
           >
         </div>
 
-        <!-- Konfigurasi GitHub API -->
-        <div style="background: #032a18; border: 1px solid #0f3020; padding: 18px; border-radius: 10px; margin-bottom: 25px;">
-          <h3 style="color: #34d399; font-size: 15px; margin-top: 0; margin-bottom: 10px;">⚙️ Konfigurasi GitHub Repository</h3>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-            <div class="form-group" style="margin-bottom: 0;">
-              <label style="font-size: 13px;">Repository (contoh: maul-prs/maul-prs.github.io)</label>
-              <input type="text" id="ghRepo" placeholder="username/nama-repo" value="maul-prs/maul-prs.github.io" />
-            </div>
-            <div class="form-group" style="margin-bottom: 0;">
-              <label style="font-size: 13px;">GitHub Personal Access Token (PAT)</label>
-              <input type="password" id="ghToken" placeholder="ghp_xxxxxxxxxxxx" />
-            </div>
-          </div>
-        </div>
+<!-- Konfigurasi GitHub API -->
+<div style="background: #032a18; border: 1px solid #0f3020; padding: 18px; border-radius: 10px; margin-bottom: 25px;">
+  <h3 style="color: #34d399; font-size: 15px; margin-top: 0; margin-bottom: 10px;">⚙️ Konfigurasi GitHub Repository</h3>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+    <div class="form-group" style="margin-bottom: 0;">
+      <label style="font-size: 13px;">Repository (contoh: maul-prs/maul-prs.github.io)</label>
+      <input type="text" id="ghRepo" placeholder="username/nama-repo" value="maul-prs/maul-prs.github.io" />
+    </div>
+    <div class="form-group" style="margin-bottom: 0;">
+      <label style="font-size: 13px;">GitHub Personal Access Token (PAT)</label>
+      <!-- DI SINILAH TEMPAT KOTAK INPUT PAT -->
+      <input type="password" id="ghToken" placeholder="ghp_xxxxxxxxxxxx" />
+    </div>
+  </div>
+</div>
 
         <!-- Tombol Tab Kategori Utama -->
         <div class="category-tabs">
@@ -616,7 +617,7 @@
             document.getElementById("mainTitle").innerText = "Panel Admin Postingan";
           } else {
             const newPost = {
-              id: Date.now().toString,
+              id: Date.now().toString(),
               slug: slug,
               title,
               type: postType,
