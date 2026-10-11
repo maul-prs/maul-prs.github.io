@@ -71,24 +71,5 @@
       "bookCore": "Orang baru mau mendengar setelah merasa didengar dan dirasakan, jadi dengarkan dulu sampai mereka merasa dimengerti, baru ajak berubah.\n"
     },
     "status": "active"
-  },
-  {
-    "id": "2",
-    "title": "The Lost Art of Listening",
-    "type": "Book Summary",
-    "category": "Book Summary",
-    "categories": [
-      "Komunikasi",
-      "Psychology"
-    ],
-    "date": "10 Oktober 2026",
-    "cover": "assets/cover-listening.jpg",
-    "coreMessage": "Mendengarkan sungguh-sungguh membuat orang merasa dimengerti dan itulah kunci hubungan yang sehat.",
-    "fullContent": "<h2>Pengantar: Tentang Buku Ini</h2><p>Pernahkah kamu bercerita panjang lebar...</p>",
-    "bookData": {
-      "bookAuthor": "Michael P. Nichols",
-      "bookYear": "1995"
-    },
-    "status": "active"
   }
 ]
