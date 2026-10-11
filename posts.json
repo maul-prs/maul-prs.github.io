@@ -73,20 +73,6 @@
     "status": "active"
   },
   {
-    "id": "1",
-    "title": "Dzikir & Do'a Pagi",
-    "type": "Dzikir & Do'a",
-    "category": "Dzikir & Do'a",
-    "categories": [
-      "Dzikir & Do'a"
-    ],
-    "date": "10 Oktober 2026",
-    "cover": "assets/cover-dzikir.jpg",
-    "coreMessage": "Kumpulan bacaan dzikir dan doa penenang hati untuk mengawali pagi hari.",
-    "fullContent": "<h2 id='istiadzah'>Isti'adzah</h2><p>أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ...</p>",
-    "status": "active"
-  },
-  {
     "id": "2",
     "title": "The Lost Art of Listening",
     "type": "Book Summary",
