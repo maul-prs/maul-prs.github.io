@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title id="pageTitle">Detail Artikel — Maul Prs</title>
     <link rel="stylesheet" href="css/style.css" />
-    <script src="posts.js"></script>
     <style>
       html {
         scroll-behavior: smooth;
@@ -352,7 +351,7 @@
             src="assets/default-cover.png"
             alt="Cover"
             class="article-hero-cover"
-            onerror="this.onerror=null; this.src='assets/default-cover.png';"
+            onerror="coverFallback(this)"
           />
           <div class="article-hero-info">
             <span id="articleCategoryBadge" class="article-badge-tag">Kategori</span>
@@ -405,7 +404,34 @@
     <script>
       let currentArticleId = "";
 
-      window.addEventListener("DOMContentLoaded", () => {
+      // ---------- Data: posts.json adalah satu-satunya sumber ----------
+      async function loadPosts() {
+        try {
+          const res = await fetch("posts.json?v=" + Date.now(), { cache: "no-store" });
+          if (!res.ok) throw new Error("HTTP " + res.status);
+          const data = await res.json();
+          return Array.isArray(data) ? data : data.posts || [];
+        } catch (err) {
+          console.error("Gagal memuat posts.json:", err);
+          return [];
+        }
+      }
+
+      const DEFAULT_COVER = "assets/default-cover.png";
+      function resolveCover(path) {
+        let c = (path || "").trim();
+        if (!c) return DEFAULT_COVER;
+        if (/^(https?:|data:)/i.test(c)) return c;
+        return c.replace(/^\.?\/+/, ""); // "/images/x.jpg" -> "images/x.jpg" (aman untuk project site)
+      }
+      function coverFallback(img) {
+        if (!img.dataset.fb) { img.dataset.fb = "1"; img.src = DEFAULT_COVER; }
+        else { img.style.display = "none"; }
+      }
+      const esc = (s) =>
+        String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+      window.addEventListener("DOMContentLoaded", async () => {
         // Cek status Mode Fokus dari LocalStorage
         if (localStorage.getItem("maul_focus_mode") === "enabled") {
           document.body.classList.add("focus-mode");
@@ -413,26 +439,19 @@
         }
 
         try {
-          const urlParams = new URLSearchParams(window.location.search);
-          currentArticleId = urlParams.get("id");
+          currentArticleId = new URLSearchParams(window.location.search).get("id");
 
-          // --- LOGIKA GABUNGAN: posts.js & localStorage ---
-          let storedPosts = JSON.parse(localStorage.getItem("maul_posts")) || [];
-          let combinedMap = new Map();
+          const all = await loadPosts();
+          const allPosts = all.filter((p) => p.status !== "archived");
 
-          if (typeof defaultPostsData !== 'undefined') {
-            defaultPostsData.forEach(p => combinedMap.set(String(p.id), p));
-          }
-          storedPosts.forEach(p => combinedMap.set(String(p.id), p));
-
-          const allPosts = Array.from(combinedMap.values());
-          
           let post = null;
           if (currentArticleId) {
-            post = allPosts.find((p) => String(p.id) === String(currentArticleId));
+            post = all.find((p) => String(p.id) === String(currentArticleId));
           }
+          if (!post) post = allPosts[0];
           if (!post) {
-            post = allPosts[0];
+            document.getElementById("articleContent").innerHTML = "<p>Artikel tidak ditemukan.</p>";
+            return;
           }
 
           currentArticleId = String(post.id);
@@ -454,15 +473,10 @@
             authorEl.style.display = "none";
           }
 
-          // RENDER COVER ARTIKEL (Mendukung direktori images/ maupun assets/ atau default)
-          const coverEl = document.getElementById("articleCover");
-          if (post.cover && post.cover.trim() !== "") {
-            coverEl.src = post.cover;
-          } else {
-            coverEl.src = "assets/default-cover.png";
-          }
+          // COVER: path dari posts.json (mis. images/cover-xyz.jpg)
+          document.getElementById("articleCover").src = resolveCover(post.cover);
 
-          const rawContent = post.fullContent || `<p>${post.coreMessage || bd.bookCore || post.title}</p>`;
+          const rawContent = post.fullContent || `<p>${esc(post.coreMessage || bd.bookCore || post.title)}</p>`;
           document.getElementById("articleContent").innerHTML = rawContent;
 
           renderAccordionSidebarByTag(allPosts, post);
@@ -515,7 +529,7 @@
             const isCurrent = (String(p.id) === String(currentArticleId));
             html += `
               <li class="acc-post-item">
-                <a href="article.html?id=${p.id}" class="${isCurrent ? 'current-article' : ''}">
+                <a href="article.html?id=${encodeURIComponent(p.id)}" class="${isCurrent ? 'current-article' : ''}">
                   ${p.title}
                 </a>
               </li>

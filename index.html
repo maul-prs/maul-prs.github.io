@@ -6,7 +6,10 @@
     <meta name="description" content="Maul Prs — catatan tentang iman, kehidupan, buku, dan pengembangan diri." />
     <title>Maul Prs — Ideas for Faith, Life & Growth</title>
     <link rel="stylesheet" href="css/style.css" />
-    <script src="posts.js"></script>
+    <style>
+      /* Pengaman tampilan cover (terutama mobile) */
+      .post-card-cover { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; background: #032a18; }
+    </style>
   </head>
   <body>
     <!-- Header Navigation -->
@@ -88,8 +91,37 @@
       let currentCategory = "all";
       let currentPage = 1;
       const postsPerPage = 6;
+      let allPosts = [];
 
-      window.addEventListener("DOMContentLoaded", () => {
+      // ---------- Data: posts.json adalah satu-satunya sumber ----------
+      async function loadPosts() {
+        try {
+          const res = await fetch("posts.json?v=" + Date.now(), { cache: "no-store" });
+          if (!res.ok) throw new Error("HTTP " + res.status);
+          const data = await res.json();
+          return Array.isArray(data) ? data : data.posts || [];
+        } catch (err) {
+          console.error("Gagal memuat posts.json:", err);
+          return [];
+        }
+      }
+
+      const DEFAULT_COVER = "assets/default-cover.png";
+      function resolveCover(path) {
+        let c = (path || "").trim();
+        if (!c) return DEFAULT_COVER;
+        if (/^(https?:|data:)/i.test(c)) return c;
+        return c.replace(/^\.?\/+/, ""); // "/images/x.jpg" -> "images/x.jpg" (aman untuk project site)
+      }
+      function coverFallback(img) {
+        if (!img.dataset.fb) { img.dataset.fb = "1"; img.src = DEFAULT_COVER; }
+        else { img.style.display = "none"; }
+      }
+      const esc = (s) =>
+        String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+      window.addEventListener("DOMContentLoaded", async () => {
+        allPosts = await loadPosts();
         applyFilters();
       });
 
@@ -131,15 +163,15 @@
         let html = "";
         paginatedPosts.forEach((post) => {
           const bd = post.bookData || {};
-          const coverUrl = post.cover || 'assets/default-cover.png';
+          const coverUrl = resolveCover(post.cover);
           
-          const categoryName = post.type || post.category || bd.bookMainCategory || 'Catatan';
-          const title = post.title;
+          const categoryName = esc(post.type || post.category || bd.bookMainCategory || 'Catatan');
+          const title = esc(post.title);
           const summaryText = post.coreMessage || bd.bookCore || post.summary || '';
 
           html += `
-            <a href="article.html?id=${post.id}" class="post-card">
-              <img src="${coverUrl}" alt="${title}" class="post-card-cover" onerror="this.style.display='none'" />
+            <a href="article.html?id=${encodeURIComponent(post.id)}" class="post-card">
+              <img src="${esc(coverUrl)}" alt="${title}" class="post-card-cover" loading="lazy" decoding="async" onerror="coverFallback(this)" />
               <div class="post-card-info">
                 <span class="post-card-badge">${categoryName}</span>
                 <h3 class="post-card-title">${title}</h3>
@@ -188,20 +220,7 @@
       function applyFilters() {
         const keyword = document.getElementById("searchInput").value.toLowerCase();
         
-        // --- LOGIKA GABUNGAN: posts.js & localStorage ---
-        let storedPosts = JSON.parse(localStorage.getItem("maul_posts")) || [];
-        let combinedMap = new Map();
-
-        // 1. Masukkan data dari file posts.js (defaultPostsData) jika ada
-        if (typeof defaultPostsData !== 'undefined') {
-          defaultPostsData.forEach(p => combinedMap.set(String(p.id), p));
-        }
-
-        // 2. Timpa/tambahkan dengan data dari localStorage (hasil admin)
-        storedPosts.forEach(p => combinedMap.set(String(p.id), p));
-
-        let allPostsData = Array.from(combinedMap.values());
-        let filtered = allPostsData;
+        let filtered = allPosts;
 
         if (currentCategory !== "all") {
           filtered = filtered.filter(post => {

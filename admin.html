@@ -224,9 +224,14 @@
           </button>
         </div>
 
+        <div id="legacyBanner" style="display:none;background:#032a18;border:1px solid #f59e0b;padding:14px 18px;border-radius:10px;margin-bottom:25px;color:#d4f0dc;font-size:14px;">
+          Ada <strong id="legacyCount">0</strong> postingan lama yang hanya tersimpan di browser ini (localStorage), jadi tidak terlihat di perangkat lain.
+          <button type="button" class="btn-action btn-archive" style="margin-left:8px;" onclick="importLegacy()">Impor ke posts.json</button>
+        </div>
+
         <!-- Form Utama -->
         <form id="postForm">
-          <input type="hidden" id="editIndex" value="" />
+          <input type="hidden" id="editId" value="" />
           <input type="hidden" id="postType" value="Book Summary" />
 
           <!-- Multi-Kategori Tagging -->
@@ -355,6 +360,8 @@
             <label>Upload Gambar Sampul (Cover)</label>
             <input type="file" id="postCoverFile" accept="image/*" />
             <input type="hidden" id="postCoverPath" />
+            <img id="coverPreview" alt="Preview cover" style="display:none;max-width:160px;margin-top:12px;border-radius:8px;border:1px solid #0f3020;" />
+            <small style="display:block;margin-top:8px;color:#9ca3af;">Gambar otomatis dikecilkan (maks. 1000px) &amp; diubah ke JPG sebelum diunggah ke folder <code>images/</code>.</small>
           </div>
 
           <div class="form-group">
@@ -401,295 +408,439 @@
     </div>
 
     <script>
+      // ============================================================
+      //  KONFIGURASI
+      //  Sumber data tunggal website = posts.json di root repo.
+      //  Cover diunggah ke folder images/ lalu path-nya disimpan
+      //  di field "cover" pada posts.json.
+      // ============================================================
+      const POSTS_FILE = "posts.json";
+      const IMAGE_DIR = "images";
+      const COVER_MAX_SIDE = 1000; // px, sisi terpanjang cover
+      const COVER_QUALITY = 0.85;  // kualitas JPEG
+
       let activeTab = "Book Summary";
       let selectedImageFile = null;
+      let remotePosts = [];
 
-      window.addEventListener("DOMContentLoaded", () => {
-        const today = new Date().toISOString().split("T")[0];
-        document.getElementById("postDate").value = today;
-        
-        if (localStorage.getItem("gh_token")) {
-          document.getElementById("ghToken").value = localStorage.getItem("gh_token");
+      const $ = (id) => document.getElementById(id);
+      const esc = (s) =>
+        String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+      // ---------- Helper GitHub API ----------
+      function getConfig() {
+        const repo = $("ghRepo").value.trim();
+        const token = $("ghToken").value.trim();
+        if (!/^[\w.-]+\/[\w.-]+$/.test(repo)) {
+          throw new Error("Format repository harus 'username/nama-repo'.");
+        }
+        if (!token) {
+          throw new Error("Mohon isi GitHub Personal Access Token terlebih dahulu.");
+        }
+        localStorage.setItem("gh_token", token);
+        return { repo, token };
+      }
+
+      function ghHeaders(token) {
+        return {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/vnd.github+json",
+          "X-GitHub-Api-Version": "2022-11-28",
+        };
+      }
+
+      async function apiError(res) {
+        let msg = `GitHub API error (${res.status})`;
+        try {
+          const j = await res.json();
+          if (j && j.message) msg = `${j.message} (${res.status})`;
+        } catch (_) {}
+        if (res.status === 401 || res.status === 403) msg += " — cek token & izin 'Contents: Read and write'.";
+        return new Error(msg);
+      }
+
+      // base64 aman untuk UTF-8 (judul/isi bahasa Indonesia & Arab)
+      function utf8ToBase64(str) {
+        const bytes = new TextEncoder().encode(str);
+        let bin = "";
+        for (let i = 0; i < bytes.length; i += 0x8000) {
+          bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+        }
+        return btoa(bin);
+      }
+      function base64ToUtf8(b64) {
+        const bin = atob(b64.replace(/\s/g, ""));
+        return new TextDecoder().decode(Uint8Array.from(bin, (c) => c.charCodeAt(0)));
+      }
+
+      // ---------- Gambar: kecilkan + ubah ke JPEG base64 ----------
+      function loadImage(file) {
+        return new Promise((resolve, reject) => {
+          const url = URL.createObjectURL(file);
+          const img = new Image();
+          img.onload = () => { URL.revokeObjectURL(url); resolve(img); };
+          img.onerror = () => { URL.revokeObjectURL(url); reject(new Error("Gambar tidak bisa dibaca. Coba pakai JPG atau PNG.")); };
+          img.src = url;
+        });
+      }
+
+      async function imageToJpegBase64(file) {
+        const img = await loadImage(file);
+        const scale = Math.min(1, COVER_MAX_SIDE / Math.max(img.naturalWidth, img.naturalHeight));
+        const w = Math.max(1, Math.round(img.naturalWidth * scale));
+        const h = Math.max(1, Math.round(img.naturalHeight * scale));
+        const canvas = document.createElement("canvas");
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext("2d");
+        ctx.fillStyle = "#ffffff"; // PNG transparan -> latar putih
+        ctx.fillRect(0, 0, w, h);
+        ctx.drawImage(img, 0, 0, w, h);
+        return canvas.toDataURL("image/jpeg", COVER_QUALITY).split(",")[1];
+      }
+
+      function makeSlug(title) {
+        const s = title.toLowerCase().replace(/[^a-z0-9\s-]/g, "").trim().replace(/\s+/g, "-").replace(/-+/g, "-");
+        return s || "post";
+      }
+
+      // Upload cover ke images/ lewat Contents API. Mengembalikan path relatif, mis. "images/cover-xyz-123.jpg"
+      async function uploadCoverToGitHub(file, slug) {
+        const { repo, token } = getConfig();
+        const path = `${IMAGE_DIR}/cover-${slug}-${Date.now()}.jpg`;
+        const content = await imageToJpegBase64(file);
+
+        const res = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
+          method: "PUT",
+          headers: { ...ghHeaders(token), "Content-Type": "application/json" },
+          body: JSON.stringify({ message: `Upload cover: ${slug}`, content }),
+        });
+        if (!res.ok) throw await apiError(res);
+        return path;
+      }
+
+      // ---------- Baca & tulis posts.json di repo ----------
+      async function fetchPostsFile(repo, token) {
+        const url = `https://api.github.com/repos/${repo}/contents/${POSTS_FILE}`;
+        const res = await fetch(url, { headers: ghHeaders(token), cache: "no-store" });
+        if (res.status === 404) return { posts: [], sha: null };
+        if (!res.ok) throw await apiError(res);
+        const meta = await res.json();
+
+        let text;
+        if (meta.content && meta.encoding === "base64") {
+          text = base64ToUtf8(meta.content);
+        } else {
+          // file > 1 MB: ambil isi mentahnya
+          const raw = await fetch(url, {
+            headers: { ...ghHeaders(token), Accept: "application/vnd.github.raw+json" },
+            cache: "no-store",
+          });
+          if (!raw.ok) throw await apiError(raw);
+          text = await raw.text();
+        }
+
+        let data;
+        try {
+          data = JSON.parse(text);
+        } catch (_) {
+          throw new Error("posts.json di repo bukan JSON yang valid (mungkin masih berisi kode posts.js). Ganti dulu dengan posts.json yang baru, lalu coba lagi.");
+        }
+        return { posts: Array.isArray(data) ? data : data.posts || [], sha: meta.sha };
+      }
+
+      // Read-modify-write: selalu ambil versi terbaru dulu supaya tidak menimpa perubahan lain.
+      async function commitPosts(mutator, message) {
+        const { repo, token } = getConfig();
+        const url = `https://api.github.com/repos/${repo}/contents/${POSTS_FILE}`;
+
+        for (let attempt = 0; attempt < 2; attempt++) {
+          const { posts, sha } = await fetchPostsFile(repo, token);
+          const next = mutator(posts) || posts;
+          const body = { message, content: utf8ToBase64(JSON.stringify(next, null, 2) + "\n") };
+          if (sha) body.sha = sha;
+
+          const res = await fetch(url, {
+            method: "PUT",
+            headers: { ...ghHeaders(token), "Content-Type": "application/json" },
+            body: JSON.stringify(body),
+          });
+          if (res.ok) {
+            remotePosts = next;
+            return;
+          }
+          if (res.status === 409 && attempt === 0) continue; // sha basi -> ulangi sekali
+          throw await apiError(res);
+        }
+        throw new Error("Terjadi konflik saat menyimpan posts.json. Coba lagi.");
+      }
+
+      async function loadHistory() {
+        const tbody = $("historyTableBody");
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#777;">Memuat dari GitHub...</td></tr>';
+        try {
+          const token = $("ghToken").value.trim();
+          const repo = $("ghRepo").value.trim();
+          if (token && /^[\w.-]+\/[\w.-]+$/.test(repo)) {
+            remotePosts = (await fetchPostsFile(repo, token)).posts;
+          } else {
+            const res = await fetch(POSTS_FILE + "?v=" + Date.now(), { cache: "no-store" });
+            remotePosts = res.ok ? await res.json() : [];
+          }
+        } catch (err) {
+          tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:#ef4444;">${esc(err.message)}</td></tr>`;
+          return;
         }
         renderHistory();
+      }
+
+      function renderHistory() {
+        const tbody = $("historyTableBody");
+        if (!remotePosts.length) {
+          tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#777;">Belum ada postingan.</td></tr>';
+          return;
+        }
+        tbody.innerHTML = remotePosts
+          .map((post) => {
+            const archived = post.status === "archived";
+            const cat = Array.isArray(post.categories) ? post.categories.join(", ") : post.category || post.type || "";
+            const id = esc(post.id);
+            return `
+            <tr>
+              <td><strong>${esc(post.title)}</strong></td>
+              <td><span style="color:#34d399;font-weight:500;">${esc(cat)}</span></td>
+              <td>${esc(post.date || "-")}</td>
+              <td>${archived ? '<span style="color:#f59e0b;">Diarsipkan</span>' : '<span style="color:#10b981;">Aktif</span>'}</td>
+              <td>
+                <div class="action-btns">
+                  <button type="button" class="btn-action btn-edit" onclick="editPost('${id}')">Edit</button>
+                  <button type="button" class="btn-action btn-archive" onclick="toggleArchive('${id}')">${archived ? "Pulihkan" : "Arsip"}</button>
+                  <button type="button" class="btn-action btn-delete" onclick="deletePost('${id}')">Hapus</button>
+                </div>
+              </td>
+            </tr>`;
+          })
+          .join("");
+      }
+
+      // ---------- Impor postingan lama dari localStorage (sekali jalan) ----------
+      function checkLegacy() {
+        let local = [];
+        try { local = JSON.parse(localStorage.getItem("maul_posts")) || []; } catch (_) {}
+        if (local.length) {
+          $("legacyCount").textContent = local.length;
+          $("legacyBanner").style.display = "block";
+        }
+      }
+
+      window.importLegacy = async function () {
+        let local = [];
+        try { local = JSON.parse(localStorage.getItem("maul_posts")) || []; } catch (_) {}
+        if (!local.length) return;
+        try {
+          await commitPosts((posts) => {
+            const ids = new Set(posts.map((p) => String(p.id)));
+            local.forEach((p) => { if (!ids.has(String(p.id))) posts.unshift(p); });
+            return posts;
+          }, "Import posts dari localStorage admin");
+          localStorage.removeItem("maul_posts");
+          $("legacyBanner").style.display = "none";
+          renderHistory();
+          alert("Berhasil. Postingan lama sekarang tersimpan di posts.json.");
+        } catch (err) {
+          alert("Gagal impor: " + err.message);
+        }
+      };
+
+      // ---------- UI ----------
+      window.addEventListener("DOMContentLoaded", () => {
+        $("postDate").value = new Date().toISOString().split("T")[0];
+        if (localStorage.getItem("gh_token")) $("ghToken").value = localStorage.getItem("gh_token");
+        checkLegacy();
+        loadHistory();
+        $("ghToken").addEventListener("change", loadHistory);
       });
 
       function switchTab(categoryName, event) {
         activeTab = categoryName;
-
         document.querySelectorAll(".tab-btn").forEach((btn) => btn.classList.remove("active"));
-        if (event && event.currentTarget) {
-          event.currentTarget.classList.add("active");
-        }
+        if (event && event.currentTarget) event.currentTarget.classList.add("active");
 
-        document.getElementById("postType").value = categoryName;
-        document.getElementById("submitBtn").innerText = `Simpan & Upload Postingan ${categoryName}`;
-
-        const catGroup = document.getElementById("book-category-group");
-        const bookDetailsSection = document.getElementById("book-details-section");
-
-        if (categoryName === "Cerita Inspirasi") {
-          catGroup.style.display = "none";
-        } else {
-          catGroup.style.display = "block";
-        }
+        $("postType").value = categoryName;
+        $("submitBtn").innerText = `Simpan & Upload Postingan ${categoryName}`;
+        $("book-category-group").style.display = categoryName === "Cerita Inspirasi" ? "none" : "block";
 
         if (categoryName === "Book Summary") {
-          bookDetailsSection.style.display = "block";
-          document.getElementById("bookMainCategory").value = "Book Summary";
+          $("book-details-section").style.display = "block";
+          $("bookMainCategory").value = "Book Summary";
         } else {
-          bookDetailsSection.style.display = "none";
+          $("book-details-section").style.display = "none";
         }
       }
 
-      document.getElementById("postCoverFile").addEventListener("change", function (e) {
-        selectedImageFile = e.target.files[0];
+      function showCoverPreview(src) {
+        const img = $("coverPreview");
+        if (src) { img.src = src; img.style.display = "block"; }
+        else { img.removeAttribute("src"); img.style.display = "none"; }
+      }
+
+      $("postCoverFile").addEventListener("change", function (e) {
+        selectedImageFile = e.target.files[0] || null;
+        showCoverPreview(selectedImageFile ? URL.createObjectURL(selectedImageFile) : $("postCoverPath").value);
       });
 
-      let uploadedHtmlContent = "";
-      document.getElementById("postHtmlFile").addEventListener("change", function (e) {
+      $("postHtmlFile").addEventListener("change", function (e) {
         const file = e.target.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = function (event) {
-            uploadedHtmlContent = event.target.result;
-            document.getElementById("postFullContent").value = uploadedHtmlContent;
-          };
-          reader.readAsText(file);
-        }
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (ev) => { $("postFullContent").value = ev.target.result; };
+        reader.readAsText(file);
       });
 
-      function fileToBase64(file) {
-        return new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.readAsDataURL(file);
-          reader.onload = () => {
-            let encoded = reader.result.toString().replace(/^data:(.*,)?/, '');
-            if ((encoded.length % 4) > 0) {
-              encoded += '='.repeat(4 - (encoded.length % 4));
-            }
-            resolve(encoded);
-          };
-          reader.onerror = error => reject(error);
-        });
+      function formatDateID(iso) {
+        const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+        const [y, m, d] = iso.split("-").map(Number);
+        return `${d} ${months[m - 1]} ${y}`;
       }
 
-      async function uploadImageToGitHub(file, slug) {
-        const repo = document.getElementById("ghRepo").value.trim();
-        const token = document.getElementById("ghToken").value.trim();
-
-        if (!token) {
-          alert("Mohon masukkan GitHub Personal Access Token terlebih dahulu!");
-          throw new Error("Token GitHub kosong");
-        }
-
-        localStorage.setItem("gh_token", token);
-
-        const fileExt = file.name.split('.').pop();
-        
-        // DIUBAH DARI 'assets/' MENJADI 'images/'
-        const fileName = `images/cover-${slug}-${Date.now()}.${fileExt}`;
-        
-        const base64Content = await fileToBase64(file);
-
-        const url = `https://api.github.com/repos/${repo}/contents/${fileName}`;
-        
-        const response = await fetch(url, {
-          method: "PUT",
-          headers: {
-            "Authorization": `token ${token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            message: `Upload cover image to images folder for post: ${slug}`,
-            content: base64Content
-          })
-        });
-
-        if (!response.ok) {
-          const errData = await response.json();
-          throw new Error(errData.message || "Gagal mengunggah gambar ke GitHub");
-        }
-
-        return fileName; // Akan mengembalikan jalur path misal: images/cover-xyz.jpg
-      }
-
-      function renderHistory() {
-        const posts = JSON.parse(localStorage.getItem("maul_posts")) || [];
-        const tbody = document.getElementById("historyTableBody");
-
-        if (posts.length === 0) {
-          tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: #777;">Belum ada riwayat postingan.</td></tr>';
-          return;
-        }
-
-        let html = "";
-        posts.forEach((post, index) => {
-          const isArchived = post.status === "archived";
-          const catDisplay = Array.isArray(post.categories) ? post.categories.join(", ") : post.category || post.type;
-          html += `
-            <tr>
-              <td><strong>${post.title}</strong></td>
-              <td><span style="color: #34d399; font-weight: 500;">${catDisplay}</span></td>
-              <td>${post.date || "-"}</td>
-              <td>${isArchived ? '<span style="color: #f59e0b;">Diarsipkan</span>' : '<span style="color: #10b981;">Aktif</span>'}</td>
-              <td>
-                <div class="action-btns">
-                  <button type="button" class="btn-action btn-edit" onclick="editPost(${index})">Edit</button>
-                  <button type="button" class="btn-action btn-archive" onclick="toggleArchive(${index})">${isArchived ? "Pulihkan" : "Arsip"}</button>
-                  <button type="button" class="btn-action btn-delete" onclick="deletePost(${index})">Hapus</button>
-                </div>
-              </td>
-            </tr>
-          `;
-        });
-        tbody.innerHTML = html;
-      }
-
-      document.getElementById("postForm").addEventListener("submit", async function (e) {
+      // ---------- Simpan (baru / edit) ----------
+      $("postForm").addEventListener("submit", async function (e) {
         e.preventDefault();
-        
-        const submitBtn = document.getElementById("submitBtn");
+        const submitBtn = $("submitBtn");
+        const originalLabel = submitBtn.innerText;
         submitBtn.disabled = true;
-        submitBtn.innerText = "Sedang Mengunggah & Menyimpan...";
 
         try {
-          const editIndex = document.getElementById("editIndex").value;
-          const title = document.getElementById("postTitle").value;
-          const postType = document.getElementById("postType").value;
+          getConfig(); // validasi repo + token lebih awal
 
-          const slug = title
-            .toLowerCase()
-            .replace(/[^a-z0-9\s-]/g, "")
-            .trim()
-            .replace(/\s+/g, "-");
+          const editId = $("editId").value;
+          const title = $("postTitle").value.trim();
+          const postType = $("postType").value;
+          const slug = makeSlug(title);
 
-          let coverPath = document.getElementById("postCoverPath").value;
+          let coverPath = $("postCoverPath").value;
           if (selectedImageFile) {
-            coverPath = await uploadImageToGitHub(selectedImageFile, slug);
+            submitBtn.innerText = "Mengunggah cover...";
+            coverPath = await uploadCoverToGitHub(selectedImageFile, slug);
           }
 
-          let selectedCategories = [];
+          let categories = [];
           if (postType !== "Cerita Inspirasi") {
-            const rawCatInput = document.getElementById("post-categories").value.trim();
-            if (rawCatInput !== "") {
-              selectedCategories = rawCatInput.split(",").map((c) => c.trim()).filter((c) => c !== "");
-            }
+            categories = $("post-categories").value.split(",").map((c) => c.trim()).filter(Boolean);
           }
-          if (selectedCategories.length === 0) {
-            selectedCategories = [postType];
-          }
+          if (!categories.length) categories = [postType];
 
-          const dateInput = document.getElementById("postDate").value;
-          let formattedDate = dateInput;
-          if (dateInput) {
-            const d = new Date(dateInput);
-            const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
-            formattedDate = `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
-          }
-
-          const fullContent = document.getElementById("postFullContent").value;
+          const dateISO = $("postDate").value;
+          const formattedDate = dateISO ? formatDateID(dateISO) : "";
+          const fullContent = $("postFullContent").value;
           const bookData = {
-            bookTitle: document.getElementById("bookTitle").value,
-            bookAuthor: document.getElementById("bookAuthor").value,
-            bookYear: document.getElementById("bookYear").value,
-            bookMainCategory: document.getElementById("bookMainCategory").value,
-            bookCore: document.getElementById("bookCore").value,
-            bookReadTime: document.getElementById("bookReadTime").value,
+            bookTitle: $("bookTitle").value,
+            bookAuthor: $("bookAuthor").value,
+            bookYear: $("bookYear").value,
+            bookMainCategory: $("bookMainCategory").value,
+            bookCore: $("bookCore").value,
+            bookReadTime: $("bookReadTime").value,
           };
 
-          let posts = JSON.parse(localStorage.getItem("maul_posts")) || [];
+          submitBtn.innerText = "Menyimpan posts.json...";
+          await commitPosts((posts) => {
+            if (editId) {
+              const p = posts.find((x) => String(x.id) === String(editId));
+              if (!p) throw new Error("Postingan yang diedit tidak ditemukan di posts.json.");
+              Object.assign(p, { title, slug, type: postType, category: postType, categories, date: formattedDate, dateISO, bookData });
+              if (coverPath) p.cover = coverPath;
+              if (fullContent) p.fullContent = fullContent;
+            } else {
+              posts.unshift({
+                id: Date.now().toString(),
+                slug,
+                title,
+                type: postType,
+                category: postType,
+                categories,
+                date: formattedDate,
+                dateISO,
+                cover: coverPath || "assets/default-cover.png",
+                coreMessage: bookData.bookCore || "",
+                fullContent: fullContent || `<p>${esc(bookData.bookCore || title)}</p>`,
+                bookData,
+                status: "active",
+              });
+            }
+            return posts;
+          }, `${editId ? "Update" : "Add"} post: ${title}`);
 
-          if (editIndex !== "") {
-            posts[editIndex].title = title;
-            posts[editIndex].slug = slug;
-            posts[editIndex].type = postType;
-            posts[editIndex].categories = selectedCategories;
-            posts[editIndex].date = formattedDate;
-            if (coverPath) posts[editIndex].cover = coverPath;
-            if (fullContent) posts[editIndex].fullContent = fullContent;
-            posts[editIndex].bookData = bookData;
+          alert(
+            (editId ? "Postingan diperbarui." : "Postingan baru tersimpan.") +
+              "\n\nGitHub Pages butuh sekitar 1 menit untuk menayangkan perubahan. Jika cover belum muncul, tunggu sebentar lalu refresh."
+          );
 
-            alert("Postingan dan gambar berhasil diperbarui ke GitHub!");
-            document.getElementById("editIndex").value = "";
-            document.getElementById("mainTitle").innerText = "Panel Admin Postingan";
-          } else {
-            const newPost = {
-              id: Date.now().toString(),
-              slug: slug,
-              title,
-              type: postType,
-              categories: selectedCategories,
-              date: formattedDate,
-              cover: coverPath || "assets/default-cover.png",
-              summary: bookData.bookCore || "",
-              fullContent: fullContent || `<p>${bookData.bookCore || title}</p>`,
-              bookData: bookData,
-              status: "active",
-            };
-            posts.unshift(newPost);
-            alert("Postingan baru dan gambar berhasil diunggah ke GitHub!");
-          }
-
-          localStorage.setItem("maul_posts", JSON.stringify(posts));
           this.reset();
-          document.getElementById("postDate").value = new Date().toISOString().split("T")[0];
+          $("editId").value = "";
+          $("postCoverPath").value = "";
+          $("postFullContent").value = "";
+          $("postDate").value = new Date().toISOString().split("T")[0];
+          $("mainTitle").innerText = "Panel Admin Postingan";
           selectedImageFile = null;
-          uploadedHtmlContent = "";
-          document.getElementById("postCoverPath").value = "";
+          showCoverPreview("");
           renderHistory();
-
         } catch (error) {
-          alert("Terjadi Kesalahan: " + error.message);
+          alert("Terjadi kesalahan: " + error.message);
         } finally {
           submitBtn.disabled = false;
-          submitBtn.innerText = "Simpan & Upload ke GitHub";
+          submitBtn.innerText = originalLabel;
         }
       });
 
-      window.editPost = function (index) {
-        const posts = JSON.parse(localStorage.getItem("maul_posts")) || [];
-        const post = posts[index];
+      // ---------- Edit / Arsip / Hapus (semuanya commit ke posts.json) ----------
+      window.editPost = function (id) {
+        const post = remotePosts.find((p) => String(p.id) === String(id));
         if (!post) return;
+        const bd = post.bookData || {};
 
-        document.getElementById("editIndex").value = index;
-        document.getElementById("postTitle").value = post.title;
-        document.getElementById("postCoverPath").value = post.cover || "";
-        document.getElementById("postFullContent").value = post.fullContent || "";
+        $("editId").value = post.id;
+        $("postType").value = post.type || activeTab;
+        $("postTitle").value = post.title || "";
+        $("postCoverPath").value = post.cover || "";
+        $("postFullContent").value = ""; // kosong = isi artikel lama tidak diubah
+        if (post.dateISO) $("postDate").value = post.dateISO;
+        $("post-categories").value = Array.isArray(post.categories) ? post.categories.join(", ") : "";
+        $("bookTitle").value = bd.bookTitle || "";
+        $("bookAuthor").value = bd.bookAuthor || "";
+        $("bookYear").value = bd.bookYear || "";
+        $("bookMainCategory").value = bd.bookMainCategory || "Book Summary";
+        $("bookCore").value = bd.bookCore || post.coreMessage || "";
+        $("bookReadTime").value = bd.bookReadTime || "";
 
-        if (post.categories && Array.isArray(post.categories)) {
-          document.getElementById("post-categories").value = post.categories.join(", ");
-        }
+        selectedImageFile = null;
+        $("postCoverFile").value = "";
+        showCoverPreview(post.cover);
 
-        if (post.bookData) {
-          document.getElementById("bookTitle").value = post.bookData.bookTitle || "";
-          document.getElementById("bookAuthor").value = post.bookData.bookAuthor || "";
-          document.getElementById("bookYear").value = post.bookData.bookYear || "";
-          document.getElementById("bookMainCategory").value = post.bookData.bookMainCategory || "Book Summary";
-          document.getElementById("bookCore").value = post.bookData.bookCore || "";
-          document.getElementById("bookReadTime").value = post.bookData.bookReadTime || "15-20 menit baca";
-        }
-
-        document.getElementById("mainTitle").innerText = "Edit Postingan: " + post.title;
-        document.getElementById("submitBtn").innerText = "Simpan Perubahan";
+        $("mainTitle").innerText = "Edit Postingan: " + post.title;
+        $("submitBtn").innerText = "Simpan Perubahan";
         window.scrollTo({ top: 0, behavior: "smooth" });
       };
 
-      window.toggleArchive = function (index) {
-        let posts = JSON.parse(localStorage.getItem("maul_posts")) || [];
-        if (posts[index]) {
-          posts[index].status = posts[index].status === "archived" ? "active" : "archived";
-          localStorage.setItem("maul_posts", JSON.stringify(posts));
+      window.toggleArchive = async function (id) {
+        try {
+          await commitPosts((posts) => {
+            const p = posts.find((x) => String(x.id) === String(id));
+            if (p) p.status = p.status === "archived" ? "active" : "archived";
+            return posts;
+          }, `Toggle archive post ${id}`);
           renderHistory();
+        } catch (err) {
+          alert("Gagal: " + err.message);
         }
       };
 
-      window.deletePost = function (index) {
-        if (confirm("Apakah Anda yakin ingin menghapus postingan ini secara permanen?")) {
-          let posts = JSON.parse(localStorage.getItem("maul_posts")) || [];
-          posts.splice(index, 1);
-          localStorage.setItem("maul_posts", JSON.stringify(posts));
+      window.deletePost = async function (id) {
+        if (!confirm("Apakah Anda yakin ingin menghapus postingan ini secara permanen?")) return;
+        try {
+          await commitPosts((posts) => posts.filter((x) => String(x.id) !== String(id)), `Delete post ${id}`);
           renderHistory();
+        } catch (err) {
+          alert("Gagal: " + err.message);
         }
       };
     </script>
