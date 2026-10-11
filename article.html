@@ -352,7 +352,7 @@
             src="assets/default-cover.png"
             alt="Cover"
             class="article-hero-cover"
-            onerror="this.src='assets/default-cover.png'"
+            onerror="this.onerror=null; this.src='assets/default-cover.png';"
           />
           <div class="article-hero-info">
             <span id="articleCategoryBadge" class="article-badge-tag">Kategori</span>
@@ -454,10 +454,10 @@
             authorEl.style.display = "none";
           }
 
+          // RENDER COVER ARTIKEL (Mendukung direktori images/ maupun assets/ atau default)
           const coverEl = document.getElementById("articleCover");
           if (post.cover && post.cover.trim() !== "") {
             coverEl.src = post.cover;
-            coverEl.style.display = "block";
           } else {
             coverEl.src = "assets/default-cover.png";
           }

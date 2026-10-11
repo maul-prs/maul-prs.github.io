@@ -486,7 +486,10 @@
         localStorage.setItem("gh_token", token);
 
         const fileExt = file.name.split('.').pop();
-        const fileName = `assets/cover-${slug}-${Date.now()}.${fileExt}`;
+        
+        // DIUBAH DARI 'assets/' MENJADI 'images/'
+        const fileName = `images/cover-${slug}-${Date.now()}.${fileExt}`;
+        
         const base64Content = await fileToBase64(file);
 
         const url = `https://api.github.com/repos/${repo}/contents/${fileName}`;
@@ -498,7 +501,7 @@
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            message: `Upload cover image for post: ${slug}`,
+            message: `Upload cover image to images folder for post: ${slug}`,
             content: base64Content
           })
         });
@@ -508,7 +511,7 @@
           throw new Error(errData.message || "Gagal mengunggah gambar ke GitHub");
         }
 
-        return fileName;
+        return fileName; // Akan mengembalikan jalur path misal: images/cover-xyz.jpg
       }
 
       function renderHistory() {
