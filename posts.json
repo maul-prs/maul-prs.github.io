@@ -1,38 +1,32 @@
-[
-    {
-    "id": "1",
-    "slug": "48 Laws of Power — Rangkuman",
-    "title": "48 Laws of Power — Rangkuman",
-    "date": "2026-09-24",
-    "category": "Book Summary",
-    "summary": "Mohammed Faris — Achieve More and Stress Less While Saving Your Soul. Rangkuman lengkap mengenai tiga dimensi utama produktivitas seorang Mu...",
-    "content": "<p>Mohammed Faris — Achieve More and Stress Less While Saving Your Soul. Rangkuman lengkap mengenai tiga dimensi utama produktivitas seorang Muslim, yaitu Spiritual (Ruh), Fisik (Raga), dan Intelektual (Jiwa).</p><p>Dalam buku ini, produktivitas bukan hanya soal mengejar target duniawi, melainkan bagaimana menyelaraskan energi fisik dan spiritual untuk mendapatkan keberkahan waktu.</p>"
+// posts.js - Basis data utama artikel untuk publik
+const defaultPostsData = [
+  {
+    id: "1",
+    title: "Dzikir & Do'a Pagi",
+    type: "Dzikir & Do'a",
+    category: "Dzikir & Do'a",
+    categories: ["Dzikir & Do'a"],
+    date: "10 Oktober 2026",
+    cover: "assets/cover-dzikir.jpg",
+    coreMessage: "Kumpulan bacaan dzikir dan doa penenang hati untuk mengawali pagi hari.",
+    fullContent: "<h2 id='istiadzah'>Isti'adzah</h2><p>أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ...</p>",
+    status: "active"
   },
   {
-    "id": "2",
-    "slug": "the-productive-muslim",
-    "title": "The Productive Muslim | Rangkuman Buku",
-    "date": "2026-09-24",
-    "category": "Book Summary",
-    "summary": "Mohammed Faris — Achieve More and Stress Less While Saving Your Soul. Rangkuman lengkap mengenai tiga dimensi utama produktivitas seorang Mu...",
-    "content": "<p>Mohammed Faris — Achieve More and Stress Less While Saving Your Soul. Rangkuman lengkap mengenai tiga dimensi utama produktivitas seorang Muslim, yaitu Spiritual (Ruh), Fisik (Raga), dan Intelektual (Jiwa).</p><p>Dalam buku ini, produktivitas bukan hanya soal mengejar target duniawi, melainkan bagaimana menyelaraskan energi fisik dan spiritual untuk mendapatkan keberkahan waktu.</p>"
-  },
-  {
-    "id": "3",
-    "slug": "the-compound-effect",
-    "title": "The Compound Effect — Darren Hardy",
-    "date": "2026-09-25",
-    "category": "Book Summary",
-    "summary": "Prinsip dasar bahwa keputusan kecil dan konsisten yang diambil setiap hari akan menghasilkan perbedaan yang masif dalam jangka panjang. Pela...",
-    "content": "<p>Prinsip dasar bahwa keputusan kecil dan konsisten yang diambil setiap hari akan menghasilkan perbedaan yang masif dalam jangka panjang.</p><p>Kesuksesan besar bukanlah hasil dari satu tindakan monumental yang instan, melainkan akumulasi dari kebiasaan-kebiasaan kecil harian yang dilakukan secara disiplin.</p>"
-  },
-  {
-    "id": "4",
-    "slug": "tawakkal-imam-al-ghazali",
-    "title": "Tawakkal — Imam Al Ghazali",
-    "date": "2026-09-26",
-    "category": "Quotes / Nasehat",
-    "summary": "Menyelami hakikat tawakal yang sesungguhnya menurut Imam Al Ghazali. Tawakal bukanlah sikap pasrah tanpa usaha, melainkan ketenangan hati se...",
-    "content": "<p>Menyelami hakikat tawakal yang sesungguhnya menurut Imam Al Ghazali. Tawakal bukanlah sikap pasrah tanpa usaha, melainkan ketenangan hati setelah mengerahkan ikhtiar secara maksimal.</p><p>Hati yang bertawakal bersandar sepenuhnya kepada Allah SWT namun tetap menjalankan peran dan tanggung jawab duniawinya dengan penuh kesadaran.</p>"
+    id: "2",
+    title: "The Lost Art of Listening",
+    type: "Book Summary",
+    category: "Book Summary",
+    categories: ["Komunikasi", "Psychology"],
+    date: "10 Oktober 2026",
+    cover: "assets/cover-listening.jpg",
+    coreMessage: "Mendengarkan sungguh-sungguh membuat orang merasa dimengerti dan itulah kunci hubungan yang sehat.",
+    fullContent: "<h2>Pengantar: Tentang Buku Ini</h2><p>Pernahkah kamu bercerita panjang lebar...</p>",
+    bookData: {
+      bookAuthor: "Michael P. Nichols",
+      bookYear: "1995"
+    },
+    status: "active"
   }
-]
+  // Anda bisa menambahkan artikel utama lainnya di sini
+];
