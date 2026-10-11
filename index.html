@@ -6,10 +6,6 @@
     <meta name="description" content="Maul Prs — catatan tentang iman, kehidupan, buku, dan pengembangan diri." />
     <title>Maul Prs — Ideas for Faith, Life & Growth</title>
     <link rel="stylesheet" href="css/style.css" />
-    <style>
-      /* Pengaman tampilan cover (terutama mobile) */
-      .post-card-cover { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; background: #032a18; }
-    </style>
   </head>
   <body>
     <!-- Header Navigation -->
@@ -106,15 +102,22 @@
         }
       }
 
-      const DEFAULT_COVER = "assets/default-cover.png";
       function resolveCover(path) {
-        let c = (path || "").trim();
-        if (!c) return DEFAULT_COVER;
+        const c = (path || "").trim();
+        if (!c) return "";
         if (/^(https?:|data:)/i.test(c)) return c;
-        return c.replace(/^\.?\/+/, ""); // "/images/x.jpg" -> "images/x.jpg" (aman untuk project site)
+        return c.replace(/^\.?\/+/, ""); // "/images/x.jpg" -> "images/x.jpg"
       }
+      // Placeholder bawaan (SVG inline, tidak butuh file apa pun) untuk post tanpa cover
+      function placeholderCover(post) {
+        const t = (post && (post.type || post.category)) || "";
+        const icon = /book/i.test(t) ? "📚" : /dzikir/i.test(t) ? "🤲" : /quote|nasehat/i.test(t) ? "💡" : /inspirasi/i.test(t) ? "✨" : "📝";
+        const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f3020"/><stop offset="1" stop-color="#032a18"/></linearGradient></defs><rect width="300" height="400" fill="url(#g)"/><text x="150" y="215" font-size="96" text-anchor="middle">' + icon + '</text></svg>';
+        return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+      }
+      // Dipakai kartu di index: gagal sekali -> placeholder (data URI, tidak mungkin gagal)
       function coverFallback(img) {
-        if (!img.dataset.fb) { img.dataset.fb = "1"; img.src = DEFAULT_COVER; }
+        if (!img.dataset.fb) { img.dataset.fb = "1"; img.src = placeholderCover({ type: img.dataset.t }); }
         else { img.style.display = "none"; }
       }
       const esc = (s) =>
@@ -163,7 +166,7 @@
         let html = "";
         paginatedPosts.forEach((post) => {
           const bd = post.bookData || {};
-          const coverUrl = resolveCover(post.cover);
+          const coverUrl = resolveCover(post.cover) || placeholderCover(post);
           
           const categoryName = esc(post.type || post.category || bd.bookMainCategory || 'Catatan');
           const title = esc(post.title);
@@ -171,7 +174,7 @@
 
           html += `
             <a href="article.html?id=${encodeURIComponent(post.id)}" class="post-card">
-              <img src="${esc(coverUrl)}" alt="${title}" class="post-card-cover" loading="lazy" decoding="async" onerror="coverFallback(this)" />
+              <img src="${esc(coverUrl)}" alt="${title}" class="post-card-cover" data-t="${esc(post.type || post.category || '')}" loading="lazy" decoding="async" onerror="coverFallback(this)" />
               <div class="post-card-info">
                 <span class="post-card-badge">${categoryName}</span>
                 <h3 class="post-card-title">${title}</h3>

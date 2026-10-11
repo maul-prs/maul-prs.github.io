@@ -297,6 +297,46 @@
           font-size: 17px;
         }
       }
+
+      /* ===== Perbaikan layout & cover ===== */
+      .main-article-card { min-width: 0; }
+      .article-content { overflow-wrap: anywhere; }
+      .article-content img,
+      .article-content table,
+      .article-content iframe,
+      .article-content video { max-width: 100%; height: auto; }
+      .article-content pre { max-width: 100%; overflow-x: auto; }
+      .article-hero-box.no-cover { grid-template-columns: 1fr; }
+
+      @media (max-width: 640px) {
+        /* margin kiri-kanan lebih kecil */
+        .site-header .container.nav { width: calc(100% - 28px) !important; max-width: none !important; gap: 8px; flex-wrap: nowrap; }
+        main.article-layout { width: calc(100% - 28px) !important; max-width: none !important; padding: 14px 0 60px; gap: 16px; }
+        .main-article-card { padding: 16px 14px; }
+
+        /* header tidak wrap */
+        .brand span { font-size: 15px; white-space: nowrap; }
+        .brand-photo { width: 32px; height: 32px; }
+        .focus-toggle-btn { padding: 6px 10px; font-size: 12px; white-space: nowrap; }
+        .back-link { font-size: 12px !important; white-space: nowrap; }
+
+        /* kotak judul + cover */
+        .article-hero-box { grid-template-columns: 88px 1fr; gap: 12px; padding: 12px; }
+        .article-hero-box.no-cover { grid-template-columns: 1fr; }
+        .article-hero-cover { height: 118px; }
+        .article-title-sub { font-size: 18px; }
+        .article-core-desc { font-size: 13px; }
+
+        /* isi artikel */
+        .article-content { font-size: 15px; line-height: 1.75; }
+        .article-content h2 { font-size: 20px; }
+        .article-content h3 { font-size: 17px; }
+        .article-content .arabic-text {
+          font-size: clamp(24px, 7vw, 30px) !important;
+          line-height: 2 !important;
+          max-width: 100%;
+        }
+      }
     </style>
   </head>
   <body>
@@ -319,6 +359,7 @@
           </button>
           <a
             href="index.html"
+            class="back-link"
             style="
               color: var(--accent-light, #34d399);
               text-decoration: none;
@@ -346,13 +387,7 @@
       <!-- KONTEN UTAMA ARTIKEL -->
       <section class="main-article-card">
         <div id="articleHeroBox" class="article-hero-box">
-          <img
-            id="articleCover"
-            src="assets/default-cover.png"
-            alt="Cover"
-            class="article-hero-cover"
-            onerror="coverFallback(this)"
-          />
+          <img id="articleCover" alt="Cover" class="article-hero-cover" />
           <div class="article-hero-info">
             <span id="articleCategoryBadge" class="article-badge-tag">Kategori</span>
             <h1 id="articleTitleDisplay" class="article-title-sub">-</h1>
@@ -417,19 +452,52 @@
         }
       }
 
-      const DEFAULT_COVER = "assets/default-cover.png";
       function resolveCover(path) {
-        let c = (path || "").trim();
-        if (!c) return DEFAULT_COVER;
+        const c = (path || "").trim();
+        if (!c) return "";
         if (/^(https?:|data:)/i.test(c)) return c;
-        return c.replace(/^\.?\/+/, ""); // "/images/x.jpg" -> "images/x.jpg" (aman untuk project site)
+        return c.replace(/^\.?\/+/, ""); // "/images/x.jpg" -> "images/x.jpg"
       }
+      // Placeholder bawaan (SVG inline, tidak butuh file apa pun) untuk post tanpa cover
+      function placeholderCover(post) {
+        const t = (post && (post.type || post.category)) || "";
+        const icon = /book/i.test(t) ? "📚" : /dzikir/i.test(t) ? "🤲" : /quote|nasehat/i.test(t) ? "💡" : /inspirasi/i.test(t) ? "✨" : "📝";
+        const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f3020"/><stop offset="1" stop-color="#032a18"/></linearGradient></defs><rect width="300" height="400" fill="url(#g)"/><text x="150" y="215" font-size="96" text-anchor="middle">' + icon + '</text></svg>';
+        return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+      }
+      // Dipakai kartu di index: gagal sekali -> placeholder (data URI, tidak mungkin gagal)
       function coverFallback(img) {
-        if (!img.dataset.fb) { img.dataset.fb = "1"; img.src = DEFAULT_COVER; }
+        if (!img.dataset.fb) { img.dataset.fb = "1"; img.src = placeholderCover({ type: img.dataset.t }); }
         else { img.style.display = "none"; }
       }
       const esc = (s) =>
         String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+      // COVER hero artikel. Tidak ada src awal di HTML -> tidak ada balapan antara
+      // error gambar default dan pengisian cover dari JS.
+      function setHeroCover(post) {
+        const img = document.getElementById("articleCover");
+        const box = document.getElementById("articleHeroBox");
+        box.classList.remove("no-cover");
+        img.style.display = "";
+        img.dataset.fb = "";
+        img.onerror = function () {
+          if (!img.dataset.fb) { img.dataset.fb = "1"; img.src = placeholderCover(post); }
+          else { img.style.display = "none"; box.classList.add("no-cover"); }
+        };
+        img.src = resolveCover(post.cover) || placeholderCover(post);
+      }
+
+      // Tandai elemen berisi teks Arab agar ukurannya bisa dikecilkan di layar HP
+      function markArabic(root) {
+        const re = /[\u0600-\u06FF]/;
+        root.querySelectorAll("*").forEach((el) => {
+          if (el.tagName === "STYLE" || el.tagName === "SCRIPT") return;
+          for (const n of el.childNodes) {
+            if (n.nodeType === 3 && re.test(n.nodeValue)) { el.classList.add("arabic-text"); break; }
+          }
+        });
+      }
 
       window.addEventListener("DOMContentLoaded", async () => {
         // Cek status Mode Fokus dari LocalStorage
@@ -474,10 +542,11 @@
           }
 
           // COVER: path dari posts.json (mis. images/cover-xyz.jpg)
-          document.getElementById("articleCover").src = resolveCover(post.cover);
+          setHeroCover(post);
 
           const rawContent = post.fullContent || `<p>${esc(post.coreMessage || bd.bookCore || post.title)}</p>`;
           document.getElementById("articleContent").innerHTML = rawContent;
+          markArabic(document.getElementById("articleContent"));
 
           renderAccordionSidebarByTag(allPosts, post);
           generateTableOfContents();
