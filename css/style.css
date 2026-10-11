@@ -425,4 +425,25 @@ body {
   .post-card-title {
     font-size: 15px;
   }
+  @media (max-width: 768px) {
+  /* Buat wrapper kategori dan search tersusun vertikal penuh di HP */
+  .category-search-wrapper {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  /* Buat kotak pencarian mengambil lebar penuh layar */
+  .search-input {
+    width: 100% !important;
+  }
+
+  /* Buat tombol kategori menyesuaikan ruang atau tersusun rapi */
+  .category-filter {
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    flex-wrap: nowrap; /* Opsional: bisa digeser horizontal atau biarkan wrap */
+  }
+}
 }
