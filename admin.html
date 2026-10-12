@@ -2,6 +2,7 @@
 <html lang="id">
   <head>
     <meta charset="utf-8" />
+    <meta name="robots" content="noindex" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Admin Panel — Maul Prs</title>
     <link rel="stylesheet" href="css/style.css" />
@@ -181,7 +182,7 @@
             Panel Admin Postingan
           </h2>
           <a
-            href="index.html"
+            href="/"
             style="color: #34d399; font-size: 15px; text-decoration: none"
             >← Ke Beranda</a
           >
@@ -224,14 +225,14 @@
           </button>
         </div>
 
-        <div id="legacyBanner" style="display:none;background:#032a18;border:1px solid #f59e0b;padding:14px 18px;border-radius:10px;margin-bottom:25px;color:#d4f0dc;font-size:14px;">
-          Ada <strong id="legacyCount">0</strong> postingan lama yang hanya tersimpan di browser ini (localStorage), jadi tidak terlihat di perangkat lain.
-          <button type="button" class="btn-action btn-archive" style="margin-left:8px;" onclick="importLegacy()">Impor ke posts.json</button>
+        <div id="legacyBanner" style="display:none;background:#032a18;border:1px solid #f59e0b;padding:14px 18px;border-radius:10px;margin-bottom:25px;color:#d4f0dc;font-size:14px;line-height:1.6;">
+          Ditemukan <strong id="legacyCount">0</strong> postingan dalam format lama (posts.json / browser ini). Pindahkan ke format baru (satu file per artikel) supaya bisa diedit di sini dan masuk Google.
+          <button type="button" id="migrateBtn" class="btn-action btn-archive" style="margin-left:8px;" onclick="migrateLegacy()">Migrasi sekarang</button>
         </div>
 
         <!-- Form Utama -->
         <form id="postForm">
-          <input type="hidden" id="editId" value="" />
+          <input type="hidden" id="editSlug" value="" />
           <input type="hidden" id="postType" value="Book Summary" />
 
           <!-- Multi-Kategori Tagging -->
@@ -266,6 +267,26 @@
               required
               placeholder="Masukkan judul..."
             />
+          </div>
+
+          <div class="form-group">
+            <label>Alamat URL (slug)</label>
+            <input type="text" id="postSlug" placeholder="otomatis dari judul" autocomplete="off" />
+            <small style="display:block;margin-top:6px;color:#9ca3af;">Alamat artikel: <code>/artikel/<strong>slug</strong>/</code>. Setelah dipublikasikan sebaiknya jangan diubah (link yang sudah dibagikan tetap hidup).</small>
+          </div>
+
+          <!-- INTI / PESAN UTAMA: tampil di semua tab (bukan hanya Book Summary) -->
+          <div class="form-group" id="core-group">
+            <label id="coreLabel" for="bookCore">Inti Buku (Ringkasan/Pesan Utama)</label>
+            <textarea
+              id="bookCore"
+              style="min-height: 90px"
+              placeholder="Tuliskan inti atau ringkasan singkat isi buku..."
+            ></textarea>
+            <small style="display:block;margin-top:6px;color:#9ca3af;">
+              Tampil di samping cover, di kartu beranda, dan menjadi deskripsi saat dibagikan ke Google &amp; WhatsApp.
+              Idealnya 120–160 karakter. <span id="coreCount">0 karakter</span>
+            </small>
           </div>
 
           <!-- KELOMPOK INPUT KHUSUS DETAIL BUKU -->
@@ -326,15 +347,6 @@
               </select>
             </div>
 
-            <div class="form-group">
-              <label>Inti Buku (Ringkasan/Pesan Utama)</label>
-              <textarea
-                id="bookCore"
-                style="min-height: 90px"
-                placeholder="Tuliskan inti atau ringkasan singkat isi buku..."
-              ></textarea>
-            </div>
-
             <div class="form-group" style="margin-bottom: 0">
               <label>Waktu Baca</label>
               <input
@@ -361,7 +373,7 @@
             <input type="file" id="postCoverFile" accept="image/*" />
             <input type="hidden" id="postCoverPath" />
             <img id="coverPreview" alt="Preview cover" style="display:none;max-width:160px;margin-top:12px;border-radius:8px;border:1px solid #0f3020;" />
-            <small style="display:block;margin-top:8px;color:#9ca3af;">Gambar otomatis dikecilkan (maks. 1000px) &amp; diubah ke JPG sebelum diunggah ke folder <code>images/</code>.</small>
+            <small style="display:block;margin-top:8px;color:#9ca3af;">Gambar otomatis dikecilkan (maks. 600px) &amp; diubah ke JPG sebelum diunggah ke folder <code>images/</code>.</small>
           </div>
 
           <div class="form-group">
@@ -409,46 +421,74 @@
 
     <script>
       // ============================================================
-      //  KONFIGURASI
-      //  Sumber data tunggal website = posts.json di root repo.
-      //  Cover diunggah ke folder images/ lalu path-nya disimpan
-      //  di field "cover" pada posts.json.
+      //  STRUKTUR DATA BARU
+      //  content/posts/<slug>.json   metadata artikel
+      //  content/posts/<slug>.html   isi artikel
+      //  images/<cover>.jpg          cover (otomatis dikecilkan)
+      //  Setiap simpan = SATU commit (cover + metadata + isi).
+      //  GitHub Actions lalu membangun ulang website otomatis.
       // ============================================================
-      const POSTS_FILE = "posts.json";
+      const POSTS_DIR = "content/posts";
       const IMAGE_DIR = "images";
-      const COVER_MAX_SIDE = 1000; // px, sisi terpanjang cover
-      const COVER_QUALITY = 0.85;  // kualitas JPEG
+      const INDEX_URL = "data/index.json";
+      const COVER_MAX_SIDE = 600; // px — cover paling besar di website ±160px, 600 sudah tajam di layar retina
+      const COVER_QUALITY = 0.82;
+      const SITE_ROOT = location.origin;
 
       let activeTab = "Book Summary";
       let selectedImageFile = null;
-      let remotePosts = [];
+      let listCache = []; // daftar ringkas dari data/index.json
+      let slugTouched = false;
 
       const $ = (id) => document.getElementById(id);
       const esc = (s) =>
         String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
-      // ---------- Helper GitHub API ----------
+      // ---------- Util ----------
+      const MONTHS = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+      function formatDateID(iso) {
+        const [y, m, d] = iso.split("-").map(Number);
+        return `${d} ${MONTHS[m - 1]} ${y}`;
+      }
+      function parseIndoDate(s) {
+        const m = /(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})/.exec(s || "");
+        if (!m) return "";
+        const i = MONTHS.findIndex((x) => x.toLowerCase() === m[2].toLowerCase());
+        return i < 0 ? "" : `${m[3]}-${String(i + 1).padStart(2, "0")}-${String(m[1]).padStart(2, "0")}`;
+      }
+      const todayISO = () => new Date().toISOString().split("T")[0];
+
+      // HARUS sama dengan slugify() di build.js agar alamat URL konsisten
+      function makeSlug(s) {
+        return (
+          String(s || "")
+            .normalize("NFKD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .toLowerCase()
+            .replace(/['’`]/g, "")
+            .replace(/&/g, " dan ")
+            .replace(/[^a-z0-9]+/g, "-")
+            .replace(/^-+|-+$/g, "")
+            .slice(0, 80)
+            .replace(/-+$/g, "") || "post"
+        );
+      }
+      function uniqueSlug(base, taken) {
+        let s = base,
+          n = 2;
+        while (taken.has(s)) s = `${base}-${n++}`;
+        return s;
+      }
+
+      // ---------- GitHub API ----------
       function getConfig() {
         const repo = $("ghRepo").value.trim();
         const token = $("ghToken").value.trim();
-        if (!/^[\w.-]+\/[\w.-]+$/.test(repo)) {
-          throw new Error("Format repository harus 'username/nama-repo'.");
-        }
-        if (!token) {
-          throw new Error("Mohon isi GitHub Personal Access Token terlebih dahulu.");
-        }
+        if (!/^[\w.-]+\/[\w.-]+$/.test(repo)) throw new Error("Format repository harus 'username/nama-repo'.");
+        if (!token) throw new Error("Mohon isi GitHub Personal Access Token terlebih dahulu.");
         localStorage.setItem("gh_token", token);
         return { repo, token };
       }
-
-      function ghHeaders(token) {
-        return {
-          Authorization: `Bearer ${token}`,
-          Accept: "application/vnd.github+json",
-          "X-GitHub-Api-Version": "2022-11-28",
-        };
-      }
-
       async function apiError(res) {
         let msg = `GitHub API error (${res.status})`;
         try {
@@ -458,22 +498,71 @@
         if (res.status === 401 || res.status === 403) msg += " — cek token & izin 'Contents: Read and write'.";
         return new Error(msg);
       }
+      async function gh(path, opts = {}) {
+        const { token } = getConfig();
+        const res = await fetch(`https://api.github.com${path}`, {
+          ...opts,
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/vnd.github+json",
+            "X-GitHub-Api-Version": "2022-11-28",
+            ...(opts.body ? { "Content-Type": "application/json" } : {}),
+            ...(opts.headers || {}),
+          },
+          cache: "no-store",
+        });
+        if (!res.ok) throw await apiError(res);
+        return res.status === 204 ? null : res.json();
+      }
+      const encPath = (p) => p.split("/").map(encodeURIComponent).join("/");
 
-      // base64 aman untuk UTF-8 (judul/isi bahasa Indonesia & Arab)
-      function utf8ToBase64(str) {
-        const bytes = new TextEncoder().encode(str);
-        let bin = "";
-        for (let i = 0; i < bytes.length; i += 0x8000) {
-          bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+      // Baca isi mentah satu file di repo (null jika tidak ada)
+      async function readRaw(path) {
+        const { repo, token } = getConfig();
+        const res = await fetch(`https://api.github.com/repos/${repo}/contents/${encPath(path)}`, {
+          headers: { Authorization: `Bearer ${token}`, Accept: "application/vnd.github.raw+json", "X-GitHub-Api-Version": "2022-11-28" },
+          cache: "no-store",
+        });
+        if (res.status === 404) return null;
+        if (!res.ok) throw await apiError(res);
+        return res.text();
+      }
+
+      // Satu commit untuk banyak file. files: [{path, content} | {path, base64} | {path, delete:true}]
+      async function commitFiles(files, message) {
+        const { repo } = getConfig();
+        for (let attempt = 0; attempt < 3; attempt++) {
+          const info = await gh(`/repos/${repo}`);
+          const branch = info.default_branch;
+          const ref = await gh(`/repos/${repo}/git/ref/heads/${branch}`);
+          const headSha = ref.object.sha;
+          const headCommit = await gh(`/repos/${repo}/git/commits/${headSha}`);
+
+          const tree = [];
+          for (const f of files) {
+            if (f.delete) {
+              tree.push({ path: f.path, mode: "100644", type: "blob", sha: null });
+            } else if (f.base64 !== undefined || (f.content || "").length > 100000) {
+              const body = f.base64 !== undefined ? { content: f.base64, encoding: "base64" } : { content: f.content, encoding: "utf-8" };
+              const blob = await gh(`/repos/${repo}/git/blobs`, { method: "POST", body: JSON.stringify(body) });
+              tree.push({ path: f.path, mode: "100644", type: "blob", sha: blob.sha });
+            } else {
+              tree.push({ path: f.path, mode: "100644", type: "blob", content: f.content === "" ? "\n" : f.content });
+            }
+          }
+          const newTree = await gh(`/repos/${repo}/git/trees`, { method: "POST", body: JSON.stringify({ base_tree: headCommit.tree.sha, tree }) });
+          const commit = await gh(`/repos/${repo}/git/commits`, { method: "POST", body: JSON.stringify({ message, tree: newTree.sha, parents: [headSha] }) });
+          try {
+            await gh(`/repos/${repo}/git/refs/heads/${branch}`, { method: "PATCH", body: JSON.stringify({ sha: commit.sha }) });
+            return commit.sha;
+          } catch (err) {
+            if (attempt < 2 && /fast.?forward|422/i.test(err.message)) continue; // ada commit lain barusan -> ulangi
+            throw err;
+          }
         }
-        return btoa(bin);
-      }
-      function base64ToUtf8(b64) {
-        const bin = atob(b64.replace(/\s/g, ""));
-        return new TextDecoder().decode(Uint8Array.from(bin, (c) => c.charCodeAt(0)));
       }
 
-      // ---------- Gambar: kecilkan + ubah ke JPEG base64 ----------
+      // ---------- Gambar: kecilkan + ubah ke JPEG ----------
       function loadImage(file) {
         return new Promise((resolve, reject) => {
           const url = URL.createObjectURL(file);
@@ -483,7 +572,6 @@
           img.src = url;
         });
       }
-
       async function imageToJpegBase64(file) {
         const img = await loadImage(file);
         const scale = Math.min(1, COVER_MAX_SIDE / Math.max(img.naturalWidth, img.naturalHeight));
@@ -493,102 +581,23 @@
         canvas.width = w;
         canvas.height = h;
         const ctx = canvas.getContext("2d");
-        ctx.fillStyle = "#ffffff"; // PNG transparan -> latar putih
+        ctx.fillStyle = "#ffffff";
         ctx.fillRect(0, 0, w, h);
         ctx.drawImage(img, 0, 0, w, h);
         return canvas.toDataURL("image/jpeg", COVER_QUALITY).split(",")[1];
       }
 
-      function makeSlug(title) {
-        const s = title.toLowerCase().replace(/[^a-z0-9\s-]/g, "").trim().replace(/\s+/g, "-").replace(/-+/g, "-");
-        return s || "post";
-      }
-
-      // Upload cover ke images/ lewat Contents API. Mengembalikan path relatif, mis. "images/cover-xyz-123.jpg"
-      async function uploadCoverToGitHub(file, slug) {
-        const { repo, token } = getConfig();
-        const path = `${IMAGE_DIR}/cover-${slug}-${Date.now()}.jpg`;
-        const content = await imageToJpegBase64(file);
-
-        const res = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
-          method: "PUT",
-          headers: { ...ghHeaders(token), "Content-Type": "application/json" },
-          body: JSON.stringify({ message: `Upload cover: ${slug}`, content }),
-        });
-        if (!res.ok) throw await apiError(res);
-        return path;
-      }
-
-      // ---------- Baca & tulis posts.json di repo ----------
-      async function fetchPostsFile(repo, token) {
-        const url = `https://api.github.com/repos/${repo}/contents/${POSTS_FILE}`;
-        const res = await fetch(url, { headers: ghHeaders(token), cache: "no-store" });
-        if (res.status === 404) return { posts: [], sha: null };
-        if (!res.ok) throw await apiError(res);
-        const meta = await res.json();
-
-        let text;
-        if (meta.content && meta.encoding === "base64") {
-          text = base64ToUtf8(meta.content);
-        } else {
-          // file > 1 MB: ambil isi mentahnya
-          const raw = await fetch(url, {
-            headers: { ...ghHeaders(token), Accept: "application/vnd.github.raw+json" },
-            cache: "no-store",
-          });
-          if (!raw.ok) throw await apiError(raw);
-          text = await raw.text();
-        }
-
-        let data;
-        try {
-          data = JSON.parse(text);
-        } catch (_) {
-          throw new Error("posts.json di repo bukan JSON yang valid (mungkin masih berisi kode posts.js). Ganti dulu dengan posts.json yang baru, lalu coba lagi.");
-        }
-        return { posts: Array.isArray(data) ? data : data.posts || [], sha: meta.sha };
-      }
-
-      // Read-modify-write: selalu ambil versi terbaru dulu supaya tidak menimpa perubahan lain.
-      async function commitPosts(mutator, message) {
-        const { repo, token } = getConfig();
-        const url = `https://api.github.com/repos/${repo}/contents/${POSTS_FILE}`;
-
-        for (let attempt = 0; attempt < 2; attempt++) {
-          const { posts, sha } = await fetchPostsFile(repo, token);
-          const next = mutator(posts) || posts;
-          const body = { message, content: utf8ToBase64(JSON.stringify(next, null, 2) + "\n") };
-          if (sha) body.sha = sha;
-
-          const res = await fetch(url, {
-            method: "PUT",
-            headers: { ...ghHeaders(token), "Content-Type": "application/json" },
-            body: JSON.stringify(body),
-          });
-          if (res.ok) {
-            remotePosts = next;
-            return;
-          }
-          if (res.status === 409 && attempt === 0) continue; // sha basi -> ulangi sekali
-          throw await apiError(res);
-        }
-        throw new Error("Terjadi konflik saat menyimpan posts.json. Coba lagi.");
-      }
-
+      // ---------- Riwayat ----------
       async function loadHistory() {
         const tbody = $("historyTableBody");
-        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#777;">Memuat dari GitHub...</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#777;">Memuat daftar...</td></tr>';
         try {
-          const token = $("ghToken").value.trim();
-          const repo = $("ghRepo").value.trim();
-          if (token && /^[\w.-]+\/[\w.-]+$/.test(repo)) {
-            remotePosts = (await fetchPostsFile(repo, token)).posts;
-          } else {
-            const res = await fetch(POSTS_FILE + "?v=" + Date.now(), { cache: "no-store" });
-            remotePosts = res.ok ? await res.json() : [];
-          }
+          const res = await fetch(`${INDEX_URL}?v=${Date.now()}`, { cache: "no-store" });
+          if (!res.ok) throw new Error("data/index.json belum ada (website belum pernah dibangun?)");
+          listCache = await res.json();
         } catch (err) {
-          tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:#ef4444;">${esc(err.message)}</td></tr>`;
+          listCache = [];
+          tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:#f59e0b;">${esc(err.message)}</td></tr>`;
           return;
         }
         renderHistory();
@@ -596,69 +605,126 @@
 
       function renderHistory() {
         const tbody = $("historyTableBody");
-        if (!remotePosts.length) {
+        if (!listCache.length) {
           tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#777;">Belum ada postingan.</td></tr>';
           return;
         }
-        tbody.innerHTML = remotePosts
-          .map((post) => {
-            const archived = post.status === "archived";
-            const cat = Array.isArray(post.categories) ? post.categories.join(", ") : post.category || post.type || "";
-            const id = esc(post.id);
-            return `
+        const shown = listCache.slice(0, 200);
+        tbody.innerHTML =
+          shown
+            .map((post) => {
+              const archived = post.status === "archived";
+              const cat = Array.isArray(post.categories) && post.categories.length ? post.categories.join(", ") : post.type || "";
+              const slug = esc(post.slug);
+              return `
             <tr>
-              <td><strong>${esc(post.title)}</strong></td>
+              <td><strong>${esc(post.title)}</strong><br><small style="color:#6b7280;">/artikel/${slug}/</small></td>
               <td><span style="color:#34d399;font-weight:500;">${esc(cat)}</span></td>
               <td>${esc(post.date || "-")}</td>
               <td>${archived ? '<span style="color:#f59e0b;">Diarsipkan</span>' : '<span style="color:#10b981;">Aktif</span>'}</td>
               <td>
                 <div class="action-btns">
-                  <button type="button" class="btn-action btn-edit" onclick="editPost('${id}')">Edit</button>
-                  <button type="button" class="btn-action btn-archive" onclick="toggleArchive('${id}')">${archived ? "Pulihkan" : "Arsip"}</button>
-                  <button type="button" class="btn-action btn-delete" onclick="deletePost('${id}')">Hapus</button>
+                  <button type="button" class="btn-action btn-edit" onclick="editPost('${slug}')">Edit</button>
+                  <button type="button" class="btn-action btn-archive" onclick="toggleArchive('${slug}')">${archived ? "Pulihkan" : "Arsip"}</button>
+                  <button type="button" class="btn-action btn-delete" onclick="deletePost('${slug}')">Hapus</button>
                 </div>
               </td>
             </tr>`;
-          })
-          .join("");
+            })
+            .join("") +
+          (listCache.length > shown.length
+            ? `<tr><td colspan="5" style="text-align:center;color:#777;">Menampilkan 200 terbaru dari ${listCache.length} postingan.</td></tr>`
+            : "");
       }
 
-      // ---------- Impor postingan lama dari localStorage (sekali jalan) ----------
-      function checkLegacy() {
-        let local = [];
-        try { local = JSON.parse(localStorage.getItem("maul_posts")) || []; } catch (_) {}
-        if (local.length) {
-          $("legacyCount").textContent = local.length;
+      function upsertList(entry) {
+        const i = listCache.findIndex((p) => p.slug === entry.slug);
+        if (i >= 0) listCache[i] = { ...listCache[i], ...entry };
+        else listCache.unshift(entry);
+        listCache.sort((a, b) => (a.dateISO < b.dateISO ? 1 : a.dateISO > b.dateISO ? -1 : 0));
+      }
+
+      // ---------- Migrasi format lama (posts.json / localStorage) ----------
+      let legacyPosts = [];
+
+      async function checkLegacy() {
+        const map = new Map();
+        try {
+          if ($("ghToken").value.trim()) {
+            const txt = await readRaw("posts.json");
+            if (txt) {
+              try {
+                const data = JSON.parse(txt);
+                (Array.isArray(data) ? data : data.posts || []).forEach((p) => map.set(String(p.id), { ...p, _remote: true }));
+              } catch (_) {}
+            }
+          }
+        } catch (_) {}
+        try {
+          (JSON.parse(localStorage.getItem("maul_posts")) || []).forEach((p) => map.set(String(p.id), p));
+        } catch (_) {}
+        legacyPosts = [...map.values()];
+        if (legacyPosts.length) {
+          $("legacyCount").textContent = legacyPosts.length;
           $("legacyBanner").style.display = "block";
+        } else {
+          $("legacyBanner").style.display = "none";
         }
       }
 
-      window.importLegacy = async function () {
-        let local = [];
-        try { local = JSON.parse(localStorage.getItem("maul_posts")) || []; } catch (_) {}
-        if (!local.length) return;
+      window.migrateLegacy = async function () {
+        if (!legacyPosts.length) return;
+        if (!confirm(`Pindahkan ${legacyPosts.length} postingan lama ke format baru (satu file per artikel)?\nposts.json lama akan dihapus dari repo.`)) return;
+        const btn = $("migrateBtn");
+        btn.disabled = true;
         try {
-          await commitPosts((posts) => {
-            const ids = new Set(posts.map((p) => String(p.id)));
-            local.forEach((p) => { if (!ids.has(String(p.id))) posts.unshift(p); });
-            return posts;
-          }, "Import posts dari localStorage admin");
+          const taken = new Set(listCache.filter((p) => !p.legacy).map((p) => p.slug));
+          const files = [];
+          for (const p of legacyPosts) {
+            const bd = p.bookData || {};
+            const type = p.type || p.category || bd.bookMainCategory || "Catatan";
+            const dateISO = /^\d{4}-\d{2}-\d{2}$/.test(p.dateISO || "") ? p.dateISO : parseIndoDate(p.date) || todayISO();
+            let slug = makeSlug(p.title);
+            if (taken.has(slug)) slug = `${slug}-${makeSlug(String(p.id))}`;
+            slug = uniqueSlug(slug, taken);
+            taken.add(slug);
+            const meta = {
+              id: String(p.id),
+              slug,
+              title: p.title,
+              type,
+              categories: Array.isArray(p.categories) && p.categories.length ? p.categories : [type],
+              date: p.date || formatDateID(dateISO),
+              dateISO,
+              cover: p.cover || "",
+              coreMessage: p.coreMessage || bd.bookCore || "",
+              bookData: bd,
+              status: p.status === "archived" ? "archived" : "active",
+            };
+            files.push({ path: `${POSTS_DIR}/${slug}.json`, content: JSON.stringify(meta, null, 2) + "\n" });
+            files.push({ path: `${POSTS_DIR}/${slug}.html`, content: p.fullContent || "" });
+          }
+          for (const old of ["posts.json", "posts.js"]) {
+            if ((await readRaw(old)) !== null) files.push({ path: old, delete: true });
+          }
+          await commitFiles(files, `Migrasi ${legacyPosts.length} postingan ke format satu-file-per-artikel`);
           localStorage.removeItem("maul_posts");
+          legacyPosts = [];
           $("legacyBanner").style.display = "none";
-          renderHistory();
-          alert("Berhasil. Postingan lama sekarang tersimpan di posts.json.");
+          alert("Migrasi selesai. Website dibangun ulang otomatis (±1–2 menit). Daftar di bawah akan diperbarui setelah itu — muat ulang halaman ini nanti.");
         } catch (err) {
-          alert("Gagal impor: " + err.message);
+          alert("Gagal migrasi: " + err.message);
+        } finally {
+          btn.disabled = false;
         }
       };
 
       // ---------- UI ----------
       window.addEventListener("DOMContentLoaded", () => {
-        $("postDate").value = new Date().toISOString().split("T")[0];
+        $("postDate").value = todayISO();
         if (localStorage.getItem("gh_token")) $("ghToken").value = localStorage.getItem("gh_token");
-        checkLegacy();
-        loadHistory();
-        $("ghToken").addEventListener("change", loadHistory);
+        loadHistory().then(checkLegacy);
+        $("ghToken").addEventListener("change", checkLegacy);
       });
 
       function switchTab(categoryName, event) {
@@ -676,7 +742,23 @@
         } else {
           $("book-details-section").style.display = "none";
         }
+
+        // Kolom "Inti" selalu terlihat; hanya label & contoh isinya yang menyesuaikan tab
+        const coreText = {
+          "Book Summary": ["Inti Buku (Ringkasan/Pesan Utama)", "Tuliskan inti atau ringkasan singkat isi buku..."],
+          "Quote & Nasehat": ["Inti Pesan", "Tuliskan kutipan atau pesan utama nasehat ini..."],
+          "Dzikir & Do'a": ["Inti Dzikir / Do'a", "Tuliskan keutamaan atau pesan singkat dzikir/do'a ini..."],
+          "Cerita Inspirasi": ["Inti Cerita", "Tuliskan pelajaran atau ringkasan singkat cerita ini..."],
+        }[categoryName] || ["Inti / Pesan Utama", "Tuliskan ringkasan singkat..."];
+        $("coreLabel").innerText = coreText[0];
+        $("bookCore").placeholder = coreText[1];
       }
+
+      function updateCoreCount() {
+        const n = $("bookCore").value.trim().length;
+        $("coreCount").innerText = n + " karakter" + (n > 160 ? " (terlalu panjang untuk deskripsi Google, akan dipotong)" : "");
+      }
+      $("bookCore").addEventListener("input", updateCoreCount);
 
       function showCoverPreview(src) {
         const img = $("coverPreview");
@@ -686,7 +768,7 @@
 
       $("postCoverFile").addEventListener("change", function (e) {
         selectedImageFile = e.target.files[0] || null;
-        showCoverPreview(selectedImageFile ? URL.createObjectURL(selectedImageFile) : $("postCoverPath").value);
+        showCoverPreview(selectedImageFile ? URL.createObjectURL(selectedImageFile) : $("postCoverPath").value ? "/" + $("postCoverPath").value : "");
       });
 
       $("postHtmlFile").addEventListener("change", function (e) {
@@ -697,10 +779,26 @@
         reader.readAsText(file);
       });
 
-      function formatDateID(iso) {
-        const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
-        const [y, m, d] = iso.split("-").map(Number);
-        return `${d} ${months[m - 1]} ${y}`;
+      // slug otomatis dari judul (selama belum diubah manual & bukan mode edit)
+      $("postTitle").addEventListener("input", () => {
+        if (!slugTouched && !$("editSlug").value) $("postSlug").value = $("postTitle").value.trim() ? makeSlug($("postTitle").value) : "";
+      });
+      $("postSlug").addEventListener("input", () => { slugTouched = true; });
+
+      function resetForm() {
+        $("postForm").reset();
+        $("editSlug").value = "";
+        $("postCoverPath").value = "";
+        $("postFullContent").value = "";
+        $("postSlug").readOnly = false;
+        $("postSlug").value = "";
+        $("postDate").value = todayISO();
+        $("mainTitle").innerText = "Panel Admin Postingan";
+        $("submitBtn").innerText = `Simpan & Upload Postingan ${activeTab}`;
+        updateCoreCount();
+        slugTouched = false;
+        selectedImageFile = null;
+        showCoverPreview("");
       }
 
       // ---------- Simpan (baru / edit) ----------
@@ -711,17 +809,24 @@
         submitBtn.disabled = true;
 
         try {
-          getConfig(); // validasi repo + token lebih awal
-
-          const editId = $("editId").value;
+          const { repo } = getConfig();
+          const editSlug = $("editSlug").value;
+          const isEdit = !!editSlug;
           const title = $("postTitle").value.trim();
           const postType = $("postType").value;
-          const slug = makeSlug(title);
 
+          let slug = editSlug;
+          if (!isEdit) {
+            const taken = new Set(listCache.map((p) => p.slug));
+            slug = uniqueSlug(makeSlug($("postSlug").value || title), taken);
+          }
+
+          const files = [];
           let coverPath = $("postCoverPath").value;
           if (selectedImageFile) {
-            submitBtn.innerText = "Mengunggah cover...";
-            coverPath = await uploadCoverToGitHub(selectedImageFile, slug);
+            submitBtn.innerText = "Memproses cover...";
+            coverPath = `${IMAGE_DIR}/cover-${slug}-${Date.now()}.jpg`;
+            files.push({ path: coverPath, base64: await imageToJpegBase64(selectedImageFile) });
           }
 
           let categories = [];
@@ -730,114 +835,134 @@
           }
           if (!categories.length) categories = [postType];
 
-          const dateISO = $("postDate").value;
-          const formattedDate = dateISO ? formatDateID(dateISO) : "";
-          const fullContent = $("postFullContent").value;
-          const bookData = {
-            bookTitle: $("bookTitle").value,
-            bookAuthor: $("bookAuthor").value,
-            bookYear: $("bookYear").value,
-            bookMainCategory: $("bookMainCategory").value,
-            bookCore: $("bookCore").value,
-            bookReadTime: $("bookReadTime").value,
-          };
+          const dateISO = $("postDate").value || todayISO();
+          const core = $("bookCore").value.trim();
+          // Data buku lengkap hanya untuk Book Summary; kategori lain cukup menyimpan "inti"-nya
+          const bookData =
+            postType === "Book Summary"
+              ? {
+                  bookTitle: $("bookTitle").value,
+                  bookAuthor: $("bookAuthor").value,
+                  bookYear: $("bookYear").value,
+                  bookMainCategory: $("bookMainCategory").value,
+                  bookCore: core,
+                  bookReadTime: $("bookReadTime").value,
+                }
+              : { bookCore: core };
 
-          submitBtn.innerText = "Menyimpan posts.json...";
-          await commitPosts((posts) => {
-            if (editId) {
-              const p = posts.find((x) => String(x.id) === String(editId));
-              if (!p) throw new Error("Postingan yang diedit tidak ditemukan di posts.json.");
-              Object.assign(p, { title, slug, type: postType, category: postType, categories, date: formattedDate, dateISO, bookData });
-              if (coverPath) p.cover = coverPath;
-              if (fullContent) p.fullContent = fullContent;
-            } else {
-              posts.unshift({
-                id: Date.now().toString(),
-                slug,
-                title,
-                type: postType,
-                category: postType,
-                categories,
-                date: formattedDate,
-                dateISO,
-                cover: coverPath || "assets/default-cover.png",
-                coreMessage: bookData.bookCore || "",
-                fullContent: fullContent || `<p>${esc(bookData.bookCore || title)}</p>`,
-                bookData,
-                status: "active",
-              });
-            }
-            return posts;
-          }, `${editId ? "Update" : "Add"} post: ${title}`);
+          let meta;
+          if (isEdit) {
+            submitBtn.innerText = "Membaca data lama...";
+            const oldTxt = await readRaw(`${POSTS_DIR}/${slug}.json`);
+            if (oldTxt === null) throw new Error("File artikel ini belum ada di format baru. Jalankan 'Migrasi' dulu.");
+            meta = JSON.parse(oldTxt);
+          } else {
+            meta = { id: Date.now().toString(), slug, status: "active" };
+          }
+          Object.assign(meta, {
+            title,
+            type: postType,
+            categories,
+            date: formatDateID(dateISO),
+            dateISO,
+            coreMessage: core, // apa adanya: kolom dikosongkan = benar-benar kosong
+            bookData,
+          });
+          if (coverPath) meta.cover = coverPath;
+          delete meta.fullContent;
 
-          alert(
-            (editId ? "Postingan diperbarui." : "Postingan baru tersimpan.") +
-              "\n\nGitHub Pages butuh sekitar 1 menit untuk menayangkan perubahan. Jika cover belum muncul, tunggu sebentar lalu refresh."
-          );
+          files.push({ path: `${POSTS_DIR}/${slug}.json`, content: JSON.stringify(meta, null, 2) + "\n" });
+          const body = $("postFullContent").value;
+          if (body) files.push({ path: `${POSTS_DIR}/${slug}.html`, content: body });
+          else if (!isEdit) files.push({ path: `${POSTS_DIR}/${slug}.html`, content: `<p>${esc(bookData.bookCore || title)}</p>\n` });
 
-          this.reset();
-          $("editId").value = "";
-          $("postCoverPath").value = "";
-          $("postFullContent").value = "";
-          $("postDate").value = new Date().toISOString().split("T")[0];
-          $("mainTitle").innerText = "Panel Admin Postingan";
-          selectedImageFile = null;
-          showCoverPreview("");
+          submitBtn.innerText = "Menyimpan ke GitHub...";
+          await commitFiles(files, `${isEdit ? "Update" : "Tambah"} postingan: ${title}`);
+
+          upsertList({ id: meta.id, slug, title, type: postType, categories, date: meta.date, dateISO, status: meta.status || "active" });
           renderHistory();
+          alert(
+            (isEdit ? "Postingan diperbarui." : "Postingan baru tersimpan.") +
+              `\n\nWebsite dibangun ulang otomatis oleh GitHub (±1–2 menit). Setelah itu alamatnya:\n${SITE_ROOT}/artikel/${slug}/`
+          );
+          resetForm();
         } catch (error) {
           alert("Terjadi kesalahan: " + error.message);
         } finally {
           submitBtn.disabled = false;
-          submitBtn.innerText = originalLabel;
+          if (submitBtn.innerText.includes("...")) submitBtn.innerText = originalLabel;
         }
       });
 
-      // ---------- Edit / Arsip / Hapus (semuanya commit ke posts.json) ----------
-      window.editPost = function (id) {
-        const post = remotePosts.find((p) => String(p.id) === String(id));
-        if (!post) return;
-        const bd = post.bookData || {};
+      // ---------- Edit / Arsip / Hapus ----------
+      window.editPost = async function (slug) {
+        try {
+          const txt = await readRaw(`${POSTS_DIR}/${slug}.json`);
+          if (txt === null) {
+            alert("Postingan ini masih format lama. Jalankan 'Migrasi' (banner kuning di atas) terlebih dulu.");
+            return;
+          }
+          const post = JSON.parse(txt);
+          const bd = post.bookData || {};
 
-        $("editId").value = post.id;
-        $("postType").value = post.type || activeTab;
-        $("postTitle").value = post.title || "";
-        $("postCoverPath").value = post.cover || "";
-        $("postFullContent").value = ""; // kosong = isi artikel lama tidak diubah
-        if (post.dateISO) $("postDate").value = post.dateISO;
-        $("post-categories").value = Array.isArray(post.categories) ? post.categories.join(", ") : "";
-        $("bookTitle").value = bd.bookTitle || "";
-        $("bookAuthor").value = bd.bookAuthor || "";
-        $("bookYear").value = bd.bookYear || "";
-        $("bookMainCategory").value = bd.bookMainCategory || "Book Summary";
-        $("bookCore").value = bd.bookCore || post.coreMessage || "";
-        $("bookReadTime").value = bd.bookReadTime || "";
+          const tabBtn = [...document.querySelectorAll(".tab-btn")].find((b) => (b.getAttribute("onclick") || "").replace(/\\/g, "").includes(`'${post.type}'`));
+          if (tabBtn) switchTab(post.type, { currentTarget: tabBtn });
+          $("postType").value = post.type || activeTab;
 
-        selectedImageFile = null;
-        $("postCoverFile").value = "";
-        showCoverPreview(post.cover);
+          $("editSlug").value = post.slug || slug;
+          $("postSlug").value = post.slug || slug;
+          $("postSlug").readOnly = true;
+          $("postTitle").value = post.title || "";
+          $("postCoverPath").value = post.cover || "";
+          $("postFullContent").value = ""; // kosong = isi artikel lama tidak diubah
+          $("postDate").value = post.dateISO || parseIndoDate(post.date) || todayISO();
+          $("post-categories").value = Array.isArray(post.categories) ? post.categories.join(", ") : "";
+          $("bookTitle").value = bd.bookTitle || "";
+          $("bookAuthor").value = bd.bookAuthor || "";
+          $("bookYear").value = bd.bookYear || "";
+          $("bookMainCategory").value = bd.bookMainCategory || "Book Summary";
+          $("bookCore").value = bd.bookCore || post.coreMessage || "";
+          updateCoreCount();
+          $("bookReadTime").value = bd.bookReadTime || "";
 
-        $("mainTitle").innerText = "Edit Postingan: " + post.title;
-        $("submitBtn").innerText = "Simpan Perubahan";
-        window.scrollTo({ top: 0, behavior: "smooth" });
+          selectedImageFile = null;
+          $("postCoverFile").value = "";
+          $("postHtmlFile").value = "";
+          showCoverPreview(post.cover ? "/" + post.cover : "");
+
+          $("mainTitle").innerText = "Edit Postingan: " + post.title;
+          $("submitBtn").innerText = "Simpan Perubahan";
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        } catch (err) {
+          alert("Gagal memuat postingan: " + err.message);
+        }
       };
 
-      window.toggleArchive = async function (id) {
+      window.toggleArchive = async function (slug) {
         try {
-          await commitPosts((posts) => {
-            const p = posts.find((x) => String(x.id) === String(id));
-            if (p) p.status = p.status === "archived" ? "active" : "archived";
-            return posts;
-          }, `Toggle archive post ${id}`);
+          const txt = await readRaw(`${POSTS_DIR}/${slug}.json`);
+          if (txt === null) return alert("Postingan ini masih format lama. Jalankan 'Migrasi' terlebih dulu.");
+          const meta = JSON.parse(txt);
+          meta.status = meta.status === "archived" ? "active" : "archived";
+          await commitFiles([{ path: `${POSTS_DIR}/${slug}.json`, content: JSON.stringify(meta, null, 2) + "\n" }], `${meta.status === "archived" ? "Arsipkan" : "Pulihkan"}: ${meta.title}`);
+          upsertList({ slug, status: meta.status });
           renderHistory();
         } catch (err) {
           alert("Gagal: " + err.message);
         }
       };
 
-      window.deletePost = async function (id) {
-        if (!confirm("Apakah Anda yakin ingin menghapus postingan ini secara permanen?")) return;
+      window.deletePost = async function (slug) {
+        if (!confirm("Hapus postingan ini secara permanen dari repo?")) return;
         try {
-          await commitPosts((posts) => posts.filter((x) => String(x.id) !== String(id)), `Delete post ${id}`);
+          const files = [];
+          for (const ext of ["json", "html"]) {
+            const path = `${POSTS_DIR}/${slug}.${ext}`;
+            if ((await readRaw(path)) !== null) files.push({ path, delete: true });
+          }
+          if (!files.length) return alert("File postingan tidak ditemukan (mungkin masih format lama — jalankan 'Migrasi').");
+          await commitFiles(files, `Hapus postingan: ${slug}`);
+          listCache = listCache.filter((p) => p.slug !== slug);
           renderHistory();
         } catch (err) {
           alert("Gagal: " + err.message);

@@ -134,11 +134,14 @@ body {
 
 .hero-actions {
   display: flex;
-  gap: 16px;
+  flex-wrap: wrap;
+  gap: 12px 18px;
   align-items: center;
 }
 
 .button {
+  white-space: nowrap;
+  line-height: 1.4;
   background: var(--accent-light);
   color: #020c06;
   padding: 10px 22px;
@@ -153,6 +156,7 @@ body {
 }
 
 .text-link {
+  white-space: nowrap;
   color: var(--text-muted);
   text-decoration: none;
   font-weight: 500;
@@ -206,6 +210,9 @@ body {
 }
 
 .filter-btn {
+  flex: 0 0 auto;
+  white-space: nowrap;
+  line-height: 1.3;
   background: #032a18;
   border: 1px solid var(--border-color);
   color: var(--text-main);
@@ -387,6 +394,11 @@ body {
 }
 
 @media (max-width: 768px) {
+  /* Margin kiri-kanan: sebelumnya 50px per sisi, terlalu lebar di HP */
+  .container {
+    width: calc(100% - 28px);
+  }
+
   .menu-toggle {
     display: block;
   }
@@ -416,7 +428,7 @@ body {
     padding: 14px;
     gap: 12px;
   }
-  
+
   .post-card-cover {
     max-width: 90px;
     height: 120px;
@@ -425,25 +437,252 @@ body {
   .post-card-title {
     font-size: 15px;
   }
-  @media (max-width: 768px) {
-  /* Buat wrapper kategori dan search tersusun vertikal penuh di HP */
+
+  /* Wrapper kategori dan search tersusun vertikal penuh di HP */
   .category-search-wrapper {
     flex-direction: column;
     align-items: stretch;
     gap: 12px;
   }
 
-  /* Buat kotak pencarian mengambil lebar penuh layar */
   .search-input {
     width: 100% !important;
   }
 
-  /* Buat tombol kategori menyesuaikan ruang atau tersusun rapi */
+  /* Tombol kategori bisa digeser horizontal */
   .category-filter {
     width: 100%;
     overflow-x: auto;
     padding-bottom: 4px;
-    flex-wrap: nowrap; /* Opsional: bisa digeser horizontal atau biarkan wrap */
+    flex-wrap: nowrap;
+  }
+
+  .info-box {
+    padding: 18px;
+  }
+
+  .button {
+    padding: 9px 20px;
+    font-size: 14px;
+  }
+
+  .text-link {
+    font-size: 14px;
+  }
+
+  .filter-btn {
+    padding: 7px 14px;
+    font-size: 12.5px;
+  }
+
+  .category-filter {
+    scrollbar-width: none;
+  }
+
+  .category-filter::-webkit-scrollbar {
+    display: none;
   }
 }
+
+
+/* --- 10. TAMBAHAN VERSI STATIS (arsip, paginasi, footer, YouTube) --- */
+a.page-btn {
+  text-decoration: none;
+  display: inline-block;
+}
+
+span.page-btn.active {
+  display: inline-block;
+}
+
+.page-gap {
+  color: var(--text-muted);
+  padding: 0 2px;
+}
+
+.post-card.no-cover {
+  grid-template-columns: 1fr;
+}
+
+.archive-main {
+  padding: 30px 0 60px 0;
+}
+
+.archive-title {
+  color: #ffffff;
+  font-size: clamp(26px, 4vw, 38px);
+  margin: 10px 0 6px 0;
+  line-height: 1.2;
+}
+
+.archive-intro {
+  color: var(--text-muted);
+  margin: 0 0 26px 0;
+}
+
+.breadcrumb {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.breadcrumb a {
+  color: var(--accent-light);
+  text-decoration: none;
+}
+
+.yt-box {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  align-items: center;
+}
+
+.site-footer {
+  border-top: 1px solid var(--border-color);
+  padding: 22px 0;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.site-footer .container {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.site-footer a {
+  color: var(--accent-light);
+  text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  .yt-box {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+}
+
+/* --- 9. LANJUTKAN MEMBACA (beranda) --- */
+.resume-strip {
+  padding: 20px 0 0 0;
+}
+.resume-strip[hidden] {
+  display: none;
+}
+/* kalau strip tampil, hero tidak perlu padding atas sebesar itu */
+.resume-strip:not([hidden]) + script + .hero {
+  padding-top: 40px;
+}
+.resume-head {
+  margin-bottom: 10px;
+}
+.resume-label {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-light);
+  font-weight: 700;
+}
+.resume-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)); /* sama dengan .posts-grid; satu kartu = satu kolom */
+  gap: 20px;
+}
+.resume-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 14px;
+  align-items: center;
+  background: rgba(3, 42, 24, 0.7);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 14px 40px 14px 14px;
+  min-width: 0;
+}
+.resume-cover-link {
+  display: block;
+}
+.resume-cover {
+  width: 64px;
+  height: 88px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  background: #032a18;
+  display: block;
+}
+.resume-info {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.resume-title {
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.3;
+  text-decoration: none;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.resume-title:hover {
+  color: var(--accent-light);
+}
+.resume-meta {
+  margin: 0;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.resume-bar {
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+.resume-bar span {
+  display: block;
+  height: 100%;
+  background: var(--accent-light);
+  border-radius: inherit;
+}
+.resume-go {
+  align-self: flex-start;
+  margin-top: 4px;
+  padding: 6px 16px;
+  font-size: 13px;
+}
+.resume-x {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+.resume-x:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+@media (max-width: 900px) {
+  .resume-list {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+@media (max-width: 768px) {
+  .resume-strip:not([hidden]) + script + .hero {
+    padding-top: 28px;
+  }
 }
