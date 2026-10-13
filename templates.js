@@ -165,7 +165,7 @@ function homePage(cfg, data) {
 
       <section class="hero container">
         <p class="eyebrow">${esc(cfg.siteName.toUpperCase())}</p>
-        <h1>Ideas worth <em>remembering.</em></h1>
+        <h1>Notes from <em>Becoming.</em></h1>
         <p class="hero-copy">Catatan tentang iman, kehidupan, buku, dan proses menjadi manusia yang lebih baik.</p>
         <div class="hero-actions">
           <a class="button" href="#categories">Explore writing</a>
