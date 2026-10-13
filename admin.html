@@ -760,6 +760,13 @@
       }
       $("bookCore").addEventListener("input", updateCoreCount);
 
+      // Cover bisa berupa path relatif (images/x.jpg), URL penuh, atau data URI lama (base64)
+      function coverUrl(c) {
+        c = String(c || "");
+        if (!c) return "";
+        return /^(data:|https?:)/i.test(c) ? c : "/" + c.replace(/^\/+/, "");
+      }
+
       function showCoverPreview(src) {
         const img = $("coverPreview");
         if (src) { img.src = src; img.style.display = "block"; }
@@ -768,7 +775,7 @@
 
       $("postCoverFile").addEventListener("change", function (e) {
         selectedImageFile = e.target.files[0] || null;
-        showCoverPreview(selectedImageFile ? URL.createObjectURL(selectedImageFile) : $("postCoverPath").value ? "/" + $("postCoverPath").value : "");
+        showCoverPreview(selectedImageFile ? URL.createObjectURL(selectedImageFile) : coverUrl($("postCoverPath").value));
       });
 
       $("postHtmlFile").addEventListener("change", function (e) {
@@ -827,6 +834,12 @@
             submitBtn.innerText = "Memproses cover...";
             coverPath = `${IMAGE_DIR}/cover-${slug}-${Date.now()}.jpg`;
             files.push({ path: coverPath, base64: await imageToJpegBase64(selectedImageFile) });
+          } else if (/^data:image\//i.test(coverPath)) {
+            // Cover lama tersimpan sebagai base64 di dalam JSON: pindahkan jadi file JPG kecil
+            submitBtn.innerText = "Memindahkan cover lama...";
+            const blob = await (await fetch(coverPath)).blob();
+            coverPath = `${IMAGE_DIR}/cover-${slug}-${Date.now()}.jpg`;
+            files.push({ path: coverPath, base64: await imageToJpegBase64(blob) });
           }
 
           let categories = [];
@@ -923,7 +936,7 @@
           selectedImageFile = null;
           $("postCoverFile").value = "";
           $("postHtmlFile").value = "";
-          showCoverPreview(post.cover ? "/" + post.cover : "");
+          showCoverPreview(coverUrl(post.cover));
 
           $("mainTitle").innerText = "Edit Postingan: " + post.title;
           $("submitBtn").innerText = "Simpan Perubahan";

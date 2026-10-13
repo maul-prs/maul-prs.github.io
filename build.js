@@ -12,6 +12,7 @@
     posts.json                  (format lama, tetap dibaca jika masih ada)
 */
 const fs = require('fs');
+const crypto = require('crypto');
 const path = require('path');
 const T = require('./templates.js');
 
@@ -180,10 +181,28 @@ function normalizePosts(raw) {
 }
 
 /* ---------------- Cover ---------------- */
+// Cover yang tersimpan sebagai data URI (base64) di JSON diubah menjadi file di dist/images/covers/,
+// supaya tidak hilang diam-diam dan tidak membengkakkan HTML.
+const EXT = { jpeg: 'jpg', jpg: 'jpg', png: 'png', webp: 'webp', gif: 'gif', avif: 'avif' };
 function resolveCover(p) {
   if (!p.cover) return '';
   if (/^https?:/i.test(p.cover)) return p.cover;
-  return fs.existsSync(path.join(ROOT, p.cover)) ? p.cover : '';
+  const m = /^data:image\/([a-z0-9+.-]+);base64,([\s\S]+)$/i.exec(p.cover);
+  if (m) {
+    const ext = EXT[m[1].toLowerCase()];
+    if (!ext) {
+      console.warn(`! Cover "${p.slug}": format ${m[1]} tidak didukung, pakai placeholder`);
+      return '';
+    }
+    const buf = Buffer.from(m[2], 'base64');
+    const rel = `images/covers/${p.slug}-${crypto.createHash('sha1').update(buf).digest('hex').slice(0, 8)}.${ext}`;
+    write(rel, buf);
+    console.log(`  cover base64 "${p.slug}" -> ${rel} (${Math.round(buf.length / 1024)} KB) — sebaiknya simpan ulang lewat admin`);
+    return rel;
+  }
+  if (fs.existsSync(path.join(ROOT, p.cover))) return p.cover;
+  console.warn(`! Cover "${p.slug}": file tidak ditemukan (${p.cover}), pakai placeholder`);
+  return '';
 }
 
 /* ---------------- Isi artikel: id heading & daftar bab ---------------- */

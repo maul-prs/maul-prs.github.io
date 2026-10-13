@@ -24,6 +24,7 @@
       '<div class="post-card-info">' +
       '<span class="post-card-badge">' + esc(p.type) + '</span>' +
       '<h3 class="post-card-title">' + esc(p.title) + '</h3>' +
+      (p.author ? '<p class="post-card-author">✍️ ' + esc(p.author) + '</p>' : '') +
       '<p class="post-card-desc">' + desc + '</p>' +
       '<div class="post-card-meta"><span>📅 ' + esc(p.date) + '</span><span style="color: var(--accent-light); font-weight: 500;">Baca Selengkapnya →</span></div>' +
       '</div></a>';

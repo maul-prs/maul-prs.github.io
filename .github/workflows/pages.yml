@@ -19,6 +19,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      # Upaya otomatis mengatur Settings → Pages → Source = "GitHub Actions".
+      # Kalau gagal (izin token tidak cukup) langkah ini diabaikan; atur manual sekali saja.
+      - name: Pastikan Pages memakai GitHub Actions
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api -X PUT "repos/${{ github.repository }}/pages" -f build_type=workflow \
+            || gh api -X POST "repos/${{ github.repository }}/pages" -f build_type=workflow
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
