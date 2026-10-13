@@ -141,6 +141,17 @@ function pager(current, total, hrefFor) {
 }
 
 /* ---------- Beranda ---------- */
+// Video di beranda: isi youtubeVideoId (ID atau link video) untuk satu video,
+// atau biarkan kosong untuk memakai youtubePlaylistId (playlist).
+function youtubeEmbedUrl(cfg) {
+  const raw = String(cfg.youtubeVideoId || '').trim();
+  const m = /(?:v=|youtu\.be\/|embed\/|shorts\/|live\/)([\w-]{11})/.exec(raw);
+  const id = m ? m[1] : /^[\w-]{11}$/.test(raw) ? raw : '';
+  return id
+    ? `https://www.youtube.com/embed/${id}`
+    : `https://www.youtube.com/embed/videoseries?list=${encodeURIComponent(cfg.youtubePlaylistId || '')}`;
+}
+
 function homePage(cfg, data) {
   const filters = ['Book Summary', 'Quote & Nasehat', "Dzikir & Do'a", 'Cerita Inspirasi', ...data.extraTypes];
   const filterBtns = filters
@@ -188,7 +199,7 @@ function homePage(cfg, data) {
             <p style="color: var(--text-muted); margin: 0; line-height: 1.6; font-size: 14px;">Website ini menjadi rumah untuk tulisan dan catatan yang melengkapi konten video ${esc(cfg.siteName)}.</p>
           </div>
           <div style="aspect-ratio: 16/9; width: 100%; border-radius: 8px; overflow: hidden; background: #032a18; border: 1px solid var(--border-color);">
-            <iframe src="https://www.youtube.com/embed/videoseries?list=${esc(cfg.youtubePlaylistId)}" title="YouTube video player" loading="lazy" style="width: 100%; height: 100%; border: 0;" allowfullscreen></iframe>
+            <iframe src="${esc(youtubeEmbedUrl(cfg))}" title="YouTube video player" loading="lazy" style="width: 100%; height: 100%; border: 0;" allowfullscreen></iframe>
           </div>
         </div>
       </section>
