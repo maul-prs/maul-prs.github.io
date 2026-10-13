@@ -14,9 +14,6 @@
   var HDR = 90;             // garis baca: tepat di bawah header yang menempel
   var DAY = 86400000;
 
-  // Data di localStorage bisa saja rusak/diubah: angka selalu dipaksa menjadi angka sebelum dipakai
-  function num(v) { var n = Number(v); return isFinite(n) ? n : 0; }
-
   /* ---------------- Penyimpanan ---------------- */
   function load() {
     try {
@@ -50,7 +47,7 @@
   }
 
   function resumable(e, now) {
-    return !!e && typeof e === 'object' && !e.done && !e.dismissed && num(e.pct) >= MIN_PCT && num(e.pct) < DONE_PCT &&
+    return !!e && !e.done && !e.dismissed && e.pct >= MIN_PCT && e.pct < DONE_PCT &&
       safeUrl(e.url) && now - (e.t || 0) < STALE_DAYS * DAY;
   }
 
@@ -85,8 +82,7 @@
     var box = document.getElementById('resumeStrip');
     if (!box) return;
     var db = load(), now = Date.now();
-    var list = Object.keys(db).filter(function (k) { return db[k] && typeof db[k] === 'object'; })
-      .map(function (k) { db[k].slug = k; db[k].pct = Math.round(num(db[k].pct)); return db[k]; })
+    var list = Object.keys(db).map(function (k) { db[k].slug = k; return db[k]; })
       .filter(function (e) { return resumable(e, now); })
       .sort(function (a, b) { return b.t - a.t; })
       .slice(0, MAX_STRIP);
@@ -276,7 +272,6 @@
     } catch (err) {}
 
     var saved = load()[slug];
-    if (saved && typeof saved === 'object') saved.pct = Math.round(num(saved.pct)); else saved = null;
     var canResume = saved && !saved.done && saved.pct >= MIN_PCT && saved.pct < DONE_PCT;
     // kalau browser sudah memulihkan posisi gulir sendiri (reload/kembali), tidak perlu banner
     if (canResume && window.pageYOffset < 40) {

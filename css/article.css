@@ -368,8 +368,8 @@ html.focus-mode .article-layout {
 }
 .read-pct {
   position: fixed;
-  right: calc(14px + env(safe-area-inset-right, 0px));
-  bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+  right: 14px;
+  bottom: 14px;
   z-index: 900;
   font-size: 12px;
   font-weight: 700;
@@ -389,9 +389,9 @@ html.focus-mode .article-layout {
 /* ---- Banner "Lanjut dari X%?" ---- */
 .resume-banner {
   position: fixed;
-  left: calc(14px + env(safe-area-inset-left, 0px));
-  right: calc(14px + env(safe-area-inset-right, 0px));
-  bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+  left: 14px;
+  right: 14px;
+  bottom: 14px;
   z-index: 1050;
   max-width: 480px;
   margin: 0 auto;
