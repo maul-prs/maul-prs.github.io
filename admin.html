@@ -1,9 +1,11 @@
 <!doctype html>
 <html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - Maul Prs</title>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin Panel — Maul Prs</title>
+    <link rel="stylesheet" href="css/style.css" />
     <style>
       .admin-wrapper {
         max-width: 1100px;
@@ -162,15 +164,188 @@
         opacity: 0.85;
       }
     </style>
-</head>
-<body>
+  </head>
+  <body>
+    <div class="container">
+      <div class="admin-wrapper">
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #0f3020;
+            padding-bottom: 15px;
+          "
+        >
+          <h2 style="color: #fff; margin: 0; font-size: 26px" id="mainTitle">
+            Panel Admin Postingan
+          </h2>
+          <a
+            href="/"
+            style="color: #34d399; font-size: 15px; text-decoration: none"
+            >← Ke Beranda</a
+          >
+        </div>
 
-    <h2>Admin Tool - Tambah Artikel</h2>
-    
-    <div class="form-group">
-        <label>GitHub Personal Access Token (PAT)</label>
-        <input type="password" id="gh-token" placeholder="Masukkan PAT GitHub Anda (simpan untuk kemudahan)">
-    </div>
+        <!-- Konfigurasi GitHub API -->
+        <div style="background: #032a18; border: 1px solid #0f3020; padding: 18px; border-radius: 10px; margin-bottom: 25px;">
+          <h3 style="color: #34d399; font-size: 15px; margin-top: 0; margin-bottom: 10px;">⚙️ Konfigurasi GitHub Repository</h3>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+            <div class="form-group" style="margin-bottom: 0;">
+              <label style="font-size: 13px;">Repository (contoh: maul-prs/maul-prs.github.io)</label>
+              <input type="text" id="ghRepo" placeholder="username/nama-repo" value="maul-prs/maul-prs.github.io" />
+            </div>
+            <div class="form-group" style="margin-bottom: 0;">
+              <label style="font-size: 13px;">GitHub Personal Access Token (PAT)</label>
+              <input type="password" id="ghToken" placeholder="ghp_xxxxxxxxxxxx" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Tombol Tab Kategori Utama -->
+        <div class="category-tabs">
+          <button
+            class="tab-btn active"
+            onclick="switchTab('Book Summary', event)"
+          >
+            📚 Book Summary
+          </button>
+          <button class="tab-btn" onclick="switchTab('Quote & Nasehat', event)">
+            💡 Quote & Nasehat
+          </button>
+          <button class="tab-btn" onclick="switchTab('Dzikir & Do\'a', event)">
+            🤲 Dzikir & Do'a
+          </button>
+          <button
+            class="tab-btn"
+            onclick="switchTab('Cerita Inspirasi', event)"
+          >
+            ✨ Cerita Inspirasi
+          </button>
+        </div>
+
+        <div id="legacyBanner" style="display:none;background:#032a18;border:1px solid #f59e0b;padding:14px 18px;border-radius:10px;margin-bottom:25px;color:#d4f0dc;font-size:14px;line-height:1.6;">
+          Ditemukan <strong id="legacyCount">0</strong> postingan dalam format lama (posts.json / browser ini). Pindahkan ke format baru (satu file per artikel) supaya bisa diedit di sini dan masuk Google.
+          <button type="button" id="migrateBtn" class="btn-action btn-archive" style="margin-left:8px;" onclick="migrateLegacy()">Migrasi sekarang</button>
+        </div>
+
+        <!-- Form Utama -->
+        <form id="postForm">
+          <input type="hidden" id="editSlug" value="" />
+          <input type="hidden" id="postType" value="Book Summary" />
+
+          <!-- Multi-Kategori Tagging -->
+          <div id="book-category-group" class="form-group">
+            <label for="post-categories"
+              >Kategori Tagging (Bisa ketik lebih dari satu, pisahkan dengan
+              koma):</label
+            >
+            <input
+              type="text"
+              list="category-options"
+              id="post-categories"
+              placeholder="Contoh: Productivity, Psychology"
+            />
+            <datalist id="category-options">
+              <option value="Finance"></option>
+              <option value="Productivity"></option>
+              <option value="Thinking"></option>
+              <option value="Self Improvement"></option>
+              <option value="Parenting"></option>
+              <option value="Motivasi"></option>
+              <option value="Kehidupan"></option>
+              <option value="Hati & Jiwa"></option>
+            </datalist>
+          </div>
+
+          <div class="form-group">
+            <label>Judul Postingan / Artikel</label>
+            <input
+              type="text"
+              id="postTitle"
+              required
+              placeholder="Masukkan judul..."
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Alamat URL (slug)</label>
+            <input type="text" id="postSlug" placeholder="otomatis dari judul" autocomplete="off" />
+            <small style="display:block;margin-top:6px;color:#9ca3af;">Alamat artikel: <code>/artikel/<strong>slug</strong>/</code>. Setelah dipublikasikan sebaiknya jangan diubah (link yang sudah dibagikan tetap hidup).</small>
+          </div>
+
+          <!-- INTI / PESAN UTAMA: tampil di semua tab (bukan hanya Book Summary) -->
+          <div class="form-group" id="core-group">
+            <label id="coreLabel" for="bookCore">Inti Buku (Ringkasan/Pesan Utama)</label>
+            <textarea
+              id="bookCore"
+              style="min-height: 90px"
+              placeholder="Tuliskan inti atau ringkasan singkat isi buku..."
+            ></textarea>
+            <small style="display:block;margin-top:6px;color:#9ca3af;">
+              Tampil di samping cover, di kartu beranda, dan menjadi deskripsi saat dibagikan ke Google &amp; WhatsApp.
+              Idealnya 120–160 karakter. <span id="coreCount">0 karakter</span>
+            </small>
+          </div>
+
+          <!-- KELOMPOK INPUT KHUSUS DETAIL BUKU -->
+          <div
+            id="book-details-section"
+            style="
+              background: #032a18;
+              border: 1px solid #0f3020;
+              padding: 20px;
+              border-radius: 10px;
+              margin-bottom: 22px;
+            "
+          >
+            <h3
+              style="
+                color: #34d399;
+                font-size: 16px;
+                margin-top: 0;
+                margin-bottom: 15px;
+                border-bottom: 1px solid #0f3020;
+                padding-bottom: 8px;
+              "
+            >
+              📖 Detail Informasi Buku (Khusus Book Summary)
+            </h3>
+
+            <div class="form-group">
+              <label>Judul Buku</label>
+              <input
+                type="text"
+                id="bookTitle"
+                placeholder="Contoh: Atomic Habits"
+              />
+            </div>
+
+            <div class="form-group">
+              <label>Penulis</label>
+              <input
+                type="text"
+                id="bookAuthor"
+                placeholder="Contoh: James Clear"
+              />
+            </div>
+
+            <div class="form-group">
+              <label>Tahun Terbit Buku</label>
+              <input type="text" id="bookYear" placeholder="Contoh: 2018" />
+            </div>
+
+            <div class="form-group">
+              <label>Kategori (Pilih Tepat Salah Satu)</label>
+              <select id="bookMainCategory">
+                <option value="Book Summary">Book Summary</option>
+                <option value="Cerita Inspirasi">Cerita Inspirasi</option>
+                <option value="Quotes">Quotes</option>
+                <option value="Nasehat">Nasehat</option>
+                <option value="Dzikir & Do'a">Dzikir & Do'a</option>
+              </select>
+            </div>
 
             <div class="form-group" style="margin-bottom: 0">
               <label>Waktu Baca</label>
@@ -661,19 +836,14 @@
           if (!categories.length) categories = [postType];
 
           const dateISO = $("postDate").value || todayISO();
-          const core = $("bookCore").value.trim();
-          // Data buku lengkap hanya untuk Book Summary; kategori lain cukup menyimpan "inti"-nya
-          const bookData =
-            postType === "Book Summary"
-              ? {
-                  bookTitle: $("bookTitle").value,
-                  bookAuthor: $("bookAuthor").value,
-                  bookYear: $("bookYear").value,
-                  bookMainCategory: $("bookMainCategory").value,
-                  bookCore: core,
-                  bookReadTime: $("bookReadTime").value,
-                }
-              : { bookCore: core };
+          const bookData = {
+            bookTitle: $("bookTitle").value,
+            bookAuthor: $("bookAuthor").value,
+            bookYear: $("bookYear").value,
+            bookMainCategory: $("bookMainCategory").value,
+            bookCore: $("bookCore").value,
+            bookReadTime: $("bookReadTime").value,
+          };
 
           let meta;
           if (isEdit) {
@@ -690,7 +860,7 @@
             categories,
             date: formatDateID(dateISO),
             dateISO,
-            coreMessage: core, // apa adanya: kolom dikosongkan = benar-benar kosong
+            coreMessage: bookData.bookCore || meta.coreMessage || "",
             bookData,
           });
           if (coverPath) meta.cover = coverPath;

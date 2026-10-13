@@ -183,17 +183,6 @@ function normalizePosts(raw) {
 function resolveCover(p) {
   if (!p.cover) return '';
   if (/^https?:/i.test(p.cover)) return p.cover;
-  // Cover lama tersimpan sebagai data URI (base64) di dalam JSON. Ubah jadi file gambar di dist/images/
-  // supaya index.json tetap kecil dan gambar benar-benar tampil.
-  const m = /^data:image\/(png|jpe?g|webp|gif);base64,([A-Za-z0-9+/=\s]+)$/i.exec(p.cover);
-  if (m) {
-    const ext = m[1].toLowerCase().replace('jpeg', 'jpg');
-    const rel = `images/cover-${p.slug}.${ext}`;
-    fs.mkdirSync(path.join(OUT, 'images'), { recursive: true });
-    fs.writeFileSync(path.join(OUT, rel), Buffer.from(m[2].replace(/\s+/g, ''), 'base64'));
-    return rel;
-  }
-  if (/^data:/i.test(p.cover)) return '';
   return fs.existsSync(path.join(ROOT, p.cover)) ? p.cover : '';
 }
 
