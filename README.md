@@ -1,22 +1,16 @@
-# Maul Prs — Master V2
+# Maul Prs
 
-V2 sudah memperbaiki alur data: `data/posts.json` dibaca oleh `js/app.js`, lalu dirender ke homepage dan halaman artikel dinamis.
+Situs statis. Isi ada di `content/posts/` (satu `.json` + satu `.html` per artikel), lalu `build.js`
+membuat folder `dist/` yang di-deploy GitHub Pages lewat `.github/workflows/pages.yml`.
+
+## Pengaturan wajib (sekali saja)
+Repo → **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+Kalau Source masih "Deploy from a branch", GitHub menyajikan file mentah di root repo, bukan hasil build,
+sehingga postingan tidak muncul.
+
+## Menambah / mengedit artikel
+Lewat `/admin.html`. Setiap simpan membuat commit, lalu Actions membangun ulang situs (±1 menit).
 
 ## Jalankan lokal
-Di PowerShell/Terminal, masuk ke folder ini lalu:
-`python -m http.server 8000`
-Buka `http://localhost:8000`
-
-Jangan hanya double-click `index.html`, karena browser dapat memblokir pembacaan JSON lewat `fetch()`.
-
-## Menambah post
-Tambahkan object baru ke array `data/posts.json`. Foto diletakkan di `assets/` lalu isi field `image`, misalnya `assets/nasehat-001.jpg`.
-
-V2 belum memakai database atau admin dashboard. Itu bisa menjadi tahap berikutnya.
-
-
-### Master V3 changes
-- Softer warm-neutral background for longer reading comfort.
-- Article body typography reduced slightly for a calmer editorial reading experience.
-- Search and category filters are now independent. Choosing a category no longer fills the search box.
-- Category selection is visually marked as active.
+    node build.js
+    python3 -m http.server 8000 --directory dist
