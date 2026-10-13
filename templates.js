@@ -242,6 +242,7 @@ ${footer(cfg)}`;
     title: o.title,
     description: o.intro,
     canonical: cfg.siteUrl + o.path,
+    scripts: ['/js/reading.js'],
     body,
   });
 }

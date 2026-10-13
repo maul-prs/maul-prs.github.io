@@ -663,7 +663,12 @@
         try {
           (JSON.parse(localStorage.getItem("maul_posts")) || []).forEach((p) => map.set(String(p.id), p));
         } catch (_) {}
-        legacyPosts = [...map.values()];
+        // Abaikan yang sudah ada di website (id atau judul sama), supaya migrasi tidak membuat duplikat
+        const knownIds = new Set(listCache.map((p) => String(p.id)));
+        const knownTitles = new Set(listCache.map((p) => String(p.title || "").trim().toLowerCase()));
+        legacyPosts = [...map.values()].filter(
+          (p) => !knownIds.has(String(p.id)) && !knownTitles.has(String(p.title || "").trim().toLowerCase())
+        );
         if (legacyPosts.length) {
           $("legacyCount").textContent = legacyPosts.length;
           $("legacyBanner").style.display = "block";

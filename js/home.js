@@ -69,6 +69,7 @@
     }
     grid.innerHTML = list.slice((state.page - 1) * PER, state.page * PER).map(card).join('');
     pagerEl.innerHTML = pagerHtml(total);
+    if (window.MaulReading) window.MaulReading.markCards(grid); // tanda ✓ untuk bacaan yang sudah selesai
   }
 
   filterBox.addEventListener('click', function (e) {

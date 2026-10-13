@@ -9,6 +9,7 @@
   var DONE_PCT = 95;        // sampai sini = selesai, keluar dari strip
   var STALE_DAYS = 30;      // tidak disentuh selama ini = tidak ditagih lagi di beranda
   var KEEP_DAYS = 180;      // dibuang total dari browser setelah ini
+  var KEEP_DONE_DAYS = 365; // bacaan yang sudah tamat disimpan lebih lama supaya tanda ✓ tidak cepat hilang
   var MAX_ENTRIES = 40;
   var MAX_STRIP = 3;
   var HDR = 90;             // garis baca: tepat di bawah header yang menempel
@@ -28,7 +29,7 @@
   function store(db) {
     var now = Date.now();
     var keys = Object.keys(db).filter(function (k) {
-      return db[k] && now - (db[k].t || 0) < KEEP_DAYS * DAY;
+      return db[k] && now - (db[k].t || 0) < (db[k].done ? KEEP_DONE_DAYS : KEEP_DAYS) * DAY;
     }).sort(function (a, b) { return (db[b].t || 0) - (db[a].t || 0); }).slice(0, MAX_ENTRIES);
     var out = {};
     keys.forEach(function (k) { out[k] = db[k]; });
@@ -120,6 +121,36 @@
       }
     });
     if (changed) { store(db); renderStrip(); }
+  }
+
+  /* ---------------- Kartu: tanda ✓ untuk bacaan yang sudah selesai ---------------- */
+  function slugOf(href) {
+    var m = /^\/artikel\/([^\/?#]+)/.exec(href || '');
+    if (!m) return '';
+    try { return decodeURIComponent(m[1]); } catch (e) { return m[1]; }
+  }
+
+  // Dipanggil untuk semua kartu (beranda, arsip, kategori) dan setiap kali home.js menggambar ulang kartu
+  function markCards(root) {
+    var db = load();
+    [].forEach.call((root || document).querySelectorAll('a.post-card'), function (card) {
+      var slug = slugOf(card.getAttribute('href'));
+      var e = slug ? db[slug] : null;
+      var done = !!(e && typeof e === 'object' && e.done);
+      var mark = card.querySelector('.post-card-done');
+      if (done && !mark) {
+        mark = document.createElement('span');
+        mark.className = 'post-card-done';
+        mark.setAttribute('role', 'img');
+        mark.setAttribute('aria-label', 'Sudah selesai dibaca');
+        mark.title = 'Sudah selesai dibaca';
+        mark.textContent = '✓';
+        card.appendChild(mark);
+      } else if (!done && mark) {
+        mark.remove();
+      }
+      card.classList.toggle('is-done', done);
+    });
   }
 
   /* ---------------- Artikel: lacak posisi ---------------- */
@@ -291,7 +322,17 @@
     paint();
   }
 
-  window.MaulReading = { renderStrip: renderStrip, reconcile: reconcile, track: track };
+  window.MaulReading = { renderStrip: renderStrip, reconcile: reconcile, track: track, markCards: markCards };
+
+  // Tanda ✓ pada kartu: saat halaman siap, saat kembali lewat tombol Kembali, dan saat tab lain mengubah data
+  function initCards() { markCards(); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initCards); else initCards();
+  window.addEventListener('pageshow', function (ev) { if (ev.persisted) markCards(); });
+  window.addEventListener('storage', function (ev) {
+    if (ev.key !== KEY) return;
+    markCards();
+    if (document.getElementById('resumeStrip')) renderStrip();
+  });
 
   // Beranda: skrip ini dimuat sinkron tepat setelah #resumeStrip, jadi strip muncul di render pertama
   if (document.getElementById('resumeStrip')) {
