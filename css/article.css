@@ -462,3 +462,171 @@ html.focus-mode .article-layout {
 .resume-banner-x:hover {
   color: #fff;
 }
+
+/* ---------- Tombol bagikan ---------- */
+.share-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: -8px 0 24px;
+}
+
+.share-label {
+  font-size: 13px;
+  color: var(--text-muted, #8ba397);
+}
+
+.share-btn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--border-color, #0f3020);
+  background: rgba(3, 42, 24, 0.7);
+  color: #e7f5ee;
+  font: inherit;
+  font-size: 13px;
+  line-height: 1.2;
+  padding: 8px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.share-btn:hover {
+  border-color: rgba(16, 185, 129, 0.65);
+}
+
+.share-btn.primary {
+  background: #10b981;
+  border-color: #10b981;
+  color: #031a0e;
+  font-weight: 600;
+}
+
+.share-btn[hidden] {
+  display: none;
+}
+
+/* ---------- Panel wallpaper (doa / quote pendek) ---------- */
+.wp-panel {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 24px;
+  align-items: center;
+  background: rgba(3, 42, 24, 0.7);
+  border: 1px solid var(--border-color, #0f3020);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 28px;
+}
+
+.wp-preview canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 9 / 16;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.wp-side h2 {
+  margin: 0 0 6px;
+  font-size: 18px;
+}
+
+.wp-hint,
+.wp-note {
+  margin: 0 0 14px;
+  font-size: 13px;
+  color: var(--text-muted, #8ba397);
+}
+
+.wp-note {
+  color: #f5b82e;
+}
+
+.wp-themes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.wp-theme {
+  appearance: none;
+  border: 1px solid var(--border-color, #0f3020);
+  background: transparent;
+  color: #cfe3d8;
+  font: inherit;
+  font-size: 12px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.wp-theme.active {
+  border-color: #10b981;
+  color: #34d399;
+  background: rgba(16, 185, 129, 0.12);
+}
+
+.wp-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+@font-face {
+  font-family: "AmiriDoa";
+  src: url("/assets/fonts/amiri-arabic-400-normal.woff2") format("woff2");
+  font-display: swap;
+}
+
+/* Isi doa yang dibuat otomatis dari kolom Wallpaper di admin */
+.doa-block {
+  text-align: center;
+  padding: 8px 0 4px;
+}
+
+.doa-arab {
+  font-family: "AmiriDoa", "Amiri", "Scheherazade New", "Traditional Arabic", serif;
+  font-size: 2rem;
+  line-height: 2.1;
+  margin: 0 0 14px;
+  color: #f4efe2;
+}
+
+.doa-latin {
+  font-style: italic;
+  color: #cfc7b2;
+  margin: 0 0 14px;
+}
+
+.doa-arti {
+  margin: 0 0 12px;
+}
+
+.doa-sumber {
+  color: #f5b82e;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+@media (max-width: 640px) {
+  .wp-panel {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+  .wp-preview {
+    width: min(240px, 70%);
+  }
+  .wp-side {
+    width: 100%;
+  }
+}

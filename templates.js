@@ -259,6 +259,41 @@ ${footer(cfg)}`;
 }
 
 /* ---------- Halaman artikel ---------- */
+// Tombol bagikan (semua artikel)
+function shareBar(cfg, p) {
+  const url = cfg.siteUrl + p.url;
+  const wa = 'https://wa.me/?text=' + encodeURIComponent(`${p.title}\n${url}`);
+  return `        <div class="share-bar" id="shareBar" data-title="${esc(p.title)}" data-url="${esc(url)}">
+          <span class="share-label">Bagikan:</span>
+          <button type="button" class="share-btn" data-share="native" hidden>📤 Bagikan</button>
+          <a class="share-btn" href="${esc(wa)}" target="_blank" rel="noopener">💬 WhatsApp</a>
+          <button type="button" class="share-btn" data-share="copy">🔗 Salin tautan</button>
+        </div>`;
+}
+
+// Panel wallpaper (doa / quote pendek): gambar dibuat di browser pembaca oleh js/wallpaper.js
+function wallpaperPanel(cfg, p) {
+  const w = p.wallpaper;
+  if (!w) return '';
+  const url = cfg.siteUrl + p.url;
+  const data = JSON.stringify({ ...w, title: p.title, slug: p.slug, url, site: cfg.siteUrl.replace(/^https?:\/\//, '') }).replace(/</g, '\\u003c');
+  return `        <section class="wp-panel" id="wpPanel" aria-labelledby="wpHeading">
+          <div class="wp-preview"><canvas id="wpCanvas" width="1080" height="1920" role="img" aria-label="Pratinjau wallpaper ${esc(p.title)}"></canvas></div>
+          <div class="wp-side">
+            <h2 id="wpHeading">🖼️ Wallpaper</h2>
+            <p class="wp-hint">Jadikan wallpaper HP, atau bagikan ke WhatsApp dan media sosial.</p>
+            <div class="wp-themes" id="wpThemes" role="group" aria-label="Pilih warna"></div>
+            <div class="wp-actions">
+              <button type="button" class="share-btn primary" id="wpShare" hidden>📤 Bagikan wallpaper</button>
+              <button type="button" class="share-btn" id="wpDownload">⬇️ Unduh gambar</button>
+              <button type="button" class="share-btn" id="wpCaption">📋 Salin teks + tautan</button>
+            </div>
+            <p class="wp-note" id="wpNote" hidden></p>
+          </div>
+          <script type="application/json" id="wpData">${data}</script>
+        </section>`;
+}
+
 function articlePage(cfg, o) {
   const p = o.post;
   const bd = p.bookData || {};
@@ -322,6 +357,9 @@ ${o.related.map((r) => `            <li><a href="${esc(r.url)}">${esc(r.title)}<
           </div>
         </div>
 
+${shareBar(cfg, p)}
+${wallpaperPanel(cfg, p)}
+
         <article id="articleContent" class="article-content"${trackAttrs}>
 ${o.bodyHtml}
         </article>
@@ -368,10 +406,15 @@ ${footer(cfg)}`;
     canonical: url,
     ogType: 'article',
     ogImage: o.ogImage,
-    twitterCard: p.cover ? 'summary' : 'summary_large_image',
+    twitterCard: p.cover && !o.ogIsCard ? 'summary' : 'summary_large_image',
     published: p.dateISO,
     css: ['/css/article.css'],
-    scripts: tracked ? ['/js/reading.js', '/js/article.js'] : ['/js/article.js'],
+    scripts: [
+      ...(tracked ? ['/js/reading.js'] : []),
+      '/js/article.js',
+      '/js/share.js',
+      ...(p.wallpaper ? ['/js/wallpaper.js'] : []),
+    ],
     jsonld: [ld, crumbs],
     body,
   });

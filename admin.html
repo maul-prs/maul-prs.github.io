@@ -289,6 +289,24 @@
             </small>
           </div>
 
+          <!-- WALLPAPER: hanya untuk Quote & Nasehat dan Dzikir & Do'a -->
+          <div id="wallpaper-section" class="form-group" style="display: none; background: #032a18; border: 1px solid #0f3020; border-radius: 10px; padding: 16px; margin-bottom: 20px;">
+            <h3 style="margin: 0 0 6px; font-size: 15px;">🖼️ Wallpaper (opsional)</h3>
+            <small style="display: block; margin-bottom: 12px; color: #9ca3af;">
+              Isi untuk memunculkan tombol Wallpaper di halaman (unduh / bagikan ke HP). Cocok untuk do'a dan quote yang pendek.
+              Untuk quote tanpa Arab, cukup isi "Terjemahan / teks quote". Kalau kolom isi artikel di bawah dikosongkan,
+              halaman dibuat otomatis dari empat kolom ini.
+            </small>
+            <label for="wpArabic">Teks Arab</label>
+            <textarea id="wpArabic" dir="rtl" lang="ar" style="min-height: 80px; font-size: 20px;" placeholder="رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً ..."></textarea>
+            <label for="wpLatin" style="margin-top: 10px; display: block;">Latin (opsional)</label>
+            <textarea id="wpLatin" style="min-height: 60px" placeholder="Rabbana atina fid-dunya hasanah ..."></textarea>
+            <label for="wpTranslation" style="margin-top: 10px; display: block;">Terjemahan / teks quote</label>
+            <textarea id="wpTranslation" style="min-height: 80px" placeholder="Ya Tuhan kami, berilah kami kebaikan di dunia ..."></textarea>
+            <label for="wpSource" style="margin-top: 10px; display: block;">Sumber / penulis (opsional)</label>
+            <input type="text" id="wpSource" placeholder="Contoh: QS. Al-Baqarah: 201 atau HR. Bukhari" />
+          </div>
+
           <!-- KELOMPOK INPUT KHUSUS DETAIL BUKU -->
           <div
             id="book-details-section"
@@ -740,6 +758,7 @@
         $("postType").value = categoryName;
         $("submitBtn").innerText = `Simpan & Upload Postingan ${categoryName}`;
         $("book-category-group").style.display = categoryName === "Cerita Inspirasi" ? "none" : "block";
+        $("wallpaper-section").style.display = categoryName === "Quote & Nasehat" || categoryName === "Dzikir & Do'a" ? "block" : "none";
 
         if (categoryName === "Book Summary") {
           $("book-details-section").style.display = "block";
@@ -805,12 +824,170 @@
         $("postSlug").readOnly = false;
         $("postSlug").value = "";
         $("postDate").value = todayISO();
+        ["wpArabic", "wpLatin", "wpTranslation", "wpSource"].forEach((id) => ($(id).value = ""));
         $("mainTitle").innerText = "Panel Admin Postingan";
         $("submitBtn").innerText = `Simpan & Upload Postingan ${activeTab}`;
         updateCoreCount();
         slugTouched = false;
         selectedImageFile = null;
         showCoverPreview("");
+      }
+
+      // ---------- Gambar share 1200x630 (kartu seperti di beranda) ----------
+      const OG_W = 1200;
+      const OG_H = 630;
+
+      async function loadOgFonts() {
+        if (loadOgFonts.done || !window.FontFace || !document.fonts) return;
+        loadOgFonts.done = true;
+        const list = [
+          ["OGPoppins", "poppins-latin-400-normal", "400"],
+          ["OGPoppinsX", "poppins-latin-ext-400-normal", "400"],
+          ["OGPoppinsB", "poppins-latin-600-normal", "600"],
+          ["OGPoppinsBX", "poppins-latin-ext-600-normal", "600"],
+        ];
+        await Promise.all(
+          list.map(([fam, file, w]) =>
+            new FontFace(fam, `url(/assets/fonts/${file}.woff2) format("woff2")`, { weight: w })
+              .load()
+              .then((f) => document.fonts.add(f))
+              .catch(() => {})
+          )
+        );
+      }
+
+      function ogRoundRect(ctx, x, y, w, h, r) {
+        ctx.beginPath();
+        ctx.moveTo(x + r, y);
+        ctx.arcTo(x + w, y, x + w, y + h, r);
+        ctx.arcTo(x + w, y + h, x, y + h, r);
+        ctx.arcTo(x, y + h, x, y, r);
+        ctx.arcTo(x, y, x + w, y, r);
+        ctx.closePath();
+      }
+
+      function ogWrap(ctx, text, maxW, maxLines) {
+        const words = String(text || "").replace(/\s+/g, " ").trim().split(" ").filter(Boolean);
+        const lines = [];
+        let line = "";
+        for (const w of words) {
+          const test = line ? line + " " + w : w;
+          if (line && ctx.measureText(test).width > maxW) {
+            lines.push(line);
+            line = w;
+          } else line = test;
+        }
+        if (line) lines.push(line);
+        if (lines.length > maxLines) {
+          const cut = lines.slice(0, maxLines);
+          let last = cut[maxLines - 1];
+          while (last && ctx.measureText(last + "…").width > maxW) last = last.slice(0, -1);
+          cut[maxLines - 1] = last.trimEnd() + "…";
+          return cut;
+        }
+        return lines;
+      }
+
+      async function makeOgJpegBase64({ type, title, author, text, coverBlob }) {
+        await loadOgFonts();
+        const FB = 'OGPoppinsB, OGPoppinsBX, system-ui, "Segoe UI", sans-serif';
+        const FR = 'OGPoppins, OGPoppinsX, system-ui, "Segoe UI", sans-serif';
+        const c = document.createElement("canvas");
+        c.width = OG_W;
+        c.height = OG_H;
+        const ctx = c.getContext("2d");
+
+        const g = ctx.createLinearGradient(0, 0, OG_W, OG_H);
+        g.addColorStop(0, "#021208");
+        g.addColorStop(1, "#05361f");
+        ctx.fillStyle = g;
+        ctx.fillRect(0, 0, OG_W, OG_H);
+        ctx.strokeStyle = "rgba(52,211,153,0.32)";
+        ctx.lineWidth = 2;
+        ogRoundRect(ctx, 24, 24, OG_W - 48, OG_H - 48, 28);
+        ctx.stroke();
+
+        let textX = 90;
+        if (coverBlob) {
+          try {
+            const img = await loadImage(coverBlob);
+            const h = 470;
+            const w = Math.round(Math.min(Math.max((h * img.width) / img.height, 220), 360));
+            const scale = Math.max(w / img.width, h / img.height);
+            const sw = w / scale;
+            const sh = h / scale;
+            ctx.save();
+            ogRoundRect(ctx, 90, 80, w, h, 16);
+            ctx.clip();
+            ctx.drawImage(img, (img.width - sw) / 2, (img.height - sh) / 2, sw, sh, 90, 80, w, h);
+            ctx.restore();
+            textX = 90 + w + 56;
+          } catch (e) { /* tanpa cover */ }
+        }
+        const textW = OG_W - textX - 90;
+        ctx.textBaseline = "alphabetic";
+        ctx.textAlign = "left";
+
+        let y = 84;
+        ctx.font = `600 22px ${FB}`;
+        const badgeW = Math.ceil(ctx.measureText(type).width) + 36;
+        ctx.fillStyle = "rgba(16,185,129,0.18)";
+        ogRoundRect(ctx, textX, y, badgeW, 42, 21);
+        ctx.fill();
+        ctx.fillStyle = "#34d399";
+        ctx.fillText(type, textX + 18, y + 29);
+        y += 42 + 52;
+
+        let size = 56;
+        ctx.font = `600 ${size}px ${FB}`;
+        let lines = ogWrap(ctx, title, textW, 99);
+        if (lines.length > 3) {
+          size = 46;
+          ctx.font = `600 ${size}px ${FB}`;
+          lines = ogWrap(ctx, title, textW, 3);
+        }
+        ctx.fillStyle = "#ffffff";
+        lines.forEach((ln) => {
+          ctx.fillText(ln, textX, y);
+          y += Math.round(size * 1.22);
+        });
+        y += 10;
+
+        if (author) {
+          ctx.font = `400 26px ${FR}`;
+          ctx.fillStyle = "#a3e635";
+          ctx.fillText(ogWrap(ctx, "Penulis: " + author, textW, 1)[0], textX, y + 8);
+          y += 26 + 24;
+        }
+
+        if (text) {
+          ctx.font = `400 28px ${FR}`;
+          ctx.fillStyle = "#b9cdc1";
+          const room = Math.max(1, Math.min(4, Math.floor((OG_H - 110 - y) / 40)));
+          ogWrap(ctx, text, textW, room).forEach((ln) => {
+            ctx.fillText(ln, textX, y + 14);
+            y += 40;
+          });
+        }
+
+        ctx.font = `600 22px ${FB}`;
+        ctx.fillStyle = "#34d399";
+        ctx.fillText(SITE_ROOT.replace(/^https?:\/\//, ""), textX, OG_H - 64);
+
+        return c.toDataURL("image/jpeg", 0.86).split(",")[1];
+      }
+
+      // Isi halaman otomatis dari kolom Wallpaper (dipakai kalau kolom isi artikel dikosongkan)
+      function doaBodyHtml(w) {
+        const para = (cls, txt, extra) => (txt ? `  <p class="${cls}"${extra || ""}>${esc(txt).replace(/\n/g, "<br>")}</p>\n` : "");
+        return (
+          `<section class="doa-block">\n` +
+          para("doa-arab", w.arabic, ' dir="rtl" lang="ar"') +
+          para("doa-latin", w.latin) +
+          para("doa-arti", w.translation) +
+          (w.source ? para("doa-sumber", "— " + w.source) : "") +
+          `</section>\n`
+        );
       }
 
       // ---------- Simpan (baru / edit) ----------
@@ -835,16 +1012,24 @@
 
           const files = [];
           let coverPath = $("postCoverPath").value;
+          let coverBlob = null; // dipakai untuk gambar share
           if (selectedImageFile) {
             submitBtn.innerText = "Memproses cover...";
             coverPath = `${IMAGE_DIR}/cover-${slug}-${Date.now()}.jpg`;
             files.push({ path: coverPath, base64: await imageToJpegBase64(selectedImageFile) });
+            coverBlob = selectedImageFile;
           } else if (/^data:image\//i.test(coverPath)) {
             // Cover lama tersimpan sebagai base64 di dalam JSON: pindahkan jadi file JPG kecil
             submitBtn.innerText = "Memindahkan cover lama...";
             const blob = await (await fetch(coverPath)).blob();
             coverPath = `${IMAGE_DIR}/cover-${slug}-${Date.now()}.jpg`;
             files.push({ path: coverPath, base64: await imageToJpegBase64(blob) });
+            coverBlob = blob;
+          } else if (coverPath) {
+            try {
+              const r = await fetch(coverUrl(coverPath));
+              if (r.ok) coverBlob = await r.blob();
+            } catch (e) { /* gambar share dibuat tanpa cover */ }
           }
 
           let categories = [];
@@ -884,10 +1069,40 @@
           if (coverPath) meta.cover = coverPath;
           delete meta.fullContent;
 
+          // Wallpaper (hanya Quote & Nasehat / Dzikir & Do'a)
+          const wp = {
+            arabic: $("wpArabic").value.trim(),
+            latin: $("wpLatin").value.trim(),
+            translation: $("wpTranslation").value.trim(),
+            source: $("wpSource").value.trim(),
+          };
+          const wpOn = (postType === "Quote & Nasehat" || postType === "Dzikir & Do'a") && !!(wp.arabic || wp.latin || wp.translation);
+          if (wpOn) meta.wallpaper = wp;
+          else delete meta.wallpaper;
+
+          // Gambar share 1200x630 untuk pratinjau tautan (WhatsApp, Telegram, dll.)
+          submitBtn.innerText = "Membuat gambar share...";
+          try {
+            const ogPath = `${IMAGE_DIR}/og-${slug}.jpg`;
+            files.push({
+              path: ogPath,
+              base64: await makeOgJpegBase64({
+                type: postType,
+                title,
+                author: bookData.bookAuthor,
+                text: (wpOn && (wp.translation || wp.latin)) || bookData.bookCore || "",
+                coverBlob,
+              }),
+            });
+            meta.ogImage = ogPath;
+          } catch (e) {
+            console.warn("Gambar share gagal dibuat:", e);
+          }
+
           files.push({ path: `${POSTS_DIR}/${slug}.json`, content: JSON.stringify(meta, null, 2) + "\n" });
           const body = $("postFullContent").value;
           if (body) files.push({ path: `${POSTS_DIR}/${slug}.html`, content: body });
-          else if (!isEdit) files.push({ path: `${POSTS_DIR}/${slug}.html`, content: `<p>${esc(bookData.bookCore || title)}</p>\n` });
+          else if (!isEdit) files.push({ path: `${POSTS_DIR}/${slug}.html`, content: wpOn ? doaBodyHtml(wp) : `<p>${esc(bookData.bookCore || title)}</p>\n` });
 
           submitBtn.innerText = "Menyimpan ke GitHub...";
           await commitFiles(files, `${isEdit ? "Update" : "Tambah"} postingan: ${title}`);
@@ -937,6 +1152,11 @@
           $("bookCore").value = bd.bookCore || post.coreMessage || "";
           updateCoreCount();
           $("bookReadTime").value = bd.bookReadTime || "";
+          const wpd = post.wallpaper || {};
+          $("wpArabic").value = wpd.arabic || "";
+          $("wpLatin").value = wpd.latin || "";
+          $("wpTranslation").value = wpd.translation || "";
+          $("wpSource").value = wpd.source || "";
 
           selectedImageFile = null;
           $("postCoverFile").value = "";

@@ -140,6 +140,14 @@ function loadRawPosts() {
   return posts;
 }
 
+// Data wallpaper (doa / quote pendek): hanya empat teks sederhana
+function cleanWallpaper(w) {
+  if (!w || typeof w !== 'object') return null;
+  const f = (k) => String(w[k] || '').trim().slice(0, 1500);
+  const out = { arabic: f('arabic'), latin: f('latin'), translation: f('translation'), source: f('source') };
+  return out.arabic || out.latin || out.translation ? out : null;
+}
+
 function normalizePosts(raw) {
   const taken = new Set(raw.filter((p) => p.slug).map((p) => p.slug));
   const today = new Date().toISOString().slice(0, 10);
@@ -160,6 +168,8 @@ function normalizePosts(raw) {
       core: String(p.coreMessage || bd.bookCore || p.summary || '').trim(),
       author: bd.bookAuthor || '',
       bookData: bd,
+      wallpaper: cleanWallpaper(p.wallpaper),
+      ogImage: String(p.ogImage || '').trim().replace(/^\.?\/+/, ''),
       status: p.status === 'archived' ? 'archived' : 'active',
       _body: p._body || '',
       legacy: !!p._legacy,
@@ -287,9 +297,19 @@ function main() {
       .map((e) => e[0]);
 
     const description = truncate(p.core || plainText(html), 160) || cfg.description;
-    const ogImage = p.cover ? (/^https?:/i.test(p.cover) ? p.cover : `${cfg.siteUrl}${encodeURI('/' + p.cover)}`) : `${cfg.siteUrl}/${cfg.ogDefaultImage}`;
+    // Gambar share 1200x630 (dibuat admin saat menyimpan); kalau belum ada, pakai cover, lalu gambar default
+    let ogIsCard = false;
+    let ogImage = p.cover ? (/^https?:/i.test(p.cover) ? p.cover : `${cfg.siteUrl}${encodeURI('/' + p.cover)}`) : `${cfg.siteUrl}/${cfg.ogDefaultImage}`;
+    if (src.ogImage) {
+      if (fs.existsSync(path.join(ROOT, src.ogImage))) {
+        ogImage = `${cfg.siteUrl}${encodeURI('/' + src.ogImage)}`;
+        ogIsCard = true;
+      } else {
+        console.warn(`! Gambar share "${p.slug}" tidak ditemukan (${src.ogImage}), pakai cover`);
+      }
+    }
 
-    write(`artikel/${p.slug}/index.html`, T.articlePage(cfg, { post: { ...p, bookData: src.bookData }, bodyHtml: html, toc, related, description, ogImage }));
+    write(`artikel/${p.slug}/index.html`, T.articlePage(cfg, { post: { ...p, bookData: src.bookData, wallpaper: src.wallpaper }, bodyHtml: html, toc, related, description, ogImage, ogIsCard }));
   }
 
   /* 2. Data ringan untuk beranda, pencarian, sidebar & admin */
