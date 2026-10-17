@@ -1,0 +1,24 @@
+{
+  "id": "1792256482881",
+  "slug": "influence",
+  "status": "active",
+  "title": "Influence",
+  "type": "Book Summary",
+  "categories": [
+    "psychology",
+    "communication"
+  ],
+  "date": "17 Oktober 2026",
+  "dateISO": "2026-10-17",
+  "coreMessage": "Kenapa kita bilang \"ya\" padahal ingin bilang \"tidak\"? Tujuh tuas psikologi yang diam-diam menggerakkan keputusanmu setiap hari.",
+  "bookData": {
+    "bookTitle": "Influence",
+    "bookAuthor": "Robert B. Cialdini",
+    "bookYear": "1984",
+    "bookMainCategory": "Book Summary",
+    "bookCore": "Kenapa kita bilang \"ya\" padahal ingin bilang \"tidak\"? Tujuh tuas psikologi yang diam-diam menggerakkan keputusanmu setiap hari.",
+    "bookReadTime": "18–22 menit baca"
+  },
+  "cover": "images/cover-influence-1792256482856.jpg",
+  "ogImage": "images/og-influence.jpg"
+}
