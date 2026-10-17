@@ -1,0 +1,24 @@
+{
+  "id": "1792207073159",
+  "slug": "the-psychology-of-money",
+  "status": "active",
+  "title": "The Psychology of Money",
+  "type": "Book Summary",
+  "categories": [
+    "psychology",
+    "finance"
+  ],
+  "date": "17 Oktober 2026",
+  "dateISO": "2026-10-17",
+  "coreMessage": "Kenapa seorang tukang sapu bisa meninggal dengan harta 8 juta dolar, sementara eksekutif Harvard kehilangan rumahnya? Bukan soal pintar.",
+  "bookData": {
+    "bookTitle": "The Psychology of Money",
+    "bookAuthor": "Morgan Housel",
+    "bookYear": "2020",
+    "bookMainCategory": "Book Summary",
+    "bookCore": "Kenapa seorang tukang sapu bisa meninggal dengan harta 8 juta dolar, sementara eksekutif Harvard kehilangan rumahnya? Bukan soal pintar.",
+    "bookReadTime": "18–22 menit baca"
+  },
+  "cover": "images/cover-the-psychology-of-money-1792207073140.jpg",
+  "ogImage": "images/og-the-psychology-of-money.jpg"
+}
