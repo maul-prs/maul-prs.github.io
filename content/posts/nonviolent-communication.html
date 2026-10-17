@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nonviolent Communication — Rangkuman</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Poppins:wght@600;700&display=swap">
+<style>
+:root{color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0}
+.wrap{max-width:780px;margin:0 auto;padding:28px 20px 60px}
+.rangkuman{--pri:#F2766B;--acc:#F6B93B;--txt:#F1F1EE;--mut:#C2C6CE;--card:rgba(255,255,255,.055);--line:rgba(255,255,255,.16);--red:#F28B82;--green:#7ED9A4;--blue:#86B8F5;font-family:Lora,Georgia,serif;color:var(--txt);background:transparent;line-height:1.85;font-size:1.05rem;margin:0;padding:0}
+.rangkuman *{box-sizing:border-box}
+.rangkuman p{margin:0 0 1.1em}
+.rangkuman strong{color:#fff}
+.rangkuman h2{font-family:Poppins,sans-serif;font-weight:700;font-size:1.55rem;line-height:1.3;color:var(--acc);margin:2.6em 0 .9em;padding:.7em 0 .5em;border-top:3px solid var(--pri)}
+.rangkuman h3{font-family:Poppins,sans-serif;font-weight:600;font-size:1.1rem;color:var(--pri);margin:1.9em 0 .6em;padding-left:.8em;border-left:4px solid var(--pri)}
+.rangkuman .hook{font-size:1.25rem;line-height:1.7;font-style:italic;border-left:6px solid var(--acc);background:var(--card);padding:1.1em 1.3em;border-radius:0 12px 12px 0;margin:0 0 1.6em}
+.rangkuman .pull{position:relative;background:#16100f;border:1px solid var(--line);border-radius:14px;padding:2.2em 1.6em 1.4em;margin:2em 0;font-size:1.2rem;line-height:1.6;font-style:italic;color:#fff}
+.rangkuman .pull::before{content:"\201C";position:absolute;top:-.05em;left:.25em;font-family:Poppins,sans-serif;font-size:4.5rem;line-height:1;color:var(--acc)}
+.rangkuman .pull cite{display:block;margin-top:.8em;font-family:Poppins,sans-serif;font-style:normal;font-size:.85rem;color:var(--mut)}
+.rangkuman .callout{border-left:5px solid var(--pri);background:var(--card);border-radius:0 12px 12px 0;padding:1em 1.2em;margin:1.4em 0}
+.rangkuman .callout.amber{border-left-color:var(--acc)}
+.rangkuman .callout.red{border-left-color:var(--red)}
+.rangkuman .callout.green{border-left-color:var(--green)}
+.rangkuman .callout.blue{border-left-color:var(--blue)}
+.rangkuman .callout .ct{display:block;font-family:Poppins,sans-serif;font-weight:600;font-size:.88rem;letter-spacing:.04em;text-transform:uppercase;margin-bottom:.35em;color:#fff}
+.rangkuman .callout p:last-child{margin-bottom:0}
+.rangkuman .ambil{margin:1.1em 0 1.6em;padding:.9em 1.2em;border:1px dashed var(--acc);border-radius:12px}
+.rangkuman .ambil strong{font-family:Poppins,sans-serif;color:var(--acc);font-size:.85rem;letter-spacing:.05em;text-transform:uppercase}
+.rangkuman .alur{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:1.3em 0;font-family:Poppins,sans-serif;font-size:.88rem}
+.rangkuman .alur span{background:var(--card);border:1px solid var(--line);border-radius:99px;padding:.35em 1em;color:#fff}
+.rangkuman .alur span.api{border-color:var(--pri);color:var(--pri)}
+.rangkuman .alur i{font-style:normal;color:var(--acc)}
+.rangkuman .enam{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:1.4em 0}
+.rangkuman .enam .sel{background:var(--card);border-radius:12px;padding:.9em 1em;border-top:4px solid var(--pri)}
+.rangkuman .enam .sel.k{border-top-color:var(--acc)}
+.rangkuman .enam .sel b{display:block;font-family:Poppins,sans-serif;font-size:.9rem;color:#fff;margin-bottom:.3em}
+.rangkuman .enam .sel span{font-size:.92rem;line-height:1.6;color:var(--mut)}
+.rangkuman .tabel-wrap{overflow-x:auto;margin:1.4em 0}
+.rangkuman table.cmp{width:100%;border-collapse:collapse;min-width:520px;font-size:.98rem;line-height:1.6}
+.rangkuman table.cmp th{font-family:Poppins,sans-serif;text-align:left;background:#16100f;color:var(--acc);padding:.8em 1em;border-bottom:2px solid var(--acc)}
+.rangkuman table.cmp td{padding:.75em 1em;border-bottom:1px solid var(--line);vertical-align:top}
+.rangkuman table.cmp td:first-child{font-family:Poppins,sans-serif;font-weight:600;color:#fff;width:22%}
+.rangkuman table.cmp td:last-child{color:var(--pri)}
+.rangkuman ol.pertanyaan{list-style:none;counter-reset:q;padding:0;margin:1.2em 0}
+.rangkuman ol.pertanyaan li{counter-increment:q;position:relative;background:var(--card);border-radius:12px;padding:1em 1.2em 1em 4em;margin-bottom:12px}
+.rangkuman ol.pertanyaan li::before{content:counter(q);position:absolute;left:1em;top:.85em;width:2em;height:2em;border-radius:50%;background:var(--acc);color:#111;font-family:Poppins,sans-serif;font-weight:700;display:flex;align-items:center;justify-content:center}
+.rangkuman .penutup{background:linear-gradient(135deg,rgba(242,118,107,.18),rgba(246,185,59,.18));border:1px solid var(--line);border-radius:16px;padding:1.6em 1.6em 1.3em;margin-top:1em}
+.rangkuman .penutup p:last-child{margin-bottom:0}
+.rangkuman .penutup .kutip{margin-top:1.2em;padding-top:1em;border-top:1px solid var(--line);font-size:1.15rem;font-style:italic;color:#fff}
+.rangkuman .penutup .kutip cite{display:block;margin-top:.4em;font-family:Poppins,sans-serif;font-style:normal;font-size:.85rem;color:var(--acc)}
+@media (max-width:600px){.rangkuman .enam{grid-template-columns:1fr 1fr}.rangkuman h2{font-size:1.35rem}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="rangkuman">
+
+<div class="hook">Di Yerusalem, seorang pemukim yang terlibat konflik tajam diminta memerankan posisi lawan politiknya, lalu didengarkan dengan penuh empati selama dua puluh menit. Setelah itu ia berkata bersedia mempertimbangkan melepas klaim tanahnya, asalkan lawannya bisa mendengarkannya seperti itu. Bukan argumen yang melunakkannya. Yang melunakkannya adalah dipahami.</div>
+
+<h2>Pengantar: Bahasa yang Menghidupkan</h2>
+<p>Marshall Rosenberg, psikolog yang membangun <em>Nonviolent Communication</em> (NVC), memulai dari satu pertanyaan: apa yang membuat kita bisa tetap welas asih bahkan saat dalam kondisi terburuk, dan apa yang membuat sebagian orang justru berubah kejam? Jawabannya ia temukan dalam cara kita berbicara dan mendengar. Ia melatih guru, dokter, orang tua, bahkan warga di wilayah perang, dari Belgrade sampai Rwanda.</p>
+<p>NVC bukan teknik kata-kata. Ia adalah cara mengarahkan perhatian pada empat hal: apa yang kita <strong>amati</strong>, apa yang kita <strong>rasakan</strong>, apa yang kita <strong>butuhkan</strong>, dan apa yang kita <strong>minta</strong>. Dua arah penerapannya: mengungkapkan diri dengan jujur, dan mendengar orang lain dengan empati.</p>
+<div class="alur"><span>Observasi</span><i>→</i><span>Perasaan</span><i>→</i><span class="api">Kebutuhan</span><i>→</i><span>Permintaan</span></div>
+<div class="enam">
+<div class="sel"><b>Observasi</b><span>Apa yang terjadi, tanpa penilaian.</span></div>
+<div class="sel"><b>Perasaan</b><span>Apa yang kurasakan, bukan pikiranku.</span></div>
+<div class="sel"><b>Kebutuhan</b><span>Nilai yang menjadi akar perasaan itu.</span></div>
+<div class="sel"><b>Permintaan</b><span>Tindakan konkret yang kuminta.</span></div>
+<div class="sel k"><b>Empati</b><span>Mendengar empat hal itu pada orang lain.</span></div>
+<div class="sel k"><b>Welas diri</b><span>Memakai semuanya pada diri sendiri.</span></div>
+</div>
+<div class="ambil"><strong>Pelajaran:</strong> Pada percakapan sulit berikutnya, tanyakan dua hal sebelum bicara: apa yang sebenarnya kuamati, dan apa yang sebenarnya kubutuhkan?</div>
+
+<h2>Bagian 1: Hambatan Menuju Welas Asih</h2>
+
+<h3>Bab 1: Memberi dari Hati</h3>
+<p>Pada dasarnya kita senang memberi dan menerima dengan welas asih. NVC membantu kita kembali ke sana dengan menyalurkan kesadaran pada empat komponen tadi, sehingga kita mendengar dan berbicara dengan hormat dan empati. Guru di Chicago yang menghadapi murid agresif hanya mengajaknya “bicara dengan bahasa jerapah”, dan anak itu berkata dengan tenang, “Maukah kamu menjauh? Aku marah kalau kamu berdiri sedekat ini.” Jerapah adalah lambang NVC karena hatinya terbesar di antara hewan darat.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Sebelum membalas dengan serangan atau diam, tanyakan apa yang sedang dirasakan dan dibutuhkan, pada dirimu dan lawan bicaramu.</div>
+
+<h3>Bab 2: Komunikasi yang Menghalangi Welas Asih</h3>
+<p>Kita dibiasakan bicara dengan cara yang menjauhkan. Ada empat bentuknya: <strong>penghakiman moral</strong> (“dia egois”), <strong>perbandingan</strong>, <strong>menyangkal tanggung jawab</strong> (“aku terpaksa”, “itu aturan”), dan <strong>tuntutan</strong> yang dibungkus sebagai permintaan. Semuanya mengalihkan kita dari satu hal: apa yang hidup di dalam diri kita saat ini.</p>
+<div class="callout red"><span class="ct">Inti penghalang</span><p>Penghakiman adalah ungkapan kebutuhan kita yang tidak terpenuhi, hanya dalam bentuk yang membuat orang lain bertahan atau menyerang.</p></div>
+<div class="ambil"><strong>Pelajaran:</strong> Saat hendak menilai seseorang “malas” atau “egois”, tahan dulu dan tanyakan: kebutuhan apa dalam diriku yang tidak terpenuhi?</div>
+
+<h2>Bagian 2: Empat Langkah Berbicara Jujur</h2>
+
+<h3>Bab 3: Mengamati Tanpa Menilai</h3>
+<div class="pull">Mengamati tanpa menilai adalah bentuk tertinggi kecerdasan manusia.<cite>J. Krishnamurti, dikutip Rosenberg</cite></div>
+<p>Langkah pertama: pisahkan pengamatan dari penilaian. Kalau kita mencampurnya, orang mendengar kritik dan melawan. Katakan “Hank belum mencetak gol dalam dua puluh pertandingan”, bukan “Hank pemain yang buruk”. Saat seorang peserta berseru kepada Rosenberg, “Anda pembicara paling arogan!”, ia tidak membela diri. Ia menebak pengamatan di baliknya: “Apakah kamu bereaksi karena saya bicara tiga puluh menit tanpa memberi kalian giliran?”</p>
+<div class="ambil"><strong>Pelajaran:</strong> Ganti kata “selalu”, “tidak pernah”, dan label dengan kejadian spesifik yang bisa direkam kamera.</div>
+
+<h3>Bab 4: Mengenali dan Mengungkapkan Perasaan</h3>
+<p>Perasaan yang tidak diungkapkan mahal harganya, tetapi banyak dari kita tidak punya kosakata untuknya. Perhatikan bedanya: “Aku sedih kamu pergi” adalah perasaan. “Aku merasa kamu tidak mencintaiku” bukan, karena itu penilaian tentang orang lain yang menyamar sebagai perasaan. Kata “merasa bahwa…” biasanya pertanda pikiran, bukan perasaan.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Bangun kosakata perasaan, dan pakai kata seperti sedih, takut, lega, atau kecewa, bukan “merasa diabaikan” atau “merasa dimanfaatkan”.</div>
+
+<h3>Bab 5: Bertanggung Jawab atas Perasaan Kita</h3>
+<p>Ucapan atau tindakan orang lain bisa menjadi <em>pemicu</em> perasaan kita, tetapi tidak pernah <em>penyebabnya</em>. Penyebabnya adalah kebutuhan kita. Saat mendengar pesan negatif ada empat pilihan: menyalahkan diri, menyalahkan orang lain, merasakan perasaan dan kebutuhan kita sendiri, atau menangkap perasaan dan kebutuhan di balik pesan lawan bicara. Dua pilihan terakhir membuka jalan.</p>
+<div class="alur"><span>Perbudakan emosi</span><i>→</i><span>Tahap menyebalkan</span><i>→</i><span class="api">Kebebasan emosi</span></div>
+<p>Kebanyakan orang melewati tiga tahap: merasa bertanggung jawab atas perasaan orang lain, lalu bersikap tak peduli, lalu akhirnya bertanggung jawab penuh atas perasaan sendiri tanpa memikul perasaan orang lain.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Ucapkan “Aku merasa … karena aku butuh …”, bukan “Kamu membuatku …”.</div>
+
+<h3>Bab 6: Meminta yang Memperkaya Hidup</h3>
+<p>Langkah keempat: minta dengan bahasa tindakan yang positif dan jelas, katakan apa yang kamu mau, bukan apa yang tidak kamu mau. Pastikan pesanmu didengar sebagaimana dimaksud, dan jelaskan permintaanmu sebagai permintaan, bukan tuntutan. Pembedanya sederhana: orang yang menolak permintaan tidak dihukum. Tujuan NVC bukan mengubah orang agar menuruti kita, melainkan membangun hubungan berdasarkan kejujuran dan empati.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Tutup ungkapanmu dengan permintaan konkret yang bisa dilakukan sekarang, lalu terima jawaban tidak tanpa menghukum.</div>
+
+<h2>Bagian 3: Mendengar dengan Empati</h2>
+
+<h3>Bab 7: Menerima dengan Empati</h3>
+<div class="pull">Jangan hanya berbuat sesuatu, berdirilah di sana.<cite>Pepatah Buddhis, dikutip Rosenberg</cite></div>
+<p>Empati adalah pemahaman yang menghormati apa yang dialami orang lain. Kecenderungan kita justru memberi nasihat, menghibur, atau menceritakan pengalaman sendiri. Empati meminta kita mengosongkan pikiran dan mendengar dengan seluruh diri. Rosenberg belajar dari putrinya yang bercermin dan berkata, “Aku jelek seperti babi.” Hiburan cepat tidak menolong. Ia belajar menanyakan dulu apakah nasihat itu diinginkan.</p>
+<p>Kita tidak bisa memberi empati kalau diri sendiri kosong. Bila kita sulit mendengar: berhenti dan bernapas, “berteriak” secara nonkekerasan, atau ambil jeda.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Dengarkan perasaan dan kebutuhan orang, bukan solusinya. Parafrasekan apa yang kamu tangkap sebelum menawarkan jalan keluar.</div>
+
+<h3>Bab 8: Kekuatan Empati</h3>
+<p>Empati menyembuhkan. Ia membuat kita sanggup tetap rentan, meredakan potensi kekerasan, mendengar kata “tidak” tanpa merasa ditolak, menghidupkan percakapan yang mati, bahkan mendengar yang tersirat dalam diam. Orang kerap melampaui rasa sakit yang melumpuhkan ketika bertemu seseorang yang sungguh mendengarnya.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Dengarkan “tidak” sebagai kebutuhan yang menghalangi “ya”, dan tanyakan apa itu.</div>
+
+<h2>Bagian 4: Diri Sendiri, Amarah, dan Konflik</h2>
+
+<h3>Bab 9: Berwelas Asih pada Diri Sendiri</h3>
+<div class="pull">Jadilah perubahan yang ingin kamu lihat di dunia.<cite>Mahatma Gandhi (kutipan pembuka bab)</cite></div>
+<p>Kalau kita keras pada diri sendiri, sulit berwelas asih pada orang lain. Rosenberg menceritakan jas abu-abu barunya yang berubah jadi bercak-bercak karena pulpen tak bertutup di sakunya. Selama dua puluh menit ia memaki dirinya “ceroboh dan bodoh”. Lalu ia bertanya kebutuhan apa di balik makian itu. Jawabannya: ingin merawat dirinya lebih baik, setelah terburu-buru melayani orang lain. Rasa malu pun mereda. Itulah <strong>perkabungan NVC</strong>: menyesali tanpa menghukum diri.</p>
+<p>Cara lain: ubah “harus” menjadi “memilih”. Kalau sebuah tindakan hanya kita lakukan karena kewajiban atau takut bersalah, ia terasa berat. Kalau kita menyebut kebutuhan yang dilayaninya, ia berubah menjadi permainan yang bermakna.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Saat menyalahkan diri, tanyakan kebutuhan apa yang tak terpenuhi, dan ganti “aku harus” dengan “aku memilih … karena …”.</div>
+
+<h3>Bab 10: Mengungkapkan Amarah Sepenuhnya</h3>
+<p>Menyalahkan dan menghukum hanyalah ungkapan amarah yang dangkal. Kata kuncinya: orang lain adalah <strong>pemicu</strong> kemarahanmu, bukan <strong>penyebab</strong>-nya. Penyebabnya adalah penilaian dan kebutuhanmu yang belum terpenuhi.</p>
+<div class="alur"><span>Berhenti dan bernapas</span><i>→</i><span>Kenali pikiran menghakimi</span><i>→</i><span class="api">Sambung ke kebutuhan</span><i>→</i><span>Ungkapkan perasaan dan kebutuhan</span></div>
+<div class="callout amber"><span class="ct">Tambahan</span><p>Kadang, sebelum langkah terakhir, beri empati kepada lawan bicara agar ia lebih siap mendengar. Dan beri dirimu waktu untuk belajar.</p></div>
+<div class="ambil"><strong>Pelajaran:</strong> Jangan langsung bicara saat marah. Kenali dulu penilaianmu dan kebutuhan di balik kemarahan itu.</div>
+
+<h3>Bab 11: Penyelesaian Konflik dan Mediasi</h3>
+<p>Mediasi biasa sibuk membahas isu dan kompromi. NVC melakukan hal yang berbeda: kita pertama-tama membangun hubungan manusiawi, memastikan <strong>kebutuhan</strong> kedua pihak diungkapkan dan didengar, dan baru setelah itu mencari strategi. Kalau satu pihak terlalu sakit untuk mendengar, beri empati selama yang dibutuhkan. Yang paling terakhir adalah permintaan yang spesifik, positif, dan bisa dilakukan.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Pisahkan kebutuhan dari strategi. Dengarkan dulu semua kebutuhan sampai tuntas, baru cari solusi.</div>
+
+<h3>Bab 12: Penggunaan Kekuatan untuk Melindungi</h3>
+<p>Kalau tidak ada kesempatan berkomunikasi, misalnya saat bahaya mendesak, kekuatan boleh dipakai untuk <strong>melindungi</strong>. Niatnya mencegah cedera atau ketidakadilan, bukan menghukum agar orang menyesal atau berubah. Dua pertanyaan menunjukkan batas hukuman: “Apa yang kuinginkan orang ini lakukan secara berbeda?” dan “Apa yang kuinginkan menjadi <em>alasan</em>-nya melakukan itu?” Hukuman mungkin menjawab pertanyaan pertama, tetapi merusak jawaban atas yang kedua, karena orang jadi bertindak demi menghindari hukuman.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Sebelum menghukum, tanyakan alasan seperti apa yang kamu harap tumbuh dalam diri orang itu.</div>
+
+<h2>Bagian 5: Membebaskan Diri dan Merayakan</h2>
+
+<h3>Bab 13: Membebaskan Diri dan Mendampingi Orang Lain</h3>
+<p>NVC membantu mengubah pesan batin yang negatif menjadi perasaan dan kebutuhan. Mengenali dan berempati pada perasaan dan kebutuhan kita sendiri dapat membebaskan kita dari depresi. Bagi pendamping dan terapis, NVC mengganti diagnosis dengan hubungan yang tulus dan setara.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Saat dilanda pikiran negatif tentang diri sendiri, terjemahkan menjadi “apa yang kurasakan dan kubutuhkan sekarang?”</div>
+
+<h3>Bab 14: Mengungkapkan Penghargaan</h3>
+<p>Pujian biasa sering berupa penilaian, meski positif, dan kadang dipakai untuk memanipulasi. NVC mengungkapkan penghargaan semata-mata untuk merayakan. Tiga komponennya: <strong>tindakan</strong> yang menyumbang pada kesejahteraanku, <strong>kebutuhan</strong> yang terpenuhi olehnya, dan <strong>perasaan</strong> senang yang muncul. Saat menerimanya, kita ikut merayakan tanpa merasa lebih tinggi atau berpura-pura rendah hati. Buku ini ditutup dengan kisah paman Rosenberg, Julius, yang belajar welas asih dari neneknya, yang pada masa Depresi memboyong sebuah keluarga penjahit ke rumahnya selama tiga tahun.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Hari ini, sampaikan penghargaan dengan tiga bagian: apa yang dilakukan, kebutuhan apa yang terpenuhi, dan apa yang kamu rasakan.</div>
+
+<h2>Perbandingan: Cara Biasa dan Cara NVC</h2>
+<div class="tabel-wrap">
+<table class="cmp">
+<thead><tr><th>Hal</th><th>Cara biasa</th><th>Cara NVC</th></tr></thead>
+<tbody>
+<tr><td>Mengamati</td><td>“Kamu malas.”</td><td>Menyebut kejadian spesifik yang terlihat.</td></tr>
+<tr><td>Perasaan</td><td>“Aku merasa kamu mengabaikanku.”</td><td>“Aku sedih dan kesepian.”</td></tr>
+<tr><td>Penyebab</td><td>“Kamu membuatku marah.”</td><td>“Aku marah karena butuh dihargai.”</td></tr>
+<tr><td>Meminta</td><td>Tuntutan yang samar.</td><td>Permintaan konkret yang boleh ditolak.</td></tr>
+<tr><td>Mendengar</td><td>Menasihati dan menghibur.</td><td>Hadir dan menangkap perasaan serta kebutuhan.</td></tr>
+<tr><td>Konflik</td><td>Berdebat solusi dan kompromi.</td><td>Mendengar kebutuhan dulu, baru strategi.</td></tr>
+<tr><td>Pada diri</td><td>“Aku bodoh!”</td><td>“Kebutuhan apa yang belum terpenuhi?”</td></tr>
+<tr><td>Memuji</td><td>“Kamu hebat.”</td><td>Tindakan, kebutuhan, perasaan.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>Tiga Pertanyaan untuk Merenung</h2>
+<ol class="pertanyaan">
+<li>Penilaian apa tentang orang lain yang paling sering kupakai, dan kebutuhan apa dalam diriku yang sebenarnya ada di baliknya?</li>
+<li>Kapan terakhir kali aku langsung memberi nasihat padahal orang itu hanya ingin didengar?</li>
+<li>Tindakan apa yang kulakukan karena “harus”, dan apa yang berubah kalau kuganti menjadi “memilih”?</li>
+</ol>
+
+<h2>Penutup: Bicara dan Dengarkan dari Hati</h2>
+<div class="penutup">
+<p>Hampir semua luka dalam hubungan bermula dari satu hal: kita lebih sibuk menilai daripada memahami. NVC mengajarkan jalan pulang yang sederhana. Amati tanpa menilai. Sebut perasaan. Kenali kebutuhan. Minta dengan jelas. Lalu lakukan hal yang sama saat mendengar orang lain, dan saat mendengar dirimu sendiri.</p>
+<p>Tidak perlu sempurna. Mulai dari satu percakapan minggu ini, dan ingat bahwa tujuannya bukan memenangkan argumen, melainkan membangun hubungan di mana kebutuhan semua orang punya tempat.</p>
+<div class="kutip">“Kemampuan memberi perhatian kepada orang yang menderita adalah hal yang sangat langka dan sulit; hampir sebuah mukjizat.”<cite>Simone Weil, dikutip Rosenberg di Bab 7</cite></div>
+</div>
+
+</div>
+</div>
+</body>
+</html>
