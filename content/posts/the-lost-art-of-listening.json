@@ -4,7 +4,16 @@
   "title": "The Lost Art of Listening",
   "type": "Book Summary",
   "categories": [
-    "Hubungan & Komunikasi"
+    "Nonfiction",
+    "Psychology",
+    "Self Help",
+    "Relationships",
+    "Communication",
+    "Audiobook",
+    "Leadership",
+    "Business",
+    "Personal Development",
+    "Personal Growth"
   ],
   "date": "11 Oktober 2026",
   "dateISO": "2026-10-11",
@@ -18,5 +27,6 @@
     "bookCore": "Mendengarkan sungguh-sungguh membuat orang merasa dimengerti, dan itulah kunci hubungan yang sehat serta kemampuan orang untuk berubah.",
     "bookReadTime": "35-40 menit"
   },
-  "status": "active"
+  "status": "active",
+  "ogImage": "images/og-the-lost-art-of-listening.jpg"
 }
