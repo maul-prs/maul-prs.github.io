@@ -5,7 +5,7 @@
   "description": "Catatan tentang iman, kehidupan, buku, dan pengembangan diri.",
   "author": "Maul Prs",
   "locale": "id_ID",
-  "homePerPage": 12,
+  "homePerPage": 6,
   "archivePerPage": 24,
   "ogDefaultImage": "assets/og-default.png",
   "youtubePlaylistId": "PLx0sYbCqOb8TBPRdmBHs5Iftvv9TPboYG",
