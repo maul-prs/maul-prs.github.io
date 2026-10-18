@@ -4,7 +4,15 @@
   "title": "Just Listen",
   "type": "Book Summary",
   "categories": [
-    "Komunikasi & Persuasi"
+    "Communication",
+    "Psychology",
+    "Self Help",
+    "Nonfiction",
+    "Business",
+    "Leadership",
+    "Personal Development",
+    "Relationships",
+    "Management"
   ],
   "date": "11 Oktober 2026",
   "dateISO": "2026-10-11",
@@ -18,5 +26,6 @@
     "bookCore": "Orang baru mau mendengar setelah merasa didengar dan dirasakan, jadi dengarkan dulu sampai mereka merasa dimengerti, baru ajak berubah.\n",
     "bookReadTime": "30-35 menit"
   },
-  "status": "active"
+  "status": "active",
+  "ogImage": "images/og-just-listen.jpg"
 }
