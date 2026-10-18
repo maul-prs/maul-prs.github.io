@@ -1,0 +1,24 @@
+{
+  "id": "1792256068608",
+  "slug": "nonviolent-communication",
+  "status": "active",
+  "title": "Nonviolent Communication",
+  "type": "Book Summary",
+  "categories": [
+    "psychology",
+    "communication"
+  ],
+  "date": "17 Oktober 2026",
+  "dateISO": "2026-10-17",
+  "coreMessage": "Kenapa kata-kata kita sering melukai padahal niatnya baik? Empat langkah sederhana untuk bicara jujur dan mendengar tanpa menghakimi.",
+  "bookData": {
+    "bookTitle": "Nonviolent Communication",
+    "bookAuthor": "Marshall B. Rosenberg",
+    "bookYear": "1999",
+    "bookMainCategory": "Book Summary",
+    "bookCore": "Kenapa kata-kata kita sering melukai padahal niatnya baik? Empat langkah sederhana untuk bicara jujur dan mendengar tanpa menghakimi.",
+    "bookReadTime": "18–22 menit"
+  },
+  "cover": "images/cover-nonviolent-communication-1792256068580.jpg",
+  "ogImage": "images/og-nonviolent-communication.jpg"
+}
