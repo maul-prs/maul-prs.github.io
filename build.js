@@ -22,6 +22,7 @@ const cfg = JSON.parse(fs.readFileSync(path.join(ROOT, 'site.config.json'), 'utf
 cfg.assetVersion = Date.now().toString(36);
 
 /* ---------------- Util ---------------- */
+const MONTHS_EN = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 const MONTHS = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
 
 function slugify(s) {
@@ -50,6 +51,11 @@ function parseIndoDate(s) {
 function formatIndo(iso) {
   const [y, m, d] = iso.split('-').map(Number);
   return `${d} ${MONTHS[m - 1]} ${y}`;
+}
+
+function formatEn(iso) {
+  const [y, m, d] = iso.split('-').map(Number);
+  return `${MONTHS_EN[m - 1]} ${d}, ${y}`;
 }
 
 function decodeEntities(s) {
@@ -113,6 +119,8 @@ function loadRawPosts() {
         const htmlPath = path.join(dir, base + '.html');
         meta.slug = base; // nama file = slug (alamat URL)
         meta._body = fs.existsSync(htmlPath) ? fs.readFileSync(htmlPath, 'utf8') : meta.fullContent || '';
+        const enPath = path.join(dir, base + '.en.html');
+        meta._bodyEn = fs.existsSync(enPath) ? fs.readFileSync(enPath, 'utf8') : '';
         posts.push(meta);
       } catch (e) {
         console.warn(`! Lewati ${f}: ${e.message}`);
@@ -148,6 +156,19 @@ function cleanWallpaper(w) {
   return out.arabic || out.latin || out.translation ? out : null;
 }
 
+// Versi Inggris (opsional): judul, inti, terjemahan wallpaper. Tanpa judul Inggris = artikel hanya berbahasa Indonesia.
+function cleanEn(e) {
+  if (!e || typeof e !== 'object') return null;
+  const f = (k, n) => String(e[k] || '').trim().slice(0, n);
+  const out = {
+    title: f('title', 200),
+    core: f('coreMessage', 1500),
+    wallpaperTranslation: f('wallpaperTranslation', 1500),
+    ogImage: f('ogImage', 300).replace(/^\.?\/+/, ''),
+  };
+  return out.title ? out : null;
+}
+
 function normalizePosts(raw) {
   const taken = new Set(raw.filter((p) => p.slug).map((p) => p.slug));
   const today = new Date().toISOString().slice(0, 10);
@@ -169,6 +190,8 @@ function normalizePosts(raw) {
       author: bd.bookAuthor || '',
       bookData: bd,
       wallpaper: cleanWallpaper(p.wallpaper),
+      en: cleanEn(p.en),
+      _bodyEn: p._bodyEn || '',
       ogImage: String(p.ogImage || '').trim().replace(/^\.?\/+/, ''),
       status: p.status === 'archived' ? 'archived' : 'active',
       _body: p._body || '',
@@ -270,8 +293,17 @@ function main() {
     cover: resolveCover(p),
     core: truncate(p.core || plainText(p._body).slice(0, 400), 170),
     author: p.author,
+    dateEn: formatEn(p.dateISO),
+    ...(p.en
+      ? { en: { title: p.en.title, core: truncate(p.en.core || plainText(p._bodyEn).slice(0, 400), 170), url: `/en/artikel/${p.slug}/` } }
+      : {}),
     ...(p.legacy ? { legacy: true } : {}),
   }));
+  const enOn = active.some((p) => p.en); // halaman /en/ hanya dibuat kalau sudah ada artikel yang diterjemahkan
+  const enView = (p) =>
+    p.en
+      ? { ...p, title: p.en.title, core: p.en.core, url: p.en.url, date: p.dateEn, typeUrl: '/en' + p.typeUrl }
+      : { ...p, date: p.dateEn, typeUrl: '/en' + p.typeUrl, untranslated: true };
   const bySlug = new Map(pub.map((p) => [p.slug, p]));
 
   // peta tag -> postingan (untuk "Baca juga")
@@ -309,7 +341,56 @@ function main() {
       }
     }
 
-    write(`artikel/${p.slug}/index.html`, T.articlePage(cfg, { post: { ...p, bookData: src.bookData, wallpaper: src.wallpaper }, bodyHtml: html, toc, related, description, ogImage, ogIsCard }));
+    write(
+      `artikel/${p.slug}/index.html`,
+      T.articlePage(cfg, {
+        post: { ...p, bookData: src.bookData, wallpaper: src.wallpaper },
+        bodyHtml: html,
+        toc,
+        related,
+        description,
+        ogImage,
+        ogIsCard,
+        alt: { id: p.url, en: p.en ? p.en.url : null },
+      })
+    );
+
+    // Versi Inggris: /en/artikel/<slug>/
+    if (p.en) {
+      const view = enView(p);
+      const rawEn = normalizeBody(src._bodyEn) || `<p>${T.esc(src.en.core || src.en.title)}</p>`;
+      const en = processBody(rawEn);
+      let ogEn = ogImage;
+      let ogEnIsCard = ogIsCard;
+      if (src.en.ogImage) {
+        if (fs.existsSync(path.join(ROOT, src.en.ogImage))) {
+          ogEn = `${cfg.siteUrl}${encodeURI('/' + src.en.ogImage)}`;
+          ogEnIsCard = true;
+        } else {
+          console.warn(`! Gambar share Inggris \"${p.slug}\" tidak ditemukan (${src.en.ogImage}), pakai gambar versi Indonesia`);
+        }
+      }
+      // Wallpaper Inggris butuh terjemahan Inggris; tanpa itu panel disembunyikan supaya bahasa tidak tercampur
+      let wpEn = null;
+      if (src.wallpaper) {
+        const tr = src.en.wallpaperTranslation;
+        if (tr || !src.wallpaper.translation) wpEn = { ...src.wallpaper, translation: tr };
+      }
+      write(
+        `en/artikel/${p.slug}/index.html`,
+        T.articlePage(cfg, {
+          post: { ...view, bookData: src.bookData, wallpaper: wpEn },
+          bodyHtml: en.html,
+          toc: en.toc,
+          related: related.map(enView),
+          description: truncate(view.core || plainText(en.html), 160) || cfg.descriptionEn || cfg.description,
+          ogImage: ogEn,
+          ogIsCard: ogEnIsCard,
+          lang: 'en',
+          alt: { id: p.url, en: p.en.url },
+        })
+      );
+    }
   }
 
   /* 2. Data ringan untuk beranda, pencarian, sidebar & admin */
@@ -321,43 +402,74 @@ function main() {
 
   /* 3. Beranda */
   const extraTypes = [...typeCount.keys()].filter((t) => !['Book Summary', 'Quote & Nasehat', "Dzikir & Do'a", 'Cerita Inspirasi'].includes(t));
-  write('index.html', T.homePage(cfg, { posts: pub.slice(0, cfg.homePerPage), extraTypes }));
+  const homeAlt = { id: '/', en: enOn ? '/en/' : null };
+  write('index.html', T.homePage(cfg, { posts: pub.slice(0, cfg.homePerPage), extraTypes, alt: homeAlt }));
+  if (enOn) write('en/index.html', T.homePage(cfg, { posts: pub.slice(0, cfg.homePerPage).map(enView), extraTypes, alt: homeAlt }, 'en'));
 
   /* 4. Arsip semua tulisan + halaman kategori (dengan paginasi) */
   const per = cfg.archivePerPage;
   const sitemapExtra = [];
-  function paginate(list, basePath, heading, intro, crumb) {
+  // t = { id: {heading, intro, crumb}, en: {...} }; halaman Inggris dibuat hanya kalau enOn
+  function paginate(list, basePath, t) {
     const total = Math.max(1, Math.ceil(list.length / per));
-    const hrefFor = (n) => (n === 1 ? basePath : `${basePath}halaman/${n}/`);
+    const pathFor = (base, n) => (n === 1 ? base : `${base}halaman/${n}/`);
     for (let n = 1; n <= total; n++) {
-      const rel = (n === 1 ? basePath : `${basePath}halaman/${n}/`).replace(/^\//, '') + 'index.html';
-      write(
-        rel,
-        T.listPage(cfg, {
-          title: `${heading}${n > 1 ? ` — Halaman ${n}` : ''} — ${cfg.siteName}`,
-          heading: n > 1 ? `${heading} (halaman ${n})` : heading,
-          intro,
-          crumb,
-          path: hrefFor(n),
-          posts: list.slice((n - 1) * per, n * per),
-          pagerHtml: T.pager(n, total, hrefFor),
-        })
-      );
-      sitemapExtra.push(hrefFor(n));
+      const alt = { id: pathFor(basePath, n), en: enOn ? pathFor('/en' + basePath, n) : null };
+      for (const lang of enOn ? ['id', 'en'] : ['id']) {
+        const base = lang === 'en' ? '/en' + basePath : basePath;
+        const hrefFor = (k) => pathFor(base, k);
+        const x = t[lang];
+        const pageWord = lang === 'en' ? ['Page', 'page'] : ['Halaman', 'halaman'];
+        write(
+          hrefFor(n).replace(/^\//, '') + 'index.html',
+          T.listPage(cfg, {
+            lang,
+            alt,
+            title: `${x.heading}${n > 1 ? ` — ${pageWord[0]} ${n}` : ''} — ${cfg.siteName}`,
+            heading: n > 1 ? `${x.heading} (${pageWord[1]} ${n})` : x.heading,
+            intro: x.intro,
+            crumb: x.crumb,
+            path: hrefFor(n),
+            posts: (lang === 'en' ? list.map(enView) : list).slice((n - 1) * per, n * per),
+            pagerHtml: T.pager(n, total, hrefFor),
+          })
+        );
+        sitemapExtra.push({ loc: hrefFor(n), alt: enOn ? alt : null });
+      }
     }
   }
-  paginate(pub, '/arsip/', 'Semua Tulisan', `Seluruh ${pub.length} tulisan di ${cfg.siteName}, dari yang terbaru.`, 'Semua Tulisan');
+  paginate(pub, '/arsip/', {
+    id: { heading: 'Semua Tulisan', intro: `Seluruh ${pub.length} tulisan di ${cfg.siteName}, dari yang terbaru.`, crumb: 'Semua Tulisan' },
+    en: { heading: 'All Posts', intro: `All ${pub.length} posts on ${cfg.siteName}, newest first.`, crumb: 'All Posts' },
+  });
   for (const [type, slug] of typeSlugs) {
     const list = pub.filter((p) => p.type === type);
-    paginate(list, `/kategori/${slug}/`, type, `${list.length} tulisan dalam kategori ${type}.`, T.esc(type));
+    const typeEn = T.typeLabel(type, 'en');
+    paginate(list, `/kategori/${slug}/`, {
+      id: { heading: type, intro: `${list.length} tulisan dalam kategori ${type}.`, crumb: T.esc(type) },
+      en: { heading: typeEn, intro: `${list.length} posts in the ${typeEn} category.`, crumb: T.esc(typeEn) },
+    });
   }
 
   /* 5. Sitemap, RSS, robots, 404, redirect link lama */
-  const urls = [{ loc: '/', lastmod: pub[0] ? pub[0].dateISO : '' }, ...sitemapExtra.map((u) => ({ loc: u, lastmod: '' })), ...pub.map((p) => ({ loc: p.url, lastmod: p.dateISO }))];
+  const pair = (a, b) => (b ? { id: a, en: b } : null);
+  const urls = [
+    { loc: '/', lastmod: pub[0] ? pub[0].dateISO : '', alt: enOn ? homeAlt : null },
+    ...(enOn ? [{ loc: '/en/', lastmod: pub[0] ? pub[0].dateISO : '', alt: homeAlt }] : []),
+    ...sitemapExtra.map((u) => ({ loc: u.loc, lastmod: '', alt: u.alt })),
+    ...pub.flatMap((p) => {
+      const a = pair(p.url, p.en && p.en.url);
+      return [{ loc: p.url, lastmod: p.dateISO, alt: a }, ...(p.en ? [{ loc: p.en.url, lastmod: p.dateISO, alt: a }] : [])];
+    }),
+  ];
+  const altLinks = (a) =>
+    a
+      ? `<xhtml:link rel="alternate" hreflang="id" href="${xmlEsc(cfg.siteUrl + encodeURI(a.id))}"/><xhtml:link rel="alternate" hreflang="en" href="${xmlEsc(cfg.siteUrl + encodeURI(a.en))}"/><xhtml:link rel="alternate" hreflang="x-default" href="${xmlEsc(cfg.siteUrl + encodeURI(a.id))}"/>`
+      : '';
   write(
     'sitemap.xml',
-    `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
-      urls.map((u) => `  <url><loc>${xmlEsc(cfg.siteUrl + encodeURI(u.loc))}</loc>${u.lastmod ? `<lastmod>${u.lastmod}</lastmod>` : ''}</url>`).join('\n') +
+    `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n` +
+      urls.map((u) => `  <url><loc>${xmlEsc(cfg.siteUrl + encodeURI(u.loc))}</loc>${u.lastmod ? `<lastmod>${u.lastmod}</lastmod>` : ''}${altLinks(u.alt)}</url>`).join('\n') +
       `\n</urlset>\n`
   );
   write('robots.txt', `User-agent: *\nAllow: /\n\nSitemap: ${cfg.siteUrl}/sitemap.xml\n`);

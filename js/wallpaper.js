@@ -10,6 +10,7 @@
   var data;
   try { data = JSON.parse(dataEl.textContent); } catch (e) { return; }
 
+  var I18n = window.MaulI18n || { t: function (k) { return k; } };
   var canvas = document.getElementById('wpCanvas');
   var ctx = canvas.getContext('2d');
   var W = 1080;
@@ -17,12 +18,13 @@
   var MAX_W = 860;          // lebar teks; sisa margin kiri-kanan 110px
   var CENTER_Y = 1030;      // pusat blok teks; area atas dibiarkan lapang untuk jam layar kunci
   var MAX_H = 1140;         // tinggi maksimum blok teks
-  var MIN_SCALE = 0.42;
+  var MIN_SCALE = 0.65;     // batas terkecil yang masih nyaman dibaca di HP
+  var HARD_MIN = 0.3;       // pilihan terakhir untuk teks sangat panjang (huruf kecil, tapi tidak terpotong)
 
   var THEMES = [
-    { id: 'malam', label: 'Hijau malam', bg: ['#021208', '#04301d'], glow: 'rgba(52,211,153,0.16)', ink: '#f3f1e6', soft: '#b9cdc1', accent: '#34d399' },
-    { id: 'emas', label: 'Hitam emas', bg: ['#0a0a0a', '#1c1708'], glow: 'rgba(245,184,46,0.14)', ink: '#f7f0da', soft: '#cbbf99', accent: '#f5b82e' },
-    { id: 'krem', label: 'Krem', bg: ['#f8f2e2', '#efe5cc'], glow: 'rgba(15,122,79,0.10)', ink: '#10301f', soft: '#4b6154', accent: '#0f7a4f' }
+    { id: 'malam', label: I18n.t('wpNight'), bg: ['#021208', '#04301d'], glow: 'rgba(52,211,153,0.16)', ink: '#f3f1e6', soft: '#b9cdc1', accent: '#34d399' },
+    { id: 'emas', label: I18n.t('wpGold'), bg: ['#0a0a0a', '#1c1708'], glow: 'rgba(245,184,46,0.14)', ink: '#f7f0da', soft: '#cbbf99', accent: '#f5b82e' },
+    { id: 'krem', label: I18n.t('wpCream'), bg: ['#f8f2e2', '#efe5cc'], glow: 'rgba(15,122,79,0.10)', ink: '#10301f', soft: '#4b6154', accent: '#0f7a4f' }
   ];
 
   var FONT_FILES = [
@@ -88,23 +90,25 @@
   }
 
   // Menyusun semua blok pada skala s, mengembalikan blok + total tinggi
-  function layout(s) {
+  function layout(s, withLatin) {
     var blocks = [];
+    var widest = 0;
     function add(kind, text, font, size, lhMul, rtl, colorKey, gapBefore) {
       if (!text) return;
       setFont(font, rtl);
       var lines = wrap(text, MAX_W);
+      lines.forEach(function (l) { widest = Math.max(widest, ctx.measureText(l).width); });
       blocks.push({ kind: kind, lines: lines, font: font, size: size, lh: size * lhMul, rtl: rtl, color: colorKey, gap: gapBefore });
     }
     var q = function (px) { return Math.round(px * s); };
 
     if (hasArabic) {
       add('ar', data.arabic, '400 ' + q(86) + 'px WPAmiriAr, WPAmiriBold, serif', q(86), 1.85, true, 'ink', 0);
-      add('la', data.latin, 'italic 400 ' + q(38) + 'px WPAmiriLa, WPAmiriLaX, serif', q(38), 1.55, false, 'soft', q(46));
+      if (withLatin) add('la', data.latin, 'italic 400 ' + q(38) + 'px WPAmiriLa, WPAmiriLaX, serif', q(38), 1.55, false, 'soft', q(46));
       add('tr', data.translation, '400 ' + q(36) + 'px WPPoppins, WPPoppinsX, system-ui, sans-serif', q(36), 1.6, false, 'ink', q(36));
     } else {
       add('qt', data.translation, '700 ' + q(66) + 'px WPAmiriBold, WPAmiriBoldX, Georgia, serif', q(66), 1.38, false, 'ink', 0);
-      add('la', data.latin, 'italic 400 ' + q(38) + 'px WPAmiriLa, WPAmiriLaX, serif', q(38), 1.55, false, 'soft', q(40));
+      if (withLatin) add('la', data.latin, 'italic 400 ' + q(38) + 'px WPAmiriLa, WPAmiriLaX, serif', q(38), 1.55, false, 'soft', q(40));
     }
     add('src', data.source, '600 ' + q(30) + 'px WPPoppinsSemi, WPPoppinsSemiX, system-ui, sans-serif', q(30), 1.5, false, 'accent', q(44));
 
@@ -112,18 +116,43 @@
     blocks.forEach(function (b, i) {
       total += (i ? b.gap : 0) + b.lines.length * b.lh;
     });
-    return { blocks: blocks, total: total };
+    return { blocks: blocks, total: total, widest: widest };
+  }
+
+  // Muat jika tinggi blok dan baris terlebar (mis. satu kata sangat panjang) masih di dalam area aman
+  function fits(lay) {
+    return lay.total <= MAX_H && lay.widest <= MAX_W + 1;
+  }
+
+  function shrink(withLatin, floor) {
+    var s = 1;
+    var lay = layout(s, withLatin);
+    while (!fits(lay) && s > floor) {
+      s = Math.max(floor, Math.round((s - 0.04) * 100) / 100);
+      lay = layout(s, withLatin);
+    }
+    lay.scale = s;
+    lay.fits = fits(lay);
+    return lay;
   }
 
   function fit() {
-    var s = 1;
-    var lay = layout(s);
-    while (lay.total > MAX_H && s > MIN_SCALE) {
-      s = Math.round((s - 0.04) * 100) / 100;
-      lay = layout(s);
+    // 1) semua teks, huruf boleh mengecil sampai batas nyaman baca
+    // 2) kalau masih tidak muat: buang baris Latin (tetap ada di halaman artikel), huruf utama tetap besar
+    // 3) pilihan terakhir: huruf lebih kecil lagi supaya tidak ada teks yang keluar bingkai
+    var options = data.latin ? [true, false] : [true];
+    var lay;
+    for (var i = 0; i < options.length; i++) {
+      lay = shrink(options[i], MIN_SCALE);
+      if (lay.fits) {
+        lay.droppedLatin = !!data.latin && !options[i];
+        return lay;
+      }
     }
-    lay.scale = s;
-    lay.overflow = lay.total > MAX_H;
+    var last = options[options.length - 1];
+    lay = shrink(last, HARD_MIN);
+    lay.droppedLatin = !!data.latin && !last;
+    lay.overflow = !lay.fits;
     return lay;
   }
 
@@ -210,8 +239,10 @@
 
   function showNote(lay) {
     var msg = '';
-    if (lay.overflow) msg = 'Teks terlalu panjang untuk satu wallpaper. Perpendek bagian Latin atau terjemahan di admin.';
-    else if (lay.scale < 0.7) msg = 'Teks cukup panjang, jadi ukuran hurufnya dikecilkan.';
+    if (lay.overflow) msg = I18n.t('wpOverflow');
+    else if (lay.scale < MIN_SCALE) msg = I18n.t('wpTiny', { latin: lay.droppedLatin ? I18n.t('wpTinyLatin') : '' });
+    else if (lay.droppedLatin) msg = I18n.t('wpDropped');
+    else if (lay.scale < 0.7) msg = I18n.t('wpSmall');
     elNote.hidden = !msg;
     elNote.textContent = msg;
   }
@@ -220,14 +251,26 @@
     var token = ++renderToken;
     var lay = draw();
     showNote(lay);
+    setActions(!lay.overflow);
     blobCache = null;
     canvas.toBlob(function (b) { if (token === renderToken) blobCache = b; }, 'image/png');
   }
 
   /* ---------- tombol ---------- */
+  var fontsReady = Promise.resolve();
+
+  // Unduh/bagikan hanya aktif kalau seluruh teks muat di gambar (jangan sebarkan gambar yang terpotong)
+  function setActions(on) {
+    elDownload.disabled = !on;
+    elShare.disabled = !on;
+  }
+
+  // Tunggu font selesai dimuat dulu, supaya gambar yang diunduh tidak memakai font cadangan
   function getBlob() {
-    if (blobCache) return Promise.resolve(blobCache);
-    return new Promise(function (resolve) { canvas.toBlob(resolve, 'image/png'); });
+    return fontsReady.then(function () {
+      if (blobCache) return blobCache;
+      return new Promise(function (resolve) { canvas.toBlob(resolve, 'image/png'); });
+    });
   }
 
   function fileName() { return (data.slug || 'wallpaper') + '-wallpaper.png'; }
@@ -236,12 +279,13 @@
     var parts = [data.title];
     var body = data.translation || data.latin || '';
     if (body) parts.push(body + (data.source ? '\n— ' + data.source : ''));
-    parts.push('Baca selengkapnya: ' + data.url);
+    parts.push(I18n.t('wpReadMore') + data.url);
     return parts.join('\n\n');
   }
 
   function download() {
     getBlob().then(function (b) {
+      if (!b) return;
       var a = document.createElement('a');
       a.href = URL.createObjectURL(b);
       a.download = fileName();
@@ -283,7 +327,7 @@
   elCaption.addEventListener('click', function () {
     var copy = window.MaulShare ? window.MaulShare.copy : function () { return Promise.resolve(false); };
     copy(caption()).then(function (ok) {
-      if (window.MaulShare) window.MaulShare.flash(elCaption, ok ? '✓ Tersalin' : 'Gagal menyalin');
+      if (window.MaulShare) window.MaulShare.flash(elCaption, I18n.t(ok ? 'copied' : 'copyFail'));
     });
   });
 
@@ -301,5 +345,5 @@
   }
 
   render();                                // gambar awal dengan font cadangan
-  loadFonts().then(render, render);        // gambar ulang setelah font Arab/Latin siap
+  fontsReady = loadFonts().then(render, render); // gambar ulang setelah font Arab/Latin siap
 })();

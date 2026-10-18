@@ -1,11 +1,13 @@
 // Halaman artikel: mode fokus, teks Arab di HP, dan sidebar kategori (dimuat saat dibutuhkan)
 (function () {
   var root = document.documentElement;
+  var I = window.MaulI18n || { lang: 'id', t: function (k) { return k; } };
+  var EN = I.lang === 'en';
 
   /* ---- Mode fokus ---- */
   var btn = document.getElementById('focusBtn');
   var txt = document.getElementById('focusBtnText');
-  function syncFocus() { if (txt) txt.textContent = root.classList.contains('focus-mode') ? 'Keluar Fokus' : 'Mode Fokus'; }
+  function syncFocus() { if (txt) txt.textContent = I.t(root.classList.contains('focus-mode') ? 'focusOff' : 'focusOn'); }
   if (btn) {
     syncFocus();
     btn.addEventListener('click', function () {
@@ -31,6 +33,8 @@
   /* ---- Sidebar kiri: kategori & daftar tulisan ---- */
   var box = document.getElementById('accordionContainer');
   if (!box) return;
+  // Di HP menu samping disembunyikan (mode fokus otomatis), jadi tidak perlu dimuat
+  if (window.matchMedia && window.matchMedia('(max-width: 768px)').matches) return;
   var curSlug = box.dataset.slug;
   var curTags = [];
   try { curTags = JSON.parse(box.dataset.tags || '[]'); } catch (e) {}
@@ -61,10 +65,10 @@
       function itemsHtml(list, from) {
         var slice = list.slice(from, from + STEP);
         var html = slice.map(function (p) {
-          return '<li class="acc-post-item"><a href="' + esc(p.url) + '"' + (p.slug === curSlug ? ' class="current-article"' : '') + '>' + esc(p.title) + '</a></li>';
+          return '<li class="acc-post-item"><a href="' + esc(EN && p.en ? p.en.url : p.url) + '"' + (p.slug === curSlug ? ' class="current-article"' : '') + '>' + esc(EN && p.en ? p.en.title : p.title) + '</a></li>';
         }).join('');
         if (from + STEP < list.length) {
-          html += '<li class="acc-more-item"><button type="button" class="acc-more" data-from="' + (from + STEP) + '">Tampilkan lebih banyak (' + (list.length - from - STEP) + ')</button></li>';
+          html += '<li class="acc-more-item"><button type="button" class="acc-more" data-from="' + (from + STEP) + '">' + esc(I.t('showMore', { n: list.length - from - STEP })) + '</button></li>';
         }
         return html;
       }
@@ -76,7 +80,7 @@
       }
 
       var html = tags.slice(0, MAX_TAGS).map(function (t) { return tagHtml(t, curTags.indexOf(t) !== -1); }).join('');
-      if (tags.length > MAX_TAGS) html += '<button type="button" class="acc-more acc-all-tags">Tampilkan semua kategori (' + (tags.length - MAX_TAGS) + ' lagi)</button>';
+      if (tags.length > MAX_TAGS) html += '<button type="button" class="acc-more acc-all-tags">' + esc(I.t('showAllTags', { n: tags.length - MAX_TAGS })) + '</button>';
       box.innerHTML = html;
 
       box.addEventListener('click', function (e) {
@@ -93,7 +97,7 @@
           var next = parseInt(more.dataset.from, 10) + STEP;
           if (next < map[tag].length) {
             more.dataset.from = next;
-            more.textContent = 'Tampilkan lebih banyak (' + (map[tag].length - next) + ')';
+            more.textContent = I.t('showMore', { n: map[tag].length - next });
           } else { li.remove(); }
           return;
         }
@@ -108,5 +112,5 @@
         }
       });
     })
-    .catch(function () { box.innerHTML = '<p style="color:#777;font-size:12px;">Menu tidak dapat dimuat.</p>'; });
+    .catch(function () { box.innerHTML = '<p style="color:#777;font-size:12px;">' + esc(I.t('menuFail')) + '</p>'; });
 })();

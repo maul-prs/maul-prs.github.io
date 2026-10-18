@@ -499,6 +499,11 @@ html.focus-mode .article-layout {
   border-color: rgba(16, 185, 129, 0.65);
 }
 
+.share-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
 .share-btn.primary {
   background: #10b981;
   border-color: #10b981;
@@ -628,5 +633,16 @@ html.focus-mode .article-layout {
   }
   .wp-side {
     width: 100%;
+  }
+}
+
+/* HP: mode fokus otomatis. Menu kategori & daftar bab disembunyikan, tombol Mode Fokus dihilangkan. */
+@media (max-width: 768px) {
+  .sidebar-left-sticky,
+  .sidebar-right-sticky {
+    display: none !important;
+  }
+  .focus-toggle-btn {
+    display: none !important;
   }
 }

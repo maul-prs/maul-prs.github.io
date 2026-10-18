@@ -43,6 +43,35 @@
         font-weight: 600;
       }
 
+      /* Tab bahasa (Indonesia / English) untuk judul, inti, terjemahan wallpaper, dan file HTML */
+      .lang-tabs {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+      }
+      .lang-tab {
+        background: #032a18;
+        border: 1px solid #0f3020;
+        color: #d4f0dc;
+        padding: 8px 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+      }
+      .lang-tab.active {
+        background: #34d399;
+        color: #020c06;
+        border-color: #34d399;
+        font-weight: 600;
+      }
+      .lang-tabs small {
+        flex-basis: 100%;
+        color: #9ca3af;
+      }
+
       .form-group {
         margin-bottom: 22px;
       }
@@ -259,14 +288,25 @@
             </datalist>
           </div>
 
-          <div class="form-group">
+          <!-- Tab bahasa -->
+          <div class="lang-tabs" id="langTabs">
+            <button type="button" class="lang-tab active" data-lang-tab="id" onclick="switchLang('id')">🇮🇩 Indonesia</button>
+            <button type="button" class="lang-tab" data-lang-tab="en" onclick="switchLang('en')">🇬🇧 English</button>
+            <small>Judul, inti, terjemahan wallpaper, dan file HTML punya dua versi. Kolom lain (slug, kategori, penulis, tahun, cover, tanggal) dipakai bersama.</small>
+          </div>
+
+          <div class="form-group" data-lang="id">
             <label>Judul Postingan / Artikel</label>
             <input
               type="text"
               id="postTitle"
-              required
               placeholder="Masukkan judul..."
             />
+          </div>
+          <div class="form-group" data-lang="en" style="display: none">
+            <label>Title (English)</label>
+            <input type="text" id="postTitleEn" placeholder="Enter the English title..." />
+            <small style="display:block;margin-top:6px;color:#9ca3af;">Opsional. Kalau judul Inggris dikosongkan, halaman bahasa Inggris untuk artikel ini tidak dibuat.</small>
           </div>
 
           <div class="form-group">
@@ -276,7 +316,7 @@
           </div>
 
           <!-- INTI / PESAN UTAMA: tampil di semua tab (bukan hanya Book Summary) -->
-          <div class="form-group" id="core-group">
+          <div class="form-group" id="core-group" data-lang="id">
             <label id="coreLabel" for="bookCore">Inti Buku (Ringkasan/Pesan Utama)</label>
             <textarea
               id="bookCore"
@@ -286,6 +326,19 @@
             <small style="display:block;margin-top:6px;color:#9ca3af;">
               Tampil di samping cover, di kartu beranda, dan menjadi deskripsi saat dibagikan ke Google &amp; WhatsApp.
               Idealnya 120–160 karakter. <span id="coreCount">0 karakter</span>
+            </small>
+          </div>
+
+          <div class="form-group" id="core-group-en" data-lang="en" style="display: none">
+            <label for="bookCoreEn">Core idea (English)</label>
+            <textarea
+              id="bookCoreEn"
+              style="min-height: 90px"
+              placeholder="Write the core idea or short summary in English..."
+            ></textarea>
+            <small style="display:block;margin-top:6px;color:#9ca3af;">
+              Dipakai di kartu beranda dan deskripsi Google/WhatsApp untuk versi Inggris.
+              Idealnya 120–160 karakter. <span id="coreCountEn">0 karakter</span>
             </small>
           </div>
 
@@ -301,8 +354,15 @@
             <textarea id="wpArabic" dir="rtl" lang="ar" style="min-height: 80px; font-size: 20px;" placeholder="رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً ..."></textarea>
             <label for="wpLatin" style="margin-top: 10px; display: block;">Latin (opsional)</label>
             <textarea id="wpLatin" style="min-height: 60px" placeholder="Rabbana atina fid-dunya hasanah ..."></textarea>
-            <label for="wpTranslation" style="margin-top: 10px; display: block;">Terjemahan / teks quote</label>
-            <textarea id="wpTranslation" style="min-height: 80px" placeholder="Ya Tuhan kami, berilah kami kebaikan di dunia ..."></textarea>
+            <div data-lang="id">
+              <label for="wpTranslation" style="margin-top: 10px; display: block;">Terjemahan / teks quote</label>
+              <textarea id="wpTranslation" style="min-height: 80px" placeholder="Ya Tuhan kami, berilah kami kebaikan di dunia ..."></textarea>
+            </div>
+            <div data-lang="en" style="display: none">
+              <label for="wpTranslationEn" style="margin-top: 10px; display: block;">Translation / quote text (English)</label>
+              <textarea id="wpTranslationEn" style="min-height: 80px" placeholder="Our Lord, give us good in this world ..."></textarea>
+              <small style="display:block;margin-top:6px;color:#9ca3af;">Kalau kosong, panel wallpaper tidak muncul di halaman Inggris (supaya bahasanya tidak tercampur).</small>
+            </div>
             <label for="wpSource" style="margin-top: 10px; display: block;">Sumber / penulis (opsional)</label>
             <input type="text" id="wpSource" placeholder="Contoh: QS. Al-Baqarah: 201 atau HR. Bukhari" />
           </div>
@@ -354,16 +414,8 @@
               <input type="text" id="bookYear" placeholder="Contoh: 2018" />
             </div>
 
-            <div class="form-group">
-              <label>Kategori (Pilih Tepat Salah Satu)</label>
-              <select id="bookMainCategory">
-                <option value="Book Summary">Book Summary</option>
-                <option value="Cerita Inspirasi">Cerita Inspirasi</option>
-                <option value="Quotes">Quotes</option>
-                <option value="Nasehat">Nasehat</option>
-                <option value="Dzikir & Do'a">Dzikir & Do'a</option>
-              </select>
-            </div>
+            <!-- Kategori ditentukan oleh tab di atas (postType), bukan kolom terpisah -->
+            <input type="hidden" id="bookMainCategory" value="Book Summary" />
 
             <div class="form-group" style="margin-bottom: 0">
               <label>Waktu Baca</label>
@@ -394,13 +446,21 @@
             <small style="display:block;margin-top:8px;color:#9ca3af;">Gambar otomatis dikecilkan (maks. 600px) &amp; diubah ke JPG sebelum diunggah ke folder <code>images/</code>.</small>
           </div>
 
-          <div class="form-group">
+          <div class="form-group" data-lang="id">
             <label
               >Upload File Artikel Lengkap Format
               <strong>.html</strong> (Opsional)</label
             >
             <input type="file" id="postHtmlFile" accept=".html" />
             <input type="hidden" id="postFullContent" />
+          </div>
+          <div class="form-group" data-lang="en" style="display: none">
+            <label
+              >Upload English article file
+              <strong>.html</strong> (Opsional)</label
+            >
+            <input type="file" id="postHtmlFileEn" accept=".html" />
+            <input type="hidden" id="postFullContentEn" />
           </div>
 
           <button type="submit" class="btn-submit" id="submitBtn">
@@ -756,13 +816,13 @@
         if (event && event.currentTarget) event.currentTarget.classList.add("active");
 
         $("postType").value = categoryName;
+        $("bookMainCategory").value = categoryName;
         $("submitBtn").innerText = `Simpan & Upload Postingan ${categoryName}`;
         $("book-category-group").style.display = categoryName === "Cerita Inspirasi" ? "none" : "block";
         $("wallpaper-section").style.display = categoryName === "Quote & Nasehat" || categoryName === "Dzikir & Do'a" ? "block" : "none";
 
         if (categoryName === "Book Summary") {
           $("book-details-section").style.display = "block";
-          $("bookMainCategory").value = "Book Summary";
         } else {
           $("book-details-section").style.display = "none";
         }
@@ -778,11 +838,24 @@
         $("bookCore").placeholder = coreText[1];
       }
 
+      // Tab bahasa: tampilkan kolom Indonesia atau Inggris (kolom bersama tidak ikut berubah)
+      function switchLang(lang) {
+        document.querySelectorAll("[data-lang]").forEach((el) => {
+          el.style.display = el.getAttribute("data-lang") === lang ? "" : "none";
+        });
+        document.querySelectorAll(".lang-tab").forEach((b) => b.classList.toggle("active", b.getAttribute("data-lang-tab") === lang));
+      }
+
       function updateCoreCount() {
         const n = $("bookCore").value.trim().length;
         $("coreCount").innerText = n + " karakter" + (n > 160 ? " (terlalu panjang untuk deskripsi Google, akan dipotong)" : "");
       }
       $("bookCore").addEventListener("input", updateCoreCount);
+      function updateCoreCountEn() {
+        const n = $("bookCoreEn").value.trim().length;
+        $("coreCountEn").innerText = n + " karakter" + (n > 160 ? " (terlalu panjang untuk deskripsi Google, akan dipotong)" : "");
+      }
+      $("bookCoreEn").addEventListener("input", updateCoreCountEn);
 
       // Cover bisa berupa path relatif (images/x.jpg), URL penuh, atau data URI lama (base64)
       function coverUrl(c) {
@@ -800,6 +873,14 @@
       $("postCoverFile").addEventListener("change", function (e) {
         selectedImageFile = e.target.files[0] || null;
         showCoverPreview(selectedImageFile ? URL.createObjectURL(selectedImageFile) : coverUrl($("postCoverPath").value));
+      });
+
+      $("postHtmlFileEn").addEventListener("change", function (e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (ev) => { $("postFullContentEn").value = ev.target.result; };
+        reader.readAsText(file);
       });
 
       $("postHtmlFile").addEventListener("change", function (e) {
@@ -821,6 +902,10 @@
         $("editSlug").value = "";
         $("postCoverPath").value = "";
         $("postFullContent").value = "";
+        $("postFullContentEn").value = "";
+        ["postTitleEn", "bookCoreEn", "wpTranslationEn"].forEach((id) => ($(id).value = ""));
+        updateCoreCountEn();
+        switchLang("id");
         $("postSlug").readOnly = false;
         $("postSlug").value = "";
         $("postDate").value = todayISO();
@@ -888,7 +973,7 @@
         return lines;
       }
 
-      async function makeOgJpegBase64({ type, title, author, text, coverBlob }) {
+      async function makeOgJpegBase64({ type, title, author, text, coverBlob, lang }) {
         await loadOgFonts();
         const FB = 'OGPoppinsB, OGPoppinsBX, system-ui, "Segoe UI", sans-serif';
         const FR = 'OGPoppins, OGPoppinsX, system-ui, "Segoe UI", sans-serif';
@@ -956,7 +1041,7 @@
         if (author) {
           ctx.font = `400 26px ${FR}`;
           ctx.fillStyle = "#a3e635";
-          ctx.fillText(ogWrap(ctx, "Penulis: " + author, textW, 1)[0], textX, y + 8);
+          ctx.fillText(ogWrap(ctx, (lang === "en" ? "Author: " : "Penulis: ") + author, textW, 1)[0], textX, y + 8);
           y += 26 + 24;
         }
 
@@ -1003,6 +1088,11 @@
           const isEdit = !!editSlug;
           const title = $("postTitle").value.trim();
           const postType = $("postType").value;
+          if (!title) {
+            switchLang("id");
+            $("postTitle").focus();
+            throw new Error("Judul (Indonesia) wajib diisi.");
+          }
 
           let slug = editSlug;
           if (!isEdit) {
@@ -1069,6 +1159,19 @@
           if (coverPath) meta.cover = coverPath;
           delete meta.fullContent;
 
+          // Versi Inggris (opsional): tanpa judul Inggris, halaman /en/ untuk artikel ini tidak dibuat
+          const en = {
+            title: $("postTitleEn").value.trim(),
+            coreMessage: $("bookCoreEn").value.trim(),
+            wallpaperTranslation: $("wpTranslationEn").value.trim(),
+          };
+          Object.keys(en).forEach((k) => { if (!en[k]) delete en[k]; });
+          const enOn = !!en.title;
+          if (enOn) meta.en = { ...(meta.en || {}), ...en };
+          else delete meta.en;
+          if (enOn && !en.wallpaperTranslation && meta.en) delete meta.en.wallpaperTranslation;
+          if (enOn && !en.coreMessage && meta.en) delete meta.en.coreMessage;
+
           // Wallpaper (hanya Quote & Nasehat / Dzikir & Do'a)
           const wp = {
             arabic: $("wpArabic").value.trim(),
@@ -1099,7 +1202,40 @@
             console.warn("Gambar share gagal dibuat:", e);
           }
 
+          // Gambar share versi Inggris
+          if (enOn) {
+            try {
+              const ogPathEn = `${IMAGE_DIR}/og-${slug}-en.jpg`;
+              const typeEn = { "Quote & Nasehat": "Quotes & Advice", "Dzikir & Do'a": "Dhikr & Du'a", "Cerita Inspirasi": "Inspiring Stories" }[postType] || postType;
+              files.push({
+                path: ogPathEn,
+                base64: await makeOgJpegBase64({
+                  type: typeEn,
+                  title: en.title,
+                  author: bookData.bookAuthor,
+                  text: (wpOn && (en.wallpaperTranslation || wp.latin)) || en.coreMessage || "",
+                  coverBlob,
+                  lang: "en",
+                }),
+              });
+              meta.en.ogImage = ogPathEn;
+            } catch (e) {
+              console.warn("Gambar share Inggris gagal dibuat:", e);
+            }
+          }
+
           files.push({ path: `${POSTS_DIR}/${slug}.json`, content: JSON.stringify(meta, null, 2) + "\n" });
+          const bodyEn = $("postFullContentEn").value;
+          if (enOn) {
+            if (bodyEn) files.push({ path: `${POSTS_DIR}/${slug}.en.html`, content: bodyEn });
+            else if ((await readRaw(`${POSTS_DIR}/${slug}.en.html`)) === null) {
+              // Belum ada isi Inggris: buat halaman sederhana dari kolom yang diisi
+              files.push({
+                path: `${POSTS_DIR}/${slug}.en.html`,
+                content: wpOn && en.wallpaperTranslation ? doaBodyHtml({ ...wp, translation: en.wallpaperTranslation }) : `<p>${esc(en.coreMessage || en.title)}</p>\n`,
+              });
+            }
+          }
           const body = $("postFullContent").value;
           if (body) files.push({ path: `${POSTS_DIR}/${slug}.html`, content: body });
           else if (!isEdit) files.push({ path: `${POSTS_DIR}/${slug}.html`, content: wpOn ? doaBodyHtml(wp) : `<p>${esc(bookData.bookCore || title)}</p>\n` });
@@ -1143,12 +1279,18 @@
           $("postTitle").value = post.title || "";
           $("postCoverPath").value = post.cover || "";
           $("postFullContent").value = ""; // kosong = isi artikel lama tidak diubah
+          $("postFullContentEn").value = ""; // kosong = isi Inggris lama tidak diubah
+          const enData = post.en || {};
+          $("postTitleEn").value = enData.title || "";
+          $("bookCoreEn").value = enData.coreMessage || "";
+          $("wpTranslationEn").value = enData.wallpaperTranslation || "";
+          updateCoreCountEn();
           $("postDate").value = post.dateISO || parseIndoDate(post.date) || todayISO();
           $("post-categories").value = Array.isArray(post.categories) ? post.categories.join(", ") : "";
           $("bookTitle").value = bd.bookTitle || "";
           $("bookAuthor").value = bd.bookAuthor || "";
           $("bookYear").value = bd.bookYear || "";
-          $("bookMainCategory").value = bd.bookMainCategory || "Book Summary";
+          $("bookMainCategory").value = post.type || "Book Summary";
           $("bookCore").value = bd.bookCore || post.coreMessage || "";
           updateCoreCount();
           $("bookReadTime").value = bd.bookReadTime || "";
@@ -1161,6 +1303,8 @@
           selectedImageFile = null;
           $("postCoverFile").value = "";
           $("postHtmlFile").value = "";
+          $("postHtmlFileEn").value = "";
+          switchLang("id");
           showCoverPreview(coverUrl(post.cover));
 
           $("mainTitle").innerText = "Edit Postingan: " + post.title;
@@ -1189,7 +1333,7 @@
         if (!confirm("Hapus postingan ini secara permanen dari repo?")) return;
         try {
           const files = [];
-          for (const ext of ["json", "html"]) {
+          for (const ext of ["json", "html", "en.html"]) {
             const path = `${POSTS_DIR}/${slug}.${ext}`;
             if ((await readRaw(path)) !== null) files.push({ path, delete: true });
           }

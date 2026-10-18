@@ -4,6 +4,7 @@
 (function () {
   'use strict';
 
+  var I = window.MaulI18n || { lang: 'id', t: function (k) { return k; } };
   var KEY = 'maul_reading_v1';
   var MIN_PCT = 5;          // di bawah ini dianggap baru membuka, tidak disimpan
   var DONE_PCT = 95;        // sampai sini = selesai, keluar dari strip
@@ -43,7 +44,7 @@
   }
 
   // hanya alamat artikel internal yang boleh dipakai sebagai link
-  function safeUrl(u) { return typeof u === 'string' && /^\/artikel\/[^\s"'<>]+$/.test(u); }
+  function safeUrl(u) { return typeof u === 'string' && /^\/(?:en\/)?artikel\/[^\s"'<>]+$/.test(u); }
 
   function coverSrc(e) {
     if (e.cover) return /^https?:/i.test(e.cover) ? e.cover : encodeURI('/' + String(e.cover).replace(/^\/+/, ''));
@@ -59,9 +60,9 @@
     var a = new Date(t); a.setHours(0, 0, 0, 0);
     var b = new Date(); b.setHours(0, 0, 0, 0);
     var d = Math.round((b - a) / DAY);
-    if (d <= 0) return 'hari ini';
-    if (d === 1) return 'kemarin';
-    return d + ' hari lalu';
+    if (d <= 0) return I.t('today');
+    if (d === 1) return I.t('yesterday');
+    return I.t('daysAgo', { n: d });
   }
 
   /* ---------------- Beranda: strip "Lanjutkan Membaca" ---------------- */
@@ -74,11 +75,11 @@
       '<img class="resume-cover" src="' + esc(coverSrc(e)) + '" alt="" data-t="' + esc(e.type) + '" decoding="async" onerror="coverFallback(this)" /></a>' +
       '<div class="resume-info">' +
       '<a class="resume-title" href="' + href + '">' + esc(e.title) + '</a>' +
-      '<p class="resume-meta">' + e.pct + '% · terakhir dibaca ' + ago(e.t) + '</p>' +
+      '<p class="resume-meta">' + esc(I.t('resumeMeta', { pct: e.pct, ago: ago(e.t) })) + '</p>' +
       '<div class="resume-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + e.pct + '"><span style="width:' + e.pct + '%"></span></div>' +
-      '<a class="button resume-go" href="' + href + '">Lanjutkan</a>' +
+      '<a class="button resume-go" href="' + href + '">' + esc(I.t('go')) + '</a>' +
       '</div>' +
-      '<button class="resume-x" type="button" data-dismiss="' + esc(e.slug) + '" aria-label="Sembunyikan ' + esc(e.title) + '">×</button>' +
+      '<button class="resume-x" type="button" data-dismiss="' + esc(e.slug) + '" aria-label="' + esc(I.t('hideAria', { title: e.title })) + '">×</button>' +
       '</div>';
   }
 
@@ -92,7 +93,7 @@
       .sort(function (a, b) { return b.t - a.t; })
       .slice(0, MAX_STRIP);
     if (!list.length) { box.hidden = true; box.innerHTML = ''; return; }
-    box.innerHTML = '<div class="resume-head"><span class="resume-label">Lanjutkan Membaca</span></div>' +
+    box.innerHTML = '<div class="resume-head"><span class="resume-label">' + esc(I.t('resumeHead')) + '</span></div>' +
       '<div class="resume-list">' + list.map(cardHtml).join('') + '</div>';
     box.hidden = false;
 
@@ -116,8 +117,9 @@
     Object.keys(db).forEach(function (slug) {
       var p = by[slug];
       if (!p) { delete db[slug]; changed = true; return; }
-      if (db[slug].title !== p.title || db[slug].cover !== (p.cover || '')) {
-        db[slug].title = p.title; db[slug].cover = p.cover || ''; db[slug].type = p.type; changed = true;
+      var tt = /^\/en\//.test(db[slug].url || '') && p.en ? p.en.title : p.title; // judul sesuai bahasa halaman yang dibaca
+      if (db[slug].title !== tt || db[slug].cover !== (p.cover || '')) {
+        db[slug].title = tt; db[slug].cover = p.cover || ''; db[slug].type = p.type; changed = true;
       }
     });
     if (changed) { store(db); renderStrip(); }
@@ -125,7 +127,7 @@
 
   /* ---------------- Kartu: tanda ✓ untuk bacaan yang sudah selesai ---------------- */
   function slugOf(href) {
-    var m = /^\/artikel\/([^\/?#]+)/.exec(href || '');
+    var m = /^\/(?:en\/)?artikel\/([^\/?#]+)/.exec(href || '');
     if (!m) return '';
     try { return decodeURIComponent(m[1]); } catch (e) { return m[1]; }
   }
@@ -142,8 +144,8 @@
         mark = document.createElement('span');
         mark.className = 'post-card-done';
         mark.setAttribute('role', 'img');
-        mark.setAttribute('aria-label', 'Sudah selesai dibaca');
-        mark.title = 'Sudah selesai dibaca';
+        mark.setAttribute('aria-label', I.t('doneAria'));
+        mark.title = I.t('doneAria');
         mark.textContent = '✓';
         card.appendChild(mark);
       } else if (!done && mark) {
@@ -278,14 +280,14 @@
       banner = document.createElement('div');
       banner.className = 'resume-banner';
       banner.setAttribute('role', 'region');
-      banner.setAttribute('aria-label', 'Lanjutkan membaca');
+      banner.setAttribute('aria-label', I.t('resumeAria'));
       banner.innerHTML =
-        '<div class="resume-banner-text"><strong>Lanjut dari ' + e.pct + '%?</strong>' +
-        (sec ? '<span>Terakhir di: ' + esc(sec) + '</span>' : '') + '</div>' +
+        '<div class="resume-banner-text"><strong>' + esc(I.t('continueFrom', { pct: e.pct })) + '</strong>' +
+        (sec ? '<span>' + esc(I.t('lastAt')) + esc(sec) + '</span>' : '') + '</div>' +
         '<div class="resume-banner-actions">' +
-        '<button type="button" class="button resume-banner-go" data-act="go">Lanjutkan</button>' +
-        '<button type="button" class="resume-banner-restart" data-act="restart">Dari awal</button>' +
-        '<button type="button" class="resume-banner-x" data-act="close" aria-label="Tutup">×</button></div>';
+        '<button type="button" class="button resume-banner-go" data-act="go">' + esc(I.t('go')) + '</button>' +
+        '<button type="button" class="resume-banner-restart" data-act="restart">' + esc(I.t('restart')) + '</button>' +
+        '<button type="button" class="resume-banner-x" data-act="close" aria-label="' + esc(I.t('close')) + '">×</button></div>';
       document.body.appendChild(banner);
       banner.addEventListener('click', function (ev) {
         var b = ev.target.closest('[data-act]');

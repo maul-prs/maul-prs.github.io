@@ -716,3 +716,47 @@ span.page-btn.active {
     padding-top: 28px;
   }
 }
+
+/* --- Pilihan bahasa ID | EN --- */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.lang-switch {
+  display: inline-flex;
+  flex: 0 0 auto;
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  overflow: hidden;
+}
+.lang-btn {
+  padding: 5px 11px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  color: var(--text-muted);
+  background: #032a18;
+  text-decoration: none;
+}
+a.lang-btn:not(.active):hover {
+  color: var(--accent-light);
+}
+.lang-btn.active {
+  background: var(--accent-light);
+  color: #020c06;
+}
+.lang-btn.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+@media (max-width: 768px) {
+  .nav-right {
+    order: 2;
+    margin-left: auto;
+  }
+  .menu-toggle {
+    order: 3;
+  }
+}

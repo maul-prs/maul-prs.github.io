@@ -38,6 +38,7 @@
 
   window.MaulShare = { copy: copy, flash: flash };
 
+  var I = window.MaulI18n || { t: function (k) { return k; } };
   var bar = document.getElementById('shareBar');
   if (!bar) return;
   var url = bar.getAttribute('data-url');
@@ -53,7 +54,7 @@
   }
   if (copyBtn) {
     copyBtn.addEventListener('click', function () {
-      copy(url).then(function (ok) { flash(copyBtn, ok ? '✓ Tersalin' : 'Gagal menyalin'); });
+      copy(url).then(function (ok) { flash(copyBtn, I.t(ok ? 'copied' : 'copyFail')); });
     });
   }
 })();
