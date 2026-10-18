@@ -1,0 +1,35 @@
+{
+  "id": "1792337122142",
+  "slug": "emotional-intelligence-why-it-can-matter-more-than-iq",
+  "status": "active",
+  "title": "Emotional Intelligence: Why It Can Matter More Than IQ",
+  "type": "Book Summary",
+  "categories": [
+    "Business",
+    "Leadership",
+    "Management",
+    "Mental Health",
+    "Mindfulness",
+    "Neuroscience",
+    "Psychology",
+    "Science"
+  ],
+  "date": "18 Oktober 2026",
+  "dateISO": "2026-10-18",
+  "coreMessage": "Mengapa orang paling pintar belum tentu paling sukses? Kenali kemampuan emosi yang diam-diam menentukan hubungan, karier, dan kebahagiaanmu.",
+  "bookData": {
+    "bookTitle": "Emotional Intelligence: Why It Can Matter More Than IQ",
+    "bookAuthor": "Daniel Goleman",
+    "bookYear": "1995",
+    "bookMainCategory": "Book Summary",
+    "bookCore": "Mengapa orang paling pintar belum tentu paling sukses? Kenali kemampuan emosi yang diam-diam menentukan hubungan, karier, dan kebahagiaanmu.",
+    "bookReadTime": "18–22 menit baca"
+  },
+  "cover": "images/cover-emotional-intelligence-why-it-can-matter-more-than-iq-1792337122111.jpg",
+  "en": {
+    "title": "Emotional Intelligence: Why It Can Matter More Than IQ",
+    "coreMessage": "Why aren’t the smartest people always the most successful? Discover the emotional skills that quietly shape your relationships and career.",
+    "ogImage": "images/og-emotional-intelligence-why-it-can-matter-more-than-iq-en.jpg"
+  },
+  "ogImage": "images/og-emotional-intelligence-why-it-can-matter-more-than-iq.jpg"
+}
