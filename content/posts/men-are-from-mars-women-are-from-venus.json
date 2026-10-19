@@ -1,0 +1,34 @@
+{
+  "id": "1792422131293",
+  "slug": "men-are-from-mars-women-are-from-venus",
+  "status": "active",
+  "title": "Men Are from Mars, Women Are from Venus",
+  "type": "Book Summary",
+  "categories": [
+    "Educational",
+    "Language Learning",
+    "Non-Fiction",
+    "Philosophy",
+    "Psychology",
+    "Self development Books",
+    "Sociology"
+  ],
+  "date": "19 Oktober 2026",
+  "dateISO": "2026-10-19",
+  "coreMessage": "Kenapa pasangan sering salah paham padahal sama-sama sayang? Perumpamaan dua planet yang menjelaskan cara pria dan wanita bereaksi.",
+  "bookData": {
+    "bookTitle": "Men Are from Mars, Women Are from Venus",
+    "bookAuthor": "John Gray",
+    "bookYear": "1992",
+    "bookMainCategory": "Book Summary",
+    "bookCore": "Kenapa pasangan sering salah paham padahal sama-sama sayang? Perumpamaan dua planet yang menjelaskan cara pria dan wanita bereaksi.",
+    "bookReadTime": "18–22 menit baca"
+  },
+  "cover": "images/cover-men-are-from-mars-women-are-from-venus-1792422131273.jpg",
+  "en": {
+    "title": "Men Are from Mars, Women Are from Venus",
+    "coreMessage": "Why do couples misunderstand each other even when they love each other? A two-planet picture of how men and women react.",
+    "ogImage": "images/og-men-are-from-mars-women-are-from-venus-en.jpg"
+  },
+  "ogImage": "images/og-men-are-from-mars-women-are-from-venus.jpg"
+}

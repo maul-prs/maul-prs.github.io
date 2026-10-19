@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Men Are from Mars, Women Are from Venus — Rangkuman</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Poppins:wght@600;700&display=swap">
+<style>
+:root{color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0}
+.wrap{max-width:780px;margin:0 auto;padding:28px 20px 60px}
+.rangkuman{--pri:#F2766B;--acc:#F6B93B;--txt:#F1F1EE;--mut:#C2C6CE;--card:rgba(255,255,255,.055);--line:rgba(255,255,255,.16);--red:#F28B82;--green:#7ED9A4;--blue:#86B8F5;font-family:Lora,Georgia,serif;color:var(--txt);background:transparent;line-height:1.85;font-size:1.05rem;margin:0;padding:0}
+.rangkuman *{box-sizing:border-box}
+.rangkuman p{margin:0 0 1.1em}
+.rangkuman strong{color:#fff}
+.rangkuman h2{font-family:Poppins,sans-serif;font-weight:700;font-size:1.55rem;line-height:1.3;color:var(--acc);margin:2.6em 0 .9em;padding:.7em 0 .5em;border-top:3px solid var(--pri)}
+.rangkuman h3{font-family:Poppins,sans-serif;font-weight:600;font-size:1.1rem;color:var(--pri);margin:1.9em 0 .6em;padding-left:.8em;border-left:4px solid var(--pri)}
+.rangkuman .hook{font-size:1.25rem;line-height:1.7;font-style:italic;border-left:6px solid var(--acc);background:var(--card);padding:1.1em 1.3em;border-radius:0 12px 12px 0;margin:0 0 1.6em}
+.rangkuman .pull{position:relative;background:#16100f;border:1px solid var(--line);border-radius:14px;padding:2.2em 1.6em 1.4em;margin:2em 0;font-size:1.2rem;line-height:1.6;font-style:italic;color:#fff}
+.rangkuman .pull::before{content:"\201C";position:absolute;top:-.05em;left:.25em;font-family:Poppins,sans-serif;font-size:4.5rem;line-height:1;color:var(--acc)}
+.rangkuman .pull cite{display:block;margin-top:.8em;font-family:Poppins,sans-serif;font-style:normal;font-size:.85rem;color:var(--mut)}
+.rangkuman .callout{border-left:5px solid var(--pri);background:var(--card);border-radius:0 12px 12px 0;padding:1em 1.2em;margin:1.4em 0}
+.rangkuman .callout.amber{border-left-color:var(--acc)}
+.rangkuman .callout.red{border-left-color:var(--red)}
+.rangkuman .callout.green{border-left-color:var(--green)}
+.rangkuman .callout.blue{border-left-color:var(--blue)}
+.rangkuman .callout .ct{display:block;font-family:Poppins,sans-serif;font-weight:600;font-size:.88rem;letter-spacing:.04em;text-transform:uppercase;margin-bottom:.35em;color:#fff}
+.rangkuman .callout p:last-child{margin-bottom:0}
+.rangkuman .ambil{margin:1.1em 0 1.6em;padding:.9em 1.2em;border:1px dashed var(--acc);border-radius:12px}
+.rangkuman .ambil strong{font-family:Poppins,sans-serif;color:var(--acc);font-size:.85rem;letter-spacing:.05em;text-transform:uppercase}
+.rangkuman .alur{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:1.3em 0;font-family:Poppins,sans-serif;font-size:.88rem}
+.rangkuman .alur span{background:var(--card);border:1px solid var(--line);border-radius:99px;padding:.35em 1em;color:#fff}
+.rangkuman .alur span.api{border-color:var(--pri);color:var(--pri)}
+.rangkuman .alur i{font-style:normal;color:var(--acc)}
+.rangkuman .enam{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:1.4em 0}
+.rangkuman .enam .sel{background:var(--card);border-radius:12px;padding:.9em 1em;border-top:4px solid var(--pri)}
+.rangkuman .enam .sel.k{border-top-color:var(--acc)}
+.rangkuman .enam .sel b{display:block;font-family:Poppins,sans-serif;font-size:.9rem;color:#fff;margin-bottom:.3em}
+.rangkuman .enam .sel span{font-size:.92rem;line-height:1.6;color:var(--mut)}
+.rangkuman .tabel-wrap{overflow-x:auto;margin:1.4em 0}
+.rangkuman table.cmp{width:100%;border-collapse:collapse;min-width:520px;font-size:.98rem;line-height:1.6}
+.rangkuman table.cmp th{font-family:Poppins,sans-serif;text-align:left;background:#16100f;color:var(--acc);padding:.8em 1em;border-bottom:2px solid var(--acc)}
+.rangkuman table.cmp td{padding:.75em 1em;border-bottom:1px solid var(--line);vertical-align:top}
+.rangkuman table.cmp td:first-child{font-family:Poppins,sans-serif;font-weight:600;color:#fff;width:22%}
+.rangkuman table.cmp td:last-child{color:var(--pri)}
+.rangkuman ol.pertanyaan{list-style:none;counter-reset:q;padding:0;margin:1.2em 0}
+.rangkuman ol.pertanyaan li{counter-increment:q;position:relative;background:var(--card);border-radius:12px;padding:1em 1.2em 1em 4em;margin-bottom:12px}
+.rangkuman ol.pertanyaan li::before{content:counter(q);position:absolute;left:1em;top:.85em;width:2em;height:2em;border-radius:50%;background:var(--acc);color:#111;font-family:Poppins,sans-serif;font-weight:700;display:flex;align-items:center;justify-content:center}
+.rangkuman .penutup{background:linear-gradient(135deg,rgba(242,118,107,.18),rgba(246,185,59,.18));border:1px solid var(--line);border-radius:16px;padding:1.6em 1.6em 1.3em;margin-top:1em}
+.rangkuman .penutup p:last-child{margin-bottom:0}
+.rangkuman .penutup .kutip{margin-top:1.2em;padding-top:1em;border-top:1px solid var(--line);font-size:1.15rem;font-style:italic;color:#fff}
+.rangkuman .penutup .kutip cite{display:block;margin-top:.4em;font-family:Poppins,sans-serif;font-style:normal;font-size:.85rem;color:var(--acc)}
+@media (max-width:600px){.rangkuman .enam{grid-template-columns:1fr 1fr}.rangkuman h2{font-size:1.35rem}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="rangkuman">
+
+<div class="hook">Seminggu setelah putri mereka lahir, istri John Gray, Bonnie, kesakitan dan kehabisan obat pereda nyeri. Ia meminta saudara John membelikannya, tetapi saudara itu lupa. Seharian Bonnie terbaring kesakitan sambil mengurus bayi. Saat John pulang, Bonnie berkata, “Tidak ada yang peduli!” John mengira ia disalahkan, membela diri, dan bersiap keluar rumah. Lalu Bonnie memohon: “Jangan pergi. Ini saat aku paling butuh kamu. Tolong peluk aku, kamu tidak perlu bicara.”</div>
+
+<h2>Pengantar: Pria dari Mars, Wanita dari Venus</h2>
+<p>Dari kejadian itu John Gray, konselor hubungan, menyadari bahwa selama ini ia menjadi “teman saat cuaca cerah”: baik selama istrinya ceria, tetapi menjauh atau berdebat saat istrinya sedang susah. Ia kemudian mengembangkan idenya lewat seminar dan konsultasi, dan dari situ lahir sebuah perumpamaan sederhana.</p>
+<p>Bayangkan pria berasal dari Mars dan wanita dari Venus. Mereka jatuh cinta, saling belajar tentang perbedaan, lalu pindah ke Bumi dan terkena <strong>amnesia selektif</strong>: lupa bahwa mereka memang seharusnya berbeda. Sejak itu pria dan wanita terus bertengkar.</p>
+<div class="pull">…kita lupa bahwa pria dan wanita memang seharusnya berbeda.<cite>John Gray, Bab 1</cite></div>
+<div class="callout blue"><span class="ct">Catatan sudut pandang</span><p>Ini generalisasi tentang kecenderungan umum, bukan hukum yang berlaku untuk semua orang. Setiap pasangan berbeda, jadi pakailah sebagai peta, bukan vonis.</p></div>
+<div class="ambil"><strong>Pelajaran:</strong> Sebelum kesal pada pasangan, tanyakan: apakah ini salah, atau hanya perbedaan cara kami bereaksi?</div>
+
+<h2>Bagian 1: Dua Planet, Dua Cara Menghadapi Hidup</h2>
+
+<h3>Bab 1: Pria dari Mars, Wanita dari Venus</h3>
+<p>Kita sering marah pada lawan jenis karena mengharapkan mereka bereaksi seperti kita. Pria mengira wanita berpikir dan berkomunikasi seperti pria, dan wanita mengira pria merasakan dan merespons seperti wanita. Akibatnya hubungan penuh gesekan yang sebenarnya tak perlu. Niat baik saja tidak cukup. Kita perlu <strong>mengingat</strong> perbedaan itu, lalu meluangkan waktu untuk memahaminya.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Ganti harapan “dia harus seperti aku” menjadi “dia berbeda, mari kupahami”.</div>
+
+<h3>Bab 2: Mr. Fix-It dan Komite Perbaikan Rumah</h3>
+<p>Di Mars, orang menghargai kekuatan, kemampuan, efisiensi, dan prestasi. Jadi saat pasangannya bercerita masalah, pria memakai “topi Mr. Fix-It” dan menawarkan solusi, padahal wanita sedang mencari <strong>empati</strong>. Di Venus, orang menghargai cinta, komunikasi, dan keindahan hubungan. Karena itu wanita sering membentuk “komite perbaikan rumah”: memberi saran yang tidak diminta supaya pria berkembang. Bagi pria, itu terasa seperti dikendalikan. Ia sebenarnya ingin <strong>diterima</strong>.</p>
+<div class="alur"><span>Ia bercerita</span><i>→</i><span class="api">Pria memberi solusi</span><i>→</i><span>Ia merasa tidak didengar</span></div>
+<div class="ambil"><strong>Pelajaran:</strong> Pria: dengarkan dulu tanpa menyelesaikan. Wanita: tahan saran yang tak diminta, dan terima dia apa adanya.</div>
+
+<h3>Bab 3: Pria Masuk ke Gua, Wanita Berbicara</h3>
+<p>Saat stres, pria cenderung menarik diri ke “gua” untuk memikirkan masalahnya sendirian. Wanita justru terdorong membicarakannya. Kalau tidak dipahami, wanita merasa ditinggalkan dan pria merasa dikejar-kejar. Solusinya: pria mengatakan bahwa ia perlu waktu sendiri dan akan kembali, sedangkan wanita memberinya ruang, tidak menafsirkannya sebagai penolakan.</p>
+<div class="callout amber"><span class="ct">Kalimat yang menolong</span><p>“Aku perlu waktu sendiri untuk memikirkan ini, dan aku akan kembali.” Dengan begitu pasangan tahu ia tidak dibuang.</p></div>
+<div class="ambil"><strong>Pelajaran:</strong> Kalau pasanganmu masuk gua, beri ruang. Kalau kamu yang masuk, sampaikan bahwa kamu akan kembali.</div>
+
+<h2>Bagian 2: Motivasi, Bahasa, dan Jarak</h2>
+
+<h3>Bab 4: Cara Memotivasi Lawan Jenis</h3>
+<p>Pria termotivasi saat ia merasa <strong>dibutuhkan</strong>. Wanita termotivasi saat ia merasa <strong>dihargai dan dicintai sepenuh hati</strong>. Tantangan terbesarnya berbeda: pria harus mengatasi keengganannya untuk memberi, dan wanita harus mengatasi keengganannya untuk menerima.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Katakan pada pria bahwa kamu membutuhkannya. Tunjukkan pada wanita bahwa ia dihargai.</div>
+
+<h3>Bab 5: Berbicara dengan Bahasa Berbeda</h3>
+<p>Pria dan wanita memakai kata yang sama dengan makna berbeda, sehingga Gray menyusun “kamus frasa Mars dan Venus” untuk menerjemahkan keluhan yang sering disalahpahami. Wanita bicara untuk berbagi, sedangkan pria bicara untuk memecahkan masalah atau sering berhenti bicara sama sekali. Wanita perlu tahu apa yang harus dilakukan saat pria diam, dan pria perlu belajar mendengarkan tanpa frustrasi.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Sebelum bereaksi pada kata-kata pasangan, tanyakan: apa sebenarnya yang ia butuhkan saat mengatakannya?</div>
+
+<h3>Bab 6: Pria Seperti Karet Gelang</h3>
+<p>Pria mendekat, lalu pada titik tertentu perlu menjauh, seperti karet gelang yang meregang lalu kembali. Setelah menjauh sepenuhnya, ia akan <strong>melenting kembali</strong> dengan penuh tenaga. Wanita yang paham akan mendukung proses ini, bukan mengejarnya, dan memilih waktu yang tepat untuk percakapan yang akrab.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Saat pasangan menjauh, jangan panik. Beri ruang, dan ia akan kembali.</div>
+
+<h3>Bab 7: Wanita Seperti Gelombang</h3>
+<p>Harga diri dan rasa cinta wanita naik turun seperti gelombang. Saat gelombang di puncak, ia penuh cinta. Saat jatuh, ia masuk ke “sumur” dan jadi lebih rentan dan reaktif. Penurunan ini <strong>sementara</strong>, dan gelombang akan naik lagi. Pria perlu tahu bahwa saat itulah wanita paling membutuhkannya, dan ia bisa menolong tanpa harus berkorban besar.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Saat pasanganmu “turun”, hadirlah dengan mendengarkan. Jangan menganggapnya kesalahanmu.</div>
+
+<h2>Bagian 3: Kebutuhan, Pertengkaran, dan Skor Cinta</h2>
+
+<h3>Bab 8: Kebutuhan Emosional yang Berbeda</h3>
+<p>Kita cenderung memberi cinta dalam bentuk yang kita sendiri butuhkan, bukan yang dibutuhkan pasangan. Gray menyusun dua daftar kebutuhan cinta utama:</p>
+<div class="enam">
+<div class="sel k"><b>Wanita butuh</b><span>Kepedulian, pengertian, penghormatan.</span></div>
+<div class="sel k"><b>Wanita juga</b><span>Pengabdian, pengesahan, kepastian.</span></div>
+<div class="sel"><b>Pria butuh</b><span>Kepercayaan, penerimaan, penghargaan.</span></div>
+<div class="sel"><b>Pria juga</b><span>Kekaguman, persetujuan, dorongan.</span></div>
+</div>
+<p>Setiap orang membutuhkan keduabelas jenis cinta itu, tetapi enam yang utama harus terpenuhi dulu sebelum seseorang bisa menerima yang lain.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Tanyakan pada pasanganmu, bentuk cinta mana yang paling ia butuhkan sekarang, lalu berikan.</div>
+
+<h3>Bab 9: Cara Menghindari Pertengkaran</h3>
+<p>Pria yang bersikap seolah selalu benar akan mengabaikan perasaan wanita. Wanita tanpa sadar mengirim pesan <strong>ketidaksetujuan</strong> padahal maksudnya sekadar tidak sepakat, dan itu memancing sikap bertahan pada pria. Gray mengurai “anatomi pertengkaran” dan menyarankan komunikasi yang saling mendukung.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Bedakan “aku tidak setuju” dari “kamu salah”, dan akui perasaan pasangan lebih dulu.</div>
+
+<h3>Bab 10: Mencetak Poin dengan Lawan Jenis</h3>
+<p>Pria dan wanita menghitung “skor” dengan cara berbeda. Bagi wanita, setiap bentuk cinta bernilai sama, besar atau kecil. Jadi pria sebaiknya tidak menunggu satu hadiah besar, tetapi sering memberi hal-hal kecil. Gray mendaftar seratus satu cara mencetak poin dengan wanita. Sebaliknya, wanita belajar mengarahkan tenaganya pada hal yang membuat pria merasa menang: memberinya apa yang ia inginkan.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Lakukan satu hal kecil hari ini yang menunjukkan kamu memikirkan pasanganmu.</div>
+
+<h2>Bagian 4: Perasaan Sulit dan Cinta yang Bertahan</h2>
+
+<h3>Bab 11: Seni Mengomunikasikan Perasaan yang Sulit</h3>
+<p>Pria dan wanita menyembunyikan perasaan dengan cara berbeda, tetapi membagikannya penting. Gray menyarankan <strong>Teknik Surat Cinta</strong>, yang punya tiga bagian: menulis surat tentang kemarahan, kesedihan, ketakutan, penyesalan, dan cinta; menulis surat balasan yang berisi apa yang ingin kamu dengar; lalu membagikannya kepada pasangan.</p>
+<div class="alur"><span>Tulis surat cinta</span><i>→</i><span class="api">Tulis balasan</span><i>→</i><span>Bagikan</span></div>
+<div class="ambil"><strong>Pelajaran:</strong> Saat emosi memuncak, tulis dulu. Menulis meredakan negatif dan membuka jalan bicara dengan kasih.</div>
+
+<h3>Bab 12: Seni Meminta Dukungan</h3>
+<p>Wanita sering sulit meminta dukungan, dan pria sering menolak permintaan. Kata “bisakah kamu” dan “dapatkah kamu” membuat pria merasa dipertanyakan. Gunakan <strong>“maukah kamu”</strong> sebagai gantinya, misalnya “Maukah kamu memelukku dan meyakinkan aku?” Bicaralah singkat, langsung, dan dengan kata yang tepat.</p>
+<div class="callout green"><span class="ct">Contoh dari buku</span><p>“Maukah kamu memelukku dan meyakinkan aku?” Pergeseran kecil pada kata, tetapi jauh lebih mudah bagi pria untuk menjawab ya.</p></div>
+<div class="ambil"><strong>Pelajaran:</strong> Minta dengan singkat dan langsung memakai “maukah kamu”, tanpa menyindir.</div>
+
+<h3>Bab 13: Menjaga Keajaiban Cinta</h3>
+<p>Cinta punya <strong>musim</strong>. Ada saat bunga bermekaran, ada saat kerja keras di bawah terik, dan ada saat dingin. Tanpa memahami musim itu, pasangan mengira cinta sudah mati. Masa lalu kita, atau masa lalu pasangan, juga memengaruhi hubungan hari ini. Hubungan yang bertahan adalah yang mau menyesuaikan diri pada pergantian musim.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Saat hubungan terasa dingin, tanyakan: apakah cinta ini mati, atau sedang berganti musim?</div>
+
+<h2>Perbandingan: Mars dan Venus</h2>
+<div class="tabel-wrap">
+<table class="cmp">
+<thead><tr><th>Hal</th><th>Mars (pria)</th><th>Venus (wanita)</th></tr></thead>
+<tbody>
+<tr><td>Nilai utama</td><td>Kekuatan, kemampuan, prestasi.</td><td>Cinta, komunikasi, kebersamaan.</td></tr>
+<tr><td>Saat stres</td><td>Menarik diri ke “gua”.</td><td>Ingin membicarakannya.</td></tr>
+<tr><td>Saat mendengar masalah</td><td>Menawarkan solusi.</td><td>Mencari empati.</td></tr>
+<tr><td>Termotivasi saat</td><td>Merasa dibutuhkan.</td><td>Merasa dihargai.</td></tr>
+<tr><td>Pola kedekatan</td><td>Karet gelang: dekat, jauh, kembali.</td><td>Gelombang: naik, turun, naik lagi.</td></tr>
+<tr><td>Skor cinta</td><td>Satu hadiah besar bernilai besar.</td><td>Setiap hadiah kecil bernilai sama.</td></tr>
+<tr><td>Meminta</td><td>Tanggap pada “maukah kamu”.</td><td>Sulit meminta secara langsung.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>Tiga Pertanyaan untuk Merenung</h2>
+<ol class="pertanyaan">
+<li>Kapan terakhir kali aku menawarkan solusi, padahal pasanganku hanya ingin didengar?</li>
+<li>Bentuk cinta mana yang paling dibutuhkan pasanganku, dan apakah selama ini aku memberi yang kubutuhkan sendiri?</li>
+<li>Saat kami bertengkar, apakah aku menyampaikan ketidaksetujuan, atau tanpa sadar menyampaikan penolakan?</li>
+</ol>
+
+<h2>Penutup: Ingat Bahwa Kita Berbeda</h2>
+<div class="penutup">
+<p>Inti buku ini sederhana: sebagian besar gesekan berasal dari lupa bahwa kita memang berbeda. Saat kita ingat, kekesalan berubah menjadi rasa ingin tahu, dan perbedaan menjadi sesuatu yang bisa dinikmati, seperti Martian dan Venusian di awal pertemuan mereka.</p>
+<p>Ambil satu ide minggu ini, misalnya mendengarkan tanpa memberi solusi atau mengganti “bisakah” dengan “maukah”, lalu lihat apa yang berubah. Dan ingat bahwa ini peta umum, jadi tetap kenali pasanganmu yang unik.</p>
+<div class="kutip">“…semuanya bisa dijelaskan.”<cite>John Gray, soal mengingat bahwa pria dari Mars dan wanita dari Venus</cite></div>
+</div>
+
+</div>
+</div>
+</body>
+</html>
