@@ -1,0 +1,34 @@
+{
+  "id": "1792422612657",
+  "slug": "the-art-of-seduction",
+  "status": "active",
+  "title": "The Art of Seduction",
+  "type": "Book Summary",
+  "categories": [
+    "psychology",
+    "seduction",
+    "persuasion",
+    "power",
+    "manipulation",
+    "relationships",
+    "social-dynamics"
+  ],
+  "date": "19 Oktober 2026",
+  "dateISO": "2026-10-19",
+  "coreMessage": "Rayuan adalah seni membuat orang menginginkanmu tanpa dipaksa. Sembilan tipe penggoda, 24 siasat, dan cara mengenali saat kamu dirayu.",
+  "bookData": {
+    "bookTitle": "The Art of Seduction",
+    "bookAuthor": "Robert Greene",
+    "bookYear": "2001",
+    "bookMainCategory": "Book Summary",
+    "bookCore": "Rayuan adalah seni membuat orang menginginkanmu tanpa dipaksa. Sembilan tipe penggoda, 24 siasat, dan cara mengenali saat kamu dirayu.",
+    "bookReadTime": "18–22 menit baca"
+  },
+  "cover": "images/cover-the-art-of-seduction-1792422612639.jpg",
+  "en": {
+    "title": "The Art of Seduction",
+    "coreMessage": "Seduction is the art of making others want you without force. Nine seductive types, 24 maneuvers, and how to spot when you are the target.",
+    "ogImage": "images/og-the-art-of-seduction-en.jpg"
+  },
+  "ogImage": "images/og-the-art-of-seduction.jpg"
+}
