@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Act Like a Lady, Think Like a Man — Rangkuman</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Poppins:wght@600;700&display=swap">
+<style>
+:root{color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0}
+.wrap{max-width:780px;margin:0 auto;padding:28px 20px 60px}
+.rangkuman{--pri:#F2766B;--acc:#F6B93B;--txt:#F1F1EE;--mut:#C2C6CE;--card:rgba(255,255,255,.055);--line:rgba(255,255,255,.16);--red:#F28B82;--green:#7ED9A4;--blue:#86B8F5;font-family:Lora,Georgia,serif;color:var(--txt);background:transparent;line-height:1.85;font-size:1.05rem;margin:0;padding:0}
+.rangkuman *{box-sizing:border-box}
+.rangkuman p{margin:0 0 1.1em}
+.rangkuman strong{color:#fff}
+.rangkuman h2{font-family:Poppins,sans-serif;font-weight:700;font-size:1.55rem;line-height:1.3;color:var(--acc);margin:2.6em 0 .9em;padding:.7em 0 .5em;border-top:3px solid var(--pri)}
+.rangkuman h3{font-family:Poppins,sans-serif;font-weight:600;font-size:1.1rem;color:var(--pri);margin:1.9em 0 .6em;padding-left:.8em;border-left:4px solid var(--pri)}
+.rangkuman .hook{font-size:1.25rem;line-height:1.7;font-style:italic;border-left:6px solid var(--acc);background:var(--card);padding:1.1em 1.3em;border-radius:0 12px 12px 0;margin:0 0 1.6em}
+.rangkuman .pull{position:relative;background:#16100f;border:1px solid var(--line);border-radius:14px;padding:2.2em 1.6em 1.4em;margin:2em 0;font-size:1.2rem;line-height:1.6;font-style:italic;color:#fff}
+.rangkuman .pull::before{content:"\201C";position:absolute;top:-.05em;left:.25em;font-family:Poppins,sans-serif;font-size:4.5rem;line-height:1;color:var(--acc)}
+.rangkuman .pull cite{display:block;margin-top:.8em;font-family:Poppins,sans-serif;font-style:normal;font-size:.85rem;color:var(--mut)}
+.rangkuman .callout{border-left:5px solid var(--pri);background:var(--card);border-radius:0 12px 12px 0;padding:1em 1.2em;margin:1.4em 0}
+.rangkuman .callout.amber{border-left-color:var(--acc)}
+.rangkuman .callout.red{border-left-color:var(--red)}
+.rangkuman .callout.green{border-left-color:var(--green)}
+.rangkuman .callout.blue{border-left-color:var(--blue)}
+.rangkuman .callout .ct{display:block;font-family:Poppins,sans-serif;font-weight:600;font-size:.88rem;letter-spacing:.04em;text-transform:uppercase;margin-bottom:.35em;color:#fff}
+.rangkuman .callout p:last-child{margin-bottom:0}
+.rangkuman .ambil{margin:1.1em 0 1.6em;padding:.9em 1.2em;border:1px dashed var(--acc);border-radius:12px}
+.rangkuman .ambil strong{font-family:Poppins,sans-serif;color:var(--acc);font-size:.85rem;letter-spacing:.05em;text-transform:uppercase}
+.rangkuman .alur{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:1.3em 0;font-family:Poppins,sans-serif;font-size:.88rem}
+.rangkuman .alur span{background:var(--card);border:1px solid var(--line);border-radius:99px;padding:.35em 1em;color:#fff}
+.rangkuman .alur span.api{border-color:var(--pri);color:var(--pri)}
+.rangkuman .alur i{font-style:normal;color:var(--acc)}
+.rangkuman .enam{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:1.4em 0}
+.rangkuman .enam .sel{background:var(--card);border-radius:12px;padding:.9em 1em;border-top:4px solid var(--pri)}
+.rangkuman .enam .sel.k{border-top-color:var(--acc)}
+.rangkuman .enam .sel b{display:block;font-family:Poppins,sans-serif;font-size:.9rem;color:#fff;margin-bottom:.3em}
+.rangkuman .enam .sel span{font-size:.92rem;line-height:1.6;color:var(--mut)}
+.rangkuman .tabel-wrap{overflow-x:auto;margin:1.4em 0}
+.rangkuman table.cmp{width:100%;border-collapse:collapse;min-width:520px;font-size:.98rem;line-height:1.6}
+.rangkuman table.cmp th{font-family:Poppins,sans-serif;text-align:left;background:#16100f;color:var(--acc);padding:.8em 1em;border-bottom:2px solid var(--acc)}
+.rangkuman table.cmp td{padding:.75em 1em;border-bottom:1px solid var(--line);vertical-align:top}
+.rangkuman table.cmp td:first-child{font-family:Poppins,sans-serif;font-weight:600;color:#fff;width:22%}
+.rangkuman table.cmp td:last-child{color:var(--pri)}
+.rangkuman ol.pertanyaan{list-style:none;counter-reset:q;padding:0;margin:1.2em 0}
+.rangkuman ol.pertanyaan li{counter-increment:q;position:relative;background:var(--card);border-radius:12px;padding:1em 1.2em 1em 4em;margin-bottom:12px}
+.rangkuman ol.pertanyaan li::before{content:counter(q);position:absolute;left:1em;top:.85em;width:2em;height:2em;border-radius:50%;background:var(--acc);color:#111;font-family:Poppins,sans-serif;font-weight:700;display:flex;align-items:center;justify-content:center}
+.rangkuman .penutup{background:linear-gradient(135deg,rgba(242,118,107,.18),rgba(246,185,59,.18));border:1px solid var(--line);border-radius:16px;padding:1.6em 1.6em 1.3em;margin-top:1em}
+.rangkuman .penutup p:last-child{margin-bottom:0}
+.rangkuman .penutup .kutip{margin-top:1.2em;padding-top:1em;border-top:1px solid var(--line);font-size:1.15rem;font-style:italic;color:#fff}
+.rangkuman .penutup .kutip cite{display:block;margin-top:.4em;font-family:Poppins,sans-serif;font-style:normal;font-size:.85rem;color:var(--acc)}
+@media (max-width:600px){.rangkuman .enam{grid-template-columns:1fr 1fr}.rangkuman h2{font-size:1.35rem}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="rangkuman">
+
+<div class="hook">Saat siaran langsung di Detroit, seorang perempuan cantik, 42 tahun, mampir menyapa Steve Harvey. Seorang pria terus mendekatinya, sampai Harvey bertanya, “Dia mau apa darimu?” Perempuan itu tertawa, “Cuma ngobrol.” Harvey menyuruhnya menyebut jumlah anaknya sambil menatap mata si pria. “Lima,” katanya. Si pria mundur seperti kuda terkejut, dan di jeda iklan berikutnya ia sudah berdiri lima puluh kaki jauhnya, di depan perempuan lain.</div>
+
+<h2>Pengantar: Mengintip Cara Pikir Pria</h2>
+<p>Steve Harvey, komedian dan pembawa acara radio, selama puluhan tahun menerima surat dari pendengarnya yang kebanyakan perempuan, lengkap dengan satu pertanyaan yang sama: kenapa pria berbuat begitu? Bukunya menjawab dari dalam, dari seorang pria yang pernah menjadi pemain, pernah gagal, lalu menemukan hubungan yang kuat. Judulnya merangkum idenya: <strong>berpikirlah seperti pria</strong> agar memahami mereka, dan <strong>bersikaplah seperti perempuan terhormat</strong> agar dihormati.</p>
+<div class="enam">
+<div class="sel"><b>Bagian 1</b><span>Pola pikir pria: apa yang menggerakkannya.</span></div>
+<div class="sel"><b>Bagian 2</b><span>Mengapa pria berbuat begitu.</span></div>
+<div class="sel k"><b>Bagian 3</b><span>Playbook: cara memenangkan permainan.</span></div>
+</div>
+<div class="callout blue"><span class="ct">Catatan sudut pandang</span><p>Ini pendapat seorang pria, ditujukan kepada perempuan yang berkencan dengan pria. Banyak klaimnya berupa generalisasi, jadi anggap sebagai satu cara pandang, bukan hukum yang berlaku untuk semua orang.</p></div>
+<div class="ambil"><strong>Pelajaran:</strong> Sebelum menilai pasangan atau calon pasangan, pahami dulu apa yang ia butuhkan dan inginkan, lalu tentukan apa yang kamu butuhkan dan inginkan.</div>
+
+<h2>Bagian 1: Pola Pikir Seorang Pria</h2>
+
+<h3>Bab 1: Apa yang Menggerakkan Pria</h3>
+<p>Kata Harvey, pria itu sederhana. Mereka digerakkan oleh tiga hal: <strong>siapa dirinya</strong>, <strong>apa yang ia kerjakan</strong>, dan <strong>berapa penghasilannya</strong>. Sampai ketiganya sejalan, perempuan hanya mengisi celah-celah hidupnya. Ia belum memikirkan menetap, punya anak, atau membangun rumah. Pria tidak harus sudah sukses, tetapi setidaknya sedang menuju ke sana.</p>
+<p>Harvey mengalaminya sendiri. Setelah di-PHK dari pabrik Ford, ia menjalani banyak pekerjaan sampai menang lomba amatir komedi dan hadiah lima puluh dolar. Lima belas dolar ia pakai mencetak kartu nama: “Steve Harvey. Komedian.” Itu baru memastikan “siapa aku” dan “apa yang kukerjakan”, tetapi sudah cukup untuk membuatnya bangkit.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Tanyakan pada pria yang kamu kencani: apa mimpinya, dan langkah apa yang sedang ia ambil sekarang?</div>
+
+<h3>Bab 2: Cinta Pria Tidak Sama dengan Cintamu</h3>
+<p>Cinta perempuan, kata Harvey, sabar dan tanpa syarat, dan perempuan berharap cinta pria sama. Padahal cinta pria lebih sederhana dan lebih langsung. Ia tidak akan meneleponmu tiap setengah jam. Tapi ada tiga tanda pria yang mencintaimu.</p>
+<div class="alur"><span>Menyatakan (profess)</span><i>→</i><span class="api">Menyediakan (provide)</span><i>→</i><span>Melindungi (protect)</span></div>
+<p>Ia akan <strong>menyatakan</strong> statusmu kepada siapa pun: “ini wanitaku”, bukan sekadar “temanku”. Ia akan <strong>menyediakan</strong> kebutuhanmu, dengan uang atau tenaga, sebisanya. Dan ia akan <strong>melindungi</strong> kamu dan keluarga, bahkan berlebihan. Lalu bagaimana bila ia tak melakukan ketiganya? Menurut Harvey, ia belum benar-benar mencintaimu.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Cari tindakan, bukan kata-kata. Apakah ia menyebutmu miliknya di depan orang lain, menyediakan, dan melindungi?</div>
+
+<h3>Bab 3: Tiga Kebutuhan Pria: Dukungan, Kesetiaan, dan Kue</h3>
+<p>Selain tiga tanda di atas, Harvey menyebut tiga hal yang dibutuhkan pria dari perempuan: <strong>dukungan</strong>, <strong>kesetiaan</strong>, dan “<strong>kue</strong>” (istilahnya untuk keintiman fisik). Pria ingin merasa dibutuhkan, dan caranya adalah membiarkannya menyediakan untukmu serta mendukung mimpinya.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Dukungan dan kesetiaan layak diberikan kepada pria yang sudah membuktikan diri, bukan di awal.</div>
+
+<h3>Bab 4: “Kita Perlu Bicara” dan Kata-Kata Lain yang Menakutkan Pria</h3>
+<p>Bagi pria, “kita perlu bicara” berarti ia berbuat salah, atau lebih buruk lagi, kamu benar-benar hanya ingin bicara. Perempuan bicara untuk berbagi, sedangkan pria bicara untuk <strong>mencari solusi</strong>. Harvey memberi contoh: kamu bercerita panjang bahwa rekan kerja memakai baju yang sama. Teman wanita akan menimpali berjam-jam. Pria hanya akan berkata, “Jangan pakai baju itu lagi.” Selesai.</p>
+<div class="callout amber"><span class="ct">Akar masalahnya</span><p>Sejak kecil, anak laki-laki diajarkan menahan tangis dan “jadilah laki-laki”. Jadi jangan berharap pria dewasa tiba-tiba pandai mendengar tanpa memperbaiki.</p></div>
+<div class="ambil"><strong>Pelajaran:</strong> Sampaikan maksudmu dengan jelas dan langsung, atau curahkan perasaan itu kepada sahabatmu, bukan kepada pria yang hanya ingin memperbaikinya.</div>
+
+<h2>Bagian 2: Mengapa Pria Berbuat Begitu</h2>
+
+<h3>Bab 5: Hal Pertama: Ia Ingin Tidur denganmu</h3>
+<p>Harvey berterus terang: saat pria mendekatimu, yang pertama ia lihat adalah penampilanmu, bukan pekerjaan, mobil, atau anak-anakmu. Pada kisah pembuka tadi, si pria mundur begitu mendengar “lima anak”, karena ia hanya menginginkan satu hal, dan lima anak tidak termasuk dalam rencananya.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Jangan menyimpulkan niat dari kata manis. Perhatikan apakah ia bertanya tentang hidupmu dan sungguh peduli pada jawabanmu.</div>
+
+<h3>Bab 6: Ikan Olahraga atau Ikan Simpanan</h3>
+<p>Harvey gemar memancing, dan ia memakainya sebagai perumpamaan. Pria yang memancing “untuk olahraga” menangkap ikan terbesar, memotretnya, lalu melepasnya. Pria yang memancing “untuk dimakan” membawanya pulang. Perempuan yang tak punya aturan, syarat, atau rencana dikenali dari jauh sebagai ikan olahraga. Perempuan yang punya standar, menurutnya, diperlakukan sebagai <strong>keeper</strong>.</p>
+<div class="enam">
+<div class="sel k"><b>Keeper</b><span>Mengambil nomor pria tanpa langsung memberikan nomornya.</span></div>
+<div class="sel k"><b>Keeper</b><span>Bisa bercakap hormat dengan ibu si pria.</span></div>
+<div class="sel k"><b>Keeper</b><span>Terbuka sejak awal bahwa ia ingin menikah.</span></div>
+<div class="sel"><b>Ikan olahraga</b><span>Membagikan semua nomor kepada yang baru mentraktir minum.</span></div>
+<div class="sel"><b>Ikan olahraga</b><span>Tak punya rencana selain akhir pekan depan.</span></div>
+<div class="sel"><b>Ikan olahraga</b><span>Tak pernah dikenalkan pada keluarga atau teman.</span></div>
+</div>
+<p>Dan kalau si pria memang hanya mencari ikan olahraga, biarkan ia pergi. Tidak ada yang dirugikan.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Tunjukkan sejak awal bahwa kamu punya syarat. Kalau itu membuatnya pergi, ia memang bukan pria yang kamu cari.</div>
+
+<h3>Bab 7: Anak Mama</h3>
+<p>Hubungan pria dengan ibunya adalah hubungan pertamanya dengan perempuan. Ia belajar dari sana untuk melindungi dan menyediakan, dan dari situ juga kamu bisa menebak cara ia memperlakukanmu. Tetapi menurut Harvey, pria yang masih hidup di bawah bayang-bayang ibunya belum siap menjadi pasangan.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Lihat cara ia memperlakukan ibunya: apakah menghormati, tetapi tetap bisa mengambil keputusan sendiri?</div>
+
+<h3>Bab 8: Mengapa Pria Selingkuh</h3>
+<p>Harvey menegaskan ia tidak membenarkan perselingkuhan. Ia hanya menjelaskan. Pertama, pria sering memandang seks sebagai urusan fisik, sedangkan banyak perempuan memandangnya sebagai tindakan cinta. Kedua, pria yang berselingkuh biasanya yakin tidak akan ketahuan. Ketiga, sebagian pria yang belum mencapai tiga hal tadi (siapa dirinya, apa yang ia kerjakan, penghasilannya) mencari pengakuan dari perempuan lain.</p>
+<div class="callout green"><span class="ct">Yang bisa kamu lakukan</span><p>Tetapkan syarat sejak awal, ajukan lima pertanyaan, terapkan aturan sembilan puluh hari, dan lepaskan diri dari rasa bersalah. Kesalahan itu milik yang berselingkuh, bukan milikmu.</p></div>
+<div class="ambil"><strong>Pelajaran:</strong> Katakan sejak awal bahwa kesetiaan tidak bisa ditawar, dan siap pergi bila dilanggar.</div>
+
+<h2>Bagian 3: Playbook, Menetapkan Standar</h2>
+
+<h3>Bab 9: Pria Menghormati Standar, Punyailah</h3>
+<div class="pull">Aku tidak mau jadi mainan siapa pun atau wanita simpanan di tali.<cite>Marjorie, istri Harvey, saat bersiap pergi (dari kisah pada bab ini)</cite></div>
+<p>Harvey bertemu istrinya, Marjorie, saat tampil di Memphis. Setelah mereka kembali dekat, suatu malam Valentine, Marjorie berdiri di lorong dengan koper dan mantel bulunya karena mendengar telepon dari teman perempuan Harvey. Ia mengatakan bahwa ia punya anak dan hidup yang baik, dan hanya mau pria yang melengkapi keluarganya. Saat itu Harvey sadar ia telah bertemu dengan “the one”. Standar yang jelas dan berani ditegakkan membuat pria menghormatimu.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Tuliskan standarmu, sampaikan dengan tenang, dan siap menegakkannya.</div>
+
+<h3>Bab 10: Lima Pertanyaan Sebelum Terlalu Dalam</h3>
+<p>Harvey bertanya kepada para pria yang mengencani banyak perempuan sekaligus, bagaimana mereka bisa bertahan. Jawabnya sama: “Mereka tidak tahu ke mana ini akan berlanjut, karena mereka tidak pernah bertanya.” Maka tanyakan lima hal ini sejak awal:</p>
+<div class="enam">
+<div class="sel"><b>1. Rencana jangka pendek</b><span>Apa tujuannya sekarang, dan apa langkahnya?</span></div>
+<div class="sel"><b>2. Rencana jangka panjang</b><span>Di mana ia melihat dirinya sepuluh tahun lagi?</span></div>
+<div class="sel"><b>3. Keluarga dan iman</b><span>Anak, ibu, ayah, dan Tuhan.</span></div>
+<div class="sel"><b>4. Pikirannya tentangmu</b><span>Minta alasan spesifik, bukan pujian umum.</span></div>
+<div class="sel"><b>5. Perasaannya padamu</b><span>“Pikir” dan “rasa” itu berbeda.</span></div>
+<div class="sel k"><b>Aturan</b><span>Kalau ia tak punya rencana, pergi saja.</span></div>
+</div>
+<div class="ambil"><strong>Pelajaran:</strong> Jangan takut kehilangan pria dengan bertanya. Kalau pertanyaan itu membuatnya pergi, kamu sudah tahu jawabannya.</div>
+
+<h3>Bab 11: Aturan Sembilan Puluh Hari</h3>
+<div class="pull">He. Can. Wait.<cite>Steve Harvey, soal pria dan seks</cite></div>
+<p>Harvey mengumpamakannya dengan pabrik Ford tempatnya dulu bekerja: tunjangan kesehatan baru diberikan setelah sembilan puluh hari masa percobaan. Jadi mengapa perempuan memberikan “tunjangan” pada pria sebelum ia membuktikan diri? Menurut Harvey, tunggu sembilan puluh hari sebelum keintiman fisik, dan gunakan masa itu untuk menguji: apakah ia datang saat berjanji, menelepon saat telat, menyukai temanmu dan anakmu, dan apakah tampak menyembunyikan sesuatu.</p>
+<div class="alur"><span>Hari 1–90: amati dan uji</span><i>→</i><span class="api">Lulus?</span><i>→</i><span>Baru beri “tunjangan”</span></div>
+<div class="ambil"><strong>Pelajaran:</strong> Biarkan waktu menunjukkan sifat aslinya. Pria yang hanya mengejar keuntungan akan sulit berpura-pura selama tiga bulan.</div>
+
+<h2>Bagian 3 Lanjutan: Dari Anak Sampai Cincin</h2>
+
+<h3>Bab 12: Mengenalkan Anak Setelah Kamu Yakin, Sudah Terlambat</h3>
+<p>Pria yang hanya mengejar satu hal tidak ingin bertemu anak-anakmu. Kebanyakan ibu tunggal menjauhkan pria dari rumah, padahal anak justru bisa menjadi ujian terbaik. Tanda yang baik: ia tertarik bertemu anak-anakmu, membawa hadiah untuk mereka, bersikap hormat kepadamu di depan mereka, dan nyaman bermain bersama anak-anak. Pria yang menghilang atau tidak nyaman di dekat anak-anak patut diwaspadai.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Kenalkan anak setelah ia lulus uji awal, tetapi sebelum kamu terlanjur jatuh cinta.</div>
+
+<h3>Bab 13: Perempuan Kuat, Mandiri, dan Kesepian</h3>
+<p>Harvey memuji perempuan modern: bekerja penuh waktu, mengurus keluarga, memimpin di kantor dan gereja. Tetapi menurutnya perempuan yang selalu memegang kendali membuat pria tidak punya peran. Padahal pria ingin merasa dibutuhkan. Ia menyarankan melonggarkan peran itu sesekali, meminta bantuan, lalu menghargainya.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Beri ruang bagi pasanganmu untuk berperan, dan ucapkan terima kasih bila ia membantu.</div>
+
+<h3>Bab 14: Cara Mendapatkan Cincin</h3>
+<p>Banyak perempuan menunggu lamaran yang tak kunjung datang, sambil melakukan segalanya sebagai calon istri. Menurut Harvey, pria memasuki komitmen karena tak ingin kehilanganmu. Setelah itu, nyatakan keinginanmu untuk menikah, minta ia menentukan tanggal, dan beri batas waktu. Ia menyebutnya bukan melamar dirimu sendiri, tetapi berhenti menunggu seperti di tahun 1945. Jangan menjadi “Baltic Avenue” di papan Monopoli; jadilah “Broadway”.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Tetapkan batas waktu yang masuk akal, dan siap bertindak bila tidak dipenuhi.</div>
+
+<h3>Bab 15: Jawaban Cepat atas Pertanyaan yang Selalu Ingin Kamu Ajukan</h3>
+<p>Bab terakhir berisi tanya jawab singkat dari rekan perempuan Harvey. Garis besarnya: setiap pria punya selera berbeda, jadi kekuranganmu di cermin bisa jadi daya tarik bagi orang lain. Jawaban lainnya konsisten dengan inti buku: bersikap jujur, tahu apa yang kamu inginkan, dan jangan menukarnya dengan tekanan dari luar.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Pria berbeda-beda. Jangan jadikan satu pengalaman buruk sebagai hukum tentang semua pria.</div>
+
+<h2>Perbandingan: Cara Biasa dan Cara Harvey</h2>
+<div class="tabel-wrap">
+<table class="cmp">
+<thead><tr><th>Hal</th><th>Cara biasa</th><th>Cara Harvey</th></tr></thead>
+<tbody>
+<tr><td>Mencari cinta</td><td>Menerima semua peluang.</td><td>Menyaring dengan standar.</td></tr>
+<tr><td>Bicara</td><td>Curhat panjang ke pasangan.</td><td>Jelas dan langsung, curhat ke sahabat.</td></tr>
+<tr><td>Awal hubungan</td><td>Menunggu dan melihat nanti.</td><td>Ajukan lima pertanyaan sejak awal.</td></tr>
+<tr><td>Keintiman</td><td>Diberikan cepat agar dia tetap.</td><td>Tunggu sembilan puluh hari.</td></tr>
+<tr><td>Anak</td><td>Dijauhkan sampai yakin.</td><td>Dikenalkan sebagai ujian.</td></tr>
+<tr><td>Pernikahan</td><td>Menunggu lamaran tanpa batas.</td><td>Tetapkan batas waktu.</td></tr>
+<tr><td>Saat dikhianati</td><td>Menyalahkan diri.</td><td>Lepaskan beban, tegakkan standar.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>Tiga Pertanyaan untuk Merenung</h2>
+<ol class="pertanyaan">
+<li>Standar apa yang selama ini kupegang, dan standar apa yang kuabaikan hanya karena takut kehilangan?</li>
+<li>Kapan terakhir kali aku bertanya tentang rencana dan niat seseorang secara langsung?</li>
+<li>Apakah aku menilai seseorang dari tindakannya selama beberapa bulan, atau dari kata-kata manis di awal?</li>
+</ol>
+
+<h2>Penutup: Hormati Dirimu, Pahami Dia</h2>
+<div class="penutup">
+<p>Pesan buku ini sederhana: pria lebih mudah dipahami daripada yang dikira, dan kamu lebih berdaya daripada yang kamu kira. Kamu tidak perlu mengubah dirimu menjadi orang lain. Kamu perlu tahu apa yang kamu inginkan, menyampaikannya sejak awal, lalu membiarkan tindakannya yang menjawab.</p>
+<p>Ingat juga bahwa ini satu sudut pandang. Ambil yang berguna, uji dengan pengalamanmu, dan tetap percayai penilaianmu sendiri.</p>
+<div class="kutip">“Pria adalah makhluk yang sangat sederhana.”<cite>Steve Harvey, Bab 13</cite></div>
+</div>
+
+</div>
+</div>
+</body>
+</html>

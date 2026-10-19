@@ -1,0 +1,33 @@
+{
+  "id": "1792421797045",
+  "slug": "act-like-a-lady-think-like-a-man",
+  "status": "active",
+  "title": "Act Like a Lady, Think Like a Man",
+  "type": "Book Summary",
+  "categories": [
+    "History",
+    "Humor",
+    "Non-Fiction",
+    "Psychology",
+    "Relationship Advice",
+    "Self Help"
+  ],
+  "date": "19 Oktober 2026",
+  "dateISO": "2026-10-19",
+  "coreMessage": "Kenapa pria berbuat begitu? Seorang pria membongkar cara pikir mereka, plus lima pertanyaan dan aturan 90 hari untuk menguji pasangan.",
+  "bookData": {
+    "bookTitle": "Act Like a Lady, Think Like a Man",
+    "bookAuthor": "Steve Harvey",
+    "bookYear": "2009",
+    "bookMainCategory": "Book Summary",
+    "bookCore": "Kenapa pria berbuat begitu? Seorang pria membongkar cara pikir mereka, plus lima pertanyaan dan aturan 90 hari untuk menguji pasangan.",
+    "bookReadTime": "18–22 menit baca"
+  },
+  "cover": "images/cover-act-like-a-lady-think-like-a-man-1792421797026.jpg",
+  "en": {
+    "title": "Act Like a Lady, Think Like a Man",
+    "coreMessage": "Why do men do what they do? A man opens up his mind, with five questions and a ninety-day rule to test who you're dating.",
+    "ogImage": "images/og-act-like-a-lady-think-like-a-man-en.jpg"
+  },
+  "ogImage": "images/og-act-like-a-lady-think-like-a-man.jpg"
+}
