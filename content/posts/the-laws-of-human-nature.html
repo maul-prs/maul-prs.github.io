@@ -1,0 +1,204 @@
+<style>
+.rangkuman{--pri:#B5D86B;--acc:#F6B93B;--txt:#F1F1EE;--mut:#C2C6CE;--card:rgba(255,255,255,.055);--line:rgba(255,255,255,.16);--red:#F28B82;--green:#7ED9A4;--blue:#86B8F5;font-family:Lora,Georgia,serif;color:var(--txt);background:transparent;line-height:1.85;font-size:1.05rem;margin:0;padding:0}
+.rangkuman *{box-sizing:border-box}
+.rangkuman p{margin:0 0 1.1em}
+.rangkuman strong{color:#fff}
+.rangkuman h2{font-family:Poppins,sans-serif;font-weight:700;font-size:1.55rem;line-height:1.3;color:var(--acc);margin:2.6em 0 .9em;padding:.7em 0 .5em;border-top:3px solid var(--pri)}
+.rangkuman h3{font-family:Poppins,sans-serif;font-weight:600;font-size:1.1rem;color:var(--pri);margin:1.9em 0 .6em;padding-left:.8em;border-left:4px solid var(--pri)}
+.rangkuman .hook{font-size:1.28rem;line-height:1.7;font-style:italic;border-left:6px solid var(--acc);background:var(--card);padding:1.1em 1.3em;border-radius:0 12px 12px 0;margin:0 0 1.6em}
+.rangkuman .pull{position:relative;background:#11160a;border:1px solid var(--line);border-radius:14px;padding:2.2em 1.6em 1.4em;margin:2em 0;font-size:1.25rem;line-height:1.6;font-style:italic;color:#fff}
+.rangkuman .pull::before{content:"\201C";position:absolute;top:-.05em;left:.25em;font-family:Poppins,sans-serif;font-size:4.5rem;line-height:1;color:var(--acc)}
+.rangkuman .pull cite{display:block;margin-top:.8em;font-family:Poppins,sans-serif;font-style:normal;font-size:.85rem;color:var(--mut)}
+.rangkuman .callout{border-left:5px solid var(--pri);background:var(--card);border-radius:0 12px 12px 0;padding:1em 1.2em;margin:1.4em 0}
+.rangkuman .callout.amber{border-left-color:var(--acc)}
+.rangkuman .callout.red{border-left-color:var(--red)}
+.rangkuman .callout.green{border-left-color:var(--green)}
+.rangkuman .callout.blue{border-left-color:var(--blue)}
+.rangkuman .callout .ct{display:block;font-family:Poppins,sans-serif;font-weight:600;font-size:.88rem;letter-spacing:.04em;text-transform:uppercase;margin-bottom:.35em;color:#fff}
+.rangkuman .callout p:last-child{margin-bottom:0}
+.rangkuman .ambil{margin:1.1em 0 1.6em;padding:.9em 1.2em;border:1px dashed var(--acc);border-radius:12px;color:var(--txt)}
+.rangkuman .ambil strong{font-family:Poppins,sans-serif;color:var(--acc);font-size:.85rem;letter-spacing:.05em;text-transform:uppercase}
+.rangkuman .duo{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:1.5em 0}
+.rangkuman .duo .sisi{background:var(--card);border-radius:12px;padding:1.1em 1.2em;border-top:4px solid var(--red)}
+.rangkuman .duo .sisi.b{border-top-color:var(--pri)}
+.rangkuman .duo .sisi b{display:block;font-family:Poppins,sans-serif;font-size:1rem;margin-bottom:.4em;color:#fff}
+.rangkuman .duo .sisi span{font-size:.97rem;line-height:1.7;color:var(--mut)}
+.rangkuman .tabel-wrap{overflow-x:auto;margin:1.4em 0}
+.rangkuman table.cmp{width:100%;border-collapse:collapse;min-width:520px;font-size:.98rem;line-height:1.6}
+.rangkuman table.cmp th{font-family:Poppins,sans-serif;text-align:left;background:#11160a;color:var(--acc);padding:.8em 1em;border-bottom:2px solid var(--acc)}
+.rangkuman table.cmp td{padding:.75em 1em;border-bottom:1px solid var(--line);vertical-align:top}
+.rangkuman table.cmp td:first-child{font-family:Poppins,sans-serif;font-weight:600;color:#fff;width:22%}
+.rangkuman table.cmp td:last-child{color:var(--pri)}
+.rangkuman ol.pertanyaan{list-style:none;counter-reset:q;padding:0;margin:1.2em 0}
+.rangkuman ol.pertanyaan li{counter-increment:q;position:relative;background:var(--card);border-radius:12px;padding:1em 1.2em 1em 4em;margin-bottom:12px}
+.rangkuman ol.pertanyaan li::before{content:counter(q);position:absolute;left:1em;top:.85em;width:2em;height:2em;border-radius:50%;background:var(--acc);color:#111;font-family:Poppins,sans-serif;font-weight:700;display:flex;align-items:center;justify-content:center}
+.rangkuman .penutup{background:linear-gradient(135deg,rgba(181,216,107,.18),rgba(246,185,59,.18));border:1px solid var(--line);border-radius:16px;padding:1.6em 1.6em 1.3em;margin-top:1em}
+.rangkuman .penutup p:last-child{margin-bottom:0}
+.rangkuman .penutup .kutip{margin-top:1.2em;padding-top:1em;border-top:1px solid var(--line);font-size:1.2rem;font-style:italic;color:#fff}
+.rangkuman .penutup .kutip cite{display:block;margin-top:.4em;font-family:Poppins,sans-serif;font-style:normal;font-size:.85rem;color:var(--acc)}
+@media (max-width:600px){.rangkuman .duo{grid-template-columns:1fr}.rangkuman h2{font-size:1.35rem}}
+</style>
+
+<div class="rangkuman">
+
+<div class="hook">Kamu merasa mengambil keputusan dengan kepala dingin. Tapi kenapa kamu terus jatuh ke pola yang sama, pada jenis orang yang sama, dengan akhir yang sama? Mungkin yang mengemudi bukan kamu.</div>
+
+<h2>Pengantar: Orang di Balik Topeng</h2>
+
+<p>Buku ini ditulis Robert Greene, penulis yang dikenal lewat buku-bukunya tentang kekuasaan, strategi, dan penguasaan diri. Buku ini adalah upaya paling serius darinya untuk menjawab satu pertanyaan: kenapa manusia berperilaku seperti itu? Jawabannya ia sebut <strong>sifat manusia</strong>, yaitu kumpulan dorongan dari dalam yang membentuk pikiran, emosi, dan tindakan kita tanpa kita sadari.</p>
+
+<p>Dorongan itu tidak datang dari kemarin. Menurut Greene, ia terbentuk selama sekitar lima juta tahun evolusi kita sebagai makhluk sosial. Nenek moyang kita bertahan hidup dengan membaca wajah dan suasana hati orang lain, sehingga kita sangat mudah tertular emosi. Kita terus menimbang status, membagi dunia menjadi orang dalam dan orang luar, dan memakai topeng untuk menyembunyikan sisi yang tak disukai kelompok. Sisi yang kita tekan itu menjadi bayangan gelap dalam diri.</p>
+
+<p>Di sisi lain, kita juga punya orang-orang yang membuat hidup sulit: atasan yang manipulatif, rekan yang diam-diam iri, teman yang ternyata hanya memakai kita. Greene mengajak kita melihat mereka seperti seorang ahli mineral melihat batu, tanpa marah dan tanpa panik. Mereka bukan iblis. Mereka hanya contoh perilaku manusia yang bisa dipelajari. Ada delapan belas hukum dalam buku ini. Setiap hukum memberi dua hal: cara membaca orang lain, dan cara menguasai diri sendiri.</p>
+
+<div class="callout amber"><span class="ct">Cara memakai rangkuman ini</span><p>Setiap hukum punya satu ide inti dan satu pelajaran yang bisa langsung dipakai. Kamu tidak perlu menghafal semuanya. Cukup pilih satu atau dua yang paling mengena untuk hidupmu sekarang.</p></div>
+
+<h2>Bagian 1: Pikiran yang Tak Selalu Rasional</h2>
+
+<h3>Hukum 1: Irasionalitas</h3>
+<p>Tahun 432 SM, sepuluh ribu warga Athena berkumpul di bukit untuk memutuskan apakah akan berperang melawan Sparta. Para elang berteriak menyerang lebih dulu. Para merpati mau berdamai apa pun risikonya. Debat itu panas dan tidak menghasilkan apa-apa, sampai Pericles maju. Ia bukan orator yang berapi-api. Ia berbicara tenang dan menimbang. Greene memakai Pericles sebagai teladan <strong>Athena dalam diri</strong>: kemampuan berpikir, bukan sekadar bereaksi.</p>
+<p>Masalahnya, emosi kita bekerja diam-diam. Kita menyaring fakta agar cocok dengan yang kita inginkan, dan menyebutnya objektif. Greene menyebut enam bias utama. <strong>Bias konfirmasi</strong>: mencari bukti yang mendukung pendapat kita. <strong>Bias keyakinan</strong>: makin kuat kita meyakini sesuatu, makin kita anggap itu benar. <strong>Bias penampilan</strong>: menilai orang dari tampilannya. <strong>Bias kelompok</strong>: mempercayai yang dipercayai kelompok. <strong>Bias menyalahkan</strong>: kesalahan pasti dari orang lain. <strong>Bias superioritas</strong>: merasa lebih baik dari rata-rata. Semuanya berakar dari satu hal: kita ingin nyaman dan menghindari rasa sakit.</p>
+<p>Emosi makin kuat saat ada pemicu masa kecil, kenaikan atau kehilangan mendadak, tekanan yang meningkat, orang yang memanas-manasi, dan pengaruh kelompok. Solusinya bukan membuang emosi. Orang Yunani punya perumpamaan yang pas:</p>
+<div class="duo">
+<div class="sisi"><b>Kuda: emosimu</b><span>Penuh tenaga dan dorongan. Tanpa penunggang, ia liar dan mudah masuk jebakan.</span></div>
+<div class="sisi b"><b>Penunggang: pikiranmu</b><span>Memegang kendali dan menentukan arah. Tapi kalau terlalu kaku, kuda tak pernah dibiarkan berlari.</span></div>
+</div>
+<p>Pikirkan baik-baik sebelum memutuskan, lalu longgarkan tali dan bergerak dengan berani. Jaga juga keseimbangan skeptisisme dan rasa ingin tahu. Saat menghadapi orang yang menjengkelkan, bayangkan ceritanya dari dalam seperti penulis. Dengan begitu kebencian bisa berubah menjadi pemahaman.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Sebelum membuat keputusan penting, tanyakan: bukti apa yang sengaja kuabaikan karena tidak enak didengar?</div>
+
+<h3>Hukum 2: Narsisme</h3>
+<p>Kita semua butuh perhatian. Tanpa tatapan orang lain kita merasa tak ada. Karena perhatian itu terbatas, kita membangun gambaran diri yang menghibur kita dari dalam. Greene menyebut kita semua narsis, hanya berbeda tingkat. Narsis yang sehat berarti punya harga diri dan bisa menghargai orang lain. Narsis yang dalam menyerap seluruh energi ke dalam dirinya, sehingga hubungan hanya jadi cermin.</p>
+<p>Obatnya adalah <strong>empati</strong>, kemampuan membaca suasana hati dan pikiran orang. Kisah terbaiknya datang dari Ernest Shackleton, penjelajah yang terdampar bersama anak buahnya di atas bongkahan es. Ia sadar semangat satu orang bisa menular dan menghancurkan tim. Maka ia memperlihatkan keyakinan dan optimisme, membagi perhatian antara kelompok dan individu, dan mengamati hal kecil seperti cara orang makan atau bangun tidur. Saat ada yang murung, ia tidak memarahi karena itu mempermalukan. Ia mengajaknya bicara dengan lembut. Lama-lama anak buahnya mengira ia punya kemampuan membaca pikiran.</p>
+<p>Kuncinya sederhana: berhenti sibuk dengan monolog dalam kepalamu dan benar-benar memperhatikan orang. Tapi waspada, karena narsis ekstrem, seperti Stalin yang tampak hangat dan membuat orang merasa istimewa, bisa memanfaatkan empatimu. Jaga jarak dari mereka sebelum terseret ke dramanya.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Dalam obrolan berikutnya, tahan godaan menyusun cerita sendiri. Fokus penuh pada apa yang dirasakan lawan bicaramu.</div>
+
+<h2>Bagian 2: Membaca Orang Lain</h2>
+
+<h3>Hukum 3: Memainkan Peran</h3>
+<p>Di usia tujuh belas tahun, Milton Erickson terkena polio dan lumpuh. Di tempat tidur, hanya matanya yang bisa bergerak. Ia mulai memperhatikan saudara-saudaranya: ada yang berkata “ide bagus” dengan nada datar dan senyum sinis, yang artinya sebaliknya. Dari situ ia belajar bahwa orang berbicara dua bahasa: kata-kata dan tubuh. Kelak ia menjadi pelopor hipnoterapi.</p>
+<p>Orang suka memakai topeng yang paling menguntungkan: rendah hati, percaya diri, rajin. Tapi topeng itu punya retakan. Perasaan sebenarnya bocor lewat ekspresi wajah, nada suara, ketegangan tubuh, dan gerakan gugup. Untuk membacanya, kenali dulu <strong>garis dasar</strong> orang itu, yaitu bagaimana ia biasa bersikap, lalu cari penyimpangannya. Cari juga kelompok isyarat, bukan satu gerakan saja, dan perhatikan siapa yang menyetujui ucapanmu dengan tubuhnya, bukan hanya dengan kata.</p>
+<p>Sisi sebaliknya penting: orang juga menilaimu dari penampilan. Kata <em>personality</em> berasal dari kata Latin untuk topeng. Topeng yang dimainkan baik melindungi kita dari penilaian terlalu dekat. Kaisar Augustus ahli dalam hal ini. Ia menampilkan diri sebagai penjaga nilai-nilai Romawi, sementara lawannya, Antonius, tampak boros dan lemah. Ia berlagak sederhana, padahal diam-diam memegang militer. Pesannya: kelola kesan yang kamu timbulkan, tampilkan kehadiran yang tidak mudah ditebak, dan sisakan sedikit misteri.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Mulai hari ini, perhatikan satu orang dengan lebih saksama. Catat bagaimana ia bersikap saat santai, lalu lihat apa yang berubah saat topiknya tegang.</div>
+
+<h3>Hukum 4: Perilaku Kompulsif</h3>
+<p>Howard Hughes tumbuh dengan ibu yang sangat protektif dan terus takut ia sakit. Setelah ibu dan ayahnya meninggal saat ia masih muda, ia mewarisi kekayaan dan kebebasan penuh. Kelakuannya kemudian, termasuk ketakutan berlebihan terhadap kuman dan sikap mengendalikan orang lain, merupakan kelanjutan dari pola masa kecilnya. Greene memakai kisah ini untuk menunjukkan bahwa karakter terbentuk di tahun-tahun awal dan dipertahankan oleh kebiasaan.</p>
+<p>Prinsip utamanya: <strong>orang tidak pernah melakukan sesuatu hanya sekali</strong>. Apa pun yang mereka lakukan, mereka akan mengulanginya, bahkan saat itu merugikan diri sendiri. Maka ukur karakter dari tindakan, bukan dari reputasi atau kata-kata. Lihat bagaimana mereka menghadapi kesulitan, bekerja sama, bersabar, dan belajar. Lalu waspada pada tipe beracun seperti si pembual besar. Dan terapkan hal yang sama pada dirimu. Kenali pola yang berulang, ubah kelemahan menjadi kekuatan, misalnya kepekaan yang berlebihan menjadi empati. Latih sifat kuat dengan cara menghadapi situasi sulit dan tugas sedikit di atas kemampuanmu.</p>
+<div class="callout green"><span class="ct">Aturan sederhana</span><p>Satu kali bisa kebetulan, tiga kali adalah pola. Sebelum mempekerjakan atau mempercayai seseorang, cari tahu apa yang terjadi di dua atau tiga kesempatan sebelumnya.</p></div>
+<div class="ambil"><strong>Pelajaran:</strong> Percayai pola, bukan janji. Dan tanyakan pada dirimu sendiri: pola apa dalam diriku yang terus kuulangi?</div>
+
+<h2>Bagian 3: Daya Tarik, Pengaruh, dan Kepemimpinan</h2>
+
+<h3>Hukum 5: Menjadi Objek yang Diinginkan</h3>
+<p>Gabrielle Chanel, yang kelak dikenal sebagai Coco Chanel, tumbuh di biara yatim piatu yang serba sederhana setelah ibunya wafat. Ia menyelamatkan diri dengan novel-novel romantis yang diselundupkan. Dari hidup yang serba kekurangan itu ia belajar cara membuat dirinya dan karyanya jadi sesuatu yang diinginkan banyak orang. Greene menyimpulkan bahwa manusia selalu menginginkan apa yang tidak dimilikinya. Terlalu hadir membuat orang bosan, sedikit absen membuat mereka penasaran.</p>
+<p>Kuncinya adalah melihat dirimu dan karyamu sebagai <strong>objek</strong> yang dipersepsikan orang, bukan sebagai mimpimu sendiri. Ketahui kapan harus menarik diri, jangan terlalu mudah ditebak, dan jangan memperlihatkan kebutuhanmu secara berlebihan. Beri sedikit hal yang kurang atau terlarang dalam hidup mereka. Tapi hukum ini juga berlaku ke dalam: hati-hati dengan rasa ingin memiliki apa yang dimiliki orang lain. Kamu akan membawa ketidakpuasanmu ke mana pun pergi. Yang pantas kamu inginkan adalah hubungan yang lebih dalam dengan kenyataanmu sendiri: orang di sekitarmu, tempatmu, pekerjaanmu.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Jangan terlalu sering dan terlalu mudah tersedia. Beri ruang agar orang merindukan kehadiranmu.</div>
+
+<h3>Hukum 7: Defensif</h3>
+<p>Kita ingin merasa mandiri, jadi saat ada yang berusaha mengubah kita, kita menolak. Karena itu kamu tidak akan mengubah orang dengan menyerang keyakinannya atau membuatnya merasa bodoh. Itu hanya mengeraskan pertahanannya. Cara terbaik adalah membuatnya merasa bahwa tindakan itu pilihannya sendiri, dan mengukuhkan citra dirinya yang baik.</p>
+<p>Senator Lyndon Johnson, yang dikenal ambisius dan agak memaksa, pernah mengunjungi seniornya, Senator Tom Connally, untuk mendapatkan kursi di komite penting. Ia tahu bahwa cara memenangkan hati orang berkuasa adalah dengan menghargai posisi dan harga dirinya. Greene merangkum lima strategi, antara lain menjadi pendengar yang dalam: kita biasanya hanya setengah mendengar sambil menyusun jawaban, padahal setiap orang adalah dunia penuh kejutan. Tunjukkan kehangatan bersama, buat mereka merasa mulia karena membantu, dan hindari membantah. Dan ingat, kamu pun defensif. Pandanglah pendapatmu sendiri dengan jarak yang jenaka, dan sesekali langgar aturanmu agar pikiranmu tetap lentur.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Kalau ingin mengubah pendapat seseorang, jangan membantah. Dengarkan sungguh-sungguh dan beri ia ruang merasa bahwa ide itu miliknya.</div>
+
+<h3>Hukum 15: Plin-Plan</h3>
+<p>Pada 14 Januari 1559, warga London berkumpul menyambut Elizabeth I, ratu berusia dua puluh lima tahun yang akan dinobatkan. Orang selalu ambivalen terhadap pemimpin: mereka ingin dipimpin sekaligus bebas, ingin dilindungi tanpa berkorban, memuja raja sekaligus ingin menjatuhkannya begitu ia tampak lemah. Zaman sekarang banyak pemimpin berpikir cara mendapat loyalitas adalah menjadi teman. Greene mengingatkan, itu justru membuat orang meragukan kekuatanmu.</p>
+<p>Otoritas, katanya, adalah seni menciptakan kesan kuat, sah, dan adil, sambil membuat orang merasa kamu melayani mereka. Temukan gaya otoritas yang cocok dengan karaktermu, misalnya sang Pembebas yang membenci ketidakadilan atau sang Pendiri yang membenci status quo. Berikan visi, dan bersikaplah selaras antara kata dan perbuatan. Otoritas tertinggi adalah otoritas dari dalam: orang seperti Leonardo da Vinci mendorong dirinya sendiri melampaui batas tanpa perlu disuruh. Ia menjadi pemimpin bagi dirinya sendiri.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Untuk dipimpin dengan sukarela, orang butuh melihat kekuatan dan kejelasan arahmu, bukan hanya keramahanmu.</div>
+
+<h2>Bagian 4: Waktu, Sikap, dan Arah Hidup</h2>
+
+<h3>Hukum 6: Berpikir Jangka Pendek</h3>
+<p>Tahun 1719, John Blunt, direktur South Sea Company, panik melihat boom saham di Prancis. Ia iri dan takut Inggris tertinggal. Perusahaannya lalu menjual saham dengan janji muluk, dan harga melambung seperti gelembung, sampai akhirnya pecah dan menghancurkan banyak orang. Greene memakai kisah ini untuk menunjukkan bahwa kita sangat terpengaruh oleh apa yang terlihat dan terdengar sekarang: berita terbaru, tren, pendapat orang di sekitar. Kita cenderung berlebihan, terlalu girang atau terlalu panik.</p>
+<p>Obatnya adalah memperluas hubunganmu dengan waktu. Lihat waktu sebagai sekutu, bukan musuh. Jauhi orang yang tak bisa melihat konsekuensi tindakannya. Tulis tujuan jangka panjang yang konkret, bukan mimpi samar. Ingat bahwa masalah hari ini kecil setahun lagi. Perspektif panjang membuatmu tenang, realistis, dan menjadi ahli strategi yang mampu melawan reaksi spontan orang banyak.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Sebelum bereaksi pada kabar buruk atau tawaran menggiurkan, tanyakan: bagaimana ini akan terlihat setahun lagi?</div>
+
+<h3>Hukum 8: Merusak Diri Sendiri</h3>
+<p>Anton Chekhov kecil dipukuli ayahnya hampir setiap hari, dan itu dianggap kasih sayang. Namun ia tumbuh menjadi penulis besar dengan sikap hangat, tenang, dan penuh rasa ingin tahu terhadap manusia. Ia tidak membiarkan masa lalunya menentukan sikapnya. Greene menyebut sikap sebagai cara kita memandang dunia, dan sikap itu menentukan nasib. Sikap yang <strong>menyempit</strong> dipenuhi rasa takut, curiga, dan suka menyalahkan, sehingga kita sendiri yang menciptakan hal yang kita takutkan.</p>
+<p>Sikap yang <strong>meluas</strong> adalah sebaliknya. Kamu penasaran seperti anak kecil, terus belajar, toleran pada orang, mengambil tanggung jawab atas peranmu dalam kegagalan, dan menerima ketidakpastian. Ukur orang dari kedalaman jiwanya, dan bergaullah dengan yang berjiwa luas. Sikap itu bisa dilatih, dan melatihnya mengubah situasi yang kamu hadapi.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Saat gagal, tanya dulu: apa peran sikapku di sini, sebelum menyalahkan orang atau keadaan?</div>
+
+<h3>Hukum 13: Hidup Tanpa Arah</h3>
+<p>Martin Luther King Jr. tumbuh dalam keluarga nyaman di Atlanta. Perlahan, melalui pengalaman dan luka, ia menemukan panggilan hidupnya, yang Greene sebut <strong>suara</strong> dalam diri. Berbeda dengan hewan yang dipandu naluri, kita harus menemukan arah sendiri. Tanpa arah, kita terombang-ambing oleh suasana hati dan pendapat orang. Greene menyarankan menggali apa yang menarik bagimu sejak kecil, mencocokkan pekerjaan dengan kecenderunganmu, dan memandang kegagalan sebagai latihan yang menguatkan.</p>
+<p>Ia juga memperingatkan <strong>tujuan palsu</strong>, misalnya sikap sinis yang menganggap semuanya sia-sia. Sikap ini tampak keren, tapi menurut Greene sering menutupi rasa takut gagal dan kemalasan. Obatnya: jaga rasa ingin tahu masa kecil, lalu padukan dengan kecerdasan orang dewasa.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Tulis tiga hal yang membuatmu lupa waktu sejak kecil. Di situlah petunjuk panggilanmu.</div>
+
+<h2>Bagian 5: Sisi Gelap, Iri, dan Ego</h2>
+
+<h3>Hukum 9: Represi</h3>
+<p>Tahun 1968, Richard Nixon berhasil bangkit setelah dua kekalahan besar dan menjadi presiden. Dua tahun sebelumnya ia sempat menyerang wartawan dengan kalimat pahit bahwa mereka tak akan lagi “punya Nixon untuk ditendang-tendang”. Di balik citranya sebagai pemimpin tegas ada rasa tidak aman dan dendam yang akhirnya bocor. Greene menyebut sisi tersembunyi ini <strong>Bayangan</strong>: dorongan egois dan agresif yang kita tekan agar diterima kelompok.</p>
+<p>Bayangan bocor lewat perilaku yang kontradiktif. Orang yang terlalu saleh mungkin menyimpan ketegasan terlarang. Orang yang sangat tegas mungkin menyembunyikan rasa takut. Maka waspadai tanda-tandanya sebelum menjadi racun. Kenali juga bayanganmu sendiri. Greene menyarankan menyuarakan pendapat lebih tegas, lebih peduli pada penilaianmu sendiri daripada penilaian orang, dan sesekali melanggar konvensi. Dengan memberi ruang pada sisi gelap, kamu menjadi lebih utuh dan lebih autentik.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Perhatikan hal yang paling membuatmu marah pada orang lain. Sering kali itu bayanganmu sendiri.</div>
+
+<h3>Hukum 10: Iri Hati</h3>
+<p>Mary Shelley, penulis Frankenstein, kehilangan dua anaknya dan jatuh dalam depresi. Teman-teman dekat yang tampak peduli ternyata mudah berubah menjadi iri pada hubungannya dan kehidupan keluarganya. Greene menyebut mereka teman fatal. Manusia selalu membandingkan diri, dan bagi sebagian orang perbandingan itu berubah menjadi iri yang menyerang diam-diam. Tidak ada yang mengakuinya.</p>
+<p>Tanda-tandanya: pujian berlebihan yang tak wajar, sindiran terselubung sebagai candaan, dan ketidaknyamanan saat kamu berhasil. Iri paling sering muncul pada teman dan rekan satu bidang. Cara menghadapinya: alihkan perhatian dari dirimu, jangan pamer, dan bagikan pujian. Bangun harga diri dari dalam lewat kerja keras dan tujuan hidup, bukan dari perbandingan. Greene menyarankan <strong>mengagumi kehebatan orang lain</strong>, kebalikan iri hati, serta mencari momen menakjubkan seperti pemandangan alam yang menghilangkan rasa bersaing.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Saat sukses, rendahkan suaramu di depan teman yang sedang berjuang. Dan latih diri mengagumi, bukan membandingkan.</div>
+
+<h3>Hukum 11: Grandiositas</h3>
+<p>Michael Eisner, pimpinan Paramount Pictures, tak tahan dengan rasa gelisahnya dan mencari panggung yang lebih besar. Kesuksesan awal memperkuat pandangannya bahwa ia istimewa. Greene menyebut ini <strong>delusi sukses</strong>: kita melupakan peran keberuntungan dan kontribusi orang lain, lalu mengira kita punya sentuhan emas. Tanda-tandanya: keyakinan berlebihan pada rencana, mudah tersinggung saat dikritik, dan meremehkan otoritas.</p>
+<p>Penangkalnya adalah menilai dirimu realistis dan mengikat perasaan hebat pada kerja nyata dan kontribusi. Greene juga menawarkan perasaan sebaliknya: merasa takjub bahwa kamu hidup sebagai satu tetes di lautan kehidupan, sesuatu yang sangat tidak mungkin terjadi. Kesadaran itu membuat kita rendah hati tanpa merasa kecil.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Setelah berhasil, tuliskan tiga faktor di luar dirimu yang ikut berperan. Itu vaksin terbaik melawan kesombongan.</div>
+
+<h3>Hukum 12: Kekakuan Gender</h3>
+<p>Caterina Sforza, perempuan bangsawan Italia abad ke-15, dibesarkan seperti anggota keluarga Sforza lain dan tumbuh jadi pemimpin yang tegas dan berani di dunia yang dikuasai laki-laki. Greene memakai kisahnya untuk menegaskan bahwa setiap orang punya sisi maskulin dan feminin. Demi tampil konsisten, kita menekan salah satunya dan jadi kaku. Sisi yang ditekan itu diproyeksikan ke lawan jenis dalam bentuk fantasi atau permusuhan.</p>
+<p>Pelajarannya: jangan terjebak peran yang diharapkan. Laki-laki bisa belajar empati, seperti Shackleton dan Lincoln yang memperhatikan perasaan anak buahnya. Perempuan bisa belajar tegas dan tahu kapan berhenti mendengarkan. Bagi Greene, sumber inspirasi sejati ada di dalam diri, bukan hanya pada orang lain.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Tanyakan sifat apa yang selama ini kamu hindari karena “bukan gayaku”. Coba satu hal kecil darinya minggu ini.</div>
+
+<h2>Bagian 6: Kelompok dan Agresi</h2>
+
+<h3>Hukum 14: Konformitas</h3>
+<p>Gao Jianhua tumbuh di Tiongkok pada masa Revolusi Kebudayaan. Ia bersekolah di sekolah unggulan, bermimpi jadi penulis. Dalam beberapa tahun, suasana kelompok mengubah teman-teman dan guru-gurunya menjadi pelaku kekerasan terhadap sesama. Kisah ini menunjukkan sisi kepribadian yang jarang kita sadari: kepribadian sosial. Dalam kelompok, kita meniru tanpa sadar, ikut perasaan massa, dan berani mengambil risiko yang tak masuk akal.</p>
+<div class="pull">Kegilaan jarang terjadi pada individu, tetapi pada kelompok dan zaman, itulah aturannya.<cite>Friedrich Nietzsche, dikutip Robert Greene</cite></div>
+<p>Greene menunjukkan pola yang berulang: ada <strong>pengadilan dengan para penjilatnya</strong>, tempat orang sibuk menyenangkan pemimpin dan mengabaikan kenyataan. Lawannya adalah <strong>kelompok realitas</strong>, tim yang berani jujur, saling mengoreksi, dan sudah diuji lewat krisis. Kelompok seperti itu menarik anggotanya naik. Sebaliknya, kelompok disfungsional bisa membuat individu yang sehat menjadi neurotik. Tugas kita: menyadari perubahan dalam diri saat berada di kelompok, dan menjaga kemampuan berpikir mandiri sambil tetap bekerja sama.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Di rapat berikutnya, perhatikan kapan kamu mengangguk hanya karena semua orang mengangguk. Lalu latih diri menyampaikan satu pendapat berbeda.</div>
+
+<h3>Hukum 16: Agresi</h3>
+<p>Di balik sopan santun, semua orang menyimpan rasa frustrasi dan keinginan memengaruhi. Ada yang menyalurkannya dengan cara licik. Maurice Clark, pedagang muda di Cleveland, bermitra dengan John D. Rockefeller, dan belajar bahwa mitranya yang tenang dan sabar itu pelan-pelan mengambil alih bisnis. Greene menyebutnya <strong>agresor canggih</strong>: ia tidak berteriak, tapi gigih dan kejam secara strategis.</p>
+<p>Waspadai tanda-tandanya: pola masa lalu, kebutuhan mengontrol segalanya, dan kebiasaan memancing emosimu supaya kamu tak bisa berpikir jernih. Jangan berikan kuasa itu. Ada juga <strong>agresi pasif</strong>: orang yang menyerang lewat kelalaian, janji yang tak ditepati, dan pura-pura tak tahu. Salah satu tipenya adalah si pelempar kesalahan. Greene juga mengajarkan <strong>agresi terkendali</strong>: kemarahan yang diarahkan ke sasaran jelas, dianalisis, dan dipanaskan pelan seperti air yang mendidih perlahan, bukan meledak. Kemarahan semacam ini memberi energi untuk melawan penindas dan menghasilkan karya yang jujur.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Saat ada yang membuatmu emosi, tahan dulu. Tanyakan: siapa yang sebenarnya diuntungkan kalau aku bereaksi sekarang?</div>
+
+<h2>Bagian 7: Zaman dan Kematian</h2>
+
+<h3>Hukum 17: Ketidakpekaan Generasi</h3>
+<p>Mei 1774, Louis XV, raja Prancis yang berkuasa lebih dari lima puluh tahun, wafat. Banyak warga lega dan berharap pada arah baru. Namun harapan itu tak bertahan, karena generasi baru punya selera dan nilai yang berbeda dari yang sebelumnya, dan semangat zaman terus bergeser. Greene menyatakan bahwa generasimu membentuk dirimu lebih dari yang kau kira. Generasi ingin memisahkan diri dari yang sebelumnya, dan nilai-nilai itu lama-lama membatasi cara kita berpikir.</p>
+<p>Kenali semangat generasimu dan generasi di atas dan di bawahmu, lalu manfaatkan sebagai peluang: kamu bisa mengantisipasi apa yang diinginkan zaman. Greene juga menyebut cara melampaui zaman: dengan membayangkan masa depan. Leonardo da Vinci, Mary Wollstonecraft, dan Goethe menunjukkan bahwa kita bisa hidup sedikit di luar waktu kita dan terhubung dengan generasi yang belum lahir.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Cari satu keyakinanmu yang sebenarnya hanya “selera generasimu”, lalu coba pahami sudut pandang generasi lain tentang hal itu.</div>
+
+<h3>Hukum 18: Penyangkalan Kematian</h3>
+<p>Flannery O’Connor tumbuh dekat dengan ayahnya, yang meninggal saat ia masih muda karena penyakit yang akhirnya juga menyerangnya. Penulis cerita pendek itu hidup dengan sadar bahwa waktunya terbatas. Greene menyebutnya “peluru di sisi tubuh”: pengingat terus-menerus bahwa waktu kita singkat. Kebanyakan orang menghindari pikiran tentang kematian. Padahal kesadaran akan kematian memberi rasa urgensi, proporsi, dan fokus pada yang penting.</p>
+<p>Kematian juga menyamakan semua orang. Saat kita sadar semua orang fana, perbedaan status dan keinginan untuk merasa lebih unggul jadi kecil. Hubungan menjadi lebih jujur dan setiap pengalaman terasa lebih tajam. Latih diri dengan merenung sesekali tentang waktumu, dan lihat orang lain sebagai sesama yang akan menjalani hal yang sama.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Tanyakan hari ini: kalau waktuku terbatas, apa satu hal yang berhenti kutunda?</div>
+
+<h2>Perbandingan: Cara Biasa dan Cara Buku Ini</h2>
+<div class="tabel-wrap">
+<table class="cmp">
+<thead><tr><th>Hal</th><th>Cara biasa</th><th>Cara yang diajarkan buku ini</th></tr></thead>
+<tbody>
+<tr><td>Menilai diri</td><td>Aku mengambil keputusan dengan rasional.</td><td>Emosi bekerja diam-diam. Latih penunggang agar memegang kendali.</td></tr>
+<tr><td>Menilai orang</td><td>Percaya apa yang ia katakan.</td><td>Baca isyarat tubuh dan pola tindakan berulang.</td></tr>
+<tr><td>Reputasi</td><td>Terpesona oleh citra dan jabatan.</td><td>Ukur karakter dari cara menghadapi kesulitan.</td></tr>
+<tr><td>Memengaruhi</td><td>Membantah dan menekan.</td><td>Mendengar, menjaga harga diri, dan membuat ia merasa itu idenya.</td></tr>
+<tr><td>Memimpin</td><td>Menjadi teman agar disukai.</td><td>Membangun otoritas: kuat, adil, dan melayani.</td></tr>
+<tr><td>Orang yang sukses</td><td>Wajib dipuji dan ditiru.</td><td>Waspada pada iri, dan kagumi tanpa membandingkan.</td></tr>
+<tr><td>Kesuksesan diri</td><td>Bukti aku istimewa.</td><td>Hasil kerja, keberuntungan, dan bantuan orang lain.</td></tr>
+<tr><td>Kelompok</td><td>Ikut arus supaya diterima.</td><td>Sadari perubahan dirimu di kelompok, tetap berpikir mandiri.</td></tr>
+<tr><td>Waktu</td><td>Bereaksi pada hari ini.</td><td>Memandang jauh dan menjadikan waktu sekutu.</td></tr>
+<tr><td>Kematian</td><td>Dihindari dan tak dibicarakan.</td><td>Direnungkan agar hidup lebih fokus.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>Tiga Pertanyaan untuk Merenung</h2>
+<ol class="pertanyaan">
+<li>Dalam keputusan terakhir yang kuambil dengan emosi, bukti apa yang diam-diam kuabaikan karena tidak ingin mendengarnya?</li>
+<li>Pola apa dalam hidupku yang terus berulang, dan karakter atau luka masa kecil mana yang mungkin menjadi akarnya?</li>
+<li>Kalau waktuku terbatas, siapa dan apa yang selama ini kuberi perhatian, dan mana yang hanya kukejar karena ingin dilihat orang lain?</li>
+</ol>
+
+<h2>Penutup: Memahami, Bukan Menghakimi</h2>
+<div class="penutup">
+<p>Setelah semua hukum ini, mungkin kamu akan mulai melihat orang dengan cara berbeda. Itu bagus. Tapi hati-hati dengan godaan memakai pengetahuan ini sebagai senjata untuk menilai. Tujuan sebenarnya bukan menemukan siapa yang licik, iri, atau sombong. Tujuannya melihat bahwa kita semua punya dorongan yang sama, termasuk kamu.</p>
+<p>Mulailah dari yang paling dekat. Pilih satu hukum yang paling kena di hatimu minggu ini. Mungkin Hukum 1, saat kamu hendak mengambil keputusan besar. Mungkin Hukum 10, saat ada teman yang tiba-tiba terlalu manis. Amati, catat, dan sesuaikan. Tidak perlu sempurna. Cukup sedikit lebih sadar dari kemarin.</p>
+<p>Perlahan kamu akan sadar bahwa orang yang kamu pahami lebih sulit membuatmu marah, dan dirimu yang kamu pahami lebih sulit menipumu. Waktu akan menjadi gurumu.</p>
+<div class="kutip">“Waktu adalah guru dan tuan terbesarmu.”<cite>Robert Greene</cite></div>
+</div>
+
+</div>

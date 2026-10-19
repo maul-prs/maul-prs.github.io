@@ -1,0 +1,32 @@
+{
+  "id": "1792418002954",
+  "slug": "the-laws-of-human-nature",
+  "status": "active",
+  "title": "The Laws of Human Nature",
+  "type": "Book Summary",
+  "categories": [
+    "History",
+    "Leadership",
+    "Marketing",
+    "Non-Fiction",
+    "Psychology"
+  ],
+  "date": "19 Oktober 2026",
+  "dateISO": "2026-10-19",
+  "coreMessage": "Kenapa kita terus jatuh ke pola dan orang yang sama? Greene membongkar 18 dorongan tersembunyi yang menggerakkan manusia.",
+  "bookData": {
+    "bookTitle": "The Laws of Human Nature",
+    "bookAuthor": "Robert Greene",
+    "bookYear": "2018",
+    "bookMainCategory": "Book Summary",
+    "bookCore": "Kenapa kita terus jatuh ke pola dan orang yang sama? Greene membongkar 18 dorongan tersembunyi yang menggerakkan manusia.",
+    "bookReadTime": "18–29 min read"
+  },
+  "cover": "images/cover-the-laws-of-human-nature-1792418002937.jpg",
+  "en": {
+    "title": "The Laws of Human Nature",
+    "coreMessage": "Why do we keep falling into the same patterns and the same kinds of people? Greene exposes 18 hidden forces behind human behavior.",
+    "ogImage": "images/og-the-laws-of-human-nature-en.jpg"
+  },
+  "ogImage": "images/og-the-laws-of-human-nature.jpg"
+}
