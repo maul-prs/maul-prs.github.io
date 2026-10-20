@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>How to Win Friends and Influence People — Rangkuman</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Poppins:wght@600;700&display=swap">
+<style>
+:root{color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0}
+.wrap{max-width:780px;margin:0 auto;padding:28px 20px 60px}
+.rangkuman{--pri:#F2766B;--acc:#F6B93B;--txt:#F1F1EE;--mut:#C2C6CE;--card:rgba(255,255,255,.055);--line:rgba(255,255,255,.16);--red:#F28B82;--green:#7ED9A4;--blue:#86B8F5;font-family:Lora,Georgia,serif;color:var(--txt);background:transparent;line-height:1.85;font-size:1.05rem;margin:0;padding:0}
+.rangkuman *{box-sizing:border-box}
+.rangkuman p{margin:0 0 1.1em}
+.rangkuman strong{color:#fff}
+.rangkuman h2{font-family:Poppins,sans-serif;font-weight:700;font-size:1.55rem;line-height:1.3;color:var(--acc);margin:2.6em 0 .9em;padding:.7em 0 .5em;border-top:3px solid var(--pri)}
+.rangkuman h3{font-family:Poppins,sans-serif;font-weight:600;font-size:1.1rem;color:var(--pri);margin:1.9em 0 .6em;padding-left:.8em;border-left:4px solid var(--pri)}
+.rangkuman .hook{font-size:1.25rem;line-height:1.7;font-style:italic;border-left:6px solid var(--acc);background:var(--card);padding:1.1em 1.3em;border-radius:0 12px 12px 0;margin:0 0 1.6em}
+.rangkuman .pull{position:relative;background:#16100f;border:1px solid var(--line);border-radius:14px;padding:2.2em 1.6em 1.4em;margin:2em 0;font-size:1.2rem;line-height:1.6;font-style:italic;color:#fff}
+.rangkuman .pull::before{content:"\201C";position:absolute;top:-.05em;left:.25em;font-family:Poppins,sans-serif;font-size:4.5rem;line-height:1;color:var(--acc)}
+.rangkuman .pull cite{display:block;margin-top:.8em;font-family:Poppins,sans-serif;font-style:normal;font-size:.85rem;color:var(--mut)}
+.rangkuman .callout{border-left:5px solid var(--pri);background:var(--card);border-radius:0 12px 12px 0;padding:1em 1.2em;margin:1.4em 0}
+.rangkuman .callout.amber{border-left-color:var(--acc)}
+.rangkuman .callout.red{border-left-color:var(--red)}
+.rangkuman .callout.green{border-left-color:var(--green)}
+.rangkuman .callout.blue{border-left-color:var(--blue)}
+.rangkuman .callout .ct{display:block;font-family:Poppins,sans-serif;font-weight:600;font-size:.88rem;letter-spacing:.04em;text-transform:uppercase;margin-bottom:.35em;color:#fff}
+.rangkuman .callout p:last-child{margin-bottom:0}
+.rangkuman .ambil{margin:1.1em 0 1.6em;padding:.9em 1.2em;border:1px dashed var(--acc);border-radius:12px}
+.rangkuman .ambil strong{font-family:Poppins,sans-serif;color:var(--acc);font-size:.85rem;letter-spacing:.05em;text-transform:uppercase}
+.rangkuman .alur{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:1.3em 0;font-family:Poppins,sans-serif;font-size:.88rem}
+.rangkuman .alur span{background:var(--card);border:1px solid var(--line);border-radius:99px;padding:.35em 1em;color:#fff}
+.rangkuman .alur span.api{border-color:var(--pri);color:var(--pri)}
+.rangkuman .alur i{font-style:normal;color:var(--acc)}
+.rangkuman .enam{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:1.4em 0}
+.rangkuman .enam .sel{background:var(--card);border-radius:12px;padding:.9em 1em;border-top:4px solid var(--pri)}
+.rangkuman .enam .sel.k{border-top-color:var(--acc)}
+.rangkuman .enam .sel b{display:block;font-family:Poppins,sans-serif;font-size:.9rem;color:#fff;margin-bottom:.3em}
+.rangkuman .enam .sel span{font-size:.92rem;line-height:1.6;color:var(--mut)}
+.rangkuman .tabel-wrap{overflow-x:auto;margin:1.4em 0}
+.rangkuman table.cmp{width:100%;border-collapse:collapse;min-width:520px;font-size:.98rem;line-height:1.6}
+.rangkuman table.cmp th{font-family:Poppins,sans-serif;text-align:left;background:#16100f;color:var(--acc);padding:.8em 1em;border-bottom:2px solid var(--acc)}
+.rangkuman table.cmp td{padding:.75em 1em;border-bottom:1px solid var(--line);vertical-align:top}
+.rangkuman table.cmp td:first-child{font-family:Poppins,sans-serif;font-weight:600;color:#fff;width:22%}
+.rangkuman table.cmp td:last-child{color:var(--pri)}
+.rangkuman ol.pertanyaan{list-style:none;counter-reset:q;padding:0;margin:1.2em 0}
+.rangkuman ol.pertanyaan li{counter-increment:q;position:relative;background:var(--card);border-radius:12px;padding:1em 1.2em 1em 4em;margin-bottom:12px}
+.rangkuman ol.pertanyaan li::before{content:counter(q);position:absolute;left:1em;top:.85em;width:2em;height:2em;border-radius:50%;background:var(--acc);color:#111;font-family:Poppins,sans-serif;font-weight:700;display:flex;align-items:center;justify-content:center}
+.rangkuman .penutup{background:linear-gradient(135deg,rgba(242,118,107,.18),rgba(246,185,59,.18));border:1px solid var(--line);border-radius:16px;padding:1.6em 1.6em 1.3em;margin-top:1em}
+.rangkuman .penutup p:last-child{margin-bottom:0}
+.rangkuman .penutup .kutip{margin-top:1.2em;padding-top:1em;border-top:1px solid var(--line);font-size:1.15rem;font-style:italic;color:#fff}
+.rangkuman .penutup .kutip cite{display:block;margin-top:.4em;font-family:Poppins,sans-serif;font-style:normal;font-size:.85rem;color:var(--acc)}
+@media (max-width:600px){.rangkuman .enam{grid-template-columns:1fr 1fr}.rangkuman h2{font-size:1.35rem}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="rangkuman">
+
+<div class="hook">“Two Gun” Crowley, pembunuh yang dikepung polisi, menulis surat sebelum ditangkap: “Di balik jaketku ada hati yang lelah, tapi baik.” Al Capone menganggap dirinya dermawan yang disalahpahami. Bahkan penjahat paling bengis pun jarang menyalahkan diri sendiri. Kalau begitu, apa gunanya mengkritik orang lain?</div>
+
+<h2>Pengantar: Buku yang Mengajar Cara Memperlakukan Orang</h2>
+<p>Dale Carnegie mengajar berbicara di depan umum untuk orang dewasa di New York. Ia lalu sadar murid-muridnya lebih butuh satu keterampilan lain: bergaul dan mengajak orang. Bukunya terbit tahun 1936 dan hingga kini tetap dibaca, karena yang ia bahas bukan trik, melainkan cara memperlakukan manusia sebagai manusia. Isinya empat bagian dengan total 30 prinsip.</p>
+<div class="enam">
+<div class="sel"><b>Bagian 1 (3 prinsip)</b><span>Teknik dasar menangani orang.</span></div>
+<div class="sel"><b>Bagian 2 (6 prinsip)</b><span>Cara membuat orang menyukaimu.</span></div>
+<div class="sel"><b>Bagian 3 (12 prinsip)</b><span>Cara memenangkan orang pada pendapatmu.</span></div>
+<div class="sel k"><b>Bagian 4 (9 prinsip)</b><span>Menjadi pemimpin tanpa menyinggung.</span></div>
+</div>
+<div class="ambil"><strong>Pelajaran:</strong> Setiap prinsip di buku ini bertumpu pada satu hal: perhatikan apa yang penting bagi orang lain, bukan hanya bagi dirimu.</div>
+
+<h2>Bagian 1: Teknik Dasar Menangani Orang</h2>
+
+<h3>Prinsip 1: Jangan Mengkritik, Mengutuk, atau Mengeluh</h3>
+<p>Kritik membuat orang bertahan dan membela diri, karena ia melukai harga diri. Roosevelt menyalahkan Taft, Taft tidak merasa bersalah, dan pertikaian itu memecah partai mereka. Kritik pun seperti merpati pos: selalu pulang kepada kita. Tokoh sekeras Crowley dan Capone pun tidak menyalahkan dirinya, jadi apa harapan kita pada orang biasa?</p>
+<div class="ambil"><strong>Pelajaran:</strong> Sebelum mengkritik, ingat bahwa orang itu hampir pasti merasa dirinya benar. Cobalah memahami, bukan menghakimi.</div>
+
+<h3>Prinsip 2: Beri Penghargaan yang Jujur dan Tulus</h3>
+<p>Menurut Freud, tindakan kita berpangkal pada dorongan seksual dan keinginan menjadi hebat. John Dewey menyebut dorongan terdalam manusia sebagai <strong>keinginan untuk merasa penting</strong>. Charles Schwab digaji lebih dari tiga ribu dolar sehari karena kemampuannya menyalakan semangat orang: “Aku menghargai dan mendorong semangat,” katanya. Bedakan dengan sanjungan: sanjungan dangkal, tidak tulus, dan egois.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Hari ini cari satu hal yang benar-benar patut dihargai pada orang di dekatmu, lalu sebutkan dengan tulus.</div>
+
+<h3>Prinsip 3: Bangkitkan Keinginan yang Kuat pada Orang Lain</h3>
+<div class="pull">Kalau ada satu rahasia sukses, ia terletak pada kemampuan menangkap sudut pandang orang lain dan melihat dari sudut itu, juga dari sudutmu sendiri.<cite>Henry Ford, dikutip Carnegie</cite></div>
+<p>Satu-satunya cara memengaruhi orang adalah berbicara tentang apa yang <em>ia</em> inginkan, lalu menunjukkan cara mendapatkannya. Kita memancing dengan cacing karena ikan suka cacing, bukan karena kita suka stroberi.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Sebelum meminta sesuatu, tanyakan: apa yang diinginkan orang ini, dan bagaimana permintaanku menolongnya mendapatkannya?</div>
+
+<h2>Bagian 2: Enam Cara Membuat Orang Menyukaimu</h2>
+<div class="enam">
+<div class="sel"><b>1. Tertarik pada orang</b><span>Tertarik dengan tulus.</span></div>
+<div class="sel"><b>2. Tersenyum</b><span>Senyum menyampaikan: aku senang bertemu denganmu.</span></div>
+<div class="sel"><b>3. Ingat nama</b><span>Nama adalah bunyi paling manis bagi pemiliknya.</span></div>
+<div class="sel"><b>4. Pendengar yang baik</b><span>Dorong orang bicara tentang dirinya.</span></div>
+<div class="sel"><b>5. Bicara minat mereka</b><span>Topik yang dekat dengannya.</span></div>
+<div class="sel k"><b>6. Buat mereka merasa penting</b><span>Lakukan dengan tulus.</span></div>
+</div>
+
+<h3>Prinsip 1–2: Tertarik pada Orang dan Tersenyum</h3>
+<div class="pull">Kamu bisa punya lebih banyak teman dalam dua bulan dengan tertarik pada orang lain, daripada dalam dua tahun dengan mencoba membuat orang tertarik padamu.<cite>Dale Carnegie</cite></div>
+<p>Anjing adalah pencari teman terbaik: ia tidak jualan apa pun, hanya tulus senang bertemu kita. Carnegie menceritakan Tippy, anjing kecil masa kanak-kanaknya. Prinsip kedua sederhana: <strong>senyum</strong>. William Steinhardt, pialang saham, hampir tidak pernah tersenyum kepada istrinya selama delapan belas tahun menikah. Setelah mencoba tersenyum selama seminggu, ia merasa rumah tangganya lebih bahagia. Senyum harus tulus, karena yang dipalsukan tidak menipu.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Mulai percakapan dengan rasa ingin tahu yang nyata tentang orang itu, dan jangan pelit senyum.</div>
+
+<h3>Prinsip 3–4: Nama dan Mendengar</h3>
+<p>Jim Farley kehilangan ayahnya sejak kecil dan harus bekerja, tetapi ia belajar mengingat nama ribuan orang. Kemampuan itu membantunya memenangkan Roosevelt masuk Gedung Putih. Caranya: dengar dengan jelas, ulangi, tulis, dan kaitkan dengan wajah. Lalu jadilah <strong>pendengar yang baik</strong>. Orang yang hanya bicara tentang dirinya terasa membosankan. Orang yang membiarkan lawan bicara bercerita dianggap pembicara yang luar biasa.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Ucapkan nama orang itu dalam percakapan, dan ajukan pertanyaan yang mendorongnya bercerita.</div>
+
+<h3>Prinsip 5–6: Minat Mereka dan Rasa Penting</h3>
+<p>Theodore Roosevelt selalu membaca topik yang diminati tamunya sehari sebelumnya, sehingga mereka merasa dimengerti. Dan ada hukum emas: <strong>buat orang merasa penting, dan lakukan dengan tulus</strong>. Hampir semua orang menginginkan pengakuan, jadi mereka akan mengingat orang yang memberinya.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Cari tahu minat orang itu, bicarakan, dan akui hal yang membuatnya merasa berarti.</div>
+
+<h2>Bagian 3: Cara Memenangkan Orang pada Pendapatmu</h2>
+
+<h3>Prinsip 1–3: Hindari Berdebat dan Akui Kesalahan</h3>
+<p>Di sebuah perjamuan di London, Carnegie bersikeras mengoreksi seorang pria yang salah mengutip Shakespeare sebagai Alkitab. Teman Carnegie yang ahli Shakespeare menendangnya di bawah meja dan berkata, “Dale, kamu yang salah.” Pelajaran: <strong>satu-satunya cara memenangkan perdebatan adalah menghindarinya</strong>. Kalaupun menang, kamu kalah, karena lawanmu merasa kecil dan membencimu. Tunjukkan hormat pada pendapat orang, jangan bilang “kamu salah”, dan <strong>bila kamu yang salah, akui dengan cepat dan tegas</strong>.</p>
+<div class="callout green"><span class="ct">Kisah Rex</span><p>Carnegie sering membawa anjingnya, Rex, tanpa tali di taman. Saat seorang polisi menegurnya, ia langsung mengaku salah sebelum ditegur lebih jauh. Polisi itu malah melunak dan memaafkan. Mengkritik diri sendiri dulu melucuti lawan.</p></div>
+<div class="ambil"><strong>Pelajaran:</strong> Saat ingin berkata “kamu salah”, tahan. Dan kalau kamu salah, katakan lebih dulu sebelum orang lain.</div>
+
+<h3>Prinsip 4–7: Ramah, “Ya, Ya”, Biarkan Bicara, Idenya Miliknya</h3>
+<div class="pull">Setetes madu menangkap lebih banyak lalat daripada seliter empedu.<cite>Abraham Lincoln, dikutip Carnegie</cite></div>
+<p>Mulailah dengan ramah. Woodrow Wilson berkata kira-kira: kalau kamu datang dengan tinju terkepal, tinjuku akan terkepal secepat tinjumu. Tetapi bila kamu mengajak duduk dan berembuk, kita akan segera sadar bahwa perbedaan kita tidak sebesar yang dikira. Lalu pakai <strong>rahasia Socrates</strong>: ajukan pertanyaan yang jawabannya “ya” sampai orang itu sendiri sampai pada kesimpulan. James Eberson, seorang petugas bank, membuka rekening nasabah yang tadinya menolak mengisi formulir dengan cara ini.</p>
+<p>Biarkan lawan bicara <strong>banyak bicara</strong>, karena dia lebih tahu tentang masalahnya. Dan biarkan ia merasa <strong>idenya miliknya</strong>. Penasihat Wilson, Kolonel House, memberikan ide lalu membiarkan Wilson mengklaimnya, dan karena itu ia tetap berpengaruh.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Tanam ide lewat pertanyaan, biarkan orang menemukannya sendiri, dan jangan berebut kredit.</div>
+
+<h3>Prinsip 8–10: Empati dan Motif Mulia</h3>
+<p>Coba lihat dari sudut pandang orang lain, dan bersimpatilah dengan gagasan dan keinginannya. Rumus yang ajaib: <strong>“Aku tidak menyalahkanmu sama sekali merasa begitu. Kalau aku jadi kamu, aku pasti merasakan hal yang sama.”</strong> Kalimat itu meredakan hampir semua orang. Lalu <strong>ajaklah pada motif yang lebih mulia</strong>. Orang jarang mau mengaku bertindak karena alasan tidak terpuji, sehingga kita membantu mereka menjadi lebih baik dengan memercayai niat baiknya.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Mulailah dengan “Aku mengerti kenapa kamu merasa begitu”, baru sampaikan permintaanmu.</div>
+
+<h3>Prinsip 11–12: Dramatisasi dan Tantangan</h3>
+<p>Fakta saja tidak cukup. <strong>Dramatisasikan gagasanmu</strong> dengan gambar, demonstrasi, atau cerita yang hidup. Dan bila semuanya gagal, <strong>beri tantangan</strong>. Orang-orang berprestasi suka kompetisi dan kesempatan membuktikan diri.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Ubah angka dan ajakanmu menjadi gambaran yang bisa dilihat, dan beri orang kesempatan membuktikan dirinya.</div>
+
+<h2>Bagian 4: Menjadi Pemimpin Tanpa Menyinggung</h2>
+
+<h3>Prinsip 1–3: Pujian Dulu, Tegur Tak Langsung, Akui Salahmu</h3>
+<p>Presiden Coolidge pernah memuji gaun sekretarisnya, lalu menambahkan, “Sekarang, tolong lebih teliti dengan tanda bacamu.” Pujian lebih dulu membuat kritik lebih mudah diterima, seperti dokter gigi yang membius sebelum mengebor. Tegurlah <strong>secara tidak langsung</strong>, dan <strong>ceritakan kesalahanmu sendiri</strong> sebelum mengkritik. Mendengar bahwa pemimpinnya pun pernah salah membuat orang lebih rela memperbaiki.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Susun tegurannya: pujian tulus, kritik tak langsung, lalu pengakuan bahwa kamu pun pernah salah.</div>
+
+<h3>Prinsip 4–5: Bertanya dan Biarkan Orang Menjaga Muka</h3>
+<p>Ganti perintah dengan pertanyaan: “Menurutmu, apakah ini bisa diterima?” Orang yang ikut menyusun keputusan lebih termotivasi menjalankannya. Dan jangan mempermalukan siapa pun. <strong>Biarkan ia menjaga mukanya.</strong> Menghina harga diri seseorang meninggalkan luka yang lama, bahkan bila kita benar.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Koreksi secara pribadi, jangan di depan orang banyak, dan beri jalan keluar yang terhormat.</div>
+
+<h3>Prinsip 6–9: Puji Kemajuan, Beri Reputasi, Beri Semangat</h3>
+<p>Pujilah kemajuan sekecil apa pun, dan <strong>berikan reputasi baik yang harus dijaganya</strong>. Orang cenderung memenuhi citra yang kita berikan kepadanya. Beri dorongan, buat kesalahan tampak mudah diperbaiki, dan jadikan hal yang kamu minta sebagai sesuatu yang membuatnya senang melakukannya.</p>
+<div class="callout amber"><span class="ct">Kenapa ini berhasil</span><p>Semua prinsip kepemimpinan di sini memakai satu mekanisme: orang bertumbuh saat merasa dihargai dan dipercaya, bukan saat merasa dihakimi.</p></div>
+<div class="ambil"><strong>Pelajaran:</strong> Pilih satu orang, pujilah kemajuan kecilnya hari ini, dan sebutkan reputasi baik yang kamu harap ia jaga.</div>
+
+<h2>Perbandingan: Cara Biasa dan Cara Carnegie</h2>
+<div class="tabel-wrap">
+<table class="cmp">
+<thead><tr><th>Hal</th><th>Cara biasa</th><th>Cara Carnegie</th></tr></thead>
+<tbody>
+<tr><td>Saat orang salah</td><td>Mengkritik dan menghakimi.</td><td>Memahami dulu mengapa ia melakukannya.</td></tr>
+<tr><td>Memuji</td><td>Menyanjung agar disukai.</td><td>Menghargai dengan jujur dan spesifik.</td></tr>
+<tr><td>Mengobrol</td><td>Membicarakan diri sendiri.</td><td>Bertanya dan mendengarkan.</td></tr>
+<tr><td>Berbeda pendapat</td><td>Berdebat sampai menang.</td><td>Menghindari debat dan bertanya.</td></tr>
+<tr><td>Saat salah</td><td>Membela diri.</td><td>Mengaku cepat dan tegas.</td></tr>
+<tr><td>Meyakinkan</td><td>Mendesakkan argumen.</td><td>Membuat orang merasa idenya miliknya.</td></tr>
+<tr><td>Menegur</td><td>Langsung dan di depan umum.</td><td>Pujian dulu, tak langsung, jaga muka.</td></tr>
+<tr><td>Memotivasi</td><td>Memerintah dan mengancam.</td><td>Memberi reputasi baik yang harus dijaga.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>Tiga Pertanyaan untuk Merenung</h2>
+<ol class="pertanyaan">
+<li>Kapan terakhir kali aku mengkritik seseorang, dan apa yang terjadi pada hubungan kami sesudahnya?</li>
+<li>Siapa yang hari ini layak kuberi penghargaan tulus, dan apa yang akan kukatakan?</li>
+<li>Dalam percakapan terakhirku, berapa lama aku berbicara dibanding mendengarkan?</li>
+</ol>
+
+<h2>Penutup: Mulai dari Satu Orang</h2>
+<div class="penutup">
+<p>Tiga puluh prinsip terdengar banyak, tetapi semuanya berpusat pada satu hal: orang ingin merasa penting dan dimengerti. Kalau kamu memberi itu dengan tulus, hubungan di sekitarmu mulai berubah.</p>
+<p>Carnegie sendiri menyarankan untuk tidak membaca buku ini sekali lalu selesai. Ambil satu prinsip per minggu, praktikkan, dan lihat hasilnya. Tidak perlu sempurna, cukup mulai dari satu orang hari ini.</p>
+<div class="kutip">“Setetes madu menangkap lebih banyak lalat daripada seliter empedu.”<cite>Abraham Lincoln, dikutip Carnegie</cite></div>
+</div>
+
+</div>
+</div>
+</body>
+</html>

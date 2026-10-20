@@ -5,11 +5,14 @@
   "title": "Nonviolent Communication",
   "type": "Book Summary",
   "categories": [
-    "psychology",
-    "communication"
+    "Leadership",
+    "Management",
+    "Mental Health",
+    "Mindfulness",
+    "Non-Fiction"
   ],
-  "date": "17 Oktober 2026",
-  "dateISO": "2026-10-17",
+  "date": "21 Oktober 2026",
+  "dateISO": "2026-10-21",
   "coreMessage": "Kenapa kata-kata kita sering melukai padahal niatnya baik? Empat langkah sederhana untuk bicara jujur dan mendengar tanpa menghakimi.",
   "bookData": {
     "bookTitle": "Nonviolent Communication",
@@ -20,5 +23,10 @@
     "bookReadTime": "18–22 menit"
   },
   "cover": "images/cover-nonviolent-communication-1792256068580.jpg",
-  "ogImage": "images/og-nonviolent-communication.jpg"
+  "ogImage": "images/og-nonviolent-communication.jpg",
+  "en": {
+    "title": "Nonviolent Communication",
+    "coreMessage": "Why do well-meant words so often wound? Four simple steps to speak honestly and listen without judging.",
+    "ogImage": "images/og-nonviolent-communication-en.jpg"
+  }
 }

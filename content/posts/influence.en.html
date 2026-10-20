@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Influence — Summary</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Poppins:wght@600;700&display=swap">
+<style>
+:root{color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0}
+.wrap{max-width:780px;margin:0 auto;padding:28px 20px 60px}
+.rangkuman{--pri:#F2766B;--acc:#F6B93B;--txt:#F1F1EE;--mut:#C2C6CE;--card:rgba(255,255,255,.055);--line:rgba(255,255,255,.16);--red:#F28B82;--green:#7ED9A4;--blue:#86B8F5;font-family:Lora,Georgia,serif;color:var(--txt);background:transparent;line-height:1.85;font-size:1.05rem}
+.rangkuman *{box-sizing:border-box}
+.rangkuman p{margin:0 0 1.1em}
+.rangkuman strong{color:#fff}
+.rangkuman h2{font-family:Poppins,sans-serif;font-weight:700;font-size:1.55rem;line-height:1.3;color:var(--acc);margin:2.6em 0 .9em;padding:.7em 0 .5em;border-top:3px solid var(--pri)}
+.rangkuman h3{font-family:Poppins,sans-serif;font-weight:600;font-size:1.1rem;color:var(--pri);margin:1.9em 0 .6em;padding-left:.8em;border-left:4px solid var(--pri)}
+.rangkuman .hook{font-size:1.25rem;line-height:1.7;font-style:italic;border-left:6px solid var(--acc);background:var(--card);padding:1.1em 1.3em;border-radius:0 12px 12px 0;margin:0 0 1.6em}
+.rangkuman .pull{position:relative;background:#16100f;border:1px solid var(--line);border-radius:14px;padding:2.2em 1.6em 1.4em;margin:2em 0;font-size:1.2rem;line-height:1.6;font-style:italic;color:#fff}
+.rangkuman .pull::before{content:"\201C";position:absolute;top:-.05em;left:.25em;font-family:Poppins,sans-serif;font-size:4.5rem;line-height:1;color:var(--acc)}
+.rangkuman .pull cite{display:block;margin-top:.8em;font-family:Poppins,sans-serif;font-style:normal;font-size:.85rem;color:var(--mut)}
+.rangkuman .callout{border-left:5px solid var(--pri);background:var(--card);border-radius:0 12px 12px 0;padding:1em 1.2em;margin:1.4em 0}
+.rangkuman .callout.amber{border-left-color:var(--acc)}
+.rangkuman .callout.red{border-left-color:var(--red)}
+.rangkuman .callout.green{border-left-color:var(--green)}
+.rangkuman .callout.blue{border-left-color:var(--blue)}
+.rangkuman .callout .ct{display:block;font-family:Poppins,sans-serif;font-weight:600;font-size:.88rem;letter-spacing:.04em;text-transform:uppercase;margin-bottom:.35em;color:#fff}
+.rangkuman .callout p:last-child{margin-bottom:0}
+.rangkuman .ambil{margin:1.1em 0 1.6em;padding:.9em 1.2em;border:1px dashed var(--acc);border-radius:12px}
+.rangkuman .ambil strong{font-family:Poppins,sans-serif;color:var(--acc);font-size:.85rem;letter-spacing:.05em;text-transform:uppercase}
+.rangkuman .alur{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:1.3em 0;font-family:Poppins,sans-serif;font-size:.88rem}
+.rangkuman .alur span{background:var(--card);border:1px solid var(--line);border-radius:99px;padding:.35em 1em;color:#fff}
+.rangkuman .alur span.api{border-color:var(--pri);color:var(--pri)}
+.rangkuman .alur i{font-style:normal;color:var(--acc)}
+.rangkuman .enam{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:1.4em 0}
+.rangkuman .enam .sel{background:var(--card);border-radius:12px;padding:.9em 1em;border-top:4px solid var(--pri)}
+.rangkuman .enam .sel.k{border-top-color:var(--acc)}
+.rangkuman .enam .sel b{display:block;font-family:Poppins,sans-serif;font-size:.9rem;color:#fff;margin-bottom:.3em}
+.rangkuman .enam .sel span{font-size:.92rem;line-height:1.6;color:var(--mut)}
+.rangkuman .tabel-wrap{overflow-x:auto;margin:1.4em 0}
+.rangkuman table.cmp{width:100%;border-collapse:collapse;min-width:520px;font-size:.98rem;line-height:1.6}
+.rangkuman table.cmp th{font-family:Poppins,sans-serif;text-align:left;background:#16100f;color:var(--acc);padding:.8em 1em;border-bottom:2px solid var(--acc)}
+.rangkuman table.cmp td{padding:.75em 1em;border-bottom:1px solid var(--line);vertical-align:top}
+.rangkuman table.cmp td:first-child{font-family:Poppins,sans-serif;font-weight:600;color:#fff;width:22%}
+.rangkuman table.cmp td:last-child{color:var(--pri)}
+.rangkuman ol.pertanyaan{list-style:none;counter-reset:q;padding:0;margin:1.2em 0}
+.rangkuman ol.pertanyaan li{counter-increment:q;position:relative;background:var(--card);border-radius:12px;padding:1em 1.2em 1em 4em;margin-bottom:12px}
+.rangkuman ol.pertanyaan li::before{content:counter(q);position:absolute;left:1em;top:.85em;width:2em;height:2em;border-radius:50%;background:var(--acc);color:#111;font-family:Poppins,sans-serif;font-weight:700;display:flex;align-items:center;justify-content:center}
+.rangkuman .penutup{background:linear-gradient(135deg,rgba(242,118,107,.18),rgba(246,185,59,.18));border:1px solid var(--line);border-radius:16px;padding:1.6em 1.6em 1.3em;margin-top:1em}
+.rangkuman .penutup p:last-child{margin-bottom:0}
+.rangkuman .penutup .kutip{margin-top:1.2em;padding-top:1em;border-top:1px solid var(--line);font-size:1.15rem;font-style:italic;color:#fff}
+.rangkuman .penutup .kutip cite{display:block;margin-top:.4em;font-family:Poppins,sans-serif;font-style:normal;font-size:.85rem;color:var(--acc)}
+@media (max-width:600px){.rangkuman .enam{grid-template-columns:1fr 1fr}.rangkuman h2{font-size:1.35rem}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="rangkuman">
+
+<div class="hook">A restaurant chain in Beijing lifted sales of certain dishes by 13 to 20 percent without touching the price, the recipe, or the chef. All they did was add two words beside the dish name: “most popular.” If two words can move us that much, what else is moving us without our noticing?</div>
+
+<h2>Introduction: Why We Say Yes So Often</h2>
+<p>Robert Cialdini, a professor of psychology, has long admitted he is an easy mark. Door-to-door sellers, fundraisers, salespeople, all of them could get a nod out of him, and he studied human behavior for a living. Rather than keep losing, he went looking for answers. He dug into the research on social influence, then slipped into the worlds of sales, advertising, and fundraising to watch professionals get people to say “yes” up close.</p>
+<p>The result is <em>Influence</em>, built around <strong>seven principles</strong> that hold up across cultures and situations. Six are classics. The seventh, <strong>unity</strong>, was added later.</p>
+<div class="enam">
+<div class="sel"><b>Reciprocity</b><span>We feel bound to repay.</span></div>
+<div class="sel"><b>Liking</b><span>We say yes to people we like.</span></div>
+<div class="sel"><b>Social proof</b><span>We follow the crowd.</span></div>
+<div class="sel"><b>Authority</b><span>We defer to apparent experts.</span></div>
+<div class="sel"><b>Scarcity</b><span>The rare feels more valuable.</span></div>
+<div class="sel"><b>Commitment</b><span>We want to stay consistent.</span></div>
+<div class="sel k"><b>Unity (new)</b><span>We say yes to “one of us.”</span></div>
+</div>
+<div class="callout red"><span class="ct">Why it matters more now</span><p>Information is flooding in, choices multiply, and time is short. We decide more and more on a single cue, and a cue is a lever someone else can pull.</p></div>
+<div class="callout blue"><span class="ct">One note before we begin</span><p>This is not a manual for tricking people. The point is to notice when you are being worked on, and to use the same principles honestly.</p></div>
+<div class="ambil"><strong>Takeaway:</strong> The next time you feel a sudden urge to say yes, ask: which lever is being pulled on me?</div>
+
+<h2>Part 1: The Foundations of Influence</h2>
+
+<h3>Chapter 1: Weapons of Influence and Mental Shortcuts</h3>
+<p>Mother turkeys care for their chicks in response to one sound, a high “cheep-cheep.” A stuffed polecat fitted with a recording of that sound gets mothered with tenderness. Scientists call this kind of rigid routine a <strong>fixed-action pattern</strong>, and humans have a version of it: a click, and then a whirr.</p>
+<div class="alur"><span>Trigger appears</span><i>→</i><span class="api">Click</span><i>→</i><span>Automatic behavior</span></div>
+<p>Shortcuts save time and effort, and they usually serve us well. The danger is that someone can set the trigger deliberately. Take <strong>contrast</strong>: a real estate agent shows two shabby houses first, so that the third looks wonderful.</p>
+<div class="ambil"><strong>Takeaway:</strong> Before a big decision, ask whether you are judging the thing itself or reacting to a trigger someone arranged.</div>
+
+<h3>Chapter 2: Reciprocation, the Old Give and Take</h3>
+<p>A professor sent Christmas cards to complete strangers, and cards came back from people who never asked who he was. In psychologist Dennis Regan’s experiment, people who were handed a bottle of Coke bought about twice as many raffle tickets from the giver, even when they disliked him. The rule is powerful, it works on gifts nobody asked for, and it can drive lopsided trades. Children handed a balloon at a fast-food restaurant pushed the family’s bill up by around 25 percent.</p>
+<p>A sneakier cousin is the <strong>rejection-then-retreat</strong> technique.</p>
+<div class="alur"><span>Ask for a lot</span><i>→</i><span class="api">Refused</span><i>→</i><span>Retreat to the small request</span><i>→</i><span>Accepted</span></div>
+<p>Asked to chaperone juvenile offenders on a zoo trip, only 17 percent of students agreed. After first refusing a two-year commitment, 50 percent said yes to the single afternoon.</p>
+<div class="callout green"><span class="ct">How to defend yourself</span><p>Accept gifts graciously, but if the favor turns out to be bait, treat it as a trick. The debt dissolves.</p></div>
+<div class="ambil"><strong>Takeaway:</strong> Give first, and give what the person actually needs. When you receive, ask: gift or bait?</div>
+
+<h3>Chapter 3: Liking, the Friendly Thief</h3>
+<div class="pull">…getting customers to believe, really believe, you like them.<cite>Joe Girard, on what sells best (chapter epigraph)</cite></div>
+<p>A home-products party sells friendship, not plastic containers. Cialdini lists what breeds liking:</p>
+<div class="enam">
+<div class="sel"><b>Physical attractiveness</b><span>The halo effect: seen as smarter and kinder.</span></div>
+<div class="sel"><b>Similarity</b><span>We go along with people like us.</span></div>
+<div class="sel"><b>Compliments</b><span>Best when sincere or passed along.</span></div>
+<div class="sel"><b>Contact and cooperation</b><span>Repeated, shared effort.</span></div>
+<div class="sel"><b>Association</b><span>Tied to good things.</span></div>
+<div class="sel k"><b>Defense</b><span>Separate the person from the offer.</span></div>
+</div>
+<div class="ambil"><strong>Takeaway:</strong> To persuade, find real common ground and give honest praise. To defend yourself, if you like the pitcher too much, step back and weigh the pitch alone.</div>
+
+<h2>Part 2: Following the Crowd and Fearing the Loss</h2>
+
+<h3>Chapter 4: Social Proof</h3>
+<p>When unsure, we look at what others are doing. The effect is strongest when we are <strong>uncertain</strong>, when the crowd is <strong>large</strong>, and when the people are <strong>like us</strong>.</p>
+<div class="callout red"><span class="ct">The big campaign mistake</span><p>In Petrified Forest National Park, a sign picturing three thieves nearly tripled the theft of fossil wood, from about 3 to about 8 percent. A sign picturing a lone thief cut it to roughly 1.7 percent. Complaining that “so many people do this” makes the bad behavior feel normal.</p></div>
+<div class="ambil"><strong>Takeaway:</strong> Show what people <em>do</em>, not what they shouldn’t. And watch for fake proof: staged reviews, canned laughter.</div>
+
+<h3>Chapter 5: Authority</h3>
+<p>In Milgram’s experiments, about two-thirds of ordinary people kept raising an electric shock up to 450 volts because a man in a lab coat told them to. Psychiatrists had predicted one or two percent. In a hospital study, around 95 percent of nurses were ready to give twice the maximum dose on the word of an unknown “doctor” on the phone.</p>
+<p>We often obey the <strong>symbols</strong>: titles, clothing, trappings. Passersby obeyed a stranger in a guard’s uniform about 92 percent of the time, versus about 42 percent when he wore street clothes. A credible authority needs to seem both <strong>knowledgeable and trustworthy</strong>, and admitting a small flaw first makes the rest more believable.</p>
+<div class="alur"><span>A real expert?</span><i>→</i><span class="api">Honest?</span><i>→</i><span>Then follow</span></div>
+<div class="ambil"><strong>Takeaway:</strong> Check the evidence, not the jacket: is this person truly expert, and how honest can they be expected to be?</div>
+
+<h3>Chapter 6: Scarcity</h3>
+<div class="pull">The way to love anything is to realize that it might be lost.<cite>G. K. Chesterton (chapter epigraph)</cite></div>
+<p>We fear losing more than we enjoy gaining, and shrinking freedom triggers <strong>reactance</strong>, the urge to push back against limits. The same cookie from a jar of two was rated tastier than from a jar of ten. When Coca-Cola retired its old formula in 1985, devoted drinkers rose up demanding it back. The effect is strongest for something <strong>newly scarce</strong> and when we are <strong>competing</strong> for it.</p>
+<div class="callout red"><span class="ct">Warning sign</span><p>Scarcity stirs emotions that cloud clear thinking: a racing heart, a rush to decide.</p></div>
+<div class="ambil"><strong>Takeaway:</strong> When you feel “now or never,” calm down and ask: do I want this for its benefits, or because I fear missing out?</div>
+
+<h2>Part 3: Choices, Identity, and a Faster World</h2>
+
+<h3>Chapter 7: Commitment and Consistency</h3>
+<div class="pull">I am today what I established yesterday or some previous day.<cite>James Joyce (chapter epigraph)</cite></div>
+<p>We want to look and feel consistent: society prizes it, it makes life easier, and it works as a shortcut. In Chinese POW camps during the Korean War, captors began small:</p>
+<div class="alur"><span>Write something trivial</span><i>→</i><span>Read aloud</span><i>→</i><span class="api">Publicized</span><i>→</i><span>Self-image shifts</span></div>
+<p>In the Freedman and Fraser study, only 17 percent of homeowners agreed to put a big “Drive Carefully” sign on their lawn. But among those who two weeks earlier accepted a small “Be a Safe Driver” card, 76 percent agreed.</p>
+<div class="callout green"><span class="ct">Four marks of strong commitment</span><p><strong>Active</strong>, <strong>public</strong>, <strong>effortful</strong>, and felt as <strong>voluntary</strong>. Commitments even “grow their own legs,” which is why the <strong>low-ball</strong> trick works.</p></div>
+<div class="callout amber"><span class="ct">How to defend yourself</span><p>Listen to the gut signal, then ask your heart: knowing what I know now, would I make this commitment again?</p></div>
+<div class="ambil"><strong>Takeaway:</strong> Put your goals in writing, announce them, and start with small steps of your own choosing. And don’t cling to a mistake just to look consistent.</div>
+
+<h3>Chapter 8: Unity, When We Become One</h3>
+<div class="pull">…we have forgotten that we belong to one another.<cite>Mother Teresa (chapter epigraph)</cite></div>
+<p>Liking says, “He’s like me.” Unity says, “He’s one of us”: family, nation, tribe, faith. Two doorways lead in. First, <strong>shared origins</strong>: 97 percent of students’ parents returned a long survey, when adults usually answer at under 20 percent, because their children would earn a bonus point. Second, <strong>acting in sync</strong>: people who tapped in time with a partner were far more willing to help, about 49 percent versus about 18 percent. Music, marching, and working together deepen the “we” feeling.</p>
+<div class="ambil"><strong>Takeaway:</strong> Find a real shared identity and create shared experiences: eating, working, finishing something together. And before you comply, check whether the “we” is real.</div>
+
+<h3>Chapter 9: Instant Influence in a Fast World</h3>
+<p>Our world is flooded with information, so we lean more and more on a single cue that is usually reliable: commitment, a favor received, the behavior of people like us, liking or “we,” an expert’s word, and scarcity.</p>
+<div class="callout green"><span class="ct">When it becomes exploitation</span><p>Using these levers is not automatically wrong. It turns into exploitation only when the lever is <strong>faked</strong>: staged testimonials, bogus expertise, manufactured scarcity.</p></div>
+<div class="ambil"><strong>Takeaway:</strong> Build a pause before saying yes: which lever is pulled, and is it real?</div>
+
+<h2>Comparison: The Seven Levers at a Glance</h2>
+<div class="tabel-wrap">
+<table class="cmp">
+<thead><tr><th>Principle</th><th>How it works</th><th>How to defend yourself</th></tr></thead>
+<tbody>
+<tr><td>Reciprocity</td><td>We feel bound to repay.</td><td>Accept graciously, call a trick a trick.</td></tr>
+<tr><td>Liking</td><td>We comply with people we like.</td><td>Separate the person from the offer.</td></tr>
+<tr><td>Social proof</td><td>We follow the crowd.</td><td>Watch for faked proof.</td></tr>
+<tr><td>Authority</td><td>We follow symbols of expertise.</td><td>Ask: truly expert, and honest?</td></tr>
+<tr><td>Scarcity</td><td>The rare feels precious.</td><td>Calm down, weigh the benefit.</td></tr>
+<tr><td>Commitment</td><td>We want to stay consistent.</td><td>Heed gut and heart.</td></tr>
+<tr><td>Unity</td><td>We comply with “one of us.”</td><td>Check that the shared identity is real.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>Three Questions to Sit With</h2>
+<ol class="pertanyaan">
+<li>When did I last say yes because I felt indebted or awkward, rather than because I wanted to?</li>
+<li>Of the seven levers, which moves me most often?</li>
+<li>Which decision or habit am I keeping only because I have already started it?</li>
+</ol>
+
+<h2>Closing: Use It to Protect, Not to Deceive</h2>
+<div class="penutup">
+<p>Your decisions are not always entirely your own. Every day, quiet hands reach for these levers. That is no reason to distrust everyone, only a reason to be more aware.</p>
+<p>The knowledge cuts both ways. It can shield you from dishonest pressure, and it can help you invite others toward something good, so long as the lever is real and not manufactured. Start with one small habit: before saying yes to something important, pause and ask which lever is being pulled.</p>
+<div class="kutip">“I am today what I established yesterday or some previous day.”<cite>James Joyce, epigraph to Chapter 7</cite></div>
+</div>
+
+</div>
+</div>
+</body>
+</html>
