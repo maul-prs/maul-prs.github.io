@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>How to Win Friends and Influence People — Summary</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Poppins:wght@600;700&display=swap">
+<style>
+:root{color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0}
+.wrap{max-width:780px;margin:0 auto;padding:28px 20px 60px}
+.rangkuman{--pri:#F2766B;--acc:#F6B93B;--txt:#F1F1EE;--mut:#C2C6CE;--card:rgba(255,255,255,.055);--line:rgba(255,255,255,.16);--red:#F28B82;--green:#7ED9A4;--blue:#86B8F5;font-family:Lora,Georgia,serif;color:var(--txt);background:transparent;line-height:1.85;font-size:1.05rem;margin:0;padding:0}
+.rangkuman *{box-sizing:border-box}
+.rangkuman p{margin:0 0 1.1em}
+.rangkuman strong{color:#fff}
+.rangkuman h2{font-family:Poppins,sans-serif;font-weight:700;font-size:1.55rem;line-height:1.3;color:var(--acc);margin:2.6em 0 .9em;padding:.7em 0 .5em;border-top:3px solid var(--pri)}
+.rangkuman h3{font-family:Poppins,sans-serif;font-weight:600;font-size:1.1rem;color:var(--pri);margin:1.9em 0 .6em;padding-left:.8em;border-left:4px solid var(--pri)}
+.rangkuman .hook{font-size:1.25rem;line-height:1.7;font-style:italic;border-left:6px solid var(--acc);background:var(--card);padding:1.1em 1.3em;border-radius:0 12px 12px 0;margin:0 0 1.6em}
+.rangkuman .pull{position:relative;background:#16100f;border:1px solid var(--line);border-radius:14px;padding:2.2em 1.6em 1.4em;margin:2em 0;font-size:1.2rem;line-height:1.6;font-style:italic;color:#fff}
+.rangkuman .pull::before{content:"\201C";position:absolute;top:-.05em;left:.25em;font-family:Poppins,sans-serif;font-size:4.5rem;line-height:1;color:var(--acc)}
+.rangkuman .pull cite{display:block;margin-top:.8em;font-family:Poppins,sans-serif;font-style:normal;font-size:.85rem;color:var(--mut)}
+.rangkuman .callout{border-left:5px solid var(--pri);background:var(--card);border-radius:0 12px 12px 0;padding:1em 1.2em;margin:1.4em 0}
+.rangkuman .callout.amber{border-left-color:var(--acc)}
+.rangkuman .callout.red{border-left-color:var(--red)}
+.rangkuman .callout.green{border-left-color:var(--green)}
+.rangkuman .callout.blue{border-left-color:var(--blue)}
+.rangkuman .callout .ct{display:block;font-family:Poppins,sans-serif;font-weight:600;font-size:.88rem;letter-spacing:.04em;text-transform:uppercase;margin-bottom:.35em;color:#fff}
+.rangkuman .callout p:last-child{margin-bottom:0}
+.rangkuman .ambil{margin:1.1em 0 1.6em;padding:.9em 1.2em;border:1px dashed var(--acc);border-radius:12px}
+.rangkuman .ambil strong{font-family:Poppins,sans-serif;color:var(--acc);font-size:.85rem;letter-spacing:.05em;text-transform:uppercase}
+.rangkuman .alur{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:1.3em 0;font-family:Poppins,sans-serif;font-size:.88rem}
+.rangkuman .alur span{background:var(--card);border:1px solid var(--line);border-radius:99px;padding:.35em 1em;color:#fff}
+.rangkuman .alur span.api{border-color:var(--pri);color:var(--pri)}
+.rangkuman .alur i{font-style:normal;color:var(--acc)}
+.rangkuman .enam{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:1.4em 0}
+.rangkuman .enam .sel{background:var(--card);border-radius:12px;padding:.9em 1em;border-top:4px solid var(--pri)}
+.rangkuman .enam .sel.k{border-top-color:var(--acc)}
+.rangkuman .enam .sel b{display:block;font-family:Poppins,sans-serif;font-size:.9rem;color:#fff;margin-bottom:.3em}
+.rangkuman .enam .sel span{font-size:.92rem;line-height:1.6;color:var(--mut)}
+.rangkuman .tabel-wrap{overflow-x:auto;margin:1.4em 0}
+.rangkuman table.cmp{width:100%;border-collapse:collapse;min-width:520px;font-size:.98rem;line-height:1.6}
+.rangkuman table.cmp th{font-family:Poppins,sans-serif;text-align:left;background:#16100f;color:var(--acc);padding:.8em 1em;border-bottom:2px solid var(--acc)}
+.rangkuman table.cmp td{padding:.75em 1em;border-bottom:1px solid var(--line);vertical-align:top}
+.rangkuman table.cmp td:first-child{font-family:Poppins,sans-serif;font-weight:600;color:#fff;width:22%}
+.rangkuman table.cmp td:last-child{color:var(--pri)}
+.rangkuman ol.pertanyaan{list-style:none;counter-reset:q;padding:0;margin:1.2em 0}
+.rangkuman ol.pertanyaan li{counter-increment:q;position:relative;background:var(--card);border-radius:12px;padding:1em 1.2em 1em 4em;margin-bottom:12px}
+.rangkuman ol.pertanyaan li::before{content:counter(q);position:absolute;left:1em;top:.85em;width:2em;height:2em;border-radius:50%;background:var(--acc);color:#111;font-family:Poppins,sans-serif;font-weight:700;display:flex;align-items:center;justify-content:center}
+.rangkuman .penutup{background:linear-gradient(135deg,rgba(242,118,107,.18),rgba(246,185,59,.18));border:1px solid var(--line);border-radius:16px;padding:1.6em 1.6em 1.3em;margin-top:1em}
+.rangkuman .penutup p:last-child{margin-bottom:0}
+.rangkuman .penutup .kutip{margin-top:1.2em;padding-top:1em;border-top:1px solid var(--line);font-size:1.15rem;font-style:italic;color:#fff}
+.rangkuman .penutup .kutip cite{display:block;margin-top:.4em;font-family:Poppins,sans-serif;font-style:normal;font-size:.85rem;color:var(--acc)}
+@media (max-width:600px){.rangkuman .enam{grid-template-columns:1fr 1fr}.rangkuman h2{font-size:1.35rem}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="rangkuman">
+
+<div class="hook">“Two Gun” Crowley, a killer cornered by police, wrote a note before his capture saying that beneath his coat was a weary heart, but a kind one. Al Capone saw himself as a public benefactor, misunderstood. Even the most brutal criminals seldom blame themselves. So what is the use of criticizing anyone else?</div>
+
+<h2>Introduction: A Book About Handling People</h2>
+<p>Dale Carnegie taught public speaking to adults in New York, and he soon noticed his students needed something else even more: how to get along with people and win them over. His book came out in 1936 and is still read today, because it isn’t about tricks. It is about treating people as people. It has four parts and thirty principles in all.</p>
+<div class="enam">
+<div class="sel"><b>Part 1 (3 principles)</b><span>Fundamental techniques in handling people.</span></div>
+<div class="sel"><b>Part 2 (6 principles)</b><span>Ways to make people like you.</span></div>
+<div class="sel"><b>Part 3 (12 principles)</b><span>How to win people to your way of thinking.</span></div>
+<div class="sel k"><b>Part 4 (9 principles)</b><span>How to lead without giving offense.</span></div>
+</div>
+<div class="ambil"><strong>Takeaway:</strong> Every principle in the book rests on one thing: pay attention to what matters to the other person, not only to you.</div>
+
+<h2>Part 1: Fundamental Techniques in Handling People</h2>
+
+<h3>Principle 1: Don’t Criticize, Condemn, or Complain</h3>
+<p>Criticism puts people on the defensive, because it wounds their pride. Roosevelt blamed Taft, Taft felt blameless, and the quarrel split their party. Criticism is like a homing pigeon: it always comes home to us. If hard cases like Crowley and Capone never blamed themselves, what should we expect from ordinary people?</p>
+<div class="ambil"><strong>Takeaway:</strong> Before you criticize, remember that the person almost surely feels in the right. Try to understand rather than to judge.</div>
+
+<h3>Principle 2: Give Honest, Sincere Appreciation</h3>
+<p>Freud held that our actions spring from the sex urge and the desire to be great. John Dewey named the deepest human urge as <strong>the desire to be important</strong>. Charles Schwab was paid more than three thousand dollars a day for his gift of firing people up: he was lavish in approval and hearty in praise. Don’t confuse this with flattery, which is shallow, insincere, and selfish.</p>
+<div class="ambil"><strong>Takeaway:</strong> Today, find one thing genuinely worth appreciating in someone near you, and say it sincerely.</div>
+
+<h3>Principle 3: Arouse in the Other Person an Eager Want</h3>
+<div class="pull">…see things from that person’s angle as well as from your own.<cite>Henry Ford, quoted by Carnegie</cite></div>
+<p>The only way to influence people is to talk about what <em>they</em> want and show them how to get it. We fish with worms because fish like worms, not because we like strawberries.</p>
+<div class="ambil"><strong>Takeaway:</strong> Before you ask for something, ask yourself: what does this person want, and how does my request help them get it?</div>
+
+<h2>Part 2: Six Ways to Make People Like You</h2>
+<div class="enam">
+<div class="sel"><b>1. Become interested</b><span>Genuinely interested in other people.</span></div>
+<div class="sel"><b>2. Smile</b><span>It says: I’m glad to see you.</span></div>
+<div class="sel"><b>3. Remember names</b><span>A name is the sweetest sound to its owner.</span></div>
+<div class="sel"><b>4. Be a good listener</b><span>Encourage others to talk about themselves.</span></div>
+<div class="sel"><b>5. Talk their interests</b><span>Topics close to them.</span></div>
+<div class="sel k"><b>6. Make them feel important</b><span>And do it sincerely.</span></div>
+</div>
+
+<h3>Principles 1–2: Be Interested, and Smile</h3>
+<div class="pull">…more friends in two months by becoming interested in other people…<cite>Dale Carnegie</cite></div>
+<p>A dog is the best friend-maker around: it sells nothing, it is simply glad to see us. Carnegie recalls Tippy, the little dog of his boyhood. The second principle is plain: <strong>smile</strong>. William Steinhardt, a stockbroker, had hardly smiled at his wife in all his years of marriage. After a week of trying, he found his home life happier. The smile has to be real, because a fake one fools no one.</p>
+<div class="ambil"><strong>Takeaway:</strong> Open conversations with real curiosity about the person, and don’t be stingy with your smile.</div>
+
+<h3>Principles 3–4: Names and Listening</h3>
+<p>Jim Farley lost his father young and had to work, yet he learned to remember thousands of names. That skill helped him in winning the White House for Roosevelt. His method: hear the name clearly, repeat it, write it down, and link it to the face. Then be <strong>a good listener</strong>. A person who only talks about himself is tiresome. A person who lets others tell their story is thought a brilliant conversationalist.</p>
+<div class="ambil"><strong>Takeaway:</strong> Use the person’s name in conversation, and ask questions that get them talking.</div>
+
+<h3>Principles 5–6: Their Interests and Their Importance</h3>
+<p>Theodore Roosevelt read up the night before on whatever his visitor cared about, so the guest felt understood. And then there is the golden rule: <strong>make the other person feel important, and do it sincerely</strong>. Nearly everyone craves recognition, so they remember whoever gives it.</p>
+<div class="ambil"><strong>Takeaway:</strong> Find out what interests the person, talk about it, and acknowledge what makes them feel significant.</div>
+
+<h2>Part 3: How to Win People to Your Way of Thinking</h2>
+
+<h3>Principles 1–3: Avoid Arguments, Admit Mistakes</h3>
+<p>At a London dinner, Carnegie insisted on correcting a man who credited a Shakespeare line to the Bible. His friend, a Shakespeare expert, kicked him under the table and said, “Dale, you were wrong.” The lesson: <strong>the only way to win an argument is to avoid it</strong>. Even if you win, you lose, because the other person feels small and resents you. Show respect for other people’s opinions, never say “you’re wrong,” and <strong>if you are wrong, admit it quickly and emphatically</strong>.</p>
+<div class="callout green"><span class="ct">The story of Rex</span><p>Carnegie often walked his dog Rex off the leash in the park. When a policeman rebuked him, he owned up at once before another word was said. The officer softened and let it go. Criticizing yourself first takes the wind out of an opponent.</p></div>
+<div class="ambil"><strong>Takeaway:</strong> When “you’re wrong” is on the tip of your tongue, hold it. And if you’re the one who is wrong, say so before anyone else does.</div>
+
+<h3>Principles 4–7: Be Friendly, Get “Yes,” Let Them Talk, Let It Be Their Idea</h3>
+<div class="pull">A drop of honey catches more flies than a gallon of gall.<cite>Abraham Lincoln, quoted by Carnegie</cite></div>
+<p>Begin in a friendly way. Woodrow Wilson put it roughly like this: come at me with clenched fists and mine will clench as fast as yours, but come and say, let’s sit down and talk it over, and we soon find our differences are not so great. Then use the <strong>Socratic method</strong>: ask questions that draw a “yes” until the other person reaches the conclusion on his own. James Eberson, a bank teller, opened an account for a customer who had refused to give any information, using exactly this approach.</p>
+<p>Let the other person do <strong>much of the talking</strong>, since he knows more about his own problem. And let him feel <strong>the idea is his</strong>. Colonel House, Wilson’s adviser, planted ideas and let Wilson claim them, which kept his influence intact.</p>
+<div class="ambil"><strong>Takeaway:</strong> Plant ideas through questions, let people discover them, and don’t fight over credit.</div>
+
+<h3>Principles 8–10: Empathy and Nobler Motives</h3>
+<p>Try honestly to see things from the other person’s point of view, and be sympathetic with his ideas and desires. The magic formula: <strong>“I don’t blame you one iota for feeling as you do. If I were you I would feel just as you do.”</strong> It calms nearly everyone. Then <strong>appeal to nobler motives</strong>. People rarely admit to unworthy reasons, so we help them become better by trusting their good intentions.</p>
+<div class="ambil"><strong>Takeaway:</strong> Start with “I can see why you feel that way,” then make your request.</div>
+
+<h3>Principles 11–12: Dramatize and Throw Down a Challenge</h3>
+<p>Facts alone aren’t enough. <strong>Dramatize your ideas</strong> with pictures, demonstrations, or vivid stories. And when everything else fails, <strong>throw down a challenge</strong>. High achievers love competition and a chance to prove themselves.</p>
+<div class="ambil"><strong>Takeaway:</strong> Turn your numbers and appeals into something people can see, and give them a chance to prove themselves.</div>
+
+<h2>Part 4: Be a Leader Without Giving Offense</h2>
+
+<h3>Principles 1–3: Praise First, Correct Indirectly, Own Your Mistakes</h3>
+<p>President Coolidge once praised his secretary’s dress, then added, “But I’m sure you can be just as careful with your punctuation.” Praise first makes the criticism go down easier, like the dentist’s novocaine before the drill. Call attention to mistakes <strong>indirectly</strong>, and <strong>talk about your own mistakes</strong> before criticizing. Hearing that the boss has erred too makes people readier to fix theirs.</p>
+<div class="ambil"><strong>Takeaway:</strong> Build the correction in order: honest praise, indirect criticism, then admit that you have erred too.</div>
+
+<h3>Principles 4–5: Ask Questions and Let People Save Face</h3>
+<p>Swap orders for questions: “Do you think this would work?” People who help shape a decision are keener to carry it out. And never shame anyone. <strong>Let the other person save face.</strong> Wounding someone’s dignity leaves a long-lasting hurt, even if we are right.</p>
+<div class="ambil"><strong>Takeaway:</strong> Correct in private, not before others, and leave a dignified way out.</div>
+
+<h3>Principles 6–9: Praise Progress, Give a Fine Reputation, Encourage</h3>
+<p>Praise the slightest improvement, and <strong>give people a fine reputation to live up to</strong>. People tend to match the image we hand them. Encourage them, make faults seem easy to correct, and make what you ask for something they will be glad to do.</p>
+<div class="callout amber"><span class="ct">Why this works</span><p>All the leadership principles here run on a single mechanism: people grow when they feel valued and trusted, not when they feel judged.</p></div>
+<div class="ambil"><strong>Takeaway:</strong> Pick one person, praise a small step of progress today, and name the good reputation you hope they will keep.</div>
+
+<h2>Comparison: The Ordinary Way and Carnegie’s Way</h2>
+<div class="tabel-wrap">
+<table class="cmp">
+<thead><tr><th>Area</th><th>Ordinary way</th><th>Carnegie’s way</th></tr></thead>
+<tbody>
+<tr><td>When someone errs</td><td>Criticize and condemn.</td><td>Understand why they did it.</td></tr>
+<tr><td>Praising</td><td>Flatter to be liked.</td><td>Appreciate honestly and specifically.</td></tr>
+<tr><td>Conversation</td><td>Talk about yourself.</td><td>Ask, and listen.</td></tr>
+<tr><td>Disagreeing</td><td>Argue until you win.</td><td>Avoid the argument, ask questions.</td></tr>
+<tr><td>When you’re wrong</td><td>Defend yourself.</td><td>Admit it fast and plainly.</td></tr>
+<tr><td>Persuading</td><td>Press your case.</td><td>Let the idea feel like theirs.</td></tr>
+<tr><td>Correcting</td><td>Directly, in public.</td><td>Praise first, indirect, save face.</td></tr>
+<tr><td>Motivating</td><td>Order and threaten.</td><td>Give a good reputation to live up to.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>Three Questions to Sit With</h2>
+<ol class="pertanyaan">
+<li>When did I last criticize someone, and what happened to our relationship afterward?</li>
+<li>Who deserves sincere appreciation from me today, and what will I say?</li>
+<li>In my last conversation, how long did I talk compared to how long I listened?</li>
+</ol>
+
+<h2>Closing: Start with One Person</h2>
+<div class="penutup">
+<p>Thirty principles sound like a lot, but they all circle one idea: people want to feel important and understood. Give them that sincerely, and the relationships around you begin to change.</p>
+<p>Carnegie himself urged readers not to read the book once and put it away. Take one principle a week, practice it, and watch what happens. You don’t have to be perfect. Just start with one person today.</p>
+<div class="kutip">“A drop of honey catches more flies than a gallon of gall.”<cite>Abraham Lincoln, quoted by Carnegie</cite></div>
+</div>
+
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,34 @@
+{
+  "id": "1792482633456",
+  "slug": "how-to-win-friends-and-influence-people",
+  "status": "active",
+  "title": "How to Win Friends and Influence People",
+  "type": "Book Summary",
+  "categories": [
+    "communication",
+    "relationships",
+    "leadership",
+    "social-skills",
+    "persuasion",
+    "self-development",
+    "business"
+  ],
+  "date": "20 Oktober 2026",
+  "dateISO": "2026-10-20",
+  "coreMessage": "Satu rahasia sederhana dari 30 prinsip: orang ingin merasa penting. Ini cara membuat mereka menyukaimu tanpa berdebat atau menyinggung.",
+  "bookData": {
+    "bookTitle": "How to Win Friends and Influence People",
+    "bookAuthor": "Dale Carnegie",
+    "bookYear": "1936",
+    "bookMainCategory": "Book Summary",
+    "bookCore": "Satu rahasia sederhana dari 30 prinsip: orang ingin merasa penting. Ini cara membuat mereka menyukaimu tanpa berdebat atau menyinggung.",
+    "bookReadTime": "18–22 menit baca"
+  },
+  "cover": "images/cover-how-to-win-friends-and-influence-people-1792482633433.jpg",
+  "en": {
+    "title": "How to Win Friends and Influence People",
+    "coreMessage": "One simple secret behind 30 principles: people want to feel important. Here is how to win them without arguing or offending.",
+    "ogImage": "images/og-how-to-win-friends-and-influence-people-en.jpg"
+  },
+  "ogImage": "images/og-how-to-win-friends-and-influence-people.jpg"
+}
