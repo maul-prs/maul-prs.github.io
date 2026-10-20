@@ -4,6 +4,9 @@ on:
   push:
     branches: [main, master]
   workflow_dispatch:
+  schedule:
+    # GitHub memakai UTC: 17:05 UTC = 00:05 WIB. Membangun ulang tiap hari supaya artikel terjadwal tayang saat tanggalnya tiba.
+    - cron: '5 17 * * *'
 
 permissions:
   contents: read

@@ -665,6 +665,11 @@
         return canvas.toDataURL("image/jpeg", COVER_QUALITY).split(",")[1];
       }
 
+      // Tanggal hari ini menurut WIB (YYYY-MM-DD): artikel bertanggal setelah ini berstatus Terjadwal
+      function todayWib() {
+        return new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Jakarta" }).format(new Date());
+      }
+
       // ---------- Riwayat ----------
       async function loadHistory() {
         const tbody = $("historyTableBody");
@@ -691,7 +696,8 @@
         tbody.innerHTML =
           shown
             .map((post) => {
-              const archived = post.status === "archived";
+              const scheduled = post.scheduled || (post.status !== "archived" && post.dateISO > todayWib());
+              const archived = post.status === "archived" && !post.scheduled;
               const cat = Array.isArray(post.categories) && post.categories.length ? post.categories.join(", ") : post.type || "";
               const slug = esc(post.slug);
               return `
@@ -699,7 +705,7 @@
               <td><strong>${esc(post.title)}</strong><br><small style="color:#6b7280;">/artikel/${slug}/</small></td>
               <td><span style="color:#34d399;font-weight:500;">${esc(cat)}</span></td>
               <td>${esc(post.date || "-")}</td>
-              <td>${archived ? '<span style="color:#f59e0b;">Diarsipkan</span>' : '<span style="color:#10b981;">Aktif</span>'}</td>
+              <td>${archived ? '<span style="color:#f59e0b;">Diarsipkan</span>' : scheduled ? '<span style="color:#60a5fa;">Terjadwal</span>' : '<span style="color:#10b981;">Aktif</span>'}</td>
               <td>
                 <div class="action-btns">
                   <button type="button" class="btn-action btn-edit" onclick="editPost('${slug}')">Edit</button>
@@ -1245,9 +1251,12 @@
 
           upsertList({ id: meta.id, slug, title, type: postType, categories, date: meta.date, dateISO, status: meta.status || "active" });
           renderHistory();
+          const isFuture = meta.status !== "archived" && dateISO > todayWib();
           alert(
             (isEdit ? "Postingan diperbarui." : "Postingan baru tersimpan.") +
-              `\n\nWebsite dibangun ulang otomatis oleh GitHub (±1–2 menit). Setelah itu alamatnya:\n${SITE_ROOT}/artikel/${slug}/`
+              (isFuture
+                ? `\n\nTERJADWAL: artikel ini belum tampil di website. Otomatis tayang pada ${dateISO} pukul 00:05 WIB (website dibangun ulang tiap hari).\nAlamatnya nanti:\n${SITE_ROOT}/artikel/${slug}/`
+                : `\n\nWebsite dibangun ulang otomatis oleh GitHub (±1–2 menit). Setelah itu alamatnya:\n${SITE_ROOT}/artikel/${slug}/`)
           );
           resetForm();
         } catch (error) {

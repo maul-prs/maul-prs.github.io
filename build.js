@@ -268,8 +268,11 @@ function main() {
   fs.mkdirSync(OUT, { recursive: true });
 
   const all = normalizePosts(loadRawPosts());
-  const active = all.filter((p) => p.status === 'active');
-  console.log(`Postingan: ${all.length} (aktif ${active.length}, arsip ${all.length - active.length})`);
+  // Tayang terjadwal: artikel baru tayang saat tanggalnya tiba (zona WIB). Build harian di pages.yml yang memunculkannya.
+  const todayWib = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Jakarta' }).format(new Date());
+  const scheduled = all.filter((p) => p.status === 'active' && p.dateISO > todayWib);
+  const active = all.filter((p) => p.status === 'active' && p.dateISO <= todayWib);
+  console.log(`Postingan: ${all.length} (aktif ${active.length}, terjadwal ${scheduled.length}, arsip ${all.filter((p) => p.status === 'archived').length}) — hari ini ${todayWib} WIB`);
 
   // entri publik
   const typeSlugs = new Map();
@@ -395,9 +398,10 @@ function main() {
 
   /* 2. Data ringan untuk beranda, pencarian, sidebar & admin */
   const publicList = pub.map(({ typeUrl, ...rest }) => rest);
+  // Yang belum tayang ikut dicatat sebagai stub (status 'archived' + scheduled) supaya tidak tampil di publik tapi tetap muncul di admin
   const archivedStubs = all
-    .filter((p) => p.status === 'archived')
-    .map((p) => ({ id: p.id, slug: p.slug, title: p.title, type: p.type, date: p.date, dateISO: p.dateISO, status: 'archived', ...(p.legacy ? { legacy: true } : {}) }));
+    .filter((p) => p.status === 'archived' || scheduled.includes(p))
+    .map((p) => ({ id: p.id, slug: p.slug, title: p.title, type: p.type, date: p.date, dateISO: p.dateISO, status: 'archived', ...(scheduled.includes(p) ? { scheduled: true } : {}), ...(p.legacy ? { legacy: true } : {}) }));
   write('data/index.json', JSON.stringify([...publicList, ...archivedStubs]));
 
   /* 3. Beranda */
