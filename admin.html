@@ -181,6 +181,24 @@
         background: #3b82f6;
         color: #fff;
       }
+      /* Penanda bahasa di riwayat: hijau = versi itu ada, abu-abu = belum ada */
+      .lang-badge {
+        display: inline-block;
+        margin-right: 6px;
+        padding: 1px 8px;
+        border-radius: 10px;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        background: #1f2937;
+        color: #6b7280;
+        border: 1px solid #374151;
+      }
+      .lang-badge.on {
+        background: rgba(16, 185, 129, 0.18);
+        color: #34d399;
+        border-color: #10b981;
+      }
       .btn-archive {
         background: #f59e0b;
         color: #020c06;
@@ -702,7 +720,7 @@
               const slug = esc(post.slug);
               return `
             <tr>
-              <td><strong>${esc(post.title)}</strong><br><small style="color:#6b7280;">/artikel/${slug}/</small></td>
+              <td><strong>${esc(post.title)}</strong><br><small style="color:#6b7280;">/artikel/${slug}/</small><br><span class="lang-badge on" title="Versi Indonesia ada">ID</span><span class="lang-badge${post.en || post.hasEn ? " on" : ""}" title="${post.en || post.hasEn ? "Versi Inggris ada" : "Belum ada versi Inggris"}">EN</span></td>
               <td><span style="color:#34d399;font-weight:500;">${esc(cat)}</span></td>
               <td>${esc(post.date || "-")}</td>
               <td>${archived ? '<span style="color:#f59e0b;">Diarsipkan</span>' : scheduled ? '<span style="color:#60a5fa;">Terjadwal</span>' : '<span style="color:#10b981;">Aktif</span>'}</td>
@@ -1249,7 +1267,7 @@
           submitBtn.innerText = "Menyimpan ke GitHub...";
           await commitFiles(files, `${isEdit ? "Update" : "Tambah"} postingan: ${title}`);
 
-          upsertList({ id: meta.id, slug, title, type: postType, categories, date: meta.date, dateISO, status: meta.status || "active" });
+          upsertList({ id: meta.id, slug, title, type: postType, categories, date: meta.date, dateISO, status: meta.status || "active", hasEn: enOn, en: null });
           renderHistory();
           const isFuture = meta.status !== "archived" && dateISO > todayWib();
           alert(

@@ -401,7 +401,7 @@ function main() {
   // Yang belum tayang ikut dicatat sebagai stub (status 'archived' + scheduled) supaya tidak tampil di publik tapi tetap muncul di admin
   const archivedStubs = all
     .filter((p) => p.status === 'archived' || scheduled.includes(p))
-    .map((p) => ({ id: p.id, slug: p.slug, title: p.title, type: p.type, date: p.date, dateISO: p.dateISO, status: 'archived', ...(scheduled.includes(p) ? { scheduled: true } : {}), ...(p.legacy ? { legacy: true } : {}) }));
+    .map((p) => ({ id: p.id, slug: p.slug, title: p.title, type: p.type, date: p.date, dateISO: p.dateISO, status: 'archived', ...(scheduled.includes(p) ? { scheduled: true } : {}), ...(p.en ? { hasEn: true } : {}), ...(p.legacy ? { legacy: true } : {}) }));
   write('data/index.json', JSON.stringify([...publicList, ...archivedStubs]));
 
   /* 3. Beranda */
