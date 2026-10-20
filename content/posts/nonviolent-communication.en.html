@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nonviolent Communication — Summary</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Poppins:wght@600;700&display=swap">
+<style>
+:root{color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0}
+.wrap{max-width:780px;margin:0 auto;padding:28px 20px 60px}
+.rangkuman{--pri:#F2766B;--acc:#F6B93B;--txt:#F1F1EE;--mut:#C2C6CE;--card:rgba(255,255,255,.055);--line:rgba(255,255,255,.16);--red:#F28B82;--green:#7ED9A4;--blue:#86B8F5;font-family:Lora,Georgia,serif;color:var(--txt);background:transparent;line-height:1.85;font-size:1.05rem;margin:0;padding:0}
+.rangkuman *{box-sizing:border-box}
+.rangkuman p{margin:0 0 1.1em}
+.rangkuman strong{color:#fff}
+.rangkuman h2{font-family:Poppins,sans-serif;font-weight:700;font-size:1.55rem;line-height:1.3;color:var(--acc);margin:2.6em 0 .9em;padding:.7em 0 .5em;border-top:3px solid var(--pri)}
+.rangkuman h3{font-family:Poppins,sans-serif;font-weight:600;font-size:1.1rem;color:var(--pri);margin:1.9em 0 .6em;padding-left:.8em;border-left:4px solid var(--pri)}
+.rangkuman .hook{font-size:1.25rem;line-height:1.7;font-style:italic;border-left:6px solid var(--acc);background:var(--card);padding:1.1em 1.3em;border-radius:0 12px 12px 0;margin:0 0 1.6em}
+.rangkuman .pull{position:relative;background:#16100f;border:1px solid var(--line);border-radius:14px;padding:2.2em 1.6em 1.4em;margin:2em 0;font-size:1.2rem;line-height:1.6;font-style:italic;color:#fff}
+.rangkuman .pull::before{content:"\201C";position:absolute;top:-.05em;left:.25em;font-family:Poppins,sans-serif;font-size:4.5rem;line-height:1;color:var(--acc)}
+.rangkuman .pull cite{display:block;margin-top:.8em;font-family:Poppins,sans-serif;font-style:normal;font-size:.85rem;color:var(--mut)}
+.rangkuman .callout{border-left:5px solid var(--pri);background:var(--card);border-radius:0 12px 12px 0;padding:1em 1.2em;margin:1.4em 0}
+.rangkuman .callout.amber{border-left-color:var(--acc)}
+.rangkuman .callout.red{border-left-color:var(--red)}
+.rangkuman .callout.green{border-left-color:var(--green)}
+.rangkuman .callout.blue{border-left-color:var(--blue)}
+.rangkuman .callout .ct{display:block;font-family:Poppins,sans-serif;font-weight:600;font-size:.88rem;letter-spacing:.04em;text-transform:uppercase;margin-bottom:.35em;color:#fff}
+.rangkuman .callout p:last-child{margin-bottom:0}
+.rangkuman .ambil{margin:1.1em 0 1.6em;padding:.9em 1.2em;border:1px dashed var(--acc);border-radius:12px}
+.rangkuman .ambil strong{font-family:Poppins,sans-serif;color:var(--acc);font-size:.85rem;letter-spacing:.05em;text-transform:uppercase}
+.rangkuman .alur{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:1.3em 0;font-family:Poppins,sans-serif;font-size:.88rem}
+.rangkuman .alur span{background:var(--card);border:1px solid var(--line);border-radius:99px;padding:.35em 1em;color:#fff}
+.rangkuman .alur span.api{border-color:var(--pri);color:var(--pri)}
+.rangkuman .alur i{font-style:normal;color:var(--acc)}
+.rangkuman .enam{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:1.4em 0}
+.rangkuman .enam .sel{background:var(--card);border-radius:12px;padding:.9em 1em;border-top:4px solid var(--pri)}
+.rangkuman .enam .sel.k{border-top-color:var(--acc)}
+.rangkuman .enam .sel b{display:block;font-family:Poppins,sans-serif;font-size:.9rem;color:#fff;margin-bottom:.3em}
+.rangkuman .enam .sel span{font-size:.92rem;line-height:1.6;color:var(--mut)}
+.rangkuman .tabel-wrap{overflow-x:auto;margin:1.4em 0}
+.rangkuman table.cmp{width:100%;border-collapse:collapse;min-width:520px;font-size:.98rem;line-height:1.6}
+.rangkuman table.cmp th{font-family:Poppins,sans-serif;text-align:left;background:#16100f;color:var(--acc);padding:.8em 1em;border-bottom:2px solid var(--acc)}
+.rangkuman table.cmp td{padding:.75em 1em;border-bottom:1px solid var(--line);vertical-align:top}
+.rangkuman table.cmp td:first-child{font-family:Poppins,sans-serif;font-weight:600;color:#fff;width:22%}
+.rangkuman table.cmp td:last-child{color:var(--pri)}
+.rangkuman ol.pertanyaan{list-style:none;counter-reset:q;padding:0;margin:1.2em 0}
+.rangkuman ol.pertanyaan li{counter-increment:q;position:relative;background:var(--card);border-radius:12px;padding:1em 1.2em 1em 4em;margin-bottom:12px}
+.rangkuman ol.pertanyaan li::before{content:counter(q);position:absolute;left:1em;top:.85em;width:2em;height:2em;border-radius:50%;background:var(--acc);color:#111;font-family:Poppins,sans-serif;font-weight:700;display:flex;align-items:center;justify-content:center}
+.rangkuman .penutup{background:linear-gradient(135deg,rgba(242,118,107,.18),rgba(246,185,59,.18));border:1px solid var(--line);border-radius:16px;padding:1.6em 1.6em 1.3em;margin-top:1em}
+.rangkuman .penutup p:last-child{margin-bottom:0}
+.rangkuman .penutup .kutip{margin-top:1.2em;padding-top:1em;border-top:1px solid var(--line);font-size:1.15rem;font-style:italic;color:#fff}
+.rangkuman .penutup .kutip cite{display:block;margin-top:.4em;font-family:Poppins,sans-serif;font-style:normal;font-size:.85rem;color:var(--acc)}
+@media (max-width:600px){.rangkuman .enam{grid-template-columns:1fr 1fr}.rangkuman h2{font-size:1.35rem}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="rangkuman">
+
+<div class="hook">In Jerusalem, a settler locked in a bitter dispute was asked to play the part of her political opponent, and then listened to with real empathy for twenty minutes. Afterward she said she would consider giving up her land claims, if only her opponents could listen to her that way. No argument had softened her. Being understood had.</div>
+
+<h2>Introduction: A Language That Gives Life</h2>
+<p>Marshall Rosenberg, the psychologist behind Nonviolent Communication (NVC), began with a single question: what lets us stay compassionate even in the worst conditions, and what turns some people cruel? He found the answer in how we speak and how we listen. He went on to train teachers, doctors, parents, and communities in war zones, from Belgrade to Rwanda.</p>
+<p>NVC is not a verbal technique. It is a way of steering attention to four things: what we <strong>observe</strong>, what we <strong>feel</strong>, what we <strong>need</strong>, and what we <strong>request</strong>. It works in two directions: expressing ourselves honestly, and hearing others with empathy.</p>
+<div class="alur"><span>Observation</span><i>→</i><span>Feeling</span><i>→</i><span class="api">Need</span><i>→</i><span>Request</span></div>
+<div class="enam">
+<div class="sel"><b>Observation</b><span>What happened, without judgment.</span></div>
+<div class="sel"><b>Feeling</b><span>What I feel, not what I think.</span></div>
+<div class="sel"><b>Need</b><span>The value beneath the feeling.</span></div>
+<div class="sel"><b>Request</b><span>A concrete action I ask for.</span></div>
+<div class="sel k"><b>Empathy</b><span>Hearing those four in someone else.</span></div>
+<div class="sel k"><b>Self-compassion</b><span>Turning all of it inward.</span></div>
+</div>
+<div class="ambil"><strong>Takeaway:</strong> Before your next hard conversation, ask two things: what did I actually observe, and what do I actually need?</div>
+
+<h2>Part 1: Barriers to Compassion</h2>
+
+<h3>Chapter 1: Giving from the Heart</h3>
+<p>At heart, we enjoy giving and receiving with compassion. NVC helps us return to that by directing awareness to the four components, so we speak and listen with respect and empathy. A teacher in Chicago faced with an aggressive student invited him to talk in “giraffe language,” and the boy calmly said, “Would you step back? I get angry when you stand that close.” The giraffe is NVC’s emblem because it has the biggest heart of any land animal.</p>
+<div class="ambil"><strong>Takeaway:</strong> Before you attack or go silent, ask what is alive in you and in the other person.</div>
+
+<h3>Chapter 2: Communication That Blocks Compassion</h3>
+<p>We are trained to speak in ways that push people apart. There are four forms: <strong>moralistic judgments</strong> (“she’s selfish”), <strong>comparisons</strong>, <strong>denial of responsibility</strong> (“I had no choice,” “it’s the rule”), and <strong>demands</strong> dressed up as requests. All of them pull us away from one thing: what is alive in us right now.</p>
+<div class="callout red"><span class="ct">The heart of the barrier</span><p>A judgment is an expression of our own unmet needs, in a form that makes others defend themselves or hit back.</p></div>
+<div class="ambil"><strong>Takeaway:</strong> When you are about to call someone “lazy” or “selfish,” pause and ask: which of my needs is going unmet?</div>
+
+<h2>Part 2: Four Steps to Honest Speech</h2>
+
+<h3>Chapter 3: Observing Without Evaluating</h3>
+<div class="pull">Observing without evaluating is the highest form of human intelligence.<cite>J. Krishnamurti, quoted by Rosenberg</cite></div>
+<p>Step one: separate observation from evaluation. Blend them and people hear criticism and fight back. Say “Hank hasn’t scored in twenty games,” not “Hank is a bad player.” When a workshop participant shouted that Rosenberg was the most arrogant speaker he had ever heard, Rosenberg didn’t defend himself. He guessed at the observation underneath: “Are you reacting because I talked for thirty minutes without giving you a turn?”</p>
+<div class="ambil"><strong>Takeaway:</strong> Swap “always,” “never,” and labels for a specific event a camera could record.</div>
+
+<h3>Chapter 4: Identifying and Expressing Feelings</h3>
+<p>Unspoken feelings come at a price, yet many of us lack the vocabulary. Compare “I’m sad you’re leaving,” which is a feeling, with “I feel you don’t love me,” which isn’t. It is a judgment about the other person in disguise. The words “I feel that…” usually introduce a thought, not a feeling.</p>
+<div class="ambil"><strong>Takeaway:</strong> Build a feeling vocabulary, and reach for words like sad, afraid, relieved, or disappointed rather than “neglected” or “used.”</div>
+
+<h3>Chapter 5: Taking Responsibility for Our Feelings</h3>
+<p>What others say or do may be the <em>stimulus</em> for our feelings, never the <em>cause</em>. The cause is our needs. When we hear a harsh message we have four options: blame ourselves, blame the other person, tune in to our own feelings and needs, or tune in to the feelings and needs behind the other person’s words. The last two open the way.</p>
+<div class="alur"><span>Emotional slavery</span><i>→</i><span>The obnoxious stage</span><i>→</i><span class="api">Emotional liberation</span></div>
+<p>Most of us pass through three stages: feeling responsible for others’ feelings, then turning defiant, and finally owning our own feelings fully without carrying everyone else’s.</p>
+<div class="ambil"><strong>Takeaway:</strong> Say “I feel … because I need …,” not “You make me …”.</div>
+
+<h3>Chapter 6: Requesting That Which Would Enrich Life</h3>
+<p>Step four: ask in clear, positive action language. Say what you want, not what you don’t. Check that your message was heard as meant, and offer it as a request, not a demand. The test is simple: someone who says no is not punished. NVC isn’t about getting people to comply. It is about building relationships on honesty and empathy.</p>
+<div class="ambil"><strong>Takeaway:</strong> End with a concrete request that can be done now, and accept a “no” without punishing.</div>
+
+<h2>Part 3: Receiving with Empathy</h2>
+
+<h3>Chapter 7: Receiving Empathically</h3>
+<div class="pull">Don’t just do something, stand there.<cite>Buddhist saying, quoted by Rosenberg</cite></div>
+<p>Empathy is respectful understanding of what others are experiencing. Our habit is to advise, console, or tell our own story. Empathy asks us to empty the mind and listen with our whole being. Rosenberg learned this from his daughter, who looked in a mirror and said she was “as ugly as a pig.” Quick reassurance didn’t help. He learned to ask first whether advice was even wanted.</p>
+<p>We cannot give empathy when we are running on empty. If listening is hard, stop and breathe, “scream” nonviolently, or take a break.</p>
+<div class="ambil"><strong>Takeaway:</strong> Listen for feelings and needs, not solutions. Reflect what you heard before offering any fix.</div>
+
+<h3>Chapter 8: The Power of Empathy</h3>
+<p>Empathy heals. It helps us stay vulnerable, defuses potential violence, hears “no” without taking it as rejection, revives a dead conversation, and even hears the message in silence. People often move past crippling pain when they meet someone who truly hears them.</p>
+<div class="ambil"><strong>Takeaway:</strong> Hear “no” as a need that is blocking “yes,” and ask what it is.</div>
+
+<h2>Part 4: Yourself, Anger, and Conflict</h2>
+
+<h3>Chapter 9: Connecting Compassionately with Ourselves</h3>
+<div class="pull">Let us become the change we seek in the world.<cite>Mahatma Gandhi (chapter epigraph)</cite></div>
+<p>If we are harsh with ourselves, compassion for others is hard. Rosenberg tells of a new gray suit that ended up spotted by a pen he had left uncapped in his pocket. For twenty minutes he called himself careless and stupid. Then he asked what need lay beneath the scolding. It was to take better care of himself after rushing to serve others. The shame eased. That is <strong>NVC mourning</strong>: regretting without punishing yourself.</p>
+<p>Another tool is turning “have to” into “choose to.” An act done from duty or guilt feels heavy. Name the need it serves, and it becomes meaningful play.</p>
+<div class="ambil"><strong>Takeaway:</strong> When you blame yourself, ask which need went unmet, and replace “I have to” with “I choose to … because ….”</div>
+
+<h3>Chapter 10: Expressing Anger Fully</h3>
+<p>Blaming and punishing are only shallow expressions of anger. The key: the other person is the <strong>stimulus</strong> of your anger, never the <strong>cause</strong>. The cause is your own judgment and your unmet need.</p>
+<div class="alur"><span>Stop and breathe</span><i>→</i><span>Spot the judgmental thoughts</span><i>→</i><span class="api">Connect to the need</span><i>→</i><span>Express feelings and need</span></div>
+<div class="callout amber"><span class="ct">Extra step</span><p>Sometimes, before the last step, offer the other person empathy so they are ready to hear. And give yourself time to learn.</p></div>
+<div class="ambil"><strong>Takeaway:</strong> Don’t speak in the heat of anger. First name your judgment and the need behind it.</div>
+
+<h3>Chapter 11: Conflict Resolution and Mediation</h3>
+<p>Ordinary mediation gets lost in issues and compromises. NVC does it differently: first build a human connection, make sure both sides’ <strong>needs</strong> are voiced and heard, and only then look for strategies. If one party is too hurt to listen, offer empathy for as long as it takes. The final step is a specific, positive, doable request.</p>
+<div class="ambil"><strong>Takeaway:</strong> Separate needs from strategies. Hear every need fully before seeking solutions.</div>
+
+<h3>Chapter 12: The Protective Use of Force</h3>
+<p>When there is no chance to communicate, as in sudden danger, force may be used to <strong>protect</strong>. The intent is to prevent harm or injustice, not to punish so someone will repent or change. Two questions show the limits of punishment: “What do I want this person to do differently?” and “What do I want their <em>reasons</em> for doing it to be?” Punishment may answer the first but wrecks the second, because people then act to avoid the penalty.</p>
+<div class="ambil"><strong>Takeaway:</strong> Before punishing, ask what kind of reasons you hope will grow in that person.</div>
+
+<h2>Part 5: Freeing Ourselves and Celebrating</h2>
+
+<h3>Chapter 13: Liberating Ourselves and Counseling Others</h3>
+<p>NVC turns negative internal messages into feelings and needs. Recognizing our own feelings and needs with empathy can free us from depression. For counselors and therapists, NVC replaces diagnosis with an honest, equal relationship.</p>
+<div class="ambil"><strong>Takeaway:</strong> When negative thoughts about yourself take over, translate them into: what am I feeling and needing right now?</div>
+
+<h3>Chapter 14: Expressing Appreciation</h3>
+<p>Ordinary praise is often a judgment, even when positive, and is sometimes used to manipulate. NVC appreciation is purely to celebrate. It has three parts: the <strong>action</strong> that enriched my life, the <strong>need</strong> it met, and the <strong>feeling</strong> of pleasure it brought. Receiving it, we celebrate too, without feeling superior or faking modesty. The book closes with Rosenberg’s uncle Julius, who learned compassion from his grandmother, who during the Depression took a tailor’s family into her home for three years.</p>
+<div class="ambil"><strong>Takeaway:</strong> Today, voice appreciation in three parts: what was done, which need it met, and what you feel.</div>
+
+<h2>Comparison: Ordinary Speech and NVC</h2>
+<div class="tabel-wrap">
+<table class="cmp">
+<thead><tr><th>Area</th><th>Ordinary way</th><th>NVC way</th></tr></thead>
+<tbody>
+<tr><td>Observing</td><td>“You’re lazy.”</td><td>Name a specific, visible event.</td></tr>
+<tr><td>Feelings</td><td>“I feel you’re ignoring me.”</td><td>“I’m sad and lonely.”</td></tr>
+<tr><td>Cause</td><td>“You make me angry.”</td><td>“I’m angry because I need respect.”</td></tr>
+<tr><td>Requesting</td><td>A vague demand.</td><td>A concrete request that can be declined.</td></tr>
+<tr><td>Listening</td><td>Advise and console.</td><td>Be present, catch feelings and needs.</td></tr>
+<tr><td>Conflict</td><td>Debate solutions and compromise.</td><td>Hear needs first, strategies later.</td></tr>
+<tr><td>Toward self</td><td>“I’m stupid!”</td><td>“Which need is unmet?”</td></tr>
+<tr><td>Praising</td><td>“You’re great.”</td><td>Action, need, feeling.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>Three Questions to Sit With</h2>
+<ol class="pertanyaan">
+<li>Which judgment of others do I use most, and what need of mine is really underneath it?</li>
+<li>When did I last jump in with advice when someone only wanted to be heard?</li>
+<li>What am I doing out of “have to,” and what shifts if I change it to “choose to”?</li>
+</ol>
+
+<h2>Closing: Speak and Listen from the Heart</h2>
+<div class="penutup">
+<p>Nearly every wound in a relationship starts the same way: we were busy judging when we should have been understanding. NVC offers a simple road home. Observe without evaluating. Name the feeling. Find the need. Ask clearly. Then do the same when you listen to others, and when you listen to yourself.</p>
+<p>You don’t have to be perfect. Start with one conversation this week, and remember the goal isn’t to win an argument but to build a connection where everyone’s needs have a place.</p>
+<div class="kutip">“…a very rare and difficult thing; it is almost a miracle.”<cite>Simone Weil, on giving attention to a sufferer, quoted by Rosenberg in Chapter 7</cite></div>
+</div>
+
+</div>
+</div>
+</body>
+</html>
