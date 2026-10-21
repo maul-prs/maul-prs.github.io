@@ -1,0 +1,34 @@
+{
+  "id": "1792568520733",
+  "slug": "becoming-a-person-of-influence",
+  "status": "active",
+  "title": "Becoming a Person of Influence",
+  "type": "Book Summary",
+  "categories": [
+    "Business",
+    "Leadership",
+    "Management",
+    "Motivation",
+    "Non-Fiction",
+    "Sales",
+    "Self Help"
+  ],
+  "date": "21 Oktober 2026",
+  "dateISO": "2026-10-21",
+  "coreMessage": "Kamu sudah memengaruhi orang setiap hari, tapi ke arah mana? Dua penulis memetakan empat tahap membangun pengaruh sejati.",
+  "bookData": {
+    "bookTitle": "Becoming a Person of Influence",
+    "bookAuthor": "John C. Maxwell dan Jim Dornan",
+    "bookYear": "1997",
+    "bookMainCategory": "Book Summary",
+    "bookCore": "Kamu sudah memengaruhi orang setiap hari, tapi ke arah mana? Dua penulis memetakan empat tahap membangun pengaruh sejati.",
+    "bookReadTime": "18–29 min read"
+  },
+  "cover": "images/cover-becoming-a-person-of-influence-1792568520717.jpg",
+  "en": {
+    "title": "Becoming a Person of Influence",
+    "coreMessage": "You already influence people every day, but in which direction? Two authors map the four stages of building real influence.",
+    "ogImage": "images/og-becoming-a-person-of-influence-en.jpg"
+  },
+  "ogImage": "images/og-becoming-a-person-of-influence.jpg"
+}

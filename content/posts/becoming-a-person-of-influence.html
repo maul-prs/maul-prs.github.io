@@ -1,0 +1,169 @@
+<style>
+.rangkuman{--pri:#7FE3C8;--acc:#F6B93B;--txt:#F1F1EE;--mut:#C2C6CE;--card:rgba(255,255,255,.055);--line:rgba(255,255,255,.16);--red:#F28B82;--green:#7ED9A4;--blue:#86B8F5;font-family:Lora,Georgia,serif;color:var(--txt);background:transparent;line-height:1.85;font-size:1.05rem;margin:0;padding:0}
+.rangkuman *{box-sizing:border-box}
+.rangkuman p{margin:0 0 1.1em}
+.rangkuman strong{color:#fff}
+.rangkuman h2{font-family:Poppins,sans-serif;font-weight:700;font-size:1.55rem;line-height:1.3;color:var(--acc);margin:2.6em 0 .9em;padding:.7em 0 .5em;border-top:3px solid var(--pri)}
+.rangkuman h3{font-family:Poppins,sans-serif;font-weight:600;font-size:1.1rem;color:var(--pri);margin:1.9em 0 .6em;padding-left:.8em;border-left:4px solid var(--pri)}
+.rangkuman .hook{font-size:1.28rem;line-height:1.7;font-style:italic;border-left:6px solid var(--acc);background:var(--card);padding:1.1em 1.3em;border-radius:0 12px 12px 0;margin:0 0 1.6em}
+.rangkuman .pull{position:relative;background:#0b1714;border:1px solid var(--line);border-radius:14px;padding:2.2em 1.6em 1.4em;margin:2em 0;font-size:1.25rem;line-height:1.6;font-style:italic;color:#fff}
+.rangkuman .pull::before{content:"\201C";position:absolute;top:-.05em;left:.25em;font-family:Poppins,sans-serif;font-size:4.5rem;line-height:1;color:var(--acc)}
+.rangkuman .pull cite{display:block;margin-top:.8em;font-family:Poppins,sans-serif;font-style:normal;font-size:.85rem;color:var(--mut)}
+.rangkuman .callout{border-left:5px solid var(--pri);background:var(--card);border-radius:0 12px 12px 0;padding:1em 1.2em;margin:1.4em 0}
+.rangkuman .callout.amber{border-left-color:var(--acc)}
+.rangkuman .callout.red{border-left-color:var(--red)}
+.rangkuman .callout.green{border-left-color:var(--green)}
+.rangkuman .callout.blue{border-left-color:var(--blue)}
+.rangkuman .callout .ct{display:block;font-family:Poppins,sans-serif;font-weight:600;font-size:.88rem;letter-spacing:.04em;text-transform:uppercase;margin-bottom:.35em;color:#fff}
+.rangkuman .callout p:last-child{margin-bottom:0}
+.rangkuman .ambil{margin:1.1em 0 1.6em;padding:.9em 1.2em;border:1px dashed var(--acc);border-radius:12px;color:var(--txt)}
+.rangkuman .ambil strong{font-family:Poppins,sans-serif;color:var(--acc);font-size:.85rem;letter-spacing:.05em;text-transform:uppercase}
+.rangkuman .tangga{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:1.6em 0;counter-reset:t;align-items:end}
+.rangkuman .tangga .anak{counter-increment:t;background:var(--card);border-radius:12px;padding:1em 1em .9em;border-top:4px solid var(--pri);position:relative}
+.rangkuman .tangga .anak:nth-child(1){min-height:7.5em}
+.rangkuman .tangga .anak:nth-child(2){min-height:9em;border-top-color:var(--green)}
+.rangkuman .tangga .anak:nth-child(3){min-height:10.5em;border-top-color:var(--acc)}
+.rangkuman .tangga .anak:nth-child(4){min-height:12em;border-top-color:var(--red)}
+.rangkuman .tangga .anak::before{content:counter(t);display:inline-flex;align-items:center;justify-content:center;width:1.7em;height:1.7em;border-radius:50%;background:var(--acc);color:#111;font-family:Poppins,sans-serif;font-weight:700;font-size:.8rem;margin-bottom:.45em}
+.rangkuman .tangga .anak b{display:block;font-family:Poppins,sans-serif;color:#fff;font-size:.98rem;margin-bottom:.25em}
+.rangkuman .tangga .anak span{font-size:.9rem;line-height:1.6;color:var(--mut)}
+.rangkuman .tabel-wrap{overflow-x:auto;margin:1.4em 0}
+.rangkuman table.cmp{width:100%;border-collapse:collapse;min-width:520px;font-size:.98rem;line-height:1.6}
+.rangkuman table.cmp th{font-family:Poppins,sans-serif;text-align:left;background:#0b1714;color:var(--acc);padding:.8em 1em;border-bottom:2px solid var(--acc)}
+.rangkuman table.cmp td{padding:.75em 1em;border-bottom:1px solid var(--line);vertical-align:top}
+.rangkuman table.cmp td:first-child{font-family:Poppins,sans-serif;font-weight:600;color:#fff;width:22%}
+.rangkuman table.cmp td:last-child{color:var(--pri)}
+.rangkuman ol.pertanyaan{list-style:none;counter-reset:q;padding:0;margin:1.2em 0}
+.rangkuman ol.pertanyaan li{counter-increment:q;position:relative;background:var(--card);border-radius:12px;padding:1em 1.2em 1em 4em;margin-bottom:12px}
+.rangkuman ol.pertanyaan li::before{content:counter(q);position:absolute;left:1em;top:.85em;width:2em;height:2em;border-radius:50%;background:var(--acc);color:#111;font-family:Poppins,sans-serif;font-weight:700;display:flex;align-items:center;justify-content:center}
+.rangkuman .penutup{background:linear-gradient(135deg,rgba(127,227,200,.18),rgba(246,185,59,.18));border:1px solid var(--line);border-radius:16px;padding:1.6em 1.6em 1.3em;margin-top:1em}
+.rangkuman .penutup p:last-child{margin-bottom:0}
+.rangkuman .penutup .kutip{margin-top:1.2em;padding-top:1em;border-top:1px solid var(--line);font-size:1.2rem;font-style:italic;color:#fff}
+.rangkuman .penutup .kutip cite{display:block;margin-top:.4em;font-family:Poppins,sans-serif;font-style:normal;font-size:.85rem;color:var(--acc)}
+@media (max-width:600px){.rangkuman .tangga{grid-template-columns:1fr 1fr}.rangkuman .tangga .anak{min-height:0!important}.rangkuman h2{font-size:1.35rem}}
+</style>
+
+<div class="rangkuman">
+
+<div class="hook">Seorang petugas bea cukai di bandara hanya memeriksa tas sepasang suami istri, lalu berkata, “Mungkin temanku benar tentang kalian.” Apa yang ia lihat dalam empat puluh lima menit itu, sampai membuatnya mau mendengarkan?</div>
+
+<h2>Pengantar: Semua Orang Punya Pengaruh</h2>
+
+<p>Buku ini ditulis oleh dua orang yang latar belakangnya sangat berbeda. John Maxwell menghabiskan sekitar dua puluh delapan tahun sebagai pendeta, pimpinan organisasi gereja, dan pembicara motivasi, dan dikenal sebagai salah satu pelatih kepemimpinan terkemuka di Amerika. Jim Dornan menghabiskan sekitar tiga puluh tahun di dunia bisnis, mengajari orang menjadi sukses, dan membangun organisasi bisnis di banyak negara. Titik temu mereka satu: <strong>pengaruh</strong>.</p>
+
+<p>Mereka membuka bukunya dengan sebuah tebak-tebakan. Daftar nama yang acak: penulis, atlet, politikus, penghibur, tokoh agama, tiran, dan guru sekolah minggu yang tak dikenal siapa pun. Apa kesamaan mereka? Semuanya orang yang punya pengaruh. Pesannya: <strong>setiap orang memengaruhi orang lain</strong>. Selama hidupmu bersinggungan dengan orang lain, kamu adalah pemengaruh. Persoalannya hanya seberapa besar dan ke arah mana.</p>
+
+<p>Pengaruhmu juga tidak sama pada semua orang. Anakmu yang satu mungkin lebih mendengar kamu, yang lain lebih mendengar pasanganmu. Rekan kerja yang skeptis pada idemu mungkin menyukai semua ide atasanmu. Dan tanpa pengaruh, tidak ada keberhasilan. Penjual butuh memengaruhi pembeli, manajer butuh memengaruhi karyawan, orang tua butuh memengaruhi anak. Buku ini menawarkan peta untuk naik ke tingkat pengaruh yang lebih tinggi, melalui empat tahap yang saling membangun.</p>
+
+<div class="tangga">
+<div class="anak"><b>Menjadi Teladan</b><span>Orang pertama kali dipengaruhi oleh apa yang mereka lihat darimu.</span></div>
+<div class="anak"><b>Memotivasi</b><span>Kamu mendorong dan berkomunikasi dengan mereka di tingkat emosi. Kepercayaan diri mereka tumbuh.</span></div>
+<div class="anak"><b>Membimbing</b><span>Kamu memperbesar potensi mereka, membantu melewati rintangan, dan terhubung secara pribadi.</span></div>
+<div class="anak"><b>Melipatgandakan</b><span>Kamu memberdayakan mereka sampai mereka sendiri menjadi pemengaruh bagi orang lain.</span></div>
+</div>
+
+<p>Tahap pertama, teladan, bekerja bahkan tanpa kata-kata. Anak-anak cenderung meniru apa yang mereka lihat, bukan yang kamu katakan. Saat bertemu orang baru, kamu hampir tidak punya pengaruh sama sekali, kecuali orang yang mereka percaya memperkenalkanmu. Pengaruh “pinjaman” itu hanya sementara. Begitu mereka mengamati tindakanmu, kamu membangunnya atau menghancurkannya. Ada satu pengecualian: selebritas. Banyak orang dipengaruhi tokoh yang belum pernah mereka temui, tetapi yang memengaruhi mereka sebenarnya citranya, bukan orangnya. Untuk naik ke tahap berikutnya, kamu harus bekerja dengan individu, dari dekat.</p>
+<p>Para penulis menyelipkan sebuah anekdot tentang Presiden Calvin Coolidge. Seorang tamu menginap di Gedung Putih dan ingin tampak sopan. Ia melihat Coolidge menuang kopi ke piring kecil, menambah gula dan krim, lalu ia melakukan hal yang sama. Ia terkejut ketika sang presiden meletakkan piring itu di lantai untuk kucingnya. Lucu, tapi menunjukkan kekuatan pengaruh: orang menirumu bahkan tanpa memahami alasannya.</p>
+<div class="callout amber"><span class="ct">Peta bukunya</span><p>Sepuluh bab dalam buku ini mengikuti empat tahap itu. Bab 1 tentang teladan. Bab 2 sampai 5 tentang memotivasi. Bab 6 sampai 8 tentang membimbing. Bab 9 dan 10 tentang melipatgandakan.</p></div>
+
+<h2>Bagian 1: Teladan, Integritas dengan Orang</h2>
+
+<p>Kisah pembukanya terjadi di bandara San Francisco. Setelah berbelanja pakaian di London untuk ulang tahun istrinya, Nancy, Jim dan Nancy memilih jujur dan melaporkan semuanya di bea cukai. Petugas kebingungan karena hampir tak ada yang melapor. Mereka harus memilah semua pakaian berdasarkan bahannya dan membayar bea sekitar dua ribu dolar. Setelah empat puluh lima menit, sang petugas mengenali wajah Jim dari seorang temannya yang bergabung dalam organisasi Jim. Ia berkata, kebanyakan orang berusaha meloloskan barang tanpa membayar, sedangkan mereka malah melaporkan hal yang sebenarnya bisa lolos. Jawaban Nancy singkat: ia lebih sanggup kehilangan uang untuk bea daripada kehilangan hati nurani yang bersih.</p>
+<p>Poinnya, ketika orang merasa anonim, mereka mudah berkata “siapa yang akan tahu?”. Padahal pasangan, anak, dan rekan kerja tahu, dan terlebih lagi kamu sendiri tahu. Buku ini mengutip Stephen Covey: kalau karaktermu cacat dan penuh kepura-puraan, teknik hubungan manusia sebaik apa pun akan dianggap manipulasi. Survei terhadap 1.300 eksekutif senior juga menunjukkan bahwa 71 persen menyebut integritas sebagai kualitas yang paling dibutuhkan untuk sukses.</p>
+<p>Contoh yang kuat datang dari krisis Tylenol. Presiden perusahaan Johnson &amp; Johnson, menurut kisah dalam buku ini, menarik semua kapsul dari rak dalam waktu sejam, keputusan seratus juta dolar, dan ia bilang itu karena mengikuti pernyataan misi perusahaan. Kesimpulannya: <strong>mudah berbuat benar kalau kamu sudah tahu sebelumnya apa yang kamu perjuangkan</strong>. Pilar integritasnya empat: kebenaran, keandalan, kejujuran, dan menjaga rahasia.</p>
+<p>Buku ini menunjukkan betapa mudahnya kita mengabaikan hal ini. Financier Ivan Boesky pernah menyebut keserakahan sebagai “hal yang baik” saat berbicara di sebuah sekolah bisnis. Tak lama kemudian praktik curangnya terbongkar, ia didenda seratus juta dolar dan dipenjara tiga tahun. Para penulis juga mencatat banyaknya pejabat, tokoh agama, dan atlet yang jatuh karena moral. Kesimpulan mereka: kebutuhan akan integritas hari ini mungkin sama besarnya dengan masa lalu, dan mutlak bagi siapa pun yang ingin menjadi pemengaruh.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Selama seminggu, catat setiap kali kamu tidak menceritakan semua kebenaran, lalai pada janji, membiarkan tugas tak selesai, atau membocorkan sesuatu. Lalu kerjakan dulu apa yang <em>seharusnya</em> kamu lakukan sebelum yang kamu <em>inginkan</em>.</div>
+
+<h2>Bagian 2: Memotivasi Orang</h2>
+
+<h3>Bab 2: Memelihara Orang Lain</h3>
+<p>Untuk membantu anak mereka, Eric, lebih mandiri, keluarga Dornan mengajukan seekor anjing pendamping terlatih. Pelatih berpesan satu hal penting pada Eric: kamu sendiri yang harus memberinya makan, karena itulah cara membuat anjing terikat dan menganggapmu tuannya. Mengasih makan membuat anjing percaya dan setia. Orang pun begitu. Mereka butuh “diberi makan”: dorongan, pengakuan, rasa aman, dan harapan. Itulah <strong>memelihara</strong> (nurture).</p>
+<p>Banyak orang mengira jalan menjadi pemengaruh adalah menjadi pihak yang berwenang: mengoreksi kesalahan dan memberi kritik. Tapi seperti kata John Knox, kamu tidak bisa memusuhi dan memengaruhi pada saat yang sama. Inti pemeliharaan adalah kepedulian yang tulus. Kamu tidak bisa membuat orang merasa penting kalau diam-diam menganggapnya bukan siapa-siapa. Periksa juga motifmu: tujuannya pertumbuhan dan kemandirian mereka, bukan kebutuhanmu untuk dibutuhkan. Orang yang kamu pelihara tapi dibuat bergantung padamu sebenarnya sedang kamu rugikan.</p>
+<p>Contoh besarnya: John Wesley menulis surat dorongan kepada William Wilberforce empat hari sebelum Wesley wafat. Wilberforce kemudian berjuang puluhan tahun melawan perdagangan budak, dihina dan diancam, dan setiap kali hampir menyerah ia membaca surat itu lagi. Perdagangan budak dihapus tahun 1807, dan perbudakan dilarang di seluruh Kekaisaran Inggris pada 1833.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Selama sebulan, hentikan kritik negatif dan cari hal positif untuk dikatakan. Kirimkan catatan tangan singkat setiap minggu kepada dua atau tiga orang.</div>
+
+<h3>Bab 3: Percaya pada Orang</h3>
+<p>Di Niagara Falls, pemain akrobat Charles Blondin pernah menyeberangi air terjun di atas tali, bahkan sambil menggendong seorang pria di punggungnya. Jim sering membayangkan siapa yang mau menaruh nyawanya sepenuhnya pada orang lain seperti itu. Itulah gambaran kepercayaan. Penulis menyebut empat fakta tentang iman pada orang. Pertama, sebagian besar orang tidak percaya pada dirinya sendiri. Kedua, sebagian besar orang tidak punya seseorang yang percaya pada mereka. Fakta lainnya menegaskan bahwa kepercayaan seorang influencer sering menjadi satu-satunya hal yang membuat orang berani mencoba.</p>
+<p>Kenyataan pertama itu terlihat dalam komik Shoe: editor koran yang disuruh “percaya pada bola lengkungnya” menjawab bahwa soal percaya pada diri sendiri ia seorang agnostik. Banyak orang begitu. Mereka melihat cahaya di ujung terowongan dan yakin itu kereta yang datang. Padahal, menurut buku ini, jarang sekali kesulitan yang mengalahkan orang. Yang mengalahkan mereka adalah kurangnya iman pada diri sendiri. Dengan sedikit saja kepercayaan diri, orang bisa melakukan hal luar biasa.</p>
+<div class="pull">Saat kamu percaya pada orang, mereka melakukan hal yang mustahil.<cite>Nancy Dornan, dikutip dalam buku</cite></div>
+<p>Contohnya Eric, yang lumpuh sebagian. Jim cenderung bermain aman, tetapi berkat dorongan untuk mencoba ski di National Ability Center di Utah, Eric kini berani mencoba hampir apa saja. Moto pusat itu menjadi miliknya: kalau aku bisa melakukan ini, aku bisa melakukan apa saja. Menaruh kepercayaan pada orang memang berisiko, tapi hasilnya melampaui risikonya.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Sebutkan satu kekuatan orang yang ingin kamu dorong. Ingatkan keberhasilan masa lalunya, dan ungkapkan kepercayaanmu <em>sebelum</em> ia membuktikan diri.</div>
+
+<h3>Bab 4: Mendengarkan Orang</h3>
+<p>Jim muda, lulusan teknik, bekerja di perusahaan pesawat besar dan mulai merekrut orang untuk bisnisnya. Strateginya: duduk di dekat pria yang tampak cerdas di kantin, lalu membanjirinya dengan fakta dan logika. Hasilnya, ia membuat orang takut, dan tak ada yang bergabung. Suatu hari ia hanya mendengarkan seorang rekan bercerita tentang atasan yang menyebalkan, anak yang butuh kawat gigi, dan mobil tua yang hampir mati. Saat itulah ia melihat apa yang bisa membantu orang itu, dan untuk pertama kalinya orang itu benar-benar tertarik. Jim menyadari: ia tak bisa berhasil dengan menumpahkan informasi.</p>
+<p>Menurut buku ini, keterampilan terpenting bagi seorang pemengaruh adalah mendengarkan. Sembilan ukuran pendengar yang baik: menatap pembicara, menunggu ia selesai, menjadikan pemahaman sebagai tujuan, peka pada kebutuhannya saat itu, mengendalikan emosi, menunda penilaian sampai tahu seluruh cerita, merangkum di tengah pembicaraan, bertanya untuk memperjelas, dan menunjukkan bahwa mendengarkan itu prioritas. Kisah Rodney, yang pernah lama marah pada mantan istrinya, menunjukkan hasilnya. Ia menelepon Charlotte, mengatakan ingin memperbaiki segalanya, lalu bertanya bagaimana keadaannya. Mereka bicara berjam-jam, dan mulai ada saling menghormati lagi.</p>
+<p>Buku ini menyarankan cara sederhana untuk mengukur dirimu: minta seseorang yang mengenalmu baik menilai sembilan hal tadi, dan dengarkan penjelasannya tanpa memotong atau membela diri. Lalu pilih tiga hal yang akan kamu perbaiki dalam beberapa minggu ke depan. Ingat juga bahwa tidak pernah terlambat menjadi pendengar yang baik. Kemampuan ini bisa mengubah hidupmu dan hidup orang-orang di sekitarmu.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Jadwalkan satu jam minggu ini dengan orang terpentingmu. Habiskan sedikitnya dua pertiga waktunya untuk mendengarkan.</div>
+
+<h3>Bab 5: Memahami Orang</h3>
+<p>Jim mengira ada dua kunci sukses: kerja keras dan keterampilan teknis. Setelah masuk dunia kerja, ia sadar keberhasilan datang dari kemampuan bekerja dengan orang. Menurut penulis, kunci membangun organisasi, apa pun bidangnya, adalah memahami orang. Presiden Harry Truman pernah berkata bahwa kalau kita memahami sudut pandang orang lain, sembilan dari sepuluh kali mereka sedang berusaha berbuat benar.</p>
+<p>Contohnya sederhana: seorang ibu terkunci di luar rumah, sementara anaknya yang berusia empat tahun di dalam. Daripada memaksa, ia berkata sedih, “Aduh, kamu mengunci dirimu di dalam rumah.” Pintu langsung terbuka. Psikiater David Burns juga mengingatkan bahwa kesalahan terbesar dalam berbicara adalah mengutamakan ekspresi pendapatmu sendiri. Orang ingin didengarkan, dihormati, dan dipahami. Begitu mereka merasa dipahami, mereka lebih mau memahami kamu.</p>
+<p>Alat praktisnya empat pertanyaan setiap kali bertemu orang: dari mana mereka berasal, ke mana mereka ingin pergi, apa kebutuhan mereka sekarang, dan bagaimana aku bisa membantu? Contoh lain: orang tua Jim butuh pohon kecil untuk peneduh di depan apartemen. Jim membelikan pohon terbesar yang bisa ia temukan, karena mereka ingin teduh hari ini, bukan lima belas tahun lagi. Tidak banyak uang, hanya sedikit pengertian.</p>
+<p>Penulis juga mengajak memeriksa sikap sendiri. Kalau kemampuanmu memahami orang belum sebaik yang kamu mau, akar masalahnya mungkin kamu kurang menghargai mereka. Kata Ken Keyes Jr., orang yang penuh kasih hidup di dunia yang penuh kasih, dan orang yang memusuhi hidup di dunia yang memusuhi, karena setiap orang yang kamu temui adalah cerminmu.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Cari tahu apa yang orang inginkan, lalu bantu mereka mendapatkannya. Itu yang menggerakkan mereka.</div>
+
+<h2>Bagian 3: Membimbing Orang</h2>
+
+<h3>Bab 6: Memperbesar Orang</h3>
+<p>Eric menjalani lebih dari tiga puluh operasi otak. Setelah operasi tulang belakang, keluarga Dornan memutuskan mempekerjakan Fernando, seorang pendamping yang dikenal “tak mungkin didapat”, tetapi akhirnya bersedia. Fernando melihat tugasnya sebagai <strong>memperbesar</strong> Eric: terus mendorongnya tumbuh mendekati potensi penuh. Fernando sendiri bukan orang sembarangan. Ia pernah menjadi pelatih keterampilan hidup di sebuah rumah sakit, mengelola rumah singgah bagi anak-anak korban kekerasan, dan bekerja tujuh tahun di bidang rehabilitasi. Ia tak berhenti belajar, dan terus mencari pengalaman baru untuk menantang Eric. Berkat dia, Eric belajar jet ski dengan kecepatan sekitar empat puluh mil per jam, menjadi tutor anak kelas dua, belajar bahasa Jerman, bekerja di kantor dua hari seminggu, berenang, angkat beban, dan main sepak bola kursi roda listrik. Targetnya yang berikutnya: suatu hari mengemudi mobil.</p>
+<p>Yang menarik, yang memperbesar juga ikut bertumbuh. Fernando bercerita bahwa ia belajar harus benar-benar memberi supaya hidupnya bahagia. Orang tua Eric sadar bahwa mereka dulu terlalu protektif. Emerson benar: tak seorang pun bisa dengan tulus membantu orang lain tanpa membantu dirinya sendiri. Pilih orang untuk diperbesar dengan cermat: yang filosofi hidupnya mirip, yang potensinya kamu percaya, yang bisa kamu pengaruhi, dan yang sudah siap.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Tulis tiga nama orang yang akan kamu perbesar. Untuk tiap orang, catat potensi, hasrat, kekuatan, dan langkah berikutnya.</div>
+
+<h3>Bab 7: Menavigasi untuk Orang Lain</h3>
+<p>Seberapa pun berkembangnya seseorang, ia tetap akan menghadapi rintangan. Saat itulah pemengaruh bertindak sebagai navigator. Di bandara Charlotte, John mendapati puluhan penumpang murung karena pesawat tertahan menunggu awak kabin. Ia membeli enam puluh botol minuman dingin dan membagikannya, memperkenalkan dirinya, dan mengajak mereka berbincang. Ketika akhirnya boleh naik, ia juga membagikan kudapan dari dapur pesawat. Saat awak kabin tiba dan mendengar tawa di kabin, suasana sudah berubah.</p>
+<p>Awalnya para penumpang dan petugas menganggap John aneh. Tapi pelan-pelan terjalin kedekatan, dan itulah kuncinya: pemengaruh melihat kekecewaan orang lain sebagai kesempatan membantu, bukan sebagai urusan orang lain. Ia tidak menunggu diminta. Ia membaca situasi, memikirkan apa yang dibutuhkan, lalu bertindak.</p>
+<p>Ada pula kisah Jim dan Nancy yang nyaris ketinggalan kapal pesiar karena sebuah masalah dan akhirnya sampai tepat waktu setelah berimprovisasi. Penulis menyimpulkan bahwa kemampuan menavigasi bisa dipelajari lewat latihan. Untuk orang yang kamu bimbing, cari tahu tujuan mereka: apa yang membuat mereka menangis, bernyanyi, dan bermimpi. Lalu antisipasi kesulitan yang kemungkinan datang dan rencanakan bantuanmu. Kalau kamu menolong seseorang di saat tergelapnya, ia akan menjadi temanmu seumur hidup.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Untuk tiga orang yang kamu bimbing, tulis kesulitan yang mungkin mereka hadapi bulan depan dan satu hal yang bisa kamu siapkan sekarang.</div>
+
+<h3>Bab 8: Terhubung dengan Orang</h3>
+<p>John diundang kembali ke gereja kecil di Hillham, Indiana, tempat ia bertugas sebagai pendeta pertama dua puluh lima tahun sebelumnya, untuk merayakan ulang tahun gedungnya. Ia tidak mau datang sebagai pahlawan penakluk. Maka ia meminta buku direktori jemaat bergambar, menghafal wajah dan nama, dan menyiapkan khotbah penuh pengalaman bersama. Ia menceritakan kesalahannya sendiri dan kemenangan mereka. Ia dan Margaret datang lebih awal untuk menghabiskan Sabtu sore dengan orang-orang lama. Salah satunya seorang pria di kursi roda yang dulu pernah koma. John pernah menjenguknya dan berbicara kepadanya meski tak sadar. Ia baru tahu pria itu sadar kembali dan ingat kunjungan itu.</p>
+<p>Menurut penulis, kamu tidak bisa membawa orang dalam perjalanan sebelum terhubung secara pribadi. Dan kamu yang harus mengambil inisiatif: ajak minum kopi, makan bersama, atau tinggal dalam suasana nonformal. Cari titik temu dan pengalaman bersama, lalu bagikan visi tentang masa depan bersama. Mereka menerapkannya sampai ke Eropa Timur dan Tiongkok. Walau budayanya berbeda, semua orang pada dasarnya sama: ingin sukses, bahagia, dan belajar dari yang sudah lebih dulu berjalan.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Ingat nama, kisah, dan pengalaman bersama dengan orang yang ingin kamu pengaruhi, dan jadilah pihak yang memulai.</div>
+
+<h2>Bagian 4: Melipatgandakan Pengaruh</h2>
+
+<h3>Bab 9: Memberdayakan Orang</h3>
+<p>Di Deer Valley, Jim dan rombongannya dikenakan biaya dua puluh lima dolar karena satu kunci kamar tertinggal. Pegawai itu tidak mau melonggarkan aturan, padahal Jim sudah delapan tahun menjadi pelanggan dan menghabiskan ribuan dolar. Dengan hitungannya, pegawai itu mempertaruhkan sekitar seratus ribu dolar demi kunci seharga dua puluh lima dolar. Nancy lalu bercerita tentang Nordstrom: seorang pramuniaga bersedia menjahit ujung celana piyama dan mengantarnya ke rumah malam itu juga, padahal itu satu-satunya yang dibeli. Perusahaan itu menyambut pegawai baru dengan satu aturan: gunakan penilaian terbaikmu dalam semua situasi.</p>
+<p>Itulah <strong>pemberdayaan</strong>: percaya pada orang, mendorong mereka mencapai yang terbaik, lalu melepaskan mereka. Tom Peters benar bahwa kualitas lahir dari orang yang peduli, bukan dari teknik. Dalam buku ini, pemberdayaan juga mengubah hidup seseorang bernama Mitch Sala, yang dulu merasa gagal dan kini memengaruhi ratusan ribu orang. Mitch menulis kepada Jim bahwa masa remajanya di sekolah asrama membuatnya merasa seperti pecundang, dan perasaan itu mendorongnya bekerja keras membuktikan diri tanpa pernah merasa cukup. Jim hadir di saat yang tepat, memahaminya, dan menerimanya walau penuh kekurangan. Dari situ ia bertumbuh dalam keluarga, keuangan, dan imannya. Sebelum menyerahkan tugas, periksa: apa tugasnya, siapa orangnya, apakah ia punya pengetahuan dan keterampilan, sudahkah kamu memberi contoh, sudahkah ia punya wewenang, sudahkah kamu menyatakan kepercayaanmu di depan umum, sudahkah kamu memberi umpan balik secara pribadi, dan kapan kamu melepasnya.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Jangan hanya memberi tugas. Beri wewenang, contoh, dan kepercayaan yang diucapkan di depan orang lain.</div>
+
+<h3>Bab 10: Melahirkan Pemengaruh Lain</h3>
+<p>Orang yang paling bernilai dalam hidup Jim dan John adalah mereka yang tak hanya memengaruhi, tapi juga menjadikan mereka pemengaruh. Bagi John, itu ayahnya, Melvin Maxwell. Bagi Jim, itu Rich DeVos, yang ia dengar berbicara saat berusia dua puluhan tentang kebebasan, nilai individu, mimpi, dan iman. Hidup Jim berubah. Gambarnya adalah estafet: kalau kamu berlari dengan baik tapi tak bisa menyerahkan tongkat, kamu kalah. Kalau kamu melatih pelari lain dan menyerahkannya dengan mulus, kamu menang.</p>
+<p>Manfaatnya besar. Kalau kamu memengaruhi pemimpin, kamu secara tidak langsung memengaruhi semua orang yang mereka pengaruhi. Efeknya perkalian. Kalau kamu hanya memengaruhi orang yang tak bisa atau tak mau memengaruhi orang lain, pengaruhmu terbatas. Dan setiap kali kamu membantu seseorang menjadi lebih baik, kamu juga menaikkan potensi pribadinya. Tanpa serah terima, momentum mati bersama orang yang berhenti berlari. Pemimpin baru itu juga mencapai potensi pribadinya. Rantainya sudah terbukti: Jim menyerahkan tongkat pada Mitch, Mitch pada Robert Angkasa, dan kini Robert memengaruhi ribuan orang di Indonesia, Malaysia, Tiongkok, dan Filipina. Langkahnya: kembangkan kepemimpinanmu sendiri, temukan orang berpotensi, ajarkan ia menjadi pemimpin dan bukan hanya pelaksana, berikan akses penuh padamu, lalu bantu ia memilih orang berikutnya.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Pilih satu orang berpotensi yang mau dikembangkan. Ajari ia menjadi pemimpin, lalu minta ia membimbing orang lain.</div>
+
+<h2>Perbandingan: Cara Biasa dan Cara Buku Ini</h2>
+<div class="tabel-wrap">
+<table class="cmp">
+<thead><tr><th>Hal</th><th>Cara biasa</th><th>Cara yang diajarkan buku ini</th></tr></thead>
+<tbody>
+<tr><td>Sumber pengaruh</td><td>Jabatan dan otoritas.</td><td>Tahap demi tahap: teladan, motivasi, bimbingan, lalu pelipatgandaan.</td></tr>
+<tr><td>Karakter</td><td>Reputasi dan citra.</td><td>Konsistensi pada hal-hal kecil saat tak ada yang melihat.</td></tr>
+<tr><td>Cara memengaruhi</td><td>Mengoreksi dan memberi kritik.</td><td>Memelihara dengan dorongan, pengakuan, dan harapan.</td></tr>
+<tr><td>Percaya pada orang</td><td>Menunggu mereka membuktikan diri.</td><td>Menyatakan percaya sebelum hasil muncul.</td></tr>
+<tr><td>Berbicara</td><td>Membanjiri dengan informasi.</td><td>Mendengarkan lebih dulu dan lebih lama.</td></tr>
+<tr><td>Memahami orang</td><td>Menebak-nebak.</td><td>Bertanya: dari mana, ke mana, kebutuhan sekarang, bagaimana membantu.</td></tr>
+<tr><td>Membantu orang tumbuh</td><td>Memberi tugas.</td><td>Memperbesar potensi dan menavigasi rintangan.</td></tr>
+<tr><td>Hubungan</td><td>Formal dan berjarak.</td><td>Terhubung lewat nama, kisah bersama, dan waktu pribadi.</td></tr>
+<tr><td>Mendelegasikan</td><td>Menyerahkan pekerjaan.</td><td>Memberdayakan dengan pengetahuan, wewenang, dan kepercayaan.</td></tr>
+<tr><td>Tujuan akhir</td><td>Pengaruhku besar.</td><td>Melahirkan pemengaruh baru agar pengaruh berlipat.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>Tiga Pertanyaan untuk Merenung</h2>
+<ol class="pertanyaan">
+<li>Hal kecil apa tentang kejujuran yang sering kuabaikan, dan bagaimana orang di sekitarku akan menilainya kalau mereka tahu?</li>
+<li>Siapa yang terakhir kali kuberi semangat dengan tulus, dan siapa yang lebih sering kuberi kritik daripada dorongan?</li>
+<li>Kalau aku harus menyerahkan tongkat estafet hari ini, siapa yang akan kupilih, dan apa yang perlu kuajarkan lebih dulu kepadanya?</li>
+</ol>
+
+<h2>Penutup: Serahkan Tongkatnya</h2>
+<div class="penutup">
+<p>Kamu tidak perlu jabatan tinggi untuk mulai. Pengaruh dimulai dari hal yang paling dekat: cara kamu menepati janji, cara kamu mendengarkan, dan cara kamu menyampaikan kepada seseorang bahwa kamu percaya padanya. Orang yang menyapu lantai pun bisa menjadi guru bagi seseorang yang kelak mengubah hidup orang lain.</p>
+<p>Mulailah minggu ini. Pilih satu orang. Dengarkan lebih lama dari biasanya, tuliskan catatan tangan, dan katakan satu hal yang kamu kagumi darinya. Lalu lihat apa yang berubah. Tidak perlu sempurna, cukup tulus dan konsisten.</p>
+<p>Pada akhirnya, ukuran pengaruhmu bukan seberapa banyak orang mengikutimu. Ukurannya seberapa banyak orang yang kamu bantu menjadi lebih besar dari dirimu.</p>
+<div class="kutip">“Orang paling dipengaruhi oleh mereka yang membuat mereka merasa terbaik tentang dirinya sendiri.”<cite>John Maxwell dan Jim Dornan</cite></div>
+</div>
+
+</div>

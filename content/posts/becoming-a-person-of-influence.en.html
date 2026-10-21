@@ -1,0 +1,172 @@
+<style>
+.rangkuman{--pri:#7FE3C8;--acc:#F6B93B;--txt:#F1F1EE;--mut:#C2C6CE;--card:rgba(255,255,255,.055);--line:rgba(255,255,255,.16);--red:#F28B82;--green:#7ED9A4;--blue:#86B8F5;font-family:Lora,Georgia,serif;color:var(--txt);background:transparent;line-height:1.85;font-size:1.05rem;margin:0;padding:0}
+.rangkuman *{box-sizing:border-box}
+.rangkuman p{margin:0 0 1.1em}
+.rangkuman strong{color:#fff}
+.rangkuman h2{font-family:Poppins,sans-serif;font-weight:700;font-size:1.55rem;line-height:1.3;color:var(--acc);margin:2.6em 0 .9em;padding:.7em 0 .5em;border-top:3px solid var(--pri)}
+.rangkuman h3{font-family:Poppins,sans-serif;font-weight:600;font-size:1.1rem;color:var(--pri);margin:1.9em 0 .6em;padding-left:.8em;border-left:4px solid var(--pri)}
+.rangkuman .hook{font-size:1.28rem;line-height:1.7;font-style:italic;border-left:6px solid var(--acc);background:var(--card);padding:1.1em 1.3em;border-radius:0 12px 12px 0;margin:0 0 1.6em}
+.rangkuman .pull{position:relative;background:#0b1714;border:1px solid var(--line);border-radius:14px;padding:2.2em 1.6em 1.4em;margin:2em 0;font-size:1.25rem;line-height:1.6;font-style:italic;color:#fff}
+.rangkuman .pull::before{content:"\201C";position:absolute;top:-.05em;left:.25em;font-family:Poppins,sans-serif;font-size:4.5rem;line-height:1;color:var(--acc)}
+.rangkuman .pull cite{display:block;margin-top:.8em;font-family:Poppins,sans-serif;font-style:normal;font-size:.85rem;color:var(--mut)}
+.rangkuman .callout{border-left:5px solid var(--pri);background:var(--card);border-radius:0 12px 12px 0;padding:1em 1.2em;margin:1.4em 0}
+.rangkuman .callout.amber{border-left-color:var(--acc)}
+.rangkuman .callout.red{border-left-color:var(--red)}
+.rangkuman .callout.green{border-left-color:var(--green)}
+.rangkuman .callout.blue{border-left-color:var(--blue)}
+.rangkuman .callout .ct{display:block;font-family:Poppins,sans-serif;font-weight:600;font-size:.88rem;letter-spacing:.04em;text-transform:uppercase;margin-bottom:.35em;color:#fff}
+.rangkuman .callout p:last-child{margin-bottom:0}
+.rangkuman .ambil{margin:1.1em 0 1.6em;padding:.9em 1.2em;border:1px dashed var(--acc);border-radius:12px;color:var(--txt)}
+.rangkuman .ambil strong{font-family:Poppins,sans-serif;color:var(--acc);font-size:.85rem;letter-spacing:.05em;text-transform:uppercase}
+.rangkuman .tangga{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:1.6em 0;counter-reset:t;align-items:end}
+.rangkuman .tangga .anak{counter-increment:t;background:var(--card);border-radius:12px;padding:1em 1em .9em;border-top:4px solid var(--pri);position:relative}
+.rangkuman .tangga .anak:nth-child(1){min-height:7.5em}
+.rangkuman .tangga .anak:nth-child(2){min-height:9em;border-top-color:var(--green)}
+.rangkuman .tangga .anak:nth-child(3){min-height:10.5em;border-top-color:var(--acc)}
+.rangkuman .tangga .anak:nth-child(4){min-height:12em;border-top-color:var(--red)}
+.rangkuman .tangga .anak::before{content:counter(t);display:inline-flex;align-items:center;justify-content:center;width:1.7em;height:1.7em;border-radius:50%;background:var(--acc);color:#111;font-family:Poppins,sans-serif;font-weight:700;font-size:.8rem;margin-bottom:.45em}
+.rangkuman .tangga .anak b{display:block;font-family:Poppins,sans-serif;color:#fff;font-size:.98rem;margin-bottom:.25em}
+.rangkuman .tangga .anak span{font-size:.9rem;line-height:1.6;color:var(--mut)}
+.rangkuman .tabel-wrap{overflow-x:auto;margin:1.4em 0}
+.rangkuman table.cmp{width:100%;border-collapse:collapse;min-width:520px;font-size:.98rem;line-height:1.6}
+.rangkuman table.cmp th{font-family:Poppins,sans-serif;text-align:left;background:#0b1714;color:var(--acc);padding:.8em 1em;border-bottom:2px solid var(--acc)}
+.rangkuman table.cmp td{padding:.75em 1em;border-bottom:1px solid var(--line);vertical-align:top}
+.rangkuman table.cmp td:first-child{font-family:Poppins,sans-serif;font-weight:600;color:#fff;width:22%}
+.rangkuman table.cmp td:last-child{color:var(--pri)}
+.rangkuman ol.pertanyaan{list-style:none;counter-reset:q;padding:0;margin:1.2em 0}
+.rangkuman ol.pertanyaan li{counter-increment:q;position:relative;background:var(--card);border-radius:12px;padding:1em 1.2em 1em 4em;margin-bottom:12px}
+.rangkuman ol.pertanyaan li::before{content:counter(q);position:absolute;left:1em;top:.85em;width:2em;height:2em;border-radius:50%;background:var(--acc);color:#111;font-family:Poppins,sans-serif;font-weight:700;display:flex;align-items:center;justify-content:center}
+.rangkuman .penutup{background:linear-gradient(135deg,rgba(127,227,200,.18),rgba(246,185,59,.18));border:1px solid var(--line);border-radius:16px;padding:1.6em 1.6em 1.3em;margin-top:1em}
+.rangkuman .penutup p:last-child{margin-bottom:0}
+.rangkuman .penutup .kutip{margin-top:1.2em;padding-top:1em;border-top:1px solid var(--line);font-size:1.2rem;font-style:italic;color:#fff}
+.rangkuman .penutup .kutip cite{display:block;margin-top:.4em;font-family:Poppins,sans-serif;font-style:normal;font-size:.85rem;color:var(--acc)}
+@media (max-width:600px){.rangkuman .tangga{grid-template-columns:1fr 1fr}.rangkuman .tangga .anak{min-height:0!important}.rangkuman h2{font-size:1.35rem}}
+</style>
+
+<div class="rangkuman">
+
+<div class="hook">A customs officer at an airport examined a couple's bags, then said, "Maybe my friend is right about you two." What did he see in forty-five minutes that made him willing to listen?</div>
+
+<h2>Introduction: Everyone Has Influence</h2>
+
+<p>This book was written by two people with very different backgrounds. John Maxwell spent about twenty-eight years as a pastor, church-organization executive, and motivational speaker, and is known as one of America's leading leadership trainers. Jim Dornan spent about thirty years in business, teaching people how to succeed and building a business organization in many countries. They share one meeting point: <strong>influence</strong>.</p>
+
+<p>They open the book with a guessing game. A random list of names: writers, athletes, politicians, entertainers, religious leaders, tyrants, and a Sunday school teacher nobody has heard of. What do they share? Every one of them is a person of influence. The message: <strong>everyone influences others</strong>. As long as your life touches other people, you are an influencer. The only question is how big, and in what direction.</p>
+
+<p>Your influence is also not equal with everyone. One of your children may listen to you more, another to your spouse. A coworker who is skeptical of your ideas may love everything your boss proposes. And without influence, there is no success. Salespeople need to influence buyers, managers need to influence employees, parents need to influence children. This book offers a map for rising to higher levels of influence, through four stages that build on each other.</p>
+
+<div class="tangga">
+<div class="anak"><b>Model</b><span>People are first influenced by what they see in you.</span></div>
+<div class="anak"><b>Motivate</b><span>You encourage them and connect on an emotional level. Their confidence grows.</span></div>
+<div class="anak"><b>Mentor</b><span>You enlarge their potential, help them through obstacles, and connect personally.</span></div>
+<div class="anak"><b>Multiply</b><span>You empower them until they become influencers of others themselves.</span></div>
+</div>
+
+<p>The first stage, modeling, works even without words. Children tend to copy what they see, not what you say. When you meet new people, you have almost no influence at all, unless someone they trust introduces you. That "borrowed" influence is only temporary. Once they observe your actions, you either build it or bust it. There is one exception: celebrities. Many people are influenced by figures they have never met, but what influences them is really the image, not the person. To climb to the next stage, you have to work with individuals, up close.</p>
+<p>The authors slip in an anecdote about President Calvin Coolidge. A guest staying at the White House wanted to look well-mannered. He saw Coolidge pour coffee into a saucer, add sugar and cream, and did the same. He was horrified when the president set the saucer on the floor for his cat. Funny, but it shows the power of influence: people copy you even without understanding why.</p>
+
+<div class="callout amber"><span class="ct">The map of the book</span><p>The ten chapters follow those four stages. Chapter 1 is about modeling. Chapters 2 to 5 are about motivating. Chapters 6 to 8 are about mentoring. Chapters 9 and 10 are about multiplying.</p></div>
+
+<h2>Part 1: Model, Integrity with People</h2>
+
+<p>The opening story takes place at San Francisco airport. After shopping for clothes in London for his wife Nancy's birthday, Jim and Nancy chose to declare everything at customs. The officer was baffled because almost nobody declares. They had to sort all the clothing by fabric and pay duty of about two thousand dollars. After forty-five minutes, the officer recognized Jim's face from a friend who had joined Jim's organization. He said most people try to sneak things through without paying, while these two declared what could have slipped by. Nancy's answer was short: she would rather lose the money for duty than lose a clear conscience.</p>
+<p>The point: when people feel anonymous, it is easy to say "who will ever know?" Yet your spouse, children, and coworkers know, and above all you know. The book quotes Stephen Covey: if your character is flawed and full of pretense, even the best human-relations techniques will be seen as manipulation. A survey of 1,300 senior executives also showed 71 percent named integrity as the quality most needed to succeed.</p>
+<p>A powerful example comes from the Tylenol crisis. The president of Johnson &amp; Johnson, according to the story in this book, pulled all the capsules off the shelves within an hour, a hundred-million-dollar decision, and said he was just following the company's mission statement. The takeaway: <strong>it is easy to do right when you know ahead of time what you stand for</strong>. The four pillars of integrity: truth, reliability, honesty, and confidentiality.</p>
+<p>The book shows how easy it is to overlook this. Financier Ivan Boesky once called greed "a good thing" in a talk at a business school. Soon his crooked practices came to light, he was fined a hundred million dollars and sent to prison for three years. The authors also note the many officials, religious figures, and athletes who have fallen morally. Their conclusion: the need for integrity today may be as great as ever, and it is essential for anyone who wants to become a person of influence.</p>
+<div class="ambil"><strong>Lesson:</strong> For one week, note every time you do not tell the whole truth, neglect a promise, leave a task unfinished, or break a confidence. Then do what you <em>should</em> do before what you <em>want</em> to do.</div>
+
+<h2>Part 2: Motivate People</h2>
+
+<h3>Chapter 2: Nurturing Other People</h3>
+<p>To help their son Eric become more independent, the Dornans applied for a trained companion dog. The trainer gave Eric one important instruction: you must be the one who feeds her, because that is how the dog bonds and looks to you as her master. Feeding makes a dog trust and follow you. People are the same. They need to be "fed": encouragement, recognition, security, and hope. That is <strong>nurturing</strong>.</p>
+<p>Many people assume the way to become an influencer is to be an authority figure: correct mistakes and give criticism. But as John Knox said, you cannot antagonize and influence at the same time. At the heart of nurturing is genuine concern. You cannot make people feel important if you secretly think they are nobody. Check your motives too: the goal is their growth and independence, not your need to be needed. A person you nurture but keep dependent on you is actually being harmed.</p>
+<p>The big example: John Wesley wrote an encouraging letter to William Wilberforce four days before Wesley died. Wilberforce then fought the slave trade for decades, slandered and threatened, and each time he nearly gave up he reread that letter. The slave trade was abolished in 1807, and slavery was outlawed throughout the British Empire in 1833.</p>
+<div class="ambil"><strong>Lesson:</strong> For one month, drop negative criticism and look for positive things to say. Send a short handwritten note each week to two or three people.</div>
+
+<h3>Chapter 3: Having Faith in People</h3>
+<p>At Niagara Falls, the acrobat Charles Blondin once crossed the falls on a tightrope, even carrying a man on his back. Jim often wondered who would trust someone with their life like that. That is the picture of faith in people. The authors list four facts about it. First, most people do not have faith in themselves. Second, most people do not have someone who has faith in them. The other facts underline that an influencer's belief is often the only thing that gives people courage to try.</p>
+<div class="pull">When you believe in people, they do the impossible.<cite>Nancy Dornan, quoted in the book</cite></div>
+<p>The first fact shows in a Shoe comic strip: the newspaper editor told to "have faith in your curveball" replies that when it comes to believing in himself, he is an agnostic. Many people are like that. They see light at the end of the tunnel and are convinced it is a train. Yet, according to this book, difficulties seldom defeat people. What defeats them is a lack of faith in themselves. With even a little faith, people can do remarkable things.</p>
+<p>Take Eric, who has physical limitations. Jim tends to play it safe, but thanks to the push to try skiing at the National Ability Center in Utah, Eric now dares to try almost anything. The center's motto became his own: if I can do this, I can do anything. Putting faith in people is risky, but the rewards outweigh the risks.</p>
+<div class="ambil"><strong>Lesson:</strong> Name one strength in someone you want to encourage. Recall their past successes, and express your faith <em>before</em> they prove themselves.</div>
+
+<h3>Chapter 4: Listening to People</h3>
+<p>Young Jim, an engineering graduate working at a large aircraft company, began recruiting for his business. His strategy: sit near a sharp-looking guy in the cafeteria and bombard him with facts and logic. The result: he intimidated people, and nobody joined. One day he simply listened to a coworker talk about an annoying boss, a child needing braces, and a dying old car. Then he saw what could help that man, and for the first time the man was truly interested. Jim realized he could not succeed by dumping information.</p>
+<p>According to this book, the most important skill for an influencer is listening. The nine marks of a good listener: look at the speaker, wait until they finish, make understanding your goal, be sensitive to their immediate need, check your emotions, suspend judgment until you have the whole story, sum up at major points, ask clarifying questions, and show that listening is a priority. The story of Rodney, long angry at his ex-wife, shows the result. He called Charlotte, said he wanted to make things right, then asked how she was doing. They talked for hours, and mutual respect began to return.</p>
+<p>The book suggests a simple way to measure yourself: ask someone who knows you well to rate you on those nine, and listen to the explanation without interrupting or defending yourself. Then choose three things to improve over the coming weeks. And remember it is never too late to become a good listener. It can change your life and the lives of the people around you.</p>
+<div class="ambil"><strong>Lesson:</strong> Schedule one hour this week with your most important person. Spend at least two-thirds of the time listening.</div>
+
+<h3>Chapter 5: Understanding People</h3>
+<p>Jim used to think there were two keys to success: hard work and technical skill. After entering the workforce, he realized success comes from being able to work with people. According to the authors, the key to building an organization, in any field, is understanding people. President Harry Truman said that when we understand another person's viewpoint, nine times out of ten they are trying to do right.</p>
+<p>A simple example: a mother is locked out of the house while her four-year-old is inside. Instead of demanding, she says sadly, "Oh, too bad, you locked yourself in the house." The door opens at once. Psychiatrist David Burns also warned that the biggest mistake in talking is to put priority on expressing your own views. People want to be listened to, respected, and understood. The moment they feel understood, they become more willing to understand you.</p>
+<p>The practical tool is four questions every time you meet someone: where did they come from, where do they want to go, what is their need now, and how can I help? Another example: Jim's parents needed a small tree for shade in front of their apartment. Jim bought the biggest tree he could find, because they wanted shade today, not fifteen years from now. It did not take a lot of money, just a little understanding.</p>
+<p>The authors also invite a check of your own attitude. If your ability to understand people is not what you want, the root cause may be that you do not value others enough. As Ken Keyes Jr. said, a loving person lives in a loving world, and a hostile person in a hostile one, because everyone you meet is your mirror.</p>
+<div class="ambil"><strong>Lesson:</strong> Find out what people want, then help them get it. That is what moves them.</div>
+
+<h2>Part 3: Mentor People</h2>
+
+<h3>Chapter 6: Enlarging People</h3>
+<p>Eric has been through more than thirty brain operations. After his spinal surgery, the Dornans decided to hire Fernando, an attendant described as someone "you'll never get," who agreed in the end. Fernando saw his job as <strong>enlarging</strong> Eric: continually pushing him to grow toward his full potential. Fernando himself is no ordinary person. He had been a life skills trainer at a hospital, managed a group home for abused children, and worked seven years in rehabilitation. He never stops learning, and keeps looking for new experiences to challenge Eric.</p>
+<p>Thanks to him, Eric learned to jet ski at about forty miles per hour, tutors second graders, studies German, works at the office two days a week, swims, lifts weights, and plays power soccer. His next goal: someday to drive a car.</p>
+<p>Interestingly, the enlarger grows too. Fernando said he is learning that he has to really give to have joy in his life. Eric's parents realized they had been overprotective. Emerson was right: no one can sincerely try to help another without helping himself. Choose carefully whom you enlarge: people whose life philosophy is similar to yours, whose potential you believe in, whom you can positively impact, and who are ready.</p>
+<div class="ambil"><strong>Lesson:</strong> Write down three names of people you will enlarge. For each, note potential, passion, strengths, and next step.</div>
+
+<h3>Chapter 7: Navigating for Other People</h3>
+<p>No matter how much someone grows, they will still face obstacles. That is when an influencer acts as a navigator. At the Charlotte airport, John found dozens of passengers moping because their plane was held waiting for flight attendants. He bought sixty cold drinks and handed them out, introduced himself, and chatted with them. When boarding finally opened, he also passed out snacks from the plane's galley. By the time the crew arrived and heard laughter in the cabin, the mood had changed.</p>
+<p>At first the passengers and staff thought John was odd. But rapport formed slowly, and that is the key: an influencer sees other people's disappointment as a chance to help, not as someone else's business. He does not wait to be asked. He reads the situation, thinks about what is needed, then acts.</p>
+<p>There is also the story of Jim and Nancy nearly missing a cruise ship over a mishap and arriving just in time by improvising. The authors conclude that the ability to navigate can be learned through practice. For the people you mentor, find their destination: what makes them cry, sing, and dream. Then anticipate the difficulties likely to come and plan your help. If you help someone in their darkest hour, they become a friend for life.</p>
+<div class="ambil"><strong>Lesson:</strong> For three people you mentor, write the difficulty they might face next month and one thing you can prepare now.</div>
+
+<h3>Chapter 8: Connecting with People</h3>
+<p>John was invited back to a small church in Hillham, Indiana, where he had served as first pastor twenty-five years earlier, to celebrate the anniversary of its building. He did not want to arrive as a conquering hero. So he asked for the church directory with pictures, memorized faces and names, and prepared a message full of shared experiences. He told of his own mistakes and their victories. He and Margaret came early to spend Saturday afternoon with the old-timers. One was a man in a wheelchair who had once been in a coma. John had visited him and spoken to him even though he was unconscious. He had only now learned the man had recovered and remembered the visit.</p>
+<p>According to the authors, you cannot take people on a journey before connecting personally. And you must be the one to take the initiative: invite them for coffee, a meal, or relaxed time. Find common ground and shared experiences, then share your vision of a common future. They applied it as far as Eastern Europe and China. Though cultures differ, everyone is basically the same: wanting to be successful, happy, and to learn from those who have gone ahead.</p>
+<div class="ambil"><strong>Lesson:</strong> Remember names, stories, and shared experiences with the people you want to influence, and be the one to initiate.</div>
+
+<h2>Part 4: Multiplying Influence</h2>
+
+<h3>Chapter 9: Empowering People</h3>
+<p>At Deer Valley, Jim and his group were charged twenty-five dollars for a room key left behind. The clerk would not bend the rule, though Jim had been a customer for eight years and spent thousands of dollars. By his reckoning, the clerk was putting about a hundred thousand dollars of history at risk over a twenty-five-dollar key. Nancy then told of Nordstrom: a salesclerk offered to hem pajama pants and deliver them to the house that same night, even though it was the only thing she bought. That company greets new employees with one rule: use your good judgment in all situations.</p>
+<p>That is <strong>empowerment</strong>: trusting people, encouraging them to achieve their best, then releasing them. Tom Peters was right that quality comes from people who care, not techniques. In this book, empowerment also changed the life of a man named Mitch Sala, who once felt like a failure and now influences hundreds of thousands of people. Mitch wrote to Jim that his boarding school years left him feeling like a loser, and that feeling drove him to work hard to prove himself without ever feeling like enough. Jim showed up at the right time, understood him, and accepted him despite his flaws. From there he grew in family, finances, and faith.</p>
+<p>Before handing off a task, check: what is the task, who is the person, do they have the knowledge and skills, have you modeled it, do they have the authority, have you voiced your confidence publicly, have you given feedback privately, and when will you release them.</p>
+<div class="ambil"><strong>Lesson:</strong> Do not just give a task. Give authority, a model, and confidence voiced in front of others.</div>
+
+<h3>Chapter 10: Reproducing Other Influencers</h3>
+<p>The most valuable people in Jim's and John's lives are those who not only influenced them but made them influencers. For John, it was his father, Melvin Maxwell. For Jim, it was Rich DeVos, whom he heard speak in his twenties about freedom, individual worth, dreams, and faith. Jim's life changed. The picture is a relay: if you run well but cannot pass the baton, you lose. If you train other runners and hand it off smoothly, you win.</p>
+<p>The benefits are big. When you influence leaders, you indirectly influence everyone they influence. The effect is multiplication. If you only influence people who cannot or will not influence others, your influence is limited. And each time you help someone become better, you raise their personal potential too. Without a handoff, momentum dies with the person who stops running. The chain is proven: Jim handed the baton to Mitch, Mitch to Robert Angkasa, and now Robert influences thousands of people in Indonesia, Malaysia, China, and the Philippines. The steps: develop your own leadership, find people with potential, teach them to lead rather than just perform tasks, give them full access to you, then help them choose the next person.</p>
+<div class="ambil"><strong>Lesson:</strong> Pick one person with potential who wants to be developed. Teach them to lead, then ask them to mentor someone else.</div>
+
+<h2>Comparison: The Usual Way and This Book's Way</h2>
+<div class="tabel-wrap">
+<table class="cmp">
+<thead><tr><th>Topic</th><th>The usual way</th><th>The way this book teaches</th></tr></thead>
+<tbody>
+<tr><td>Source of influence</td><td>Position and authority.</td><td>Stage by stage: model, motivate, mentor, then multiply.</td></tr>
+<tr><td>Character</td><td>Reputation and image.</td><td>Consistency in small things when no one is watching.</td></tr>
+<tr><td>Influencing</td><td>Correct and criticize.</td><td>Nurture with encouragement, recognition, and hope.</td></tr>
+<tr><td>Believing in people</td><td>Wait for them to prove themselves.</td><td>State your belief before results appear.</td></tr>
+<tr><td>Talking</td><td>Bombard with information.</td><td>Listen first and longer.</td></tr>
+<tr><td>Understanding people</td><td>Guess.</td><td>Ask: where from, where to, need now, how to help.</td></tr>
+<tr><td>Helping people grow</td><td>Assign tasks.</td><td>Enlarge potential and navigate obstacles.</td></tr>
+<tr><td>Relationships</td><td>Formal and distant.</td><td>Connect through names, shared stories, and personal time.</td></tr>
+<tr><td>Delegating</td><td>Hand over the work.</td><td>Empower with knowledge, authority, and confidence.</td></tr>
+<tr><td>Ultimate goal</td><td>My influence is big.</td><td>Raise new influencers so influence multiplies.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>Three Questions to Reflect On</h2>
+<ol class="pertanyaan">
+<li>What small thing about honesty do I often overlook, and how would the people around me judge it if they knew?</li>
+<li>Whom did I last encourage sincerely, and whom do I give criticism more often than encouragement?</li>
+<li>If I had to pass the baton today, whom would I choose, and what would I need to teach them first?</li>
+</ol>
+
+<h2>Closing: Pass the Baton</h2>
+<div class="penutup">
+<p>You do not need a high position to start. Influence begins with what is closest: how you keep promises, how you listen, and how you tell someone you believe in them. Even a person sweeping floors can be a teacher to someone who later changes other people's lives.</p>
+<p>Start this week. Pick one person. Listen longer than usual, write a handwritten note, and say one thing you admire about them. Then see what changes. It does not need to be perfect, just sincere and consistent.</p>
+<p>In the end, the measure of your influence is not how many people follow you. It is how many people you helped become bigger than you.</p>
+<div class="kutip">“People are influenced most by those who make them feel the best about themselves.”<cite>John Maxwell and Jim Dornan</cite></div>
+</div>
+
+</div>
