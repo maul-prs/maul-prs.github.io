@@ -1,0 +1,35 @@
+{
+  "id": "1792568874618",
+  "slug": "attached",
+  "status": "active",
+  "title": "Attached",
+  "type": "Book Summary",
+  "categories": [
+    "psychology",
+    "relationships",
+    "attachment",
+    "dating",
+    "love",
+    "emotions",
+    "communication",
+    "self-development"
+  ],
+  "date": "21 Oktober 2026",
+  "dateISO": "2026-10-21",
+  "coreMessage": "Kenapa kamu selalu cemas, atau selalu ingin lari, dalam hubungan? Sains keterikatan menjelaskan gayamu, gaya pasanganmu, dan jalan menuju rasa aman.",
+  "bookData": {
+    "bookTitle": "Attached",
+    "bookAuthor": "Amir Levine dan Rachel Heller",
+    "bookYear": "2010",
+    "bookMainCategory": "Book Summary",
+    "bookCore": "Kenapa kamu selalu cemas, atau selalu ingin lari, dalam hubungan? Sains keterikatan menjelaskan gayamu, gaya pasanganmu, dan jalan menuju rasa aman.",
+    "bookReadTime": "18–22 menit baca"
+  },
+  "cover": "images/cover-attached-1792568874593.jpg",
+  "en": {
+    "title": "Attached",
+    "coreMessage": "Why do you always feel anxious, or always want to run, in relationships? Attachment science explains your style, your partner's, and the way to security.",
+    "ogImage": "images/og-attached-en.jpg"
+  },
+  "ogImage": "images/og-attached.jpg"
+}

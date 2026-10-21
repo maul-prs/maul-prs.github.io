@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Attached — Summary</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Poppins:wght@600;700&display=swap">
+<style>
+:root{color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0}
+.wrap{max-width:780px;margin:0 auto;padding:28px 20px 60px}
+.rangkuman{--pri:#F2766B;--acc:#F6B93B;--txt:#F1F1EE;--mut:#C2C6CE;--card:rgba(255,255,255,.055);--line:rgba(255,255,255,.16);--red:#F28B82;--green:#7ED9A4;--blue:#86B8F5;font-family:Lora,Georgia,serif;color:var(--txt);background:transparent;line-height:1.85;font-size:1.05rem;margin:0;padding:0}
+.rangkuman *{box-sizing:border-box}
+.rangkuman p{margin:0 0 1.1em}
+.rangkuman strong{color:#fff}
+.rangkuman h2{font-family:Poppins,sans-serif;font-weight:700;font-size:1.55rem;line-height:1.3;color:var(--acc);margin:2.6em 0 .9em;padding:.7em 0 .5em;border-top:3px solid var(--pri)}
+.rangkuman h3{font-family:Poppins,sans-serif;font-weight:600;font-size:1.1rem;color:var(--pri);margin:1.9em 0 .6em;padding-left:.8em;border-left:4px solid var(--pri)}
+.rangkuman .hook{font-size:1.25rem;line-height:1.7;font-style:italic;border-left:6px solid var(--acc);background:var(--card);padding:1.1em 1.3em;border-radius:0 12px 12px 0;margin:0 0 1.6em}
+.rangkuman .pull{position:relative;background:#16100f;border:1px solid var(--line);border-radius:14px;padding:2.2em 1.6em 1.4em;margin:2em 0;font-size:1.2rem;line-height:1.6;font-style:italic;color:#fff}
+.rangkuman .pull::before{content:"\201C";position:absolute;top:-.05em;left:.25em;font-family:Poppins,sans-serif;font-size:4.5rem;line-height:1;color:var(--acc)}
+.rangkuman .pull cite{display:block;margin-top:.8em;font-family:Poppins,sans-serif;font-style:normal;font-size:.85rem;color:var(--mut)}
+.rangkuman .callout{border-left:5px solid var(--pri);background:var(--card);border-radius:0 12px 12px 0;padding:1em 1.2em;margin:1.4em 0}
+.rangkuman .callout.amber{border-left-color:var(--acc)}
+.rangkuman .callout.red{border-left-color:var(--red)}
+.rangkuman .callout.green{border-left-color:var(--green)}
+.rangkuman .callout.blue{border-left-color:var(--blue)}
+.rangkuman .callout .ct{display:block;font-family:Poppins,sans-serif;font-weight:600;font-size:.88rem;letter-spacing:.04em;text-transform:uppercase;margin-bottom:.35em;color:#fff}
+.rangkuman .callout p:last-child{margin-bottom:0}
+.rangkuman .ambil{margin:1.1em 0 1.6em;padding:.9em 1.2em;border:1px dashed var(--acc);border-radius:12px}
+.rangkuman .ambil strong{font-family:Poppins,sans-serif;color:var(--acc);font-size:.85rem;letter-spacing:.05em;text-transform:uppercase}
+.rangkuman .alur{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:1.3em 0;font-family:Poppins,sans-serif;font-size:.88rem}
+.rangkuman .alur span{background:var(--card);border:1px solid var(--line);border-radius:99px;padding:.35em 1em;color:#fff}
+.rangkuman .alur span.api{border-color:var(--pri);color:var(--pri)}
+.rangkuman .alur i{font-style:normal;color:var(--acc)}
+.rangkuman .enam{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:1.4em 0}
+.rangkuman .enam .sel{background:var(--card);border-radius:12px;padding:.9em 1em;border-top:4px solid var(--pri)}
+.rangkuman .enam .sel.k{border-top-color:var(--acc)}
+.rangkuman .enam .sel b{display:block;font-family:Poppins,sans-serif;font-size:.9rem;color:#fff;margin-bottom:.3em}
+.rangkuman .enam .sel span{font-size:.92rem;line-height:1.6;color:var(--mut)}
+.rangkuman .tabel-wrap{overflow-x:auto;margin:1.4em 0}
+.rangkuman table.cmp{width:100%;border-collapse:collapse;min-width:520px;font-size:.98rem;line-height:1.6}
+.rangkuman table.cmp th{font-family:Poppins,sans-serif;text-align:left;background:#16100f;color:var(--acc);padding:.8em 1em;border-bottom:2px solid var(--acc)}
+.rangkuman table.cmp td{padding:.75em 1em;border-bottom:1px solid var(--line);vertical-align:top}
+.rangkuman table.cmp td:first-child{font-family:Poppins,sans-serif;font-weight:600;color:#fff;width:22%}
+.rangkuman table.cmp td:last-child{color:var(--pri)}
+.rangkuman ol.pertanyaan{list-style:none;counter-reset:q;padding:0;margin:1.2em 0}
+.rangkuman ol.pertanyaan li{counter-increment:q;position:relative;background:var(--card);border-radius:12px;padding:1em 1.2em 1em 4em;margin-bottom:12px}
+.rangkuman ol.pertanyaan li::before{content:counter(q);position:absolute;left:1em;top:.85em;width:2em;height:2em;border-radius:50%;background:var(--acc);color:#111;font-family:Poppins,sans-serif;font-weight:700;display:flex;align-items:center;justify-content:center}
+.rangkuman .penutup{background:linear-gradient(135deg,rgba(242,118,107,.18),rgba(246,185,59,.18));border:1px solid var(--line);border-radius:16px;padding:1.6em 1.6em 1.3em;margin-top:1em}
+.rangkuman .penutup p:last-child{margin-bottom:0}
+.rangkuman .penutup .kutip{margin-top:1.2em;padding-top:1em;border-top:1px solid var(--line);font-size:1.15rem;font-style:italic;color:#fff}
+.rangkuman .penutup .kutip cite{display:block;margin-top:.4em;font-family:Poppins,sans-serif;font-style:normal;font-size:.85rem;color:var(--acc)}
+@media (max-width:600px){.rangkuman .enam{grid-template-columns:1fr 1fr}.rangkuman h2{font-size:1.35rem}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="rangkuman">
+
+<div class="hook">Our friend Tamara fell for Greg. He said things like “You don’t have to be home all by yourself, you can come work over at my place,” and “You can call me any time you like.” It felt like a promise of never being alone. But Greg had also mentioned that he had never had a stable relationship, that he always grew tired of girlfriends and moved on. Tamara heard the promise, not the warning. She believed what many of us grow up believing: that love conquers all. She was wrong.</div>
+
+<h2>Introduction: The New Science of Adult Attachment</h2>
+
+<h3>Chapter 1: Decoding Relationship Behavior</h3>
+<p>Psychiatrist Amir Levine and psychologist Rachel Heller start with three problems that look unrelated: an anxious woman who obsesses over whether he’ll call, a successful man who gets bored and feels trapped after a few weeks, and a wife who feels alone in her marriage because her husband won’t talk. As clinicians they were taught that every case is unique and must be traced through each person’s history. Then they found one explanation for all of them: <strong>attachment theory</strong>, pioneered by John Bowlby and later developed into research on adult love.</p>
+<p>By this theory, people fall into three main styles: roughly <strong>half are secure</strong>, about <strong>20 percent anxious</strong>, and about <strong>25 percent avoidant</strong>. The remaining 3 to 5 percent fall into a fourth, less common disorganized category.</p>
+<div class="enam">
+<div class="sel"><b>Secure</b><span>Comfortable with closeness and independent.</span></div>
+<div class="sel"><b>Anxious</b><span>Craves closeness, alert to signs of rejection.</span></div>
+<div class="sel"><b>Avoidant</b><span>Keeps distance, treats independence as essential.</span></div>
+</div>
+<div class="ambil"><strong>Takeaway:</strong> Many relationship problems aren’t about too little love but about different needs for closeness.</div>
+
+<h3>Chapter 2: Dependency Is Not a Bad Word</h3>
+<p>Our need to connect with someone special is part of our biology and has nothing to do with how self-sufficient we are. Once we choose a partner, dependency <strong>always exists</strong>. Evolution made a couple into one physiological unit: if he is upset, I am unsettled too. That gives rise to the <strong>dependency paradox</strong>: the better we can depend on a supportive partner, the safer we feel being independent and adventurous. A partner who acts as a <strong>secure base</strong> lets us take risks.</p>
+<div class="callout blue"><span class="ct">All styles share the need</span><p>Secure and anxious types embrace this pull, while avoidants suppress it. But research shows avoidants still have the need. They just work to hold it down.</p></div>
+<div class="ambil"><strong>Takeaway:</strong> Needing a partner is not weakness. Look for someone who can be your secure base, and be that for them.</div>
+
+<h2>Part One: Your Relationship Toolkit</h2>
+
+<h3>Chapter 3: Step One, What Is My Attachment Style?</h3>
+<div class="pull">Attachment styles are stable but plastic.<cite>Levine and Heller, Chapter 3</cite></div>
+<p>The first step is knowing yourself. The book offers a questionnaire adapted from the ECR (published in 1998 by Brennan, Clark, and Shaver), which measures two dimensions: <strong>anxiety</strong> in the relationship and <strong>avoidance</strong>. Styles are fairly stable but <strong>plastic</strong>: they can shift through experience, including time with a secure person.</p>
+<div class="ambil"><strong>Takeaway:</strong> Learn your style without judging yourself. It is a map, not a verdict.</div>
+
+<h3>Chapter 4: Step Two, What Is My Partner’s Style?</h3>
+<p>After you understand yourself, work out your partner’s or prospective partner’s style from behavioral clues. One step: assess <strong>how they react when you communicate effectively</strong>, that is, state your needs honestly and directly. A secure person tends to respond with care, while someone who shuts down or shrinks your concern is worth noting.</p>
+<div class="ambil"><strong>Takeaway:</strong> Watch actions and reactions, not just the sweet talk in the beginning. A promise of closeness doesn’t always match the ability to be close.</div>
+
+<h2>Part Two: The Three Styles in Everyday Life</h2>
+
+<h3>Chapter 5: Living with a Sixth Sense for Danger, the Anxious Style</h3>
+<p>Anxious people have a “sixth sense” for signs of threat in a relationship, and their attachment system tends to stay switched on. They use <strong>protest behavior</strong>: anything that jolts the other person into noticing and responding. In an fMRI study, anxious women had a harder time shutting off thoughts about relationship scenarios. Protest behavior often damages the very relationship they are trying to save.</p>
+<div class="ambil"><strong>Takeaway:</strong> When you feel like calling again and again or testing your partner, ask: what do I really need? Then say it directly.</div>
+
+<h3>Chapter 6: Keeping Love at Arm’s Length, the Avoidant Style</h3>
+<p>Avoidant people need closeness but suppress it with <strong>deactivating strategies</strong>, any behavior or thought that squelches intimacy. The more you use them, the lonelier and less happy you become.</p>
+<div class="enam">
+<div class="sel"><b>“Not ready”</b><span>Says it, yet stays for years.</span></div>
+<div class="sel"><b>Small flaws</b><span>Lets minor imperfections kill the feeling.</span></div>
+<div class="sel"><b>Phantom ex</b><span>Pines for a partner who is gone.</span></div>
+<div class="sel"><b>Flirting with others</b><span>Plants insecurity in the partner.</span></div>
+<div class="sel"><b>Pulling away</b><span>Vanishes when things go well.</span></div>
+<div class="sel"><b>Secrets and fog</b><span>Keeps independence through vagueness.</span></div>
+</div>
+<div class="ambil"><strong>Takeaway:</strong> If the urge to pull away shows up every time a relationship gets close, suspect a deactivating strategy rather than “not meeting the right person.”</div>
+
+<h3>Chapter 7: Getting Comfortably Close, the Secure Style</h3>
+<p>Secure people are comfortable with closeness and stay independent. They state their needs clearly, don’t play push and pull, and don’t treat intimacy as a threat. A secure partner can be a secure base, and over time anxious and avoidant people next to them often become calmer.</p>
+<div class="ambil"><strong>Takeaway:</strong> A consistent, responsive partner is the best investment. And be that person for your partner.</div>
+
+<h2>Part Three: When Attachment Styles Clash</h2>
+
+<h3>Chapter 8: The Anxious-Avoidant Trap</h3>
+<p>Janet and Mark, together eight years, spent two years arguing about buying a washing machine. Mark wanted one, Janet didn’t. But when Janet did laundry, she went to her sister’s place and idled the day away. Janet is avoidant, always finding things to do without Mark. For Mark, who is anxious, the machine really stood for something else: being close to Janet. The washing machine fight was only a symptom of different needs for closeness.</p>
+<div class="alur"><span>Anxious partner moves closer</span><i>→</i><span class="api">Avoidant partner pulls away</span><i>→</i><span>Anxiety grows</span></div>
+<div class="ambil"><strong>Takeaway:</strong> When you fight over something small, ask: what need for closeness is hiding behind this?</div>
+
+<h3>Chapter 9: Escaping the Anxious-Avoidant Trap</h3>
+<p>Anxious-avoidant couples can find greater security. The book provides a <strong>relationship inventory</strong>: write down the triggering situation, your reaction, the thoughts that arise, your feelings, and what you lose by it, and then identify a more secure role. Spot the distorted thoughts, like mind reading (“I know he’s leaving me”), all-or-nothing thinking, and “I knew this was too good to last.”</p>
+<div class="ambil"><strong>Takeaway:</strong> Map your pattern when you’re calm. Knowing your triggers lets you choose a more secure response.</div>
+
+<h3>Chapter 10: When Abnormal Becomes the Norm</h3>
+<p>In some cases even repeated efforts fail, and the clash of these styles can become truly harmful. The book gives examples of mistreatment that gets normalized: snapped at for gazing lovingly, mocked for walking slowly, demeaned in intimacy. The idea that only “pathetic” people put up with this is wrong. Anxious and avoidant people can bring out the worst in each other, until “abnormal” becomes the norm.</p>
+<div class="callout red"><span class="ct">When to leave</span><p>If a relationship keeps demeaning you and change doesn’t come, ending it may be the healthiest choice.</p></div>
+<div class="ambil"><strong>Takeaway:</strong> Love doesn’t require you to stay in demeaning treatment.</div>
+
+<h2>Part Four: The Secure Way, Sharpening Your Skills</h2>
+
+<h3>Chapter 11: Effective Communication</h3>
+<p>Effective communication means getting your needs across clearly without attacking. Its five principles:</p>
+<div class="enam">
+<div class="sel k"><b>1. Wear your heart on your sleeve</b><span>Be fully honest about feelings. Be emotionally brave.</span></div>
+<div class="sel k"><b>2. Focus on your needs</b><span>Use verbs like need, feel, want.</span></div>
+<div class="sel k"><b>3. Be specific</b><span>Say exactly what bothers you.</span></div>
+<div class="sel"><b>4. Don’t blame</b><span>Talk when calm, not about to explode.</span></div>
+<div class="sel"><b>5. Be assertive, not apologetic</b><span>Your needs are valid.</span></div>
+</div>
+<div class="callout green"><span class="ct">Example from the book</span><p>“I feel devalued when you contradict me in front of your friends. I need to feel that you respect my opinions.”</p></div>
+<div class="ambil"><strong>Takeaway:</strong> Swap “you always…” for “when you…, I feel… and I need….”</div>
+
+<h3>Chapter 12: Working Things Out, Five Secure Principles</h3>
+<p>Healthy couples don’t treat conflict as a zero-sum game. Frank loves the family summer home in the Berkshires, and Sandy hates it. After a few bitter fights they agreed to take turns: sometimes the woods, sometimes the city, with Frank scheduling outdoor activities so he stays sane. The five secure principles for conflict:</p>
+<div class="alur"><span>Care about their well-being</span><i>→</i><span>Stay on the problem</span><i>→</i><span>Don’t generalize</span><i>→</i><span class="api">Be willing to engage</span><i>→</i><span>Communicate feelings and needs</span></div>
+<div class="ambil"><strong>Takeaway:</strong> Your partner’s well-being matters as much as your own. Ignoring it comes back to hurt you.</div>
+
+<h2>Comparison: The Three Attachment Styles</h2>
+<div class="tabel-wrap">
+<table class="cmp">
+<thead><tr><th>Area</th><th>Anxious</th><th>Avoidant</th></tr></thead>
+<tbody>
+<tr><td>Closeness</td><td>Wants a lot of it.</td><td>Wants space and distance.</td></tr>
+<tr><td>Fear of rejection</td><td>Protest behavior.</td><td>Deactivating strategies.</td></tr>
+<tr><td>Early promises</td><td>Commits quickly.</td><td>Promises closeness, drifts away.</td></tr>
+<tr><td>When things go well</td><td>Scans for danger.</td><td>Pulls back.</td></tr>
+<tr><td>Typical thought</td><td>“He’ll leave.”</td><td>“I’m not ready.”</td></tr>
+<tr><td>Real need</td><td>Reassurance and presence.</td><td>Closeness without pressure.</td></tr>
+<tr><td>Step toward secure</td><td>State needs directly.</td><td>Notice the urge to pull away.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>Three Questions to Sit With</h2>
+<ol class="pertanyaan">
+<li>When I feel insecure in a relationship, which protest behavior or deactivating strategy do I use most?</li>
+<li>Do I judge a prospective partner by their promises, or by their actions over several months?</li>
+<li>Which needs have I kept to myself because I thought I was “asking too much”?</li>
+</ol>
+
+<h2>Closing: Secure Can Be Learned</h2>
+<div class="penutup">
+<p>The most hopeful message of the book is that attachment styles are stable but plastic. Understanding your style and your partner’s changes the question from “what’s wrong with me?” to “which need isn’t being met?”.</p>
+<p>Start with one small step this week: state a single need honestly, clearly, and without blame. And remember this book is no substitute for therapy. If your old patterns feel too heavy, professional help is worth considering.</p>
+<div class="kutip">“…the other person’s well-being is as important as your own.”<cite>Levine and Heller, Chapter 12</cite></div>
+</div>
+
+</div>
+</div>
+</body>
+</html>
