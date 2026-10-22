@@ -5,7 +5,14 @@
   "title": "The Evolution of Desire",
   "type": "Book Summary",
   "categories": [
-    "psychology"
+    "Nonfiction",
+    "Science",
+    "Relationships",
+    "Evolution",
+    "Sexuality",
+    "Biology",
+    "Anthropology",
+    "Self Help"
   ],
   "date": "18 Oktober 2026",
   "dateISO": "2026-10-18",
@@ -16,8 +23,12 @@
     "bookYear": "1994",
     "bookMainCategory": "Book Summary",
     "bookCore": "Cinta, cemburu, dan konflik dalam hubungan ternyata bukan kebetulan. Semuanya punya akar dari strategi memilih pasangan yang diwarisi leluhur.",
-    "bookReadTime": "18–29 menit baca"
+    "bookReadTime": "18"
   },
   "cover": "images/cover-the-evolution-of-desire-1792306374768.jpg",
-  "ogImage": "images/og-the-evolution-of-desire.jpg"
+  "ogImage": "images/og-the-evolution-of-desire.jpg",
+  "en": {
+    "title": "The Evolution of Desire",
+    "ogImage": "images/og-the-evolution-of-desire-en.jpg"
+  }
 }
