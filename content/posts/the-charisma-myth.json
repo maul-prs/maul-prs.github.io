@@ -1,0 +1,35 @@
+{
+  "id": "1792712046314",
+  "slug": "the-charisma-myth",
+  "status": "active",
+  "title": "The Charisma Myth",
+  "type": "Book Summary",
+  "categories": [
+    "Psychology",
+    "Communication",
+    "Leadership",
+    "Self-Improvement",
+    "Relationships",
+    "Confidence",
+    "career",
+    "Social Skills"
+  ],
+  "date": "22 Oktober 2026",
+  "dateISO": "2026-10-22",
+  "coreMessage": "Karisma bukan bakat bawaan. Ia keterampilan yang bisa dilatih lewat kehadiran, kehangatan, dan kekuatan, dan siapa pun bisa mempelajarinya.",
+  "bookData": {
+    "bookTitle": "The Charisma Myth",
+    "bookAuthor": "Olivia Fox Cabane",
+    "bookYear": "2012",
+    "bookMainCategory": "Book Summary",
+    "bookCore": "Karisma bukan bakat bawaan. Ia keterampilan yang bisa dilatih lewat kehadiran, kehangatan, dan kekuatan, dan siapa pun bisa mempelajarinya.",
+    "bookReadTime": "29"
+  },
+  "cover": "images/cover-the-charisma-myth-1792712046291.jpg",
+  "en": {
+    "title": "The Charisma Myth",
+    "coreMessage": "Charisma isn’t a gift you’re born with. It’s a skill built from presence, warmth, and power, and anyone can learn it.",
+    "ogImage": "images/og-the-charisma-myth-en.jpg"
+  },
+  "ogImage": "images/og-the-charisma-myth.jpg"
+}
