@@ -68,6 +68,10 @@ const STR = {
     wpCopy: '📋 Salin teks + tautan',
     langLabel: 'Bahasa',
     noEn: 'Versi bahasa Inggris belum tersedia',
+    minShort: 'mnt',
+    minRead: (n) => `${n} menit`,
+    moreTags: (n) => `+${n} lagi`,
+    tagsAria: 'Kategori buku',
   },
   en: {
     home: 'Home',
@@ -103,6 +107,10 @@ const STR = {
     wpCopy: '📋 Copy text + link',
     langLabel: 'Language',
     noEn: 'English version not available yet',
+    minShort: 'min',
+    minRead: (n) => `${n} min read`,
+    moreTags: (n) => `+${n} more`,
+    tagsAria: 'Book categories',
   },
 };
 
@@ -220,7 +228,7 @@ function card(p, lang = 'id') {
   return `<a href="${esc(p.url)}" class="post-card">
               <img src="${esc(src)}" alt="${esc(p.title)}" class="post-card-cover" data-t="${esc(p.type)}" loading="lazy" decoding="async" onerror="coverFallback(this)" />
               <div class="post-card-info">
-                <span class="post-card-badge">${esc(typeLabel(p.type, lang))}${p.untranslated ? ' · ID' : ''}</span>
+                <div class="post-card-top"><span class="post-card-badge">${esc(typeLabel(p.type, lang))}${p.untranslated ? ' · ID' : ''}</span>${p.readMin ? `<span class="post-card-time">⏱ ${p.readMin} ${S.minShort}</span>` : ''}</div>
                 <h3 class="post-card-title">${esc(p.title)}</h3>
 ${p.author ? `                <p class="post-card-author">✍️ ${esc(p.author)}</p>\n` : ''}                <p class="post-card-desc">${desc}</p>
                 <div class="post-card-meta">
@@ -376,6 +384,15 @@ ${footer(cfg, lang)}`;
 
 /* ---------- Halaman artikel ---------- */
 // Tombol bagikan (semua artikel)
+// Chip kategori buku (bisa diklik). Maksimal 8 terlihat; sisanya disembunyikan di balik tombol "+N lagi".
+const MAX_CHIPS = 8;
+function tagChips(tags, S) {
+  if (!tags || !tags.length) return '';
+  const chip = (t, i) => `<a class="tag-chip${i >= MAX_CHIPS ? ' is-extra' : ''}" href="${esc(t.href)}">${esc(t.label)}</a>`;
+  const more = tags.length > MAX_CHIPS ? `<button type="button" class="tag-more" data-more>${S.moreTags(tags.length - MAX_CHIPS)}</button>` : '';
+  return `        <div class="article-tags" aria-label="${esc(S.tagsAria)}">${tags.map(chip).join('')}${more}</div>`;
+}
+
 function shareBar(cfg, p, lang = 'id') {
   const S = STR[lang];
   const url = cfg.siteUrl + p.url;
@@ -473,10 +490,10 @@ ${o.related.map((r) => `            <li><a href="${esc(r.url)}">${esc(r.title)}<
             <h1 class="article-title-sub">${esc(p.title)}</h1>
             ${author}
             <p class="article-core-desc">${esc(p.core)}</p>
-            <div class="article-date-row">📅 ${S.date} <strong>${esc(p.date)}</strong></div>
+            <div class="article-date-row">📅 ${S.date} <strong>${esc(p.date)}</strong>${p.readMin ? ` · ⏱ <strong>${S.minRead(p.readMin)}</strong>` : ''}</div>
           </div>
         </div>
-
+${tagChips(o.tags, S)}
 ${shareBar(cfg, p, lang)}
 ${wallpaperPanel(cfg, p, lang)}
 
@@ -506,7 +523,7 @@ ${footer(cfg, lang)}`;
     articleSection: typeLabel(p.type, lang),
   };
   if (bd.bookAuthor && /book/i.test(p.type)) {
-    ld.about = { '@type': 'Book', name: bd.bookTitle || p.title, author: { '@type': 'Person', name: bd.bookAuthor } };
+    ld.about = { '@type': 'Book', name: (lang === 'en' ? p.title : bd.bookTitle) || p.title, author: { '@type': 'Person', name: bd.bookAuthor } };
   }
   const crumbs = {
     '@context': 'https://schema.org',

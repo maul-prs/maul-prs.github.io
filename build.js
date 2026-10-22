@@ -188,6 +188,11 @@ function normalizePosts(raw) {
       cover: String(p.cover || '').trim().replace(/^\.?\/+/, ''),
       core: String(p.coreMessage || bd.bookCore || p.summary || '').trim(),
       author: bd.bookAuthor || '',
+      readMin: (() => {
+        const m = String(bd.bookReadTime || '').match(/\d+/); // angka menit; teks lama seperti "15-20 menit" diambil angka pertamanya
+        const n = m ? parseInt(m[0], 10) : 0;
+        return n >= 1 && n <= 600 ? n : 0;
+      })(),
       bookData: bd,
       wallpaper: cleanWallpaper(p.wallpaper),
       en: cleanEn(p.en),
@@ -297,6 +302,7 @@ function main() {
     core: truncate(p.core || plainText(p._body).slice(0, 400), 170),
     author: p.author,
     dateEn: formatEn(p.dateISO),
+    ...(p.readMin ? { readMin: p.readMin } : {}),
     ...(p.en
       ? { en: { title: p.en.title, core: truncate(p.en.core || plainText(p._bodyEn).slice(0, 400), 170), url: `/en/artikel/${p.slug}/` } }
       : {}),
@@ -315,6 +321,26 @@ function main() {
     if (!tagMap.has(t)) tagMap.set(t, []);
     tagMap.get(t).push(p);
   }));
+
+  // Kategori buku (tag) -> halaman /tag/<slug>/. Nama jenis (Book Summary, dll.) sudah punya halaman /kategori/, jadi dilewati.
+  const typeNames = new Set(pub.map((p) => p.type));
+  const tagIndex = new Map(); // slug -> { label, list }
+  pub.forEach((p) =>
+    p.categories.forEach((c) => {
+      const sl = slugify(c);
+      if (typeNames.has(c) || !sl) return;
+      if (!tagIndex.has(sl)) tagIndex.set(sl, { label: c, list: [] });
+      const e = tagIndex.get(sl);
+      if (!e.list.includes(p)) e.list.push(p);
+    })
+  );
+  const tagsFor = (p, lang) => {
+    const seen = new Set();
+    return p.categories
+      .map((c) => ({ label: c, sl: slugify(c) }))
+      .filter((t) => !typeNames.has(t.label) && t.sl && !seen.has(t.sl) && seen.add(t.sl))
+      .map((t) => ({ label: t.label, href: `${lang === 'en' ? '/en' : ''}/tag/${t.sl}/` }));
+  };
 
   /* 1. Halaman artikel */
   for (const src of active) {
@@ -354,6 +380,7 @@ function main() {
         description,
         ogImage,
         ogIsCard,
+        tags: tagsFor(p, 'id'),
         alt: { id: p.url, en: p.en ? p.en.url : null },
       })
     );
@@ -389,6 +416,7 @@ function main() {
           description: truncate(view.core || plainText(en.html), 160) || cfg.descriptionEn || cfg.description,
           ogImage: ogEn,
           ogIsCard: ogEnIsCard,
+          tags: tagsFor(p, 'en'),
           lang: 'en',
           alt: { id: p.url, en: p.en.url },
         })
@@ -446,6 +474,12 @@ function main() {
     id: { heading: 'Semua Tulisan', intro: `Seluruh ${pub.length} tulisan di ${cfg.siteName}, dari yang terbaru.`, crumb: 'Semua Tulisan' },
     en: { heading: 'All Posts', intro: `All ${pub.length} posts on ${cfg.siteName}, newest first.`, crumb: 'All Posts' },
   });
+  for (const [sl, { label, list }] of tagIndex) {
+    paginate(list, `/tag/${sl}/`, {
+      id: { heading: label, intro: `${list.length} tulisan dengan kategori "${label}".`, crumb: T.esc(label) },
+      en: { heading: label, intro: `${list.length} ${list.length > 1 ? 'posts' : 'post'} in the "${label}" category.`, crumb: T.esc(label) },
+    });
+  }
   for (const [type, slug] of typeSlugs) {
     const list = pub.filter((p) => p.type === type);
     const typeEn = T.typeLabel(type, 'en');

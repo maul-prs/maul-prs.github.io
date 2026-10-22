@@ -760,3 +760,16 @@ a.lang-btn:not(.active):hover {
     order: 3;
   }
 }
+
+/* --- Baris lencana kartu: jenis di kiri, waktu baca di kanan --- */
+.post-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.post-card-time {
+  font-size: 11px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}

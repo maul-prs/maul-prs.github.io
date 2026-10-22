@@ -114,3 +114,11 @@
     })
     .catch(function () { box.innerHTML = '<p style="color:#777;font-size:12px;">' + esc(I.t('menuFail')) + '</p>'; });
 })();
+
+// Chip kategori: tombol "+N lagi" membuka chip yang disembunyikan
+document.addEventListener('click', function (e) {
+  var b = e.target.closest && e.target.closest('.article-tags [data-more]');
+  if (!b) return;
+  b.parentNode.classList.add('open');
+  b.remove();
+});

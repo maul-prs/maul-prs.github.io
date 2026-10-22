@@ -646,3 +646,44 @@ html.focus-mode .article-layout {
     display: none !important;
   }
 }
+
+/* Chip kategori buku di bawah kotak judul */
+.article-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: -6px 0 18px;
+}
+.tag-chip,
+.tag-more {
+  font: inherit;
+  font-size: 12px;
+  line-height: 1.3;
+  padding: 3px 10px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color, #0f3020);
+  background: #032a18;
+  color: var(--accent-light, #34d399);
+  text-decoration: none;
+  cursor: pointer;
+}
+.tag-chip:hover,
+.tag-more:hover {
+  border-color: var(--accent-light, #34d399);
+}
+.tag-more {
+  background: none;
+  border-style: dashed;
+}
+.tag-chip.is-extra {
+  display: none;
+}
+.article-tags.open .tag-chip.is-extra {
+  display: inline-block;
+}
+@media (max-width: 640px) {
+  .tag-chip,
+  .tag-more {
+    font-size: 11.5px;
+  }
+}

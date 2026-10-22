@@ -72,6 +72,109 @@
         color: #9ca3af;
       }
 
+      /* Header & baris tab menempel di atas saat form di-scroll */
+      .admin-header {
+        position: sticky;
+        top: 0;
+        z-index: 60;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-sizing: border-box;
+        height: 56px;
+        margin: -40px -40px 0;
+        padding: 0 40px;
+        background: #071a0e;
+        border-bottom: 1px solid #0f3020;
+        border-radius: 12px 12px 0 0;
+      }
+      .admin-header h2 {
+        color: #fff;
+        margin: 0;
+        font-size: 24px;
+      }
+      .tab-bar {
+        position: sticky;
+        top: 56px;
+        z-index: 55;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin: 0 -40px 24px;
+        padding: 12px 40px;
+        background: #071a0e;
+        border-bottom: 1px solid #0f3020;
+      }
+      .tab-bar .category-tabs,
+      .tab-bar .lang-tabs {
+        margin: 0;
+        padding: 0;
+        border: 0;
+      }
+      .tab-bar .lang-tab {
+        padding: 10px 16px;
+      }
+      .tab-sep {
+        color: #34d399;
+        font-weight: 700;
+        letter-spacing: 3px;
+        opacity: 0.7;
+        user-select: none;
+      }
+      /* Konfigurasi GitHub: di layar lebar pindah ke sisi kanan (ikut menempel), di layar sempit tetap di atas form */
+      .config-panel {
+        background: #032a18;
+        border: 1px solid #0f3020;
+        padding: 18px;
+        border-radius: 10px;
+        margin: 25px 0;
+      }
+      .config-panel h3 {
+        color: #34d399;
+        font-size: 15px;
+        margin: 0 0 10px;
+      }
+      .config-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+      }
+      @media (min-width: 1860px) {
+        .admin-wrapper {
+          position: relative;
+        }
+        .config-side {
+          position: absolute;
+          left: 100%;
+          top: 0;
+          bottom: 0;
+          width: 280px;
+          margin-left: 20px;
+        }
+        .config-panel {
+          position: sticky;
+          top: 24px;
+          margin: 0;
+        }
+        .config-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .lang-hint {
+        display: block;
+        margin: -8px 0 16px;
+        color: #9ca3af;
+        font-size: 12px;
+      }
+      @media (max-width: 700px) {
+        .tab-bar {
+          position: static;
+          margin: 0 0 20px;
+          padding: 0 0 12px;
+        }
+      }
+
       .form-group {
         margin-bottom: 22px;
       }
@@ -215,30 +318,15 @@
   <body>
     <div class="container">
       <div class="admin-wrapper">
-        <div
-          style="
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            border-bottom: 1px solid #0f3020;
-            padding-bottom: 15px;
-          "
-        >
-          <h2 style="color: #fff; margin: 0; font-size: 26px" id="mainTitle">
-            Panel Admin Postingan
-          </h2>
-          <a
-            href="/"
-            style="color: #34d399; font-size: 15px; text-decoration: none"
-            >← Ke Beranda</a
-          >
+        <div class="admin-header">
+          <h2 id="mainTitle">Panel Admin Postingan</h2>
+          <a href="/" style="color: #34d399; font-size: 15px; text-decoration: none">← Ke Beranda</a>
         </div>
 
         <!-- Konfigurasi GitHub API -->
-        <div style="background: #032a18; border: 1px solid #0f3020; padding: 18px; border-radius: 10px; margin-bottom: 25px;">
-          <h3 style="color: #34d399; font-size: 15px; margin-top: 0; margin-bottom: 10px;">⚙️ Konfigurasi GitHub Repository</h3>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+        <div class="config-side"><div class="config-panel">
+          <h3>⚙️ Konfigurasi GitHub Repository</h3>
+          <div class="config-grid">
             <div class="form-group" style="margin-bottom: 0;">
               <label style="font-size: 13px;">Repository (contoh: maul-prs/maul-prs.github.io)</label>
               <input type="text" id="ghRepo" placeholder="username/nama-repo" value="maul-prs/maul-prs.github.io" />
@@ -249,27 +337,35 @@
             </div>
           </div>
         </div>
+        </div>
 
         <!-- Tombol Tab Kategori Utama -->
-        <div class="category-tabs">
-          <button
-            class="tab-btn active"
-            onclick="switchTab('Book Summary', event)"
-          >
-            📚 Book Summary
-          </button>
-          <button class="tab-btn" onclick="switchTab('Quote & Nasehat', event)">
-            💡 Quote & Nasehat
-          </button>
-          <button class="tab-btn" onclick="switchTab('Dzikir & Do\'a', event)">
-            🤲 Dzikir & Do'a
-          </button>
-          <button
-            class="tab-btn"
-            onclick="switchTab('Cerita Inspirasi', event)"
-          >
-            ✨ Cerita Inspirasi
-          </button>
+        <div class="tab-bar">
+          <div class="category-tabs">
+            <button
+              class="tab-btn active"
+              onclick="switchTab('Book Summary', event)"
+            >
+              📚 Book Summary
+            </button>
+            <button class="tab-btn" onclick="switchTab('Quote & Nasehat', event)">
+              💡 Quote & Nasehat
+            </button>
+            <button class="tab-btn" onclick="switchTab('Dzikir & Do\'a', event)">
+              🤲 Dzikir & Do'a
+            </button>
+            <button
+              class="tab-btn"
+              onclick="switchTab('Cerita Inspirasi', event)"
+            >
+              ✨ Cerita Inspirasi
+            </button>
+          </div>
+          <span class="tab-sep" aria-hidden="true">||</span>
+          <div class="lang-tabs" id="langTabs" title="Bahasa: judul, inti, terjemahan wallpaper, dan file HTML punya dua versi">
+            <button type="button" class="lang-tab active" data-lang-tab="id" onclick="switchLang('id')">ID</button>
+            <button type="button" class="lang-tab" data-lang-tab="en" onclick="switchLang('en')">EN</button>
+          </div>
         </div>
 
         <div id="legacyBanner" style="display:none;background:#032a18;border:1px solid #f59e0b;padding:14px 18px;border-radius:10px;margin-bottom:25px;color:#d4f0dc;font-size:14px;line-height:1.6;">
@@ -306,12 +402,7 @@
             </datalist>
           </div>
 
-          <!-- Tab bahasa -->
-          <div class="lang-tabs" id="langTabs">
-            <button type="button" class="lang-tab active" data-lang-tab="id" onclick="switchLang('id')">🇮🇩 Indonesia</button>
-            <button type="button" class="lang-tab" data-lang-tab="en" onclick="switchLang('en')">🇬🇧 English</button>
-            <small>Judul, inti, terjemahan wallpaper, dan file HTML punya dua versi. Kolom lain (slug, kategori, penulis, tahun, cover, tanggal) dipakai bersama.</small>
-          </div>
+          <small class="lang-hint">Judul, inti, terjemahan wallpaper, dan file HTML punya dua versi (tab ID / EN di atas). Kolom lain dipakai bersama.</small>
 
           <div class="form-group" data-lang="id">
             <label>Judul Postingan / Artikel</label>
@@ -334,32 +425,6 @@
           </div>
 
           <!-- INTI / PESAN UTAMA: tampil di semua tab (bukan hanya Book Summary) -->
-          <div class="form-group" id="core-group" data-lang="id">
-            <label id="coreLabel" for="bookCore">Inti Buku (Ringkasan/Pesan Utama)</label>
-            <textarea
-              id="bookCore"
-              style="min-height: 90px"
-              placeholder="Tuliskan inti atau ringkasan singkat isi buku..."
-            ></textarea>
-            <small style="display:block;margin-top:6px;color:#9ca3af;">
-              Tampil di samping cover, di kartu beranda, dan menjadi deskripsi saat dibagikan ke Google &amp; WhatsApp.
-              Idealnya 120–160 karakter. <span id="coreCount">0 karakter</span>
-            </small>
-          </div>
-
-          <div class="form-group" id="core-group-en" data-lang="en" style="display: none">
-            <label for="bookCoreEn">Core idea (English)</label>
-            <textarea
-              id="bookCoreEn"
-              style="min-height: 90px"
-              placeholder="Write the core idea or short summary in English..."
-            ></textarea>
-            <small style="display:block;margin-top:6px;color:#9ca3af;">
-              Dipakai di kartu beranda dan deskripsi Google/WhatsApp untuk versi Inggris.
-              Idealnya 120–160 karakter. <span id="coreCountEn">0 karakter</span>
-            </small>
-          </div>
-
           <!-- WALLPAPER: hanya untuk Quote & Nasehat dan Dzikir & Do'a -->
           <div id="wallpaper-section" class="form-group" style="display: none; background: #032a18; border: 1px solid #0f3020; border-radius: 10px; padding: 16px; margin-bottom: 20px;">
             <h3 style="margin: 0 0 6px; font-size: 15px;">🖼️ Wallpaper (opsional)</h3>
@@ -409,16 +474,7 @@
               📖 Detail Informasi Buku (Khusus Book Summary)
             </h3>
 
-            <div class="form-group">
-              <label>Judul Buku</label>
-              <input
-                type="text"
-                id="bookTitle"
-                placeholder="Contoh: Atomic Habits"
-              />
-            </div>
-
-            <div class="form-group">
+                        <div class="form-group">
               <label>Penulis</label>
               <input
                 type="text"
@@ -436,14 +492,44 @@
             <input type="hidden" id="bookMainCategory" value="Book Summary" />
 
             <div class="form-group" style="margin-bottom: 0">
-              <label>Waktu Baca</label>
+              <label>Waktu Baca (menit)</label>
               <input
-                type="text"
+                type="number"
                 id="bookReadTime"
-                placeholder="Contoh: 15-20 menit"
+                min="1"
+                max="600"
+                step="1"
+                placeholder="Contoh: 18"
                 value=""
               />
+              <small style="display:block;margin-top:6px;color:#9ca3af;">Isi angka menit saja. Tampil di kartu beranda dan di halaman artikel. Kosong = tidak ditampilkan.</small>
             </div>
+          </div>
+
+          <div class="form-group" id="core-group" data-lang="id">
+            <label id="coreLabel" for="bookCore">Inti Buku (Ringkasan/Pesan Utama)</label>
+            <textarea
+              id="bookCore"
+              style="min-height: 90px"
+              placeholder="Tuliskan inti atau ringkasan singkat isi buku..."
+            ></textarea>
+            <small style="display:block;margin-top:6px;color:#9ca3af;">
+              Tampil di samping cover, di kartu beranda, dan menjadi deskripsi saat dibagikan ke Google &amp; WhatsApp.
+              Idealnya 120–160 karakter. <span id="coreCount">0 karakter</span>
+            </small>
+          </div>
+
+          <div class="form-group" id="core-group-en" data-lang="en" style="display: none">
+            <label for="bookCoreEn">Core idea (English)</label>
+            <textarea
+              id="bookCoreEn"
+              style="min-height: 90px"
+              placeholder="Write the core idea or short summary in English..."
+            ></textarea>
+            <small style="display:block;margin-top:6px;color:#9ca3af;">
+              Dipakai di kartu beranda dan deskripsi Google/WhatsApp untuk versi Inggris.
+              Idealnya 120–160 karakter. <span id="coreCountEn">0 karakter</span>
+            </small>
           </div>
 
           <div class="form-group">
@@ -1154,12 +1240,12 @@
 
           const dateISO = $("postDate").value || todayISO();
           const bookData = {
-            bookTitle: $("bookTitle").value,
+            bookTitle: title, // judul buku = judul postingan
             bookAuthor: $("bookAuthor").value,
             bookYear: $("bookYear").value,
             bookMainCategory: $("bookMainCategory").value,
             bookCore: $("bookCore").value,
-            bookReadTime: $("bookReadTime").value,
+            bookReadTime: String(parseInt($("bookReadTime").value, 10) || ""),
           };
 
           let meta;
@@ -1314,13 +1400,12 @@
           updateCoreCountEn();
           $("postDate").value = post.dateISO || parseIndoDate(post.date) || todayISO();
           $("post-categories").value = Array.isArray(post.categories) ? post.categories.join(", ") : "";
-          $("bookTitle").value = bd.bookTitle || "";
           $("bookAuthor").value = bd.bookAuthor || "";
           $("bookYear").value = bd.bookYear || "";
           $("bookMainCategory").value = post.type || "Book Summary";
           $("bookCore").value = bd.bookCore || post.coreMessage || "";
           updateCoreCount();
-          $("bookReadTime").value = bd.bookReadTime || "";
+          $("bookReadTime").value = (String(bd.bookReadTime || "").match(/\d+/) || [""])[0]; // teks lama "15-20 menit" -> 15
           const wpd = post.wallpaper || {};
           $("wpArabic").value = wpd.arabic || "";
           $("wpLatin").value = wpd.latin || "";

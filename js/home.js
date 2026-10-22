@@ -33,7 +33,8 @@
     return '<a href="' + esc(v.url) + '" class="post-card">' +
       '<img src="' + esc(src) + '" alt="' + esc(v.title) + '" class="post-card-cover" data-t="' + esc(p.type) + '" loading="lazy" decoding="async" onerror="coverFallback(this)" />' +
       '<div class="post-card-info">' +
-      '<span class="post-card-badge">' + esc(I.type(p.type)) + (v.untranslated ? ' · ID' : '') + '</span>' +
+      '<div class="post-card-top"><span class="post-card-badge">' + esc(I.type(p.type)) + (v.untranslated ? ' · ID' : '') + '</span>' +
+      (p.readMin ? '<span class="post-card-time">⏱ ' + p.readMin + ' ' + esc(I.t('minShort')) + '</span>' : '') + '</div>' +
       '<h3 class="post-card-title">' + esc(v.title) + '</h3>' +
       (p.author ? '<p class="post-card-author">✍️ ' + esc(p.author) + '</p>' : '') +
       '<p class="post-card-desc">' + desc + '</p>' +

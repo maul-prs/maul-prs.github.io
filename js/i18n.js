@@ -7,6 +7,7 @@
   var D = {
     id: {
       readMore: 'Baca Selengkapnya →',
+      minShort: 'mnt',
       noPosts: 'Tidak ada postingan yang ditemukan.',
       focusOn: 'Mode Fokus',
       focusOff: 'Keluar Fokus',
@@ -40,6 +41,7 @@
     },
     en: {
       readMore: 'Read more →',
+      minShort: 'min',
       noPosts: 'No posts found.',
       focusOn: 'Focus Mode',
       focusOff: 'Exit Focus',
