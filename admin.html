@@ -524,11 +524,12 @@
             <div class="form-group" style="margin-bottom: 0">
               <label>Waktu Baca (menit)</label>
               <input
-                type="number"
+                type="text"
                 id="bookReadTime"
-                min="1"
-                max="600"
-                step="1"
+                inputmode="numeric"
+                pattern="[0-9]*"
+                maxlength="3"
+                autocomplete="off"
                 placeholder="Contoh: 18"
                 value=""
               />
@@ -668,7 +669,22 @@
         const i = MONTHS.findIndex((x) => x.toLowerCase() === m[2].toLowerCase());
         return i < 0 ? "" : `${m[3]}-${String(i + 1).padStart(2, "0")}-${String(m[1]).padStart(2, "0")}`;
       }
-      const todayISO = () => new Date().toISOString().split("T")[0];
+      // Tanggal hari ini menurut WIB (bukan UTC, supaya pagi hari sebelum 07:00 tidak mundur sehari)
+      const todayISO = () => new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Jakarta" }).format(new Date());
+
+      // Waktu baca: kolom teks biasa (selebar kolom lain), hanya angka yang diterima
+      $("bookReadTime").addEventListener("input", (e) => {
+        e.target.value = e.target.value.replace(/\D/g, "").slice(0, 3);
+      });
+
+      // Kolom tanggal otomatis mengikuti hari ini selama belum Anda ubah sendiri (berguna kalau tab admin dibiarkan terbuka semalaman)
+      let dateTouched = false;
+      $("postDate").addEventListener("input", () => { dateTouched = true; });
+      function refreshDateIfStale() {
+        if (!dateTouched && $("postDate").value !== todayISO()) $("postDate").value = todayISO();
+      }
+      document.addEventListener("visibilitychange", () => { if (!document.hidden) refreshDateIfStale(); });
+      window.addEventListener("focus", refreshDateIfStale);
 
       // HARUS sama dengan slugify() di build.js agar alamat URL konsisten
       function makeSlug(s) {
@@ -1052,6 +1068,7 @@
       $("postSlug").addEventListener("input", () => { slugTouched = true; });
 
       function resetForm() {
+        dateTouched = false;
         $("postForm").reset();
         $("editSlug").value = "";
         $("postCoverPath").value = "";
@@ -1442,7 +1459,8 @@
           $("bookCoreEn").value = enData.coreMessage || "";
           $("wpTranslationEn").value = enData.wallpaperTranslation || "";
           updateCoreCountEn();
-          $("postDate").value = post.dateISO || parseIndoDate(post.date) || todayISO();
+          dateTouched = true; // sedang mengedit: tanggal artikel jangan diganti otomatis
+        $("postDate").value = post.dateISO || parseIndoDate(post.date) || todayISO();
           $("post-categories").value = Array.isArray(post.categories) ? post.categories.join(", ") : "";
           $("bookAuthor").value = bd.bookAuthor || "";
           $("bookYear").value = bd.bookYear || "";
