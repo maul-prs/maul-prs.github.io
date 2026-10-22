@@ -5,8 +5,12 @@
   "title": "Presence: Bringing Your Boldest Self to Your Biggest Challenges",
   "type": "Book Summary",
   "categories": [
-    "psychology",
-    "communication"
+    "Psychology",
+    "Self-Confidence",
+    "Communication",
+    "Body Language",
+    "Leadership",
+    "Public Speaking"
   ],
   "date": "17 Oktober 2026",
   "dateISO": "2026-10-17",
@@ -17,8 +21,13 @@
     "bookYear": "2015",
     "bookMainCategory": "Book Summary",
     "bookCore": "Bagaimana tetap menjadi dirimu sendiri saat paling gugup? Temukan cara melatih presence lewat keyakinan, mendengarkan, dan bahasa tubuh.",
-    "bookReadTime": "18–22 menit baca"
+    "bookReadTime": "18"
   },
   "cover": "images/cover-presence-bringing-your-boldest-self-to-your-biggest-challenges-1792256308747.jpg",
-  "ogImage": "images/og-presence-bringing-your-boldest-self-to-your-biggest-challenges.jpg"
+  "ogImage": "images/og-presence-bringing-your-boldest-self-to-your-biggest-challenges.jpg",
+  "en": {
+    "title": "Presence: Bringing Your Boldest Self to Your Biggest Challenges",
+    "coreMessage": "How do you stay yourself when the pressure is on? Learn to build presence through belief, listening, and simple body habits.",
+    "ogImage": "images/og-presence-bringing-your-boldest-self-to-your-biggest-challenges-en.jpg"
+  }
 }
