@@ -1,0 +1,33 @@
+{
+  "id": "1792710879717",
+  "slug": "anatomy-and-physiology-2e",
+  "status": "active",
+  "title": "Anatomy and Physiology 2e",
+  "type": "Book Summary",
+  "categories": [
+    "Anatomy",
+    "Physiology",
+    "Biology",
+    "Health",
+    "Science",
+    "Medicine"
+  ],
+  "date": "24 Oktober 2026",
+  "dateISO": "2026-10-24",
+  "coreMessage": "Tubuhmu menjalankan miliaran reaksi tiap detik tanpa kamu sadari. Kenali 11 sistem organ yang menjaga kamu tetap hidup.",
+  "bookData": {
+    "bookTitle": "Anatomy and Physiology 2e",
+    "bookAuthor": "J. Gordon Betts",
+    "bookYear": "2013",
+    "bookMainCategory": "Book Summary",
+    "bookCore": "Tubuhmu menjalankan miliaran reaksi tiap detik tanpa kamu sadari. Kenali 11 sistem organ yang menjaga kamu tetap hidup.",
+    "bookReadTime": "30"
+  },
+  "cover": "images/cover-anatomy-and-physiology-2e-1792710879704.jpg",
+  "en": {
+    "title": "Anatomy and Physiology 2e",
+    "coreMessage": "Your body runs billions of reactions every second without asking you. Meet the 11 organ systems keeping you alive.",
+    "ogImage": "images/og-anatomy-and-physiology-2e-en.jpg"
+  },
+  "ogImage": "images/og-anatomy-and-physiology-2e.jpg"
+}
