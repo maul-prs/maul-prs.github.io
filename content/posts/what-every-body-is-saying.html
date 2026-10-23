@@ -1,0 +1,186 @@
+<style>
+.rangkuman{--pri:#8FA8FF;--acc:#F6B93B;--txt:#F1F1EE;--mut:#C2C6CE;--card:rgba(255,255,255,.055);--line:rgba(255,255,255,.16);--red:#F28B82;--green:#7ED9A4;--blue:#86B8F5;font-family:Lora,Georgia,serif;color:var(--txt);background:transparent;line-height:1.85;font-size:1.05rem;margin:0;padding:0}
+.rangkuman *{box-sizing:border-box}
+.rangkuman p{margin:0 0 1.1em}
+.rangkuman strong{color:#fff}
+.rangkuman h2{font-family:Poppins,sans-serif;font-weight:700;font-size:1.55rem;line-height:1.3;color:var(--acc);margin:2.6em 0 .9em;padding:.7em 0 .5em;border-top:3px solid var(--pri)}
+.rangkuman h3{font-family:Poppins,sans-serif;font-weight:600;font-size:1.1rem;color:var(--pri);margin:1.9em 0 .6em;padding-left:.8em;border-left:4px solid var(--pri)}
+.rangkuman .hook{font-size:1.28rem;line-height:1.7;font-style:italic;border-left:6px solid var(--acc);background:var(--card);padding:1.1em 1.3em;border-radius:0 12px 12px 0;margin:0 0 1.6em}
+.rangkuman .pull{position:relative;background:#0e1220;border:1px solid var(--line);border-radius:14px;padding:2.2em 1.6em 1.4em;margin:2em 0;font-size:1.25rem;line-height:1.6;font-style:italic;color:#fff}
+.rangkuman .pull::before{content:"\201C";position:absolute;top:-.05em;left:.25em;font-family:Poppins,sans-serif;font-size:4.5rem;line-height:1;color:var(--acc)}
+.rangkuman .pull cite{display:block;margin-top:.8em;font-family:Poppins,sans-serif;font-style:normal;font-size:.85rem;color:var(--mut)}
+.rangkuman .callout{border-left:5px solid var(--pri);background:var(--card);border-radius:0 12px 12px 0;padding:1em 1.2em;margin:1.4em 0}
+.rangkuman .callout.amber{border-left-color:var(--acc)}
+.rangkuman .callout.red{border-left-color:var(--red)}
+.rangkuman .callout.green{border-left-color:var(--green)}
+.rangkuman .callout.blue{border-left-color:var(--blue)}
+.rangkuman .callout .ct{display:block;font-family:Poppins,sans-serif;font-weight:600;font-size:.88rem;letter-spacing:.04em;text-transform:uppercase;margin-bottom:.35em;color:#fff}
+.rangkuman .callout p:last-child{margin-bottom:0}
+.rangkuman .ambil{margin:1.1em 0 1.6em;padding:.9em 1.2em;border:1px dashed var(--acc);border-radius:12px;color:var(--txt)}
+.rangkuman .ambil strong{font-family:Poppins,sans-serif;color:var(--acc);font-size:.85rem;letter-spacing:.05em;text-transform:uppercase}
+.rangkuman .tiga{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:1.5em 0;counter-reset:f}
+.rangkuman .tiga .kartu{counter-increment:f;position:relative;background:var(--card);border-radius:12px;padding:1.1em 1.1em 1em;border-top:4px solid var(--pri)}
+.rangkuman .tiga .kartu:nth-child(2){border-top-color:var(--acc)}
+.rangkuman .tiga .kartu:nth-child(3){border-top-color:var(--red)}
+.rangkuman .tiga .kartu::before{content:counter(f);display:inline-flex;align-items:center;justify-content:center;width:1.8em;height:1.8em;border-radius:50%;background:var(--acc);color:#111;font-family:Poppins,sans-serif;font-weight:700;font-size:.85rem;margin-bottom:.5em}
+.rangkuman .tiga .kartu b{display:block;font-family:Poppins,sans-serif;color:#fff;font-size:1rem;margin-bottom:.3em}
+.rangkuman .tiga .kartu span{font-size:.93rem;line-height:1.65;color:var(--mut)}
+.rangkuman .tabel-wrap{overflow-x:auto;margin:1.4em 0}
+.rangkuman table.cmp{width:100%;border-collapse:collapse;min-width:520px;font-size:.98rem;line-height:1.6}
+.rangkuman table.cmp th{font-family:Poppins,sans-serif;text-align:left;background:#0e1220;color:var(--acc);padding:.8em 1em;border-bottom:2px solid var(--acc)}
+.rangkuman table.cmp td{padding:.75em 1em;border-bottom:1px solid var(--line);vertical-align:top}
+.rangkuman table.cmp td:first-child{font-family:Poppins,sans-serif;font-weight:600;color:#fff;width:22%}
+.rangkuman table.cmp td:last-child{color:var(--pri)}
+.rangkuman ol.pertanyaan{list-style:none;counter-reset:q;padding:0;margin:1.2em 0}
+.rangkuman ol.pertanyaan li{counter-increment:q;position:relative;background:var(--card);border-radius:12px;padding:1em 1.2em 1em 4em;margin-bottom:12px}
+.rangkuman ol.pertanyaan li::before{content:counter(q);position:absolute;left:1em;top:.85em;width:2em;height:2em;border-radius:50%;background:var(--acc);color:#111;font-family:Poppins,sans-serif;font-weight:700;display:flex;align-items:center;justify-content:center}
+.rangkuman .penutup{background:linear-gradient(135deg,rgba(143,168,255,.18),rgba(246,185,59,.18));border:1px solid var(--line);border-radius:16px;padding:1.6em 1.6em 1.3em;margin-top:1em}
+.rangkuman .penutup p:last-child{margin-bottom:0}
+.rangkuman .penutup .kutip{margin-top:1.2em;padding-top:1em;border-top:1px solid var(--line);font-size:1.2rem;font-style:italic;color:#fff}
+.rangkuman .penutup .kutip cite{display:block;margin-top:.4em;font-family:Poppins,sans-serif;font-style:normal;font-size:.85rem;color:var(--acc)}
+@media (max-width:600px){.rangkuman .tiga{grid-template-columns:1fr}.rangkuman h2{font-size:1.35rem}}
+</style>
+
+<div class="rangkuman">
+
+<div class="hook">Seorang tersangka duduk tenang dan menjawab semua pertanyaan dengan meyakinkan. Tapi ketika penyidik menyebut satu kata, “ice pick”, kelopak matanya menutup rapat dan baru terbuka lagi setelah kata berikutnya. Apa yang tubuhnya ketahui, padahal mulutnya tidak mau bilang?</div>
+
+<h2>Pengantar: Penangkap Mata-Mata dari FBI</h2>
+
+<p>Penulis buku ini, Joe Navarro, mengajarkan hal yang hampir tidak pernah diajarkan di sekolah: membaca bahasa tubuh. Ia mengabdi sekitar 25 tahun di FBI, dikenal sebagai penangkap mata-mata, dan kini mengajar di lingkungan intelijen. Buku ini ditulis bersama psikolog Marvin Karlins. Tersangka di awal tadi akhirnya mengaku, dan itu terbongkar karena satu gerakan kelopak mata.</p>
+
+<p>Kisah Navarro dimulai jauh dari FBI. Ia datang ke Amerika dari Kuba pada usia delapan tahun, tanpa bisa berbahasa Inggris. Untuk bertahan, ia belajar membaca “bahasa lain”: ekspresi dan gerak tubuh teman-temannya. Ia melihat guru dan teman yang menyukainya mengangkat alis saat ia masuk, sedangkan yang tidak ramah menyipitkan mata sedikit. Dua gerakan kecil itu ternyata punya dasar ilmiah yang kelak ia pakai untuk memecahkan kasus kriminal.</p>
+
+<p>Menurut buku ini, perilaku nonverbal menyumbang sekitar 60 sampai 65 persen komunikasi antarmanusia. Karena banyak dilakukan tanpa disadari, tubuh sering lebih jujur daripada kata-kata. Navarro menyebut isyarat itu <strong>tells</strong>. Ada satu peringatan penting yang membedakan buku ini dari kebanyakan buku sejenis: mendeteksi kebohongan jauh lebih sulit daripada membaca perasaan. Pesan intinya, tubuh bisa kamu baca dengan cukup akurat, tapi cap “pembohong” harus kamu tahan.</p>
+
+<div class="callout amber"><span class="ct">Bukti dari ruang sidang</span><p>Tahun 1963, detektif Martin McFadden di Cleveland melihat dua pria bolak-balik mengintip sebuah toko. Ia menggeledah mereka dan menemukan senjata. Kasus ini menjadi putusan Mahkamah Agung AS, Terry v. Ohio (1968), yang mengakui bahwa perilaku nonverbal bisa menjadi dasar kecurigaan yang sah.</p></div>
+
+<h2>Bagian 1: Sepuluh Aturan Seorang Pengamat</h2>
+
+<h3>Bab 1: Mengamati dengan Sungguh-Sungguh</h3>
+<p>Aturan pertama: jadilah pengamat yang kompeten. Kebanyakan orang melihat, tapi tidak mengamati. Dalam eksperimen terkenal, sekitar separuh mahasiswa tidak menyadari seseorang berkostum gorila lewat di depan mereka. Itu sebabnya orang sering terkejut dengan peristiwa yang sebenarnya memberi tanda: istri yang tiba-tiba menggugat cerai, anak yang ketahuan memakai narkoba bertahun-tahun, atau bos yang akhirnya memecat. Kemampuan ini bisa dilatih, seperti otot. Gunakan semua indramu, bukan hanya mata.</p>
+<p>Aturan kedua: baca <strong>konteks</strong>. Orang yang gemetar setelah kecelakaan itu wajar. Kegugupan di awal wawancara kerja juga wajar. Yang patut dicurigai adalah kegugupan yang muncul kembali saat satu pertanyaan tertentu diajukan.</p>
+<div class="pull">Kamu melihat, tapi tidak mengamati.<cite>Sherlock Holmes, dikutip Joe Navarro</cite></div>
+<div class="ambil"><strong>Pelajaran:</strong> Jangan menilai dari sekilas pandang. Mulai dari melatih diri benar-benar memperhatikan orang dan situasi di sekitarmu.</div>
+
+<h3>Bab 1: Universal, Khas, dan Garis Dasar</h3>
+<p>Aturan ketiga dan keempat membedakan dua jenis isyarat. <strong>Isyarat universal</strong> dimiliki hampir semua orang, misalnya bibir yang menekan sampai seolah hilang tanda sedang bermasalah. Dalam negosiasi kontrak kapal, Navarro melihat perunding lawan memencongkan bibirnya saat satu klausul dibacakan. Klausul itu langsung dibahas ulang di tempat dan menghemat 13,5 juta dolar bagi kliennya. <strong>Isyarat khas</strong> hanya dimiliki orang tertentu, misalnya anak remaja yang menggaruk kepala dan menggigit bibir setiap kali akan ujian.</p>
+<p>Aturan kelima adalah kunci dari semuanya: tentukan <strong>garis dasar</strong>. Kamu tidak bisa mengenali yang tidak normal kalau tidak tahu yang normal, seperti orang tua yang tak pernah melihat tenggorokan anak saat sehat. Contohnya anak delapan tahun yang biasanya langsung memeluk Paman Harry, tapi kali ini kaku dan membeku. Itu penyimpangan dari kebiasaannya, dan layak diperhatikan lebih lanjut, bukan diabaikan.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Kenali dulu cara orang bersikap saat santai. Perubahan dari situlah yang bercerita.</div>
+
+<h3>Bab 1: Kelompok, Perubahan, dan Nyaman atau Tidak</h3>
+<p>Aturan keenam: cari <strong>kelompok isyarat</strong>, bukan satu isyarat. Seperti kepingan puzzle, makin banyak kepingan, makin jelas gambarnya. Aturan ketujuh: perhatikan perubahan. Saat bekerja di toko ayahnya di Miami tahun 1974, Navarro melihat seorang pria berdiri dekat mesin kasir tanpa membeli apa pun. Lubang hidungnya tiba-tiba mengembang, tanda tubuh mengambil napas sebelum bertindak. Satu detik sebelum pria itu menyambar uang, ia berteriak memperingatkan, dan perampokan gagal. Aturan kedelapan: waspadai isyarat palsu, karena sebagian orang pandai berpura-pura.</p>
+<p>Aturan kesembilan adalah pegangan terpenting: tanyakan apakah isyarat itu tanda <strong>nyaman</strong> atau <strong>tidak nyaman</strong>. Hampir semua perilaku bisa dikelompokkan seperti itu. Aturan kesepuluh: amati dengan halus. Menatap terang-terangan membuat orang waspada dan perilakunya berubah.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Jangan menafsirkan satu gerakan saja. Cari kelompoknya, bandingkan dengan kebiasaan orangnya, lalu tanyakan: ini nyaman atau tidak?</div>
+
+<h2>Bagian 2: Otak yang Tak Bisa Berbohong</h2>
+
+<h3>Bab 2: Tiga Otak dan Satu yang Jujur</h3>
+<p>Navarro memakai gagasan Paul MacLean tentang tiga bagian otak. Yang penting bagi kita adalah dua. <strong>Sistem limbik</strong> adalah otak emosi yang bereaksi spontan terhadap lingkungan, tanpa berpikir. Karena itu reaksinya jujur. <strong>Neokorteks</strong> adalah otak pemikir yang mampu menghitung, menganalisis, dan juga berbohong. Kamu bisa berkata “tidak ada bahan peledak di mobil saya” dengan lancar, tapi keringat dan kegelisahan dari limbik sulit disembunyikan.</p>
+<p>Contohnya petugas bea cukai Diana Dean yang pada akhir 1999 melihat pengemudi dari Kanada berkeringat dan sangat gelisah. Pria itu disuruh keluar, mencoba kabur, dan di mobilnya ditemukan bahan peledak. Ia dikenal sebagai “pembom milenium”. Otak limbik juga tak pernah lupa. Perasaan negatif terhadap perundung masa sekolah bisa muncul lagi dua puluh tahun kemudian.</p>
+
+<h3>Bab 2: Freeze, Flight, Fight</h3>
+<p>Kita sering mendengar “fight or flight”. Navarro meluruskan: urutan sebenarnya adalah <strong>membeku, lari, baru melawan</strong>. Nenek moyang kita lebih sering selamat dengan diam karena predator tertarik pada gerakan.</p>
+<div class="tiga">
+<div class="kartu"><b>Freeze (Membeku)</b><span>Tubuh berhenti bergerak, napas jadi dangkal. Terlihat pada tersangka yang mengunci kaki di balik kursi, atau satu keluarga yang tangannya serentak berhenti saat bel pintu berbunyi di tengah malam.</span></div>
+<div class="kartu"><b>Flight (Menjauh)</b><span>Condong menjauh, memutar kaki ke arah pintu, menutup atau menggosok mata, menaruh tas di pangkuan. Di zaman modern, “lari” berubah jadi menciptakan jarak.</span></div>
+<div class="kartu"><b>Fight (Melawan)</b><span>Pilihan terakhir. Bentuk modernnya: debat panas, sindiran, menantang dengan dada membusung, atau melanggar ruang pribadi.</span></div>
+</div>
+<p>Navarro mengingatkan bahwa kemarahan membajak otak berpikir kita. Jadi sedapat mungkin hindari fight, dan manfaatkan tanda-tandanya sebagai peringatan dini sebelum konflik fisik terjadi.</p>
+
+<h3>Bab 2: Perilaku Menenangkan Diri</h3>
+<p>Setelah ada tekanan, otak meminta tubuh menenangkan dirinya lewat <strong>pacifier</strong>: menyentuh leher, mengusap wajah, memainkan rambut, mengusap kerah, mengunyah permen karet lebih cepat, atau menghembuskan napas dengan pipi menggembung. Leher kaya saraf, sehingga mengusapnya membantu memperlambat denyut jantung. Pria cenderung menggenggam leher bagian depan. Perempuan sering menutup “lekukan leher” di atas tulang dada atau memainkan kalung.</p>
+<div class="callout green"><span class="ct">Kisah buronan dan ibunya</span><p>Saat mencari buronan, Navarro bertanya pada ibu si buronan apakah anaknya ada di rumah. Setiap kali pertanyaan itu muncul, tangannya menyentuh lekukan leher, padahal jawabannya selalu “tidak”. Setelah tiga kali, ia meminta izin menggeledah dan menemukan sang anak bersembunyi di lemari di bawah selimut.</p></div>
+<div class="ambil"><strong>Pelajaran:</strong> Kalau melihat seseorang menenangkan diri, tanyakan <em>apa yang baru saja memicunya</em>. Itu petunjuk topik mana yang membuatnya tertekan.</div>
+
+<h2>Bagian 3: Dari Kaki Sampai Bahu</h2>
+
+<h3>Bab 3: Kaki dan Tungkai</h3>
+<p>Kebanyakan orang membaca orang dari wajah. Navarro justru memulai dari kaki, karena kaki paling jujur. Selama jutaan tahun, kaki bereaksi duluan terhadap ancaman tanpa perlu berpikir. Wajah malah paling tidak bisa dipercaya karena sejak kecil kita dilatih menahan ekspresi: jangan cemberut, tersenyumlah pada saudara.</p>
+<p>Contohnya <strong>happy feet</strong>, yaitu kaki yang bergoyang atau memantul saat orang merasa senang dan percaya diri. Seorang pemain poker menerima kartu flush dengan wajah datar, tapi kakinya heboh di bawah meja. Di sebuah perusahaan, calon karyawan yang kakinya bergoyang saat ditawari tugas luar negeri tiba-tiba diam begitu mendengar kota tujuannya Mumbai. Ternyata ia berharap Hong Kong. Kalau kakimu tak terlihat, perhatikan bahu dan kemeja yang ikut bergetar.</p>
+<p>Arah kaki juga penting. Kita menghadapkan tubuh pada hal yang kita sukai dan memalingkannya dari yang tidak. Juri yang tak menyukai saksi sering mengarahkan kaki ke pintu keluar sambil tetap menghadap ke depan secara sopan. Saat bergabung dalam obrolan dua orang, perhatikan: kalau kaki dan torso mereka berputar menyambutmu, kamu diterima. Kalau hanya pinggang yang menoleh, mereka sebenarnya ingin dibiarkan.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Mulai membaca dari kaki, bukan dari wajah. Kaki memberi tahu ke mana seseorang ingin pergi dan apa yang ia rasakan.</div>
+
+<h3>Bab 4: Torso, Pinggul, Dada, dan Bahu</h3>
+<p>Tubuh bagian tengah menyimpan organ vital, jadi otak melindunginya dengan gigih. Saat tidak nyaman, orang <strong>miring menjauh</strong> atau memutar tubuh sedikit. Pasangan yang sedang menjauh secara emosional juga mulai menjauh secara fisik: sentuhan berkurang, dan saat duduk bersebelahan hanya kepala yang menoleh. Navarro menyebut sisi depan tubuh sebagai sisi <strong>ventral</strong>. Kita memperlihatkannya pada yang kita sukai (<em>ventral fronting</em>) dan menutupinya dari yang tidak kita sukai (<em>ventral denial</em>). Istilah “membelakangi seseorang” lahir dari sini.</p>
+<p>Kalau menjauh tidak pantas secara sosial, orang membuat <strong>tameng</strong>. Pria mengancingkan jasnya saat bicara dengan orang yang tak nyaman baginya. Seorang pemuda yang diwawancarai FBI memeluk bantal sofa erat-erat setiap kali ditanya soal kejahatan, lalu melepasnya saat bicara olahraga. Menyilangkan lengan mendadak di tengah percakapan juga bisa menandakan ketidaknyamanan.</p>
+<p>Bahu pun bicara. Mengangkat kedua bahu dengan tegas saat berkata “tidak tahu” menandakan keyakinan. Bahu yang hanya terangkat sebagian menandakan orang itu tak sepenuhnya yakin dengan ucapannya. Bahu yang naik ke arah telinga disebut <em>turtle effect</em>, terlihat saat orang merasa dipermalukan atau kehilangan percaya diri.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Condongkan badan ke arah lawan bicara untuk menunjukkan kamu setuju, dan perhatikan kapan orang lain mulai menjauh dari topik tertentu.</div>
+
+<h2>Bagian 4: Lengan dan Tangan</h2>
+
+<h3>Bab 5: Lengan</h3>
+<p>Lengan sering terlupakan, padahal jujur. Saat bahagia, lengan <strong>menentang gravitasi</strong>: terangkat tinggi, seperti penonton yang bersorak saat tim mencetak gol. Saat sedih atau gagal, bahu dan lengan merosot. Itu perasaan “tenggelam” yang nyata. Ketika takut atau khawatir, lengan <strong>menarik diri</strong> ke samping atau menyilang di dada. Seorang ibu yang cemas melihat anaknya bermain kasar akan memeluk perutnya sendiri sambil menahan diri.</p>
+<p>Ada tanda yang lebih serius: lengan yang membeku. Navarro melihat anak yang biasanya ceria tiba-tiba menahan lengannya kaku setiap kali ibunya mendekat. Ia juga melihat memar di sisi dalam lengan atasnya, yang menurutnya bukan luka akibat jatuh. Ia melapor ke pengelola kolam renang, dan akhirnya diteruskan ke pihak berwenang. Pelajarannya: perubahan drastis gerak lengan anak di dekat orang dewasa tertentu layak diselidiki lebih jauh.</p>
+<p>Lengan juga bisa dipakai untuk menegaskan wilayah. Posisi <strong>arms akimbo</strong>, kedua lengan membentuk V dengan tangan di pinggang, dipakai polisi dan tentara untuk menunjukkan otoritas. Di dunia kerja sipil, sikap ini sering kurang disukai.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Perhatikan seberapa bebas lengan seseorang bergerak. Makin lepas, makin nyaman. Makin terkunci, makin besar kemungkinan ia tertekan.</div>
+
+<h3>Bab 6: Tangan dan Jari</h3>
+<p>Otak kita memberi perhatian besar pada tangan, karena tangan bisa memegang senjata. Itu sebabnya pembicara yang pandai memakai gerak tangan lebih meyakinkan. Sebaliknya, <strong>menyembunyikan tangan</strong> membuat orang dicurigai. Dalam percobaan kecil Navarro, mahasiswa yang menaruh tangan di bawah meja dinilai lebih tertutup, licik, atau tidak jujur oleh lawan bicaranya. Juri pun tidak suka saksi yang menyembunyikan tangan.</p>
+<p>Jabat tangan membentuk kesan pertama. Navarro tidak menyarankan “adu dominasi” dengan menekan tangan atau jabat tangan dua tangan ala politisi, karena banyak orang merasa tidak nyaman. Ia juga mengingatkan perbedaan budaya: di Timur Tengah dan Asia, pria memegang tangan sebagai tanda percaya. Seorang informan asal Bulgaria menggenggam tangannya hampir setengah jam, dan itu justru membuka lebih banyak informasi. Menunjuk dengan jari termasuk gestur paling ofensif di banyak budaya. Para juri tidak menyukai jaksa yang menunjuk terdakwa sebelum kasusnya terbukti.</p>
+<p>Soal membaca orang: tangan yang <strong>gemetar</strong> menandakan lonjakan adrenalin akibat stres. Tangan yang berkeringat juga bukan bukti bohong. Itu aktivitas sistem saraf yang sama dengan reaksi freeze, flight, fight, dan sekitar 5 persen orang memang berkeringat berlebihan. Sebaliknya, <strong>steepling</strong>, ujung jari kedua tangan bertemu seperti puncak gereja, adalah salah satu tanda percaya diri paling kuat. Ibu jari yang mencuat juga dikaitkan dengan percaya diri dan status tinggi.</p>
+<p>Dua kebiasaan kecil juga berpengaruh. <strong>Merapikan diri</strong> saat orang lain bicara, seperti membersihkan serat di baju, terbaca sebagai sikap meremehkan. Sebaliknya, saling merapikan pada pasangan atau ibu dan anak menandakan keakraban. Lalu soal <strong>kebersihan tangan</strong>: karena otak sangat memperhatikan tangan, kuku yang terawat dan telapak yang kering sebelum bersalaman memberi kesan lebih baik. Kalau bersalaman dengan orang yang tangannya basah, anggap ia sedang gugup, lalu bantu ia tenang.</p>
+<div class="callout blue"><span class="ct">Latihan kecil</span><p>Dalam rapat berikutnya, amati posisi tangan satu orang yang kamu kenal baik. Catat bagaimana tangannya saat ia santai, lalu perhatikan saat topik berubah tegang.</p></div>
+<div class="ambil"><strong>Pelajaran:</strong> Biarkan tanganmu terlihat dan terbuka, dan jangan menyimpulkan bohong dari tangan yang gemetar atau berkeringat.</div>
+
+<h2>Bagian 5: Wajah, Kanvas Pikiran</h2>
+
+<h3>Bab 7: Mata dan Alis</h3>
+<p>Wajah mampu membentuk lebih dari sepuluh ribu ekspresi dan merupakan bahasa universal manusia. Tapi karena kita dilatih menyembunyikan perasaan lewat wajah, ekspresi paling mudah dimanipulasi. Karena itu, wajah dibaca belakangan, bersama isyarat tubuh lain.</p>
+<p>Isyarat mata yang paling andal adalah <strong>eye blocking</strong>: memejamkan, menyipitkan, atau menutup mata saat mendengar atau melihat sesuatu yang tidak disukai. Anak yang lahir buta pun menutup mata saat mendengar kabar buruk, jadi ini bawaan. Dalam kasus kebakaran hotel di Puerto Rico yang menewaskan 97 orang, satpam yang dicurigai memejamkan mata hanya saat ditanya posisinya ketika api mulai. Ia bukan pelaku. Ia sedang meninggalkan pos untuk menemui kekasihnya. Pada kasus mata-mata, dua nama dari 32 kartu membuat matanya melebar lalu pupilnya mengecil dan matanya menyipit. Dua nama itu adalah rekan komplotannya.</p>
+<p>Sebaliknya, pupil melebar dan alis terangkat menandakan senang melihat sesuatu. Alis yang turun menandakan rasa tidak percaya diri atau ancaman. Menyipit sesaat, bahkan hanya sepersekian detik, bisa menunjukkan dendam lama yang tidak terucap. Peningkatan kedipan juga menandakan tekanan, tapi tidak otomatis bohong. Mengalihkan pandangan juga bukan tanda bohong. Orang sering melakukannya untuk berpikir atau karena merasa nyaman.</p>
+
+<p>Tatapan juga mengikuti status. Orang yang dominan bebas memandang ke mana saja, sedangkan bawahan diharapkan memandang atasan. Karena itu, pelamar kerja yang matanya berkeliaran seolah menguasai ruangan akan terkesan tidak tertarik atau angkuh. Tatapan tajam sendiri bisa berarti cinta, minat, atau ancaman, jadi ia harus dibaca bersama ekspresi lain: senyum yang rileks berarti suka, sedangkan rahang tegang dan bibir menekan berarti tidak suka. Adapun menoleh miring dengan lirikan sekilas (<em>looking askance</em>) adalah cara tubuh berkata, “Saya dengar, tapi belum percaya.”</p>
+
+<h3>Bab 7: Senyum, Bibir, dan Hidung</h3>
+<p>Senyum asli melibatkan dua otot: yang menarik sudut bibir ke atas dan yang mengerutkan sudut mata (kerutan “kaki gagak”). Senyum palsu atau sopan hanya menarik bibir ke samping, tanpa melibatkan mata. Gunakan ini sebagai “barometer senyum”: ide yang disambut senyum asli layak dikejar, sedangkan yang disambut senyum sopan perlu dipikirkan ulang.</p>
+<p>Isyarat bibir yang paling universal adalah <strong>bibir menghilang</strong>. Saat stres, orang menekan bibir sampai tipis. Kalau sudut mulutnya turun membentuk huruf U terbalik, stresnya tinggi. Ini jarang bermakna positif. Hidung juga punya tanda: lubang hidung yang mengembang menandakan gairah atau kesiapan bertindak fisik. Itu sebabnya perampok di toko ayah Navarro bisa terbaca sedetik sebelum beraksi.</p>
+<div class="ambil"><strong>Pelajaran:</strong> Percayai wajah hanya bila didukung bagian tubuh lain. Lihat mata dan bibir pada saat orang baru mendengar sesuatu.</div>
+
+<h2>Bagian 6: Hati-Hati Menuduh Berbohong</h2>
+
+<h3>Bab 8: Kenapa Kebohongan Sulit Dideteksi</h3>
+<p>Setelah bab-bab penuh tips, Navarro justru memperingatkan: mendeteksi kebohongan sangat sulit. Studi menunjukkan kebanyakan orang, termasuk hakim, polisi, dan agen FBI, tidak lebih baik dari tebakan acak. Poligraf pun hanya akurat sekitar 60 sampai 80 persen. Orang yang paling berbakat, kurang dari 1 persen populasi, jarang benar lebih dari 60 persen. Penyebabnya, kita belajar berbohong sejak kecil dan sangat terlatih. Yang lebih penting, <strong>tidak ada satu pun perilaku yang pasti menandakan kebohongan</strong>.</p>
+<p>Risikonya nyata. Navarro menyebut banyak orang tak bersalah mengaku karena stres mereka disalahartikan sebagai bohong, termasuk dalam kasus Central Park jogger. Hal yang sama bisa terjadi di rumah, saat orang tua atau pasangan menginterogasi dengan nada menuduh.</p>
+
+<h3>Bab 8: Model Empat Domain dan Pedoman Wawancara</h3>
+<p>Alih-alih mencari “tanda bohong”, Navarro mengusulkan model yang berpusat pada <strong>nyaman dan tidak nyaman</strong>. Orang yang jujur cenderung lebih nyaman. Orang yang menyembunyikan sesuatu menanggung beban pikiran yang membuat ketidaknyamanan muncul. Karena itu tugasmu pertama-tama menciptakan suasana nyaman. Jangan menuduh, jangan duduk terlalu dekat, jangan menatap curiga. Kenyamanan terlihat dari sinkronisasi: napas, nada bicara, dan posisi tubuh yang saling mengikuti (<em>isopraxism</em>).</p>
+<p>Pedomannya mudah diingat. Pastikan pandanganmu ke lawan bicara tidak terhalang meja. Harapkan sedikit kegugupan di awal, dan biarkan orang itu rileks dulu. Tentukan garis dasar, lalu cari <strong>lonjakan</strong> perilaku menenangkan diri setelah pertanyaan tertentu. Tanya, beri jeda, dan amati, jangan menembak pertanyaan beruntun. Jangan mengira banyak bicara berarti jujur, karena cerita panjang bisa menjadi tabir asap. Yang menentukan adalah apakah faktanya bisa diverifikasi. Tahap stres sering terlihat dua kali: pertama reaksi menjauh (kaki menarik diri, rahang mengeras), lalu perilaku menenangkan diri (menyentuh leher atau hidung).</p>
+<p>Navarro juga menyarankan memeriksa <strong>keselarasan</strong> antara kata dan tubuh. Seseorang yang berkata “saya tidak melakukannya” sambil mengangguk pelan sedang mengirim dua pesan yang bertentangan. Perhatikan pula wajah yang mendadak memerah atau pucat, napas yang tak teratur, tenggorokan yang kering sehingga ia menelan dengan susah, dan suara yang pecah. Semuanya tanda tekanan, dan bobotnya baru terasa jika muncul tepat setelah pertanyaan tertentu, setelah kegugupan awal mereda.</p>
+<div class="callout red"><span class="ct">Ingat batasnya</span><p>Menyentuh hidung saat bicara juga dilakukan orang jujur yang gugup. Bahkan Navarro sendiri melakukannya saat ditilang polisi. Gerakan itu hanya menandakan stres, bukan kebohongan.</p></div>
+<div class="ambil"><strong>Pelajaran:</strong> Tujuanmu bukan menangkap pembohong, melainkan menemukan topik yang membuat orang tidak nyaman, lalu menggali dengan pertanyaan yang tenang.</div>
+
+<h2>Perbandingan: Cara Biasa dan Cara Buku Ini</h2>
+<div class="tabel-wrap">
+<table class="cmp">
+<thead><tr><th>Hal</th><th>Cara biasa</th><th>Cara yang diajarkan buku ini</th></tr></thead>
+<tbody>
+<tr><td>Mulai membaca</td><td>Dari wajah, karena paling mudah terlihat.</td><td>Dari kaki ke atas. Wajah paling akhir, karena paling mudah dipalsukan.</td></tr>
+<tr><td>Satu gerakan</td><td>Dianggap punya arti pasti.</td><td>Dibaca bersama kelompok isyarat, konteks, dan garis dasar.</td></tr>
+<tr><td>Memandang</td><td>Melihat sekilas.</td><td>Mengamati dengan sengaja memakai semua indra.</td></tr>
+<tr><td>Orang gugup</td><td>Dianggap sedang berbohong.</td><td>Itu tanda stres, dan bisa dialami orang jujur.</td></tr>
+<tr><td>Yang dicari</td><td>Tanda bohong.</td><td>Tanda nyaman dan tidak nyaman.</td></tr>
+<tr><td>Bertanya</td><td>Menuduh dan menembak beruntun.</td><td>Menciptakan kenyamanan, bertanya, lalu memberi jeda.</td></tr>
+<tr><td>Banyak bicara</td><td>Dianggap jujur.</td><td>Yang dihitung adalah fakta yang bisa diverifikasi.</td></tr>
+<tr><td>Cara mengamati</td><td>Menatap terang-terangan.</td><td>Mengamati dengan halus.</td></tr>
+<tr><td>Perilaku tubuh sendiri</td><td>Tidak disadari.</td><td>Dijaga: tangan terlihat, tubuh condong menyambut.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>Tiga Pertanyaan untuk Merenung</h2>
+<ol class="pertanyaan">
+<li>Saat berbicara dengan orang terdekat, bagian tubuhnya yang mana yang biasanya kuabaikan, dan apa yang mungkin selama ini kulewatkan?</li>
+<li>Kapan terakhir kali aku menganggap seseorang berbohong hanya karena ia tampak gugup, dan pertanyaan apa yang tak sempat kutanyakan?</li>
+<li>Sinyal apa yang tubuhku kirim tanpa sadar, seperti tangan di bawah meja atau badan yang menjauh, dan bagaimana orang lain mungkin menafsirkannya?</li>
+</ol>
+
+<h2>Penutup: Tanda di Permukaan Tanah</h2>
+<div class="penutup">
+<p>Navarro menutup bukunya dengan cerita sederhana. Seorang ibu mencari alamat di Coral Gables, Florida, dan tak menemukan satu pun papan nama jalan. Seorang penjaga pom bensin memberi tahu: lihatlah ke bawah, bukan ke atas. Papan nama di sana berupa balok batu kecil di dekat tanah. Setelah tahu ke mana harus melihat, katanya, tandanya jelas dan tak bisa dilewatkan.</p>
+<p>Bahasa tubuh seperti itu. Tanda-tandanya selalu ada, hanya jarang diajarkan. Kamu tidak perlu jadi agen FBI untuk memakainya. Mulailah dari yang kecil: perhatikan satu orang yang kamu kenal baik, catat cara santainya, lalu perhatikan apa yang berubah saat topik berganti.</p>
+<p>Gunakan kemampuan ini untuk memahami dan menenangkan, bukan untuk menuduh. Orang yang tubuhnya sedang bicara sering hanya butuh ditanya dengan tenang.</p>
+<div class="kutip">“Observasi itu seperti otot: makin dipakai makin kuat, makin dibiarkan makin lemah.”<cite>Joe Navarro</cite></div>
+</div>
+
+</div>

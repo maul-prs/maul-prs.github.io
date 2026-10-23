@@ -1,0 +1,185 @@
+<style>
+.rangkuman{--pri:#8FA8FF;--acc:#F6B93B;--txt:#F1F1EE;--mut:#C2C6CE;--card:rgba(255,255,255,.055);--line:rgba(255,255,255,.16);--red:#F28B82;--green:#7ED9A4;--blue:#86B8F5;font-family:Lora,Georgia,serif;color:var(--txt);background:transparent;line-height:1.85;font-size:1.05rem;margin:0;padding:0}
+.rangkuman *{box-sizing:border-box}
+.rangkuman p{margin:0 0 1.1em}
+.rangkuman strong{color:#fff}
+.rangkuman h2{font-family:Poppins,sans-serif;font-weight:700;font-size:1.55rem;line-height:1.3;color:var(--acc);margin:2.6em 0 .9em;padding:.7em 0 .5em;border-top:3px solid var(--pri)}
+.rangkuman h3{font-family:Poppins,sans-serif;font-weight:600;font-size:1.1rem;color:var(--pri);margin:1.9em 0 .6em;padding-left:.8em;border-left:4px solid var(--pri)}
+.rangkuman .hook{font-size:1.28rem;line-height:1.7;font-style:italic;border-left:6px solid var(--acc);background:var(--card);padding:1.1em 1.3em;border-radius:0 12px 12px 0;margin:0 0 1.6em}
+.rangkuman .pull{position:relative;background:#0e1220;border:1px solid var(--line);border-radius:14px;padding:2.2em 1.6em 1.4em;margin:2em 0;font-size:1.25rem;line-height:1.6;font-style:italic;color:#fff}
+.rangkuman .pull::before{content:"\201C";position:absolute;top:-.05em;left:.25em;font-family:Poppins,sans-serif;font-size:4.5rem;line-height:1;color:var(--acc)}
+.rangkuman .pull cite{display:block;margin-top:.8em;font-family:Poppins,sans-serif;font-style:normal;font-size:.85rem;color:var(--mut)}
+.rangkuman .callout{border-left:5px solid var(--pri);background:var(--card);border-radius:0 12px 12px 0;padding:1em 1.2em;margin:1.4em 0}
+.rangkuman .callout.amber{border-left-color:var(--acc)}
+.rangkuman .callout.red{border-left-color:var(--red)}
+.rangkuman .callout.green{border-left-color:var(--green)}
+.rangkuman .callout.blue{border-left-color:var(--blue)}
+.rangkuman .callout .ct{display:block;font-family:Poppins,sans-serif;font-weight:600;font-size:.88rem;letter-spacing:.04em;text-transform:uppercase;margin-bottom:.35em;color:#fff}
+.rangkuman .callout p:last-child{margin-bottom:0}
+.rangkuman .ambil{margin:1.1em 0 1.6em;padding:.9em 1.2em;border:1px dashed var(--acc);border-radius:12px;color:var(--txt)}
+.rangkuman .ambil strong{font-family:Poppins,sans-serif;color:var(--acc);font-size:.85rem;letter-spacing:.05em;text-transform:uppercase}
+.rangkuman .tiga{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:1.5em 0;counter-reset:f}
+.rangkuman .tiga .kartu{counter-increment:f;position:relative;background:var(--card);border-radius:12px;padding:1.1em 1.1em 1em;border-top:4px solid var(--pri)}
+.rangkuman .tiga .kartu:nth-child(2){border-top-color:var(--acc)}
+.rangkuman .tiga .kartu:nth-child(3){border-top-color:var(--red)}
+.rangkuman .tiga .kartu::before{content:counter(f);display:inline-flex;align-items:center;justify-content:center;width:1.8em;height:1.8em;border-radius:50%;background:var(--acc);color:#111;font-family:Poppins,sans-serif;font-weight:700;font-size:.85rem;margin-bottom:.5em}
+.rangkuman .tiga .kartu b{display:block;font-family:Poppins,sans-serif;color:#fff;font-size:1rem;margin-bottom:.3em}
+.rangkuman .tiga .kartu span{font-size:.93rem;line-height:1.65;color:var(--mut)}
+.rangkuman .tabel-wrap{overflow-x:auto;margin:1.4em 0}
+.rangkuman table.cmp{width:100%;border-collapse:collapse;min-width:520px;font-size:.98rem;line-height:1.6}
+.rangkuman table.cmp th{font-family:Poppins,sans-serif;text-align:left;background:#0e1220;color:var(--acc);padding:.8em 1em;border-bottom:2px solid var(--acc)}
+.rangkuman table.cmp td{padding:.75em 1em;border-bottom:1px solid var(--line);vertical-align:top}
+.rangkuman table.cmp td:first-child{font-family:Poppins,sans-serif;font-weight:600;color:#fff;width:22%}
+.rangkuman table.cmp td:last-child{color:var(--pri)}
+.rangkuman ol.pertanyaan{list-style:none;counter-reset:q;padding:0;margin:1.2em 0}
+.rangkuman ol.pertanyaan li{counter-increment:q;position:relative;background:var(--card);border-radius:12px;padding:1em 1.2em 1em 4em;margin-bottom:12px}
+.rangkuman ol.pertanyaan li::before{content:counter(q);position:absolute;left:1em;top:.85em;width:2em;height:2em;border-radius:50%;background:var(--acc);color:#111;font-family:Poppins,sans-serif;font-weight:700;display:flex;align-items:center;justify-content:center}
+.rangkuman .penutup{background:linear-gradient(135deg,rgba(143,168,255,.18),rgba(246,185,59,.18));border:1px solid var(--line);border-radius:16px;padding:1.6em 1.6em 1.3em;margin-top:1em}
+.rangkuman .penutup p:last-child{margin-bottom:0}
+.rangkuman .penutup .kutip{margin-top:1.2em;padding-top:1em;border-top:1px solid var(--line);font-size:1.2rem;font-style:italic;color:#fff}
+.rangkuman .penutup .kutip cite{display:block;margin-top:.4em;font-family:Poppins,sans-serif;font-style:normal;font-size:.85rem;color:var(--acc)}
+@media (max-width:600px){.rangkuman .tiga{grid-template-columns:1fr}.rangkuman h2{font-size:1.35rem}}
+</style>
+
+<div class="rangkuman">
+
+<div class="hook">A suspect sits calmly and answers every question convincingly. But when the investigator says one phrase, "ice pick," his eyelids clamp shut and stay closed until the next word. What does his body know that his mouth refuses to say?</div>
+
+<h2>Introduction: The FBI's Spy Catcher</h2>
+
+<p>The author of this book, Joe Navarro, teaches something that is almost never taught in school: reading body language. He served about 25 years in the FBI, became known as a spy catcher, and now teaches in the intelligence community. The book was written with psychologist Marvin Karlins. The suspect above eventually confessed, and it came to light because of a single eyelid movement.</p>
+
+<p>Navarro's story begins far from the FBI. He came to America from Cuba at age eight, unable to speak English. To survive, he learned to read "another language": the expressions and body movements of his classmates. He noticed that teachers and friends who liked him raised their eyebrows when he came in, while the unfriendly ones narrowed their eyes slightly. Those two small movements turned out to have a scientific basis that he would later use to solve criminal cases.</p>
+
+<p>According to this book, nonverbal behavior accounts for roughly 60 to 65 percent of human communication. Because much of it happens without our awareness, the body is often more honest than words. Navarro calls these signals <strong>tells</strong>. There is one important warning that sets this book apart from most others of its kind: detecting lies is far harder than reading feelings. The core message: you can read the body fairly accurately, but hold back from stamping someone a "liar."</p>
+
+<div class="callout amber"><span class="ct">Evidence from the courtroom</span><p>In 1963, detective Martin McFadden in Cleveland saw two men repeatedly casing a store. He searched them and found weapons. The case became a U.S. Supreme Court ruling, Terry v. Ohio (1968), which recognized that nonverbal behavior can be a legitimate basis for suspicion.</p></div>
+
+<h2>Part 1: Ten Rules of an Observer</h2>
+
+<h3>Chapter 1: Observing with Purpose</h3>
+<p>The first rule: be a competent observer. Most people look, but do not observe. In a famous experiment, about half of students failed to notice someone in a gorilla suit walking through. That is why people are often shocked by events that gave warning signs: the wife who suddenly files for divorce, the child caught using drugs for years, or the boss who finally fires you. The skill can be trained, like a muscle. Use all your senses, not only your eyes.</p>
+<p>The second rule: read <strong>context</strong>. Someone trembling after an accident is normal. Nervousness at the start of a job interview is normal too. What deserves suspicion is nervousness that returns when one particular question is asked.</p>
+<div class="pull">You see, but you do not observe.<cite>Sherlock Holmes, quoted by Joe Navarro</cite></div>
+<div class="ambil"><strong>Lesson:</strong> Do not judge from a glance. Start by training yourself to truly pay attention to the people and situations around you.</div>
+
+<h3>Chapter 1: Universal, Idiosyncratic, and Baseline</h3>
+<p>The third and fourth rules distinguish two kinds of signals. <strong>Universal signals</strong> are shared by nearly everyone. For example, lips pressed so tightly they seem to vanish signal a problem. In a ship contract negotiation, Navarro saw the opposing negotiator purse his lips when one clause was read. The clause was immediately revisited on the spot and saved his client 13.5 million dollars. <strong>Idiosyncratic signals</strong> belong only to particular people, like the teenager who scratches his head and bites his lip every time an exam is coming.</p>
+<p>The fifth rule is the key to everything: establish a <strong>baseline</strong>. You cannot recognize the abnormal if you do not know the normal, like a parent who has never looked at a child's throat when healthy. Take the eight-year-old who usually hugs Uncle Harry right away, but this time goes stiff and freezes. That is a deviation from her usual self, and worth further attention rather than being brushed aside.</p>
+<div class="ambil"><strong>Lesson:</strong> First learn how people act when relaxed. The changes from that baseline are what tell the story.</div>
+
+<h3>Chapter 1: Clusters, Changes, and Comfort vs. Discomfort</h3>
+<p>The sixth rule: look for <strong>clusters of signals</strong>, not a single one. Like puzzle pieces, the more pieces you have, the clearer the picture. The seventh rule: notice changes. While working in his father's store in Miami in 1974, Navarro noticed a man standing near the cash register without buying anything. The man's nostrils suddenly flared, a sign the body is taking a breath before acting. One second before the man grabbed the money, he shouted a warning, and the robbery failed. The eighth rule: watch for false signals, because some people are good at pretending.</p>
+<p>The ninth rule is the most important handle: ask whether the signal indicates <strong>comfort</strong> or <strong>discomfort</strong>. Nearly every behavior can be sorted this way. The tenth rule: observe subtly. Staring openly makes people wary and their behavior changes.</p>
+<div class="ambil"><strong>Lesson:</strong> Do not interpret a single gesture. Look for the cluster, compare with the person's habits, then ask: is this comfort or discomfort?</div>
+
+<h2>Part 2: The Brain That Cannot Lie</h2>
+
+<h3>Chapter 2: Three Brains and the Honest One</h3>
+<p>Navarro uses Paul MacLean's idea of three parts of the brain. Two matter for us. The <strong>limbic system</strong> is the emotional brain that reacts spontaneously to the environment, without thinking. That is why its reactions are honest. The <strong>neocortex</strong> is the thinking brain that can calculate, analyze, and also lie. You can say "there are no explosives in my car" fluently, but the sweat and restlessness from the limbic system are hard to hide.</p>
+<p>Take customs officer Diana Dean, who in late 1999 saw a driver from Canada sweating and extremely agitated. The man was told to get out, tried to flee, and explosives were found in his car. He became known as the "Millennium Bomber." The limbic brain also never forgets. Negative feelings toward a school bully can surface again twenty years later.</p>
+
+<h3>Chapter 2: Freeze, Flight, Fight</h3>
+<p>We often hear "fight or flight." Navarro corrects it: the real order is <strong>freeze, flee, then fight</strong>. Our ancestors survived more often by staying still, because predators are drawn to movement.</p>
+<div class="tiga">
+<div class="kartu"><b>Freeze</b><span>The body stops moving and breathing turns shallow. Seen in a suspect who locks his feet behind the chair legs, or a family whose hands all stop at once when the doorbell rings in the middle of the night.</span></div>
+<div class="kartu"><b>Flight</b><span>Leaning away, turning the feet toward the door, closing or rubbing the eyes, putting a bag on the lap. In modern times, "running" becomes creating distance.</span></div>
+<div class="kartu"><b>Fight</b><span>The last option. Its modern forms: heated arguments, sarcasm, challenging with a puffed-out chest, or violating personal space.</span></div>
+</div>
+<p>Navarro reminds us that anger hijacks our thinking brain. So avoid fight where you can, and use its signs as an early warning before physical conflict occurs.</p>
+
+<h3>Chapter 2: Pacifying Behaviors</h3>
+<p>After stress, the brain asks the body to calm itself through <strong>pacifiers</strong>: touching the neck, rubbing the face, playing with hair, stroking the collar, chewing gum faster, or exhaling with puffed cheeks. The neck is rich in nerves, so stroking it helps slow the heart rate. Men tend to grip the front of the neck. Women often cover the "neck dimple" above the breastbone or play with a necklace.</p>
+<div class="callout green"><span class="ct">The fugitive and his mother</span><p>While looking for a fugitive, Navarro asked the fugitive's mother whether her son was home. Each time the question came up, her hand touched the dimple of her neck, even though her answer was always "no." After the third time, he asked permission to search and found the son hiding in a closet under a blanket.</p></div>
+<div class="ambil"><strong>Lesson:</strong> When you see someone soothing themselves, ask <em>what just triggered it</em>. That is a clue to which topic is stressing them.</div>
+
+<h2>Part 3: From the Feet to the Shoulders</h2>
+
+<h3>Chapter 3: Feet and Legs</h3>
+<p>Most people read others from the face. Navarro starts from the feet, because the feet are the most honest. For millions of years the feet reacted to threats first, without thinking. The face, meanwhile, is the least trustworthy because since childhood we are trained to hold back expressions: do not frown, smile at your sibling.</p>
+<p>Take <strong>happy feet</strong>, feet that wiggle or bounce when a person feels glad and confident. A poker player received a flush with a blank face, but his feet went wild under the table. At one company, a job candidate whose feet bounced when offered an overseas assignment suddenly went still on hearing the destination was Mumbai. It turned out he was hoping for Hong Kong. If the feet are out of sight, watch the shoulders and shirt shaking along.</p>
+<p>The direction of the feet matters too. We turn our bodies toward what we like and away from what we do not. A juror who dislikes a witness often points his feet toward the exit while politely facing forward. When joining a conversation between two people, notice: if their feet and torsos turn to welcome you, you are accepted. If only their hips turn, they actually want to be left alone.</p>
+<div class="ambil"><strong>Lesson:</strong> Start reading from the feet, not the face. The feet tell you where a person wants to go and what they feel.</div>
+
+<h3>Chapter 4: Torso, Hips, Chest, and Shoulders</h3>
+<p>The middle of the body holds the vital organs, so the brain protects it fiercely. When uncomfortable, people <strong>lean away</strong> or turn their body slightly. Couples who are emotionally drifting also begin to drift physically: less touching, and when sitting side by side only the head turns. Navarro calls the front of the body the <strong>ventral</strong> side. We show it to those we like (<em>ventral fronting</em>) and hide it from those we do not (<em>ventral denial</em>). The expression "turning your back on someone" comes from this.</p>
+<p>When turning away is socially inappropriate, people build a <strong>barrier</strong>. A man buttons his jacket when talking to someone who makes him uneasy. A young man interviewed by the FBI hugged a sofa pillow tightly every time he was asked about the crime, then released it when talking about sports. Suddenly crossing the arms in the middle of a conversation can also signal discomfort.</p>
+<p>Shoulders speak too. Raising both shoulders firmly while saying "I don't know" signals conviction. Shoulders that rise only partly signal the person is not fully sure of what they said. Shoulders that rise toward the ears are called the <em>turtle effect</em>, seen when people feel embarrassed or lose confidence.</p>
+<div class="ambil"><strong>Lesson:</strong> Lean toward the person to show you agree, and notice when others begin to pull away from a particular topic.</div>
+
+<h2>Part 4: Arms and Hands</h2>
+
+<h3>Chapter 5: The Arms</h3>
+<p>Arms are often forgotten, yet they are honest. When happy, arms <strong>defy gravity</strong>: lifted high, like fans cheering when their team scores. When sad or after failure, shoulders and arms sag. That is the feeling of "sinking" made real. When afraid or worried, arms <strong>withdraw</strong> to the sides or cross over the chest. A mother anxious about her child playing rough will hug her own belly while restraining herself.</p>
+<p>There is a more serious sign: frozen arms. Navarro saw a normally cheerful child suddenly hold her arms stiff every time her mother came near. He also noticed bruising on the inner upper arm, which he believed was not a fall injury. He reported it to the pool management, and it was eventually passed on to authorities. The lesson: a drastic change in a child's arm movement around certain adults deserves closer investigation.</p>
+<p>Arms can also be used to mark territory. The <strong>arms akimbo</strong> posture, both arms forming a V with hands at the waist, is used by police and soldiers to show authority. In civilian workplaces, this stance is often less welcome.</p>
+<div class="ambil"><strong>Lesson:</strong> Notice how freely someone's arms move. The looser, the more comfortable. The more locked, the more likely they are under stress.</div>
+
+<h3>Chapter 6: Hands and Fingers</h3>
+<p>Our brains give great attention to hands, because hands can hold a weapon. That is why speakers who use hand gestures well are more convincing. Conversely, <strong>hiding the hands</strong> makes people suspicious. In a small experiment of Navarro's, students who put their hands under the table were rated by their conversation partners as more closed, sly, or dishonest. Jurors also dislike witnesses who hide their hands.</p>
+<p>The handshake shapes first impressions. Navarro does not recommend "dominance contests" by squeezing hard or using the politician's two-handed handshake, because many people find it uncomfortable. He also reminds us of cultural differences: in the Middle East and Asia, men hold hands as a sign of trust. An informant from Bulgaria held his hand for almost half an hour, and that actually opened up more information. Pointing with a finger is among the most offensive gestures in many cultures. Jurors dislike prosecutors who point at a defendant before the case is proven.</p>
+<p>Two small habits also matter. <strong>Grooming</strong> yourself while others speak, like brushing lint off your clothes, reads as dismissive. In contrast, grooming each other among couples or mother and child signals closeness. And <strong>hand hygiene</strong>: because the brain pays so much attention to hands, well-kept nails and dry palms before a handshake make a better impression. If you shake hands with someone whose hand is wet, assume they are nervous and help them calm down.</p>
+<p>On reading people: <strong>trembling</strong> hands signal an adrenaline surge from stress. Sweaty hands are not proof of lying either. It is the same nervous system activity behind freeze, flight, and fight, and about 5 percent of people sweat excessively anyway. In contrast, <strong>steepling</strong>, the fingertips of both hands meeting like a church spire, is among the strongest signs of confidence. Thumbs that stick out are also linked to confidence and high status.</p>
+<div class="callout blue"><span class="ct">A small exercise</span><p>In your next meeting, watch the hand positions of one person you know well. Note how their hands look when they are relaxed, then watch when the topic turns tense.</p></div>
+<div class="ambil"><strong>Lesson:</strong> Keep your hands visible and open, and do not conclude lying from trembling or sweaty hands.</div>
+
+<h2>Part 5: The Face, Canvas of the Mind</h2>
+
+<h3>Chapter 7: Eyes and Eyebrows</h3>
+<p>The face can form more than ten thousand expressions and is a universal human language. But because we are trained to hide feelings through the face, expressions are the easiest to manipulate. That is why the face is read last, together with other body signals.</p>
+<p>The most reliable eye signal is <strong>eye blocking</strong>: closing, squinting, or covering the eyes on hearing or seeing something unwanted. Even people born blind close their eyes on hearing bad news, so this is innate. In the hotel fire case in Puerto Rico that killed 97 people, a security guard under suspicion shut his eyes only when asked where he was when the fire started. He was not the culprit. He had left his post to meet his girlfriend. In a spy case, two names among 32 cards made his eyes widen, then his pupils shrank and his eyes narrowed. Those two names were his accomplices.</p>
+<p>Conversely, dilated pupils and raised eyebrows signal pleasure at what is seen. Lowered eyebrows signal uncertainty or threat. A brief squint, even for a fraction of a second, can reveal an old unspoken grudge. A rise in blinking also signals pressure, but not automatically lying. Looking away is not a sign of lying either. People often do it to think or because they feel comfortable.</p>
+<p>Gaze also follows status. Dominant people feel free to look anywhere, while subordinates are expected to look at the superior. So a job applicant whose eyes roam as if owning the room will seem uninterested or arrogant. A piercing gaze itself can mean love, interest, or threat, so it must be read together with other expressions: a relaxed smile means liking, while a tense jaw and pressed lips mean dislike. A sideways tilt of the head with a quick glance (<em>looking askance</em>) is the body's way of saying, "I hear you, but I don't believe you yet."</p>
+
+<h3>Chapter 7: Smiles, Lips, and Nose</h3>
+<p>A genuine smile involves two muscles: the one that pulls the corners of the lips up and the one that crinkles the corners of the eyes (the "crow's feet"). A fake or polite smile only pulls the lips sideways, without involving the eyes. Use this as a "smile barometer": an idea met with a genuine smile deserves pursuing, while one met with a polite smile needs rethinking.</p>
+<p>The most universal lip signal is <strong>disappearing lips</strong>. Under stress, people press their lips thin. If the corners of the mouth turn down into an upside-down U, stress is high. This is rarely positive. The nose has its own tell: flaring nostrils signal arousal or readiness for physical action. That is why the robber in Navarro's father's store could be read one second before he acted.</p>
+<div class="ambil"><strong>Lesson:</strong> Trust the face only when other parts of the body back it up. Look at the eyes and lips at the moment someone has just heard something.</div>
+
+<h2>Part 6: Careful About Accusing Someone of Lying</h2>
+
+<h3>Chapter 8: Why Lies Are Hard to Detect</h3>
+<p>After chapters full of tips, Navarro warns: detecting deception is very hard. Studies show most people, including judges, police, and FBI agents, do no better than random guessing. Even the polygraph is only about 60 to 80 percent accurate. The most gifted people, less than 1 percent of the population, are rarely right more than 60 percent of the time. The reason: we learn to lie from childhood and are highly practiced. More importantly, <strong>no single behavior reliably indicates a lie</strong>.</p>
+<p>The risk is real. Navarro notes that many innocent people have confessed because their stress was misread as lying, including in the Central Park jogger case. The same can happen at home, when parents or partners interrogate in an accusing tone.</p>
+
+<h3>Chapter 8: The Four-Domain Model and Interview Guidelines</h3>
+<p>Instead of looking for "signs of lying," Navarro proposes a model centered on <strong>comfort and discomfort</strong>. Honest people tend to be more comfortable. People hiding something carry a mental burden that shows up as discomfort. So your first job is to create a comfortable atmosphere. Do not accuse, do not sit too close, do not stare suspiciously. Comfort shows in synchrony: breathing, tone of voice, and body positions that mirror one another (<em>isopraxism</em>).</p>
+<p>The guidelines are easy to remember. Make sure your view of the other person is not blocked by a desk. Expect a little nervousness at the start, and let the person relax first. Set a baseline, then look for <strong>spikes</strong> of pacifying behavior after particular questions. Ask, pause, and observe, do not fire off rapid questions. Do not assume a lot of talking means honesty, because a long story can be a smokescreen. What counts is whether the facts can be verified. The stress stage often shows twice: first a withdrawal reaction (feet pulling back, jaw tightening), then pacifying behavior (touching the neck or nose).</p>
+<p>Navarro also suggests checking for <strong>alignment</strong> between words and body. Someone who says "I didn't do it" while nodding slowly is sending two contradictory messages. Also watch for a face that suddenly flushes or goes pale, irregular breathing, a dry throat so they swallow hard, and a cracking voice. All are signs of pressure, and their weight is felt only if they appear right after a particular question, once the initial nervousness has subsided.</p>
+<div class="callout red"><span class="ct">Remember the limits</span><p>Touching the nose while talking is also done by honest people who are nervous. Even Navarro himself does it when pulled over by the police. That gesture only signals stress, not lying.</p></div>
+<div class="ambil"><strong>Lesson:</strong> Your goal is not to catch liars, but to find the topics that make people uncomfortable, then dig in with calm questions.</div>
+
+<h2>Comparison: The Usual Way and This Book's Way</h2>
+<div class="tabel-wrap">
+<table class="cmp">
+<thead><tr><th>Topic</th><th>The usual way</th><th>The way this book teaches</th></tr></thead>
+<tbody>
+<tr><td>Where to start reading</td><td>From the face, because it is most visible.</td><td>From the feet up. The face last, because it is easiest to fake.</td></tr>
+<tr><td>A single gesture</td><td>Treated as having a definite meaning.</td><td>Read together with clusters, context, and baseline.</td></tr>
+<tr><td>Looking</td><td>A quick glance.</td><td>Deliberately observing with all your senses.</td></tr>
+<tr><td>A nervous person</td><td>Assumed to be lying.</td><td>It signals stress, which honest people feel too.</td></tr>
+<tr><td>What to look for</td><td>Signs of lying.</td><td>Signs of comfort and discomfort.</td></tr>
+<tr><td>Asking questions</td><td>Accusing and firing questions in a row.</td><td>Creating comfort, asking, then pausing.</td></tr>
+<tr><td>A lot of talking</td><td>Taken as honest.</td><td>What counts is facts that can be verified.</td></tr>
+<tr><td>How to observe</td><td>Staring openly.</td><td>Observing subtly.</td></tr>
+<tr><td>Your own body behavior</td><td>Unnoticed.</td><td>Managed: hands visible, body leaning in welcome.</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>Three Questions to Reflect On</h2>
+<ol class="pertanyaan">
+<li>When I talk with the people closest to me, which part of their body do I usually overlook, and what might I have been missing?</li>
+<li>When did I last decide someone was lying only because they seemed nervous, and what question did I never get to ask?</li>
+<li>What signals does my own body send without my knowing, like hands under the table or a body that pulls away, and how might others interpret them?</li>
+</ol>
+
+<h2>Closing: The Sign Near the Ground</h2>
+<div class="penutup">
+<p>Navarro closes his book with a simple story. A woman looks for an address in Coral Gables, Florida, and cannot find a single street sign. A gas station attendant tells her: look down, not up. The signs there are small stone blocks near the ground. Once you know where to look, he says, the signs are clear and cannot be missed.</p>
+<p>Body language is like that. The signs are always there, they are just rarely taught. You do not need to be an FBI agent to use them. Start small: watch one person you know well, note their relaxed manner, then notice what changes when the topic shifts.</p>
+<p>Use this ability to understand and to calm, not to accuse. A person whose body is speaking often just needs to be asked calmly.</p>
+<div class="kutip">“Observation is like a muscle: the more you use it the stronger it gets, the more you neglect it the weaker.”<cite>Joe Navarro</cite></div>
+</div>
+
+</div>

@@ -1,0 +1,35 @@
+{
+  "id": "1792714896999",
+  "slug": "what-every-body-is-saying",
+  "status": "active",
+  "title": "What Every BODY Is Saying",
+  "type": "Book Summary",
+  "categories": [
+    "Business",
+    "Educational",
+    "Leadership",
+    "Neuroscience",
+    "Non-Fiction",
+    "Popular Science",
+    "Sales",
+    "Science"
+  ],
+  "date": "24 Oktober 2026",
+  "dateISO": "2026-10-24",
+  "coreMessage": "Tubuhmu bicara sebelum mulutmu. Mantan agen FBI ini mengajarkan cara membaca isyarat yang tak bisa disembunyikan orang.",
+  "bookData": {
+    "bookTitle": "What Every BODY Is Saying",
+    "bookAuthor": "Joe Navarro",
+    "bookYear": "2008",
+    "bookMainCategory": "Book Summary",
+    "bookCore": "Tubuhmu bicara sebelum mulutmu. Mantan agen FBI ini mengajarkan cara membaca isyarat yang tak bisa disembunyikan orang.",
+    "bookReadTime": "22"
+  },
+  "cover": "images/cover-what-every-body-is-saying-1792714896982.jpg",
+  "en": {
+    "title": "What Every BODY Is Saying",
+    "coreMessage": "Your body speaks before your mouth does. A former FBI agent shows how to read the signals people can’t hide.",
+    "ogImage": "images/og-what-every-body-is-saying-en.jpg"
+  },
+  "ogImage": "images/og-what-every-body-is-saying.jpg"
+}
