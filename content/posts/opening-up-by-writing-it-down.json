@@ -5,7 +5,12 @@
   "title": "Opening Up by Writing It Down",
   "type": "Book Summary",
   "categories": [
-    "Psikologi"
+    "Psychology",
+    "Mental Health",
+    "Expressive Writing",
+    "Trauma And Healing",
+    "Health Psychology",
+    "Wellness"
   ],
   "date": "18 Oktober 2026",
   "dateISO": "2026-10-18",
@@ -16,8 +21,13 @@
     "bookYear": "1990 & 2016",
     "bookMainCategory": "Book Summary",
     "bookCore": "Menulis jujur tentang pengalaman emosional yang berat dapat membantu kita memahami, melepaskan, dan pulih, dengan cara yang aman.",
-    "bookReadTime": "30-45 menit"
+    "bookReadTime": "30"
   },
   "cover": "images/cover-opening-up-by-writing-it-down-1792296364107.jpg",
-  "ogImage": "images/og-opening-up-by-writing-it-down.jpg"
+  "ogImage": "images/og-opening-up-by-writing-it-down.jpg",
+  "en": {
+    "title": "Opening Up: The Healing Power of Expressing Emotions",
+    "coreMessage": "Holding back feelings is exhausting for the body. Discover why expressing emotions, especially in writing, can help us heal.",
+    "ogImage": "images/og-opening-up-by-writing-it-down-en.jpg"
+  }
 }
