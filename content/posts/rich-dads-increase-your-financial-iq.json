@@ -1,0 +1,35 @@
+{
+  "id": "1792828115064",
+  "slug": "rich-dads-increase-your-financial-iq",
+  "status": "active",
+  "title": "Rich Dad's Increase Your Financial IQ",
+  "type": "Book Summary",
+  "categories": [
+    "Finance",
+    "Investing",
+    "Real Estate",
+    "Entrepreneurship",
+    "Money Mindset",
+    "Financial Education",
+    "Personal Development",
+    "Psychology"
+  ],
+  "date": "24 Oktober 2026",
+  "dateISO": "2026-10-24",
+  "coreMessage": "Uang saja tidak membuatmu kaya. Yang membuatmu kaya adalah lima kecerdasan finansial yang tidak diajarkan di sekolah.",
+  "bookData": {
+    "bookTitle": "Rich Dad's Increase Your Financial IQ",
+    "bookAuthor": "Robert T. Kiyosaki",
+    "bookYear": "2008",
+    "bookMainCategory": "Book Summary",
+    "bookCore": "Uang saja tidak membuatmu kaya. Yang membuatmu kaya adalah lima kecerdasan finansial yang tidak diajarkan di sekolah.",
+    "bookReadTime": "25"
+  },
+  "cover": "images/cover-rich-dads-increase-your-financial-iq-1792828115051.jpg",
+  "en": {
+    "title": "Rich Dad's Increase Your Financial IQ",
+    "coreMessage": "Money alone won't make you rich. Five financial intelligences, rarely taught in school, will.",
+    "ogImage": "images/og-rich-dads-increase-your-financial-iq-en.jpg"
+  },
+  "ogImage": "images/og-rich-dads-increase-your-financial-iq.jpg"
+}
